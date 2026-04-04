@@ -1,0 +1,48 @@
+# 架构决策日志（追加式）
+
+## 2026-04-03 — 初始架构方案对齐
+
+**背景**: 项目从零开始，需要确定 Agent 治理模式、目录结构、Stage 技术选型。
+
+**决策**:
+1. 采用 OpenAI Harness Engineering "map, not manual" 模式 — AGENTS.md ~100行做导航，不做大手册
+2. 目录结构扁平化，按需生长，不预创建空目录
+3. Stage 层使用 Taro H5 应用（非 shadcn/ui），避免样式体系冲突
+4. TypeScript 类型作为主合同，YAML 合同为补充元数据
+5. Harness = 机械化 linter + 结构化测试 + CI 脚本，不建独立验证平台
+6. 构建产物输出到 .deliverables/（gitignore），不入版本控制
+7. Monorepo 工具链：pnpm workspaces + turborepo
+8. Agent 记忆通过 .agent/checkpoint.yaml 接续，非每轮读全量文档
+
+**被否决的替代方案**:
+- 大手册模式（AGENT_PROTOCOL.md 等 6 份文档）— 消耗上下文，违反 Harness 原则
+- shadcn/ui 做 Stage 外壳 — 样式冲突风险，Taro 运行时兼容问题
+- 独立 harness 验证平台 — 初期维护成本过高
+- 先治理后开发 — 延迟价值产出
+
+## 2026-04-03 — 四层记忆架构 + 方向漂移防护
+
+**背景**: Agent 跨对话记忆接续存在方向漂移风险。原有 checkpoint.yaml 只记录"当前在哪"，不记录"要去哪"。后续 Phase 的目标如果依赖 Agent 推理，会逐渐偏离项目定位。
+
+**决策**:
+1. 新增 docs/NORTH_STAR.md — 不可变的项目核心定位（~50行），除非用户显式要求否则不改写
+2. 新增 docs/ROADMAP.md — 预定义全部 Phase 的准入/准出标准（~100行），Agent 每轮必读
+3. Agent 每轮入口阅读量 = AGENTS.md(~85行) + checkpoint.yaml(~30行) + ROADMAP.md(~100行) ≈ 215行
+4. Phase 准出标准是检查清单，Agent 完成 Phase 时逐条确认
+5. Phase 不可跳过——上一 Phase 准出未达标，不可进入下一 Phase
+6. Phase 5（Figma 对接）是例外，可在任何阶段插入
+
+**被否决的替代方案**:
+- 依赖聊天历史传递方向 — 上下文窗口有限，无法保证传递完整
+- 依赖 Agent 从代码推理后续 Phase — 累积偏移不可控
+- 把全部需求文档塞入每轮上下文 — 消耗过大（500+ 行）
+
+## 2026-04-03 — 语言规范
+
+**背景**: 治理文档中英混杂，项目人类负责人为中文母语者，审查成本高。
+
+**决策**:
+1. 治理文档（AGENTS.md、NORTH_STAR、ROADMAP、ARCHITECTURE、changelog、decisions）统一为中文
+2. 代码、变量名、package name 保持英文（行业标准）
+3. 代码注释保持英文（行业标准）
+4. YAML/JSON 的 key 保持英文（机器解析标准），value 中的描述性文字用中文

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.turbo/
+.deliverables/
+
+*.log
+!.agent/*.log
+
+.DS_Store
+*.local

@@ -1,0 +1,17 @@
+{
+  "name": "@fdesign/tokens",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Design tokens for FDesign System — colors, spacing, typography, radii, shadows",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "clean": "rm -rf dist",
+    "lint": "echo 'no lint configured yet'"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  }
+}

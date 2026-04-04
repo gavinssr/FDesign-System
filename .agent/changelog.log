@@ -1,0 +1,46 @@
+# AI 变更日志（追加式）
+
+## 2026-04-03 — Phase 0: 仓库骨架
+
+### 新增
+- monorepo 根配置：package.json、pnpm-workspace.yaml、turbo.json、tsconfig.base.json
+- AGENTS.md 导航文件（~85行）
+- docs/ARCHITECTURE.md 架构地图
+- .agent/ 状态管理（checkpoint.yaml、decisions.log、changelog.log）
+- docs/exec-plans/active/phase-0-repo-scaffold.md 执行计划
+- packages/tokens/ — 设计 token package（含初始 provisional 值）
+- packages/components/ — 组件 package 空骨架
+- packages/eslint-config/ — ESLint 配置 + 边界约束规则
+- packages/tsconfig/ — 共享 TypeScript 配置
+- scripts/validate-boundaries.ts — import 边界校验脚本
+- .gitignore、.npmrc
+
+### 决策
+- 见 .agent/decisions.log 2026-04-03 条目
+
+## 2026-04-03 — 治理体系补全：北极星 + 路线图
+
+### 新增
+- docs/NORTH_STAR.md — 项目定位精华（~50行），不可变核心
+- docs/ROADMAP.md — 全 Phase 路线图（含准入/准出标准）
+
+### 变更
+- AGENTS.md — 阅读协议升级为四层记忆架构
+
+### 背景
+- 识别到 Agent 跨对话无预定义路线图会导致方向漂移
+- 解决方案：ROADMAP.md 预定义全部 Phase + NORTH_STAR.md 锚定不可变定位
+
+## 2026-04-03 — 语言统一 + Phase 1 执行计划
+
+### 变更
+- 所有治理文档统一为中文（AGENTS.md、ARCHITECTURE.md、ROADMAP.md、changelog.log、decisions.log）
+- Phase 0 执行计划移至 completed/
+
+### 新增
+- docs/exec-plans/active/phase-1.md — Phase 1 详细执行计划
+
+### 背景
+- 项目人类负责人为中文母语者，中英混杂增加审查成本
+- 代码、变量名、package name 保持英文（行业标准）
+- 治理文档统一中文，提升可审查性

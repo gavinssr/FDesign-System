@@ -1,0 +1,22 @@
+{
+  "name": "fdesign-system",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Taro-based design system monorepo — AI-governable, multi-platform, independently deliverable",
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "check-boundaries": "tsx scripts/validate-boundaries.ts",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "turbo": "^2.9.3",
+    "typescript": "^5.8.2",
+    "tsx": "^4.19.0"
+  },
+  "packageManager": "pnpm@10.31.0",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
