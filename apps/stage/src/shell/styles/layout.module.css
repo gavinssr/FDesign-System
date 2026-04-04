@@ -1,0 +1,144 @@
+.__stage-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+.__stage-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 16px;
+  background: #111827;
+  color: #f9fafb;
+}
+
+.__stage-sidebarTitle {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.__stage-navLink {
+  display: inline-flex;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #e5e7eb;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.__stage-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+}
+
+.__stage-page {
+  min-height: 100vh;
+  padding: 24px;
+  background: #f3f4f6;
+}
+
+.__stage-homeCard,
+.__stage-demoCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+}
+
+.__stage-demoHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.__stage-title,
+.__stage-sectionTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.__stage-sectionTitle {
+  font-size: 18px;
+}
+
+.__stage-description,
+.__stage-controlLabel {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.__stage-controlPanel {
+  padding: 16px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+.__stage-controls,
+.__stage-controlGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.__stage-chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.__stage-toggle {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111827;
+}
+
+.__stage-toggle[data-active='true'] {
+  border-color: #2563eb;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.__stage-demoBody {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.__stage-preview {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.__stage-blockPreview {
+  width: 320px;
+}
+
+.__stage-link {
+  width: fit-content;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.__stage-probe {
+  display: inline-flex;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px dashed #93c5fd;
+  background: #eff6ff;
+}

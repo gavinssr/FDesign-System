@@ -1,0 +1,22 @@
+component: Button
+purpose: "通用交互按钮，支持多变体和状态"
+provisional: true
+platform_notes:
+  h5: "默认渲染为 Taro View/Text，并映射 onPress 到点击事件"
+  rn: "需要 TouchableOpacity adapter（Phase 4 实现）"
+  weex: "不在主路径，需要 adapter 桥接（Phase 4 评估）"
+forbidden:
+  - "不允许传入业务特有的 icon 集合"
+  - "不允许在 Button 内部处理路由跳转"
+  - "不允许硬编码颜色值，必须使用 @fdesign/tokens"
+a11y:
+  - "disabled 时设置 aria-disabled=true"
+  - "loading 时展示可访问的加载状态文案"
+slots:
+  children: "按钮文字或图标内容"
+states:
+  - default
+  - hover
+  - pressed
+  - disabled
+  - loading

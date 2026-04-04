@@ -94,7 +94,7 @@ pnpm add -D vitest @testing-library/react jsdom
 
 这是本项目组件的**标准文件结构模式**，后续所有组件必须遵循：
 
-```
+```text
 packages/components/src/
   button/
     index.ts                ← 公共导出入口
@@ -169,7 +169,7 @@ states:
 
 harness 的职责是覆盖组件的**状态矩阵**——所有变体 × 所有尺寸 × 所有状态的组合：
 
-```
+```text
 variants: [primary, secondary, ghost, danger]
 sizes:    [sm, md, lg]
 states:   [default, disabled, loading]
@@ -198,7 +198,7 @@ export type { ButtonProps } from './button/Button.types';
 
 apps/stage 是一个 **Taro H5 应用**，用于展示设计系统组件。
 
-```
+```text
 apps/stage/
   package.json
   tsconfig.json

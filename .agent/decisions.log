@@ -67,6 +67,35 @@
 - Phase 1 即引入跨端样式抽象（如 styled-components 或 token-to-style 方案） — 增加不必要的复杂度，且无法在无 RN 验证环境时做出正确的抽象设计
 - Phase 1 预留 adapter 注入点 — 过早抽象，缺乏足够的多端差异信息来设计合理 API
 
+## 2026-04-04 — Phase 1 实施期运行时决策
+
+**背景**: 在 Phase 1 实施过程中，Taro 4.1.11 + pnpm monorepo + H5 stage 的真实编译链路暴露出若干运行时约束，这些约束不是前期文档能完全预判的，需要在实施期补充为显式决策。
+
+**决策**:
+1. **apps/stage 显式依赖 `@tarojs/shared`**：
+   - 原因：`@tarojs/webpack5-runner` 的 H5 基础配置会在 app 目录基于 `resolveSync()` 注入 `@tarojs/shared` alias
+   - 在 pnpm monorepo 下，如果 stage 仅通过传递依赖获得 `@tarojs/shared`，该 alias 可能解析失败并导致 webpack schema 校验报错
+   - 因此 `apps/stage/package.json` 显式添加 `@tarojs/shared: 4.1.11`，作为 H5 构建链路的稳定依赖
+
+2. **apps/stage 显式提供 Babel 运行前置依赖**：
+   - `babel-preset-taro`、`@babel/preset-react`、`@pmmmwh/react-refresh-webpack-plugin`、`react-refresh` 在 monorepo app 下需要显式安装
+   - 原因：Taro H5 app 的 Babel/React refresh 链路不会可靠地从其他 workspace 包隐式继承
+   - 目标：确保 `apps/stage` 的 build/dev 都能独立成立，不依赖“根目录恰好已有某依赖”
+
+3. **Phase 1 中 `*.module.css` 采用“side-effect import + 显式命名空间 class”消费策略**：
+   - 真实表现：Taro H5 会正确产出 CSS，但在当前 monorepo 组合下，`import styles from '*.module.css'` 未得到稳定的 JS 导出对象
+   - 组件层采用 `fd-button-*` 前缀，stage shell 采用 `__stage-*` 前缀，继续保留样式隔离目标
+   - 这不是放弃 CSS Modules 文件模式，而是在 Phase 1 用更稳的消费方式换取运行时确定性
+
+4. **packages/components 构建过程补充 CSS 资源复制**：
+   - `tsc` 仅输出 JS / d.ts，不会携带 `*.module.css`
+   - 为保证 `@fdesign/components` 被 stage 消费时能解析到样式文件，构建脚本追加 CSS 复制步骤，将 `src/**/*.module.css` 同步到 `dist/`
+
+**被否决的替代方案**:
+- 继续依赖传递依赖解析 `@tarojs/shared` — 在 pnpm monorepo 下不稳定，已被真实构建错误证伪
+- 继续使用 `import styles from '*.module.css'` 并等待运行时自然恢复 — 构建告警表明该消费方式在当前组合下不可靠
+- 让 stage 直接 alias 到 components 源码入口 — 会额外引入 TypeScript / barrel 语法兼容问题，且弱化包构建产物验证价值
+
 ## 2026-04-03 — 语言规范
 
 **背景**: 治理文档中英混杂，项目人类负责人为中文母语者，审查成本高。

@@ -1,5 +1,41 @@
 # AI 变更日志（追加式）
 
+## 2026-04-04 — Phase 1 全链路模式验证完成
+
+### 代码变更
+- root：补充 Vitest 基础依赖与 `.github/workflows/ci.yml` 最小 CI
+- packages/components：引入 Taro 4.1.11、Vitest、React 18 基础依赖，`test` 切换到可执行 Vitest
+- packages/components：新增 `Phase1Probe`，用于最小编译验证入口
+- packages/components：落地 Button 全套标准结构
+  - `Button.tsx`
+  - `Button.types.ts`
+  - `Button.contract.yaml`
+  - `Button.module.css`
+  - `Button.test.tsx`
+  - `Button.harness.tsx`
+  - `button/index.ts`
+- packages/components：构建脚本追加 CSS 资源复制，保证 `dist` 可被 stage 消费
+- apps/stage：新增 Taro H5 stage 应用（config / app / pages / shell）
+- scripts：新增 `copy-css-assets.mjs`，同步 `*.module.css` 到构建产物
+
+### 工程验证
+- `pnpm build` 通过（包含 `@fdesign/stage`）
+- `pnpm lint` 通过
+- `pnpm test` 通过（Button 2 个用例）
+- `pnpm check-boundaries` 通过
+- `apps/stage` 构建成功
+- `apps/stage` 开发服务启动成功，监听 `http://localhost:10086/`
+
+### 文档与治理
+- `docs/ROADMAP.md`：Phase 1 状态改为已完成，准出标准全部勾选
+- `.agent/checkpoint.yaml`：切换到 Phase 2 焦点
+- `.agent/decisions.log`：补充 Phase 1 实施期运行时决策
+- `docs/exec-plans/active/`：准备切换到 Phase 2 执行计划
+
+### 背景
+- 在真实实施中验证了 Taro 4.1.11 + pnpm monorepo + H5 stage 的完整链路
+- 通过显式补齐 `@tarojs/shared`、Babel / React refresh 依赖，以及 `dist` 样式复制，解决了 monorepo 下的 H5 运行时约束
+
 ## 2026-04-03 — Phase 0: 仓库骨架
 
 ### 新增

@@ -1,2 +1,3 @@
-// Components will be exported here as they are built.
-// Phase 1 will add: Button, Input, Text, Card, Modal
+export { Phase1Probe } from './Phase1Probe';
+export { Button, ButtonHarness } from './button';
+export type { ButtonProps } from './button';
