@@ -1,32 +1,34 @@
-last_session: "2026-04-03T18:30:00Z"
+last_session: "2026-04-04T10:00:00Z"
 current_phase: "phase-1"
-current_focus: "准备启动 Phase 1"
+current_focus: "红队审查改进措施已落地，准备执行 Phase 1"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
   - "north-star-and-roadmap — 四层记忆架构建立"
   - "language-unification — 治理文档统一为中文"
   - "phase-1-exec-plan — Phase 1 详细执行计划产出"
+  - "red-team-review — 红队审查改进措施落地"
 in_progress: []
 blocked: []
 next_recommended:
-  - "按 docs/exec-plans/active/phase-1.md 步骤 1 执行：引入 Taro 4.x 依赖"
+  - "按 docs/exec-plans/active/phase-1.md 步骤 0 已完成（ESLint 接入）"
+  - "下一步执行步骤 1：引入 Taro 4.x 依赖 + Vitest 测试运行器"
+  - "然后步骤 1.4：最小编译验证（Taro monorepo 链路）"
   - "然后步骤 2：实现 Button 组件（建立文件结构模式）"
   - "然后步骤 3：搭建 apps/stage Taro H5 应用"
   - "最后步骤 4-5：隔离验证 + 治理文件更新"
 active_exec_plan: "docs/exec-plans/active/phase-1.md"
 notes: |
-  本轮完成了：
-  1. 所有治理文档统一为中文
-  2. Phase 1 详细执行计划产出，包含：
-     - Taro 4.x 依赖引入的具体命令和注意事项
-     - Button 组件的标准文件结构模式（含示例代码）
-     - apps/stage Taro H5 应用的完整配置
-     - 样式隔离验证方案
-  3. Phase 0 执行计划已移至 completed/
+  本轮完成了（红队审查改进）：
+  1. ESLint 边界约束接入 — tokens 和 components 的 lint 从 echo 占位改为真实 eslint 执行
+  2. validate-boundaries.ts 补齐 — 增加 consumer→stageShell 规则，扫描范围增加 apps/ 目录
+  3. Phase 1 执行计划更新 — 增加步骤 0（ESLint）、步骤 1 增加 Vitest 和最小编译验证、风险增加 CSS Modules 声明
+  4. ROADMAP.md 更新 — Phase 2 增加 changeset 准出标准、Phase 3 增加 scope 限定说明
+  5. ARCHITECTURE.md 更新 — Package 职责表增加创建阶段列
+  6. decisions.log 补充 — Storybook 否决原因、CSS Modules 多端策略、adapter 注入扩展点策略
   
   下一个 Agent 进入时：
   - 读本文件了解当前状态
   - 读 docs/ROADMAP.md 了解准出标准
   - 读 docs/exec-plans/active/phase-1.md 获取具体执行步骤
-  - 按步骤顺序执行即可
+  - 步骤 0 已完成，从步骤 1 开始执行

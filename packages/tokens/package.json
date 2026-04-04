@@ -9,9 +9,11 @@
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "clean": "rm -rf dist",
-    "lint": "echo 'no lint configured yet'"
+    "lint": "eslint src/"
   },
   "devDependencies": {
+    "@fdesign/eslint-config": "workspace:*",
+    "eslint": "^9.0.0",
     "typescript": "^5.8.2"
   }
 }

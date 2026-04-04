@@ -37,6 +37,36 @@
 - 依赖 Agent 从代码推理后续 Phase — 累积偏移不可控
 - 把全部需求文档塞入每轮上下文 — 消耗过大（500+ 行）
 
+## 2026-04-04 — 红队审查改进
+
+**背景**: 架构红队审查发现多处设计缺口，原架构设计师确认后产出改进措施清单。本条目记录改进过程中的关键技术决策。
+
+**决策**:
+
+1. **Storybook 被否决**：Stage 层选择自建 Taro H5 应用而非 Storybook，原因：
+   - Storybook 原生运行在 React DOM 环境，Taro 组件依赖 `@tarojs/runtime` 无法在非 Taro 环境正确渲染
+   - Taro 4.x 对第三方 UI 库兼容性存在已知问题（GitHub issue #17078）
+   - 自建 stage 即 Taro H5 应用，组件在完全原生的 Taro 运行时中渲染，零兼容风险
+   - 自建 stage 的控制面板功能（Layout / ComponentDemo / PropControl）规模可控，不构成过度工程
+
+2. **CSS Modules 多端策略（有意识的技术债）**：
+   - CSS Modules 为当前 H5 + 小程序样式方案，Taro 会将其编译为 wxss
+   - RN 端不支持 CSS Modules，需要 StyleSheet.create 或类似方案
+   - Phase 4 多端适配时需引入 JS-in-CSS 方案或 adapter 层转换
+   - Phase 1-3 建立的 `*.module.css` 模式在 Phase 4 可能需要适配调整
+   - 标记为有意识的技术债——在 H5 + 小程序主路径上 CSS Modules 是正确选择，不应因 RN 未来需求而在 Phase 1 引入不必要的抽象
+
+3. **adapter 注入扩展点策略**：
+   - Phase 1 组件暂不预留 adapter 注入点
+   - Phase 4 时通过 context 或 props 注入平台特定行为（如 RN 的 TouchableOpacity 替代 click 事件）
+   - 理由：过早抽象会增加 Phase 1-3 的复杂度，且在未明确各端具体差异之前无法设计合理的注入 API
+   - 当前防护措施：Button.contract.yaml 已标注平台差异说明，Props 命名采用 `onPress`（而非 `onClick`）面向 RN 兼容
+
+**被否决的替代方案**:
+- 使用 Storybook for Taro — 兼容性风险过高，需要额外的 Taro runtime 适配层
+- Phase 1 即引入跨端样式抽象（如 styled-components 或 token-to-style 方案） — 增加不必要的复杂度，且无法在无 RN 验证环境时做出正确的抽象设计
+- Phase 1 预留 adapter 注入点 — 过早抽象，缺乏足够的多端差异信息来设计合理 API
+
 ## 2026-04-03 — 语言规范
 
 **背景**: 治理文档中英混杂，项目人类负责人为中文母语者，审查成本高。

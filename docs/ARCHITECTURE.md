@@ -49,14 +49,14 @@ tokens ← components ← adapters
 
 ## Package 职责
 
-| Package | 职责 | 发布方式 |
-|---------|------|----------|
-| `packages/tokens` | 设计 token：颜色、间距、字体、圆角、阴影 | npm（内部） |
-| `packages/components` | 基于 Taro 的 UI 组件 | npm（内部） |
-| `packages/adapters` | 平台适配层（RN、Weex 兼容桥） | npm（内部） |
-| `packages/contracts` | 合同 schema + 校验工具 | npm（内部） |
-| `packages/eslint-config` | 共享 ESLint 规则 + 边界约束 | npm（内部） |
-| `packages/tsconfig` | 共享 TypeScript 配置 | 仅本地 |
+| Package | 职责 | 发布方式 | 创建阶段 |
+|---------|------|----------|----------|
+| `packages/tokens` | 设计 token：颜色、间距、字体、圆角、阴影 | npm（内部） | Phase 0（已创建） |
+| `packages/components` | 基于 Taro 的 UI 组件 | npm（内部） | Phase 0（已创建，Phase 1 填充） |
+| `packages/adapters` | 平台适配层（RN、Weex 兼容桥） | npm（内部） | Phase 4 创建 |
+| `packages/contracts` | 合同 schema + 校验工具 | npm（内部） | Phase 2 创建 |
+| `packages/eslint-config` | 共享 ESLint 规则 + 边界约束 | npm（内部） | Phase 0（已创建） |
+| `packages/tsconfig` | 共享 TypeScript 配置 | 仅本地 | Phase 0（已创建） |
 
 ## 技术决策
 

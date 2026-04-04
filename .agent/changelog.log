@@ -31,6 +31,24 @@
 - 识别到 Agent 跨对话无预定义路线图会导致方向漂移
 - 解决方案：ROADMAP.md 预定义全部 Phase + NORTH_STAR.md 锚定不可变定位
 
+## 2026-04-04 — 红队审查改进措施落地
+
+### 代码变更
+- packages/tokens：ESLint 接入（eslint.config.mjs + 依赖 + lint 脚本）
+- packages/components：ESLint 接入（eslint.config.mjs + 依赖 + lint 脚本 + boundaries 规则）
+- scripts/validate-boundaries.ts：补齐 consumer→stageShell 规则，扫描范围增加 apps/ 目录
+
+### 文档变更
+- docs/exec-plans/active/phase-1.md：增加步骤 0（ESLint 接入）、步骤 1 增加 Vitest 引入和最小编译验证、风险部分增加 CSS Modules 多端策略声明
+- docs/ROADMAP.md：Phase 2 准出标准增加 changeset、Phase 3 增加 scope 限定说明（验证样板，非外部交付）
+- docs/ARCHITECTURE.md：Package 职责表增加"创建阶段"列
+- .agent/decisions.log：补充 Storybook 否决原因、CSS Modules 多端策略、adapter 注入扩展点策略
+- .agent/checkpoint.yaml：标记红队审查改进完成
+
+### 背景
+- 架构红队审查发现：ESLint 边界约束未实际生效（lint 是 echo 占位）、validate-boundaries.ts 规则与 boundaries.js 不一致、测试基础设施缺失、多端策略未显式声明、Phase 3 scope 未限定等问题
+- 原架构设计师确认改进措施后，本轮执行全部 P0-P3 改进
+
 ## 2026-04-03 — 语言统一 + Phase 1 执行计划
 
 ### 变更

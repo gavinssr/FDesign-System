@@ -16,6 +16,29 @@
 
 ---
 
+## 步骤 0：ESLint 边界约束接入 ✅
+
+> 此步骤由红队审查后追加。确保在第一行组件代码写下之前，边界约束就是真实执行的。
+
+### 0.1 为 packages/tokens 和 packages/components 接入 ESLint
+
+- 各 package 添加 `@fdesign/eslint-config` 和 `eslint` 为 devDependency
+- `lint` 脚本从 `echo` 占位改为 `eslint src/`
+- 创建 `eslint.config.mjs`：tokens 引入 base 规则，components 引入 base + boundaries 规则
+
+### 0.2 补齐 validate-boundaries.ts
+
+- RULES 数组增加 `apps/example-*` 禁止 import `apps/stage/shell` 规则
+- 扫描目录增加 `apps/`，与 boundaries.js 规则覆盖保持一致
+
+### 0.3 验证
+
+- `pnpm install` 成功
+- `pnpm lint` 成功（ESLint 边界规则真实执行）
+- `pnpm check-boundaries` 成功
+
+---
+
 ## 步骤 1：引入 Taro 4.x 依赖
 
 ### 1.1 为 packages/components 添加 Taro 依赖
@@ -31,10 +54,37 @@ pnpm add -D @tarojs/cli @tarojs/webpack5-runner @tarojs/plugin-framework-react
 - packages/components 中的 @tarojs/* 依赖使用精确版本，不用 workspace:*
 - packages/tokens 不需要 Taro 依赖（纯 TypeScript）
 
-### 1.2 验证
+### 1.2 引入 Vitest 测试运行器
+
+```bash
+# 在根目录添加 Vitest
+pnpm add -Dw vitest @testing-library/react
+
+# 在 packages/components 中添加测试依赖
+cd packages/components
+pnpm add -D vitest @testing-library/react jsdom
+```
+
+注意事项：
+- Vitest 比 Jest 更适合 Taro + ESM + monorepo 场景（原生 ESM、内置 TypeScript 支持）
+- 在 packages/components 中创建 `vitest.config.ts`，配置 jsdom 环境
+- 根 package.json 中 `test` 脚本已通过 turbo 代理，各 package 的 `test` 脚本改为 `vitest run`
+
+### 1.3 验证
 
 - `pnpm install` 成功
 - `pnpm build` 成功（packages/tokens 先构建，packages/components 后构建）
+- `pnpm test` 可运行（即使尚无测试文件）
+
+### 1.4 最小编译验证（Taro monorepo 链路）
+
+在 Button 组件完整实现之前，先做一个最小编译验证：
+1. 在 `packages/components/src/` 中导出一个空的占位组件
+2. 在 `apps/stage` 中 import 该组件并编译
+3. 确认 Taro Webpack 能正确 resolve pnpm workspace symlink
+4. 验证通过后删除占位组件
+
+目的：提前暴露 Taro + pnpm monorepo 的编译链路问题，避免 Button 组件写完后才发现编译链路不通。
 
 ---
 
@@ -293,10 +343,11 @@ pages/button/index.tsx 展示：
 
 ## 风险与注意事项
 
-1. **Taro monorepo 配置**: Taro 在 pnpm monorepo 中可能需要额外的 alias 配置，如果编译时找不到 workspace 包，需要在 config/index.ts 中配置 alias
+1. **Taro monorepo 配置**: Taro 在 pnpm monorepo 中可能需要额外的 alias 配置，如果编译时找不到 workspace 包，需要在 config/index.ts 中配置 alias。步骤 1.4 的最小编译验证应提前暴露此问题
 2. **CSS Modules 支持**: Taro H5 模式默认支持 CSS Modules，但需要确认 4.1.11 版本的具体配置方式
 3. **React 版本兼容**: Taro 4.x 兼容 React 18，确保 stage 和 components 使用相同版本
 4. **不要在本 Phase 过度设计 harness**: harness.tsx 只需确保 36 种组合全部渲染无报错即可，不需要做快照测试或视觉回归（留给 Phase 2）
+5. **CSS Modules 多端策略（有意识的技术债）**: CSS Modules 是当前 H5 + 小程序的样式方案。RN 端不支持 CSS Modules，样式策略将在 Phase 4 解决（可能引入 JS-in-CSS 方案或 adapter 层转换）。Phase 1-3 的组件 `*.module.css` 文件在 Phase 4 多端适配时可能需要调整。此技术债已在 `.agent/decisions.log` 中记录
 
 ## 预估工作量
 

@@ -43,6 +43,11 @@ const RULES: Array<{
     forbiddenImport: /apps\/stage/,
     message: 'projects must NOT import from apps/stage/',
   },
+  {
+    sourceGlob: 'apps/example-',
+    forbiddenImport: /apps\/stage\/shell/,
+    message: 'consumer apps must NOT import stage shell internals',
+  },
 ];
 
 function collectFiles(dir: string, ext: string[]): string[] {
@@ -93,7 +98,7 @@ function checkFile(filePath: string): Violation[] {
 function main() {
   console.log('Validating import boundaries...\n');
 
-  const dirs = ['packages/components', 'projects'].map((d) => join(ROOT, d));
+  const dirs = ['packages/components', 'projects', 'apps'].map((d) => join(ROOT, d));
   const files = dirs.flatMap((d) => collectFiles(d, ['.ts', '.tsx']));
 
   const allViolations = files.flatMap(checkFile);
