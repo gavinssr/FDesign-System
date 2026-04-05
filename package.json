@@ -7,15 +7,21 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish",
     "check-boundaries": "tsx scripts/validate-boundaries.ts",
+    "validate-contracts": "tsx scripts/validate-contracts.ts",
     "clean": "turbo run clean && rm -rf node_modules"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.30.0",
     "@testing-library/react": "^16.3.2",
     "tsx": "^4.19.0",
     "turbo": "^2.9.3",
     "typescript": "^5.8.2",
-    "vitest": "^4.1.2"
+    "vitest": "^4.1.2",
+    "yaml": "^2.8.3"
   },
   "packageManager": "pnpm@10.31.0",
   "engines": {

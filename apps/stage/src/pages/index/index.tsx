@@ -1,6 +1,8 @@
 import { Navigator, Text, View } from '@tarojs/components';
 import { Phase1Probe } from '@fdesign/components';
 
+import { componentLinks } from '../../shell/componentLinks';
+
 export default function IndexPage() {
   return (
     <View className="__stage-page">
@@ -12,9 +14,18 @@ export default function IndexPage() {
         <View className="__stage-probe">
           <Phase1Probe />
         </View>
-        <Navigator className="__stage-link" openType="navigate" url="/pages/button/index">
-          查看 Button 展示页
-        </Navigator>
+        <View className="__stage-chipRow">
+          {componentLinks.map((item) => (
+            <Navigator
+              key={item.url}
+              className="__stage-link"
+              openType="navigate"
+              url={item.url}
+            >
+              {`查看 ${item.label} 展示页`}
+            </Navigator>
+          ))}
+        </View>
       </View>
     </View>
   );

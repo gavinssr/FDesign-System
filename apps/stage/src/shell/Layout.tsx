@@ -1,5 +1,7 @@
 import { Navigator, Text, View } from '@tarojs/components';
 
+import { componentLinks } from './componentLinks';
+
 type LayoutChildren = JSX.Element | JSX.Element[] | string | number | null;
 
 interface LayoutProps {
@@ -15,9 +17,16 @@ export function Layout({ title, children }: LayoutProps) {
         <Navigator className="__stage-navLink" openType="navigate" url="/pages/index/index">
           首页
         </Navigator>
-        <Navigator className="__stage-navLink" openType="navigate" url="/pages/button/index">
-          Button
-        </Navigator>
+        {componentLinks.map((item) => (
+          <Navigator
+            key={item.url}
+            className="__stage-navLink"
+            openType="navigate"
+            url={item.url}
+          >
+            {item.label}
+          </Navigator>
+        ))}
       </View>
       <View className="__stage-main">
         <Text className="__stage-title">{title}</Text>

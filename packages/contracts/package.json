@@ -1,0 +1,19 @@
+{
+  "name": "@fdesign/contracts",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Contract schema helpers for FDesign System components",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "clean": "rm -rf dist",
+    "lint": "eslint src/"
+  },
+  "devDependencies": {
+    "@fdesign/eslint-config": "workspace:*",
+    "eslint": "^9.0.0",
+    "typescript": "^5.8.2"
+  }
+}

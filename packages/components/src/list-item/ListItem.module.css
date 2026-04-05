@@ -1,0 +1,49 @@
+.fd-listItem-root {
+  display: flex;
+  align-items: center;
+  gap: var(--list-item-gap);
+  padding: var(--list-item-padding);
+  border: 1px solid var(--list-item-border);
+  border-radius: var(--list-item-radius);
+  background: var(--list-item-bg);
+}
+
+.fd-listItem-leading,
+.fd-listItem-trailing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fd-listItem-content {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fd-listItem-title {
+  color: var(--list-item-title);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.fd-listItem-description {
+  color: var(--list-item-description);
+  font-size: 14px;
+}
+
+.fd-listItem-meta {
+  color: var(--list-item-meta);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.fd-listItem-disabled {
+  opacity: 0.7;
+}
+
+.fd-listItem-interactive {
+  cursor: pointer;
+}

@@ -1,0 +1,9 @@
+.fd-icon-root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--icon-color);
+  font-size: var(--icon-size);
+  font-weight: 700;
+  line-height: 1;
+}

@@ -1,0 +1,38 @@
+.fd-card-root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--card-bg);
+}
+
+.fd-card-padded {
+  padding: var(--card-padding);
+}
+
+.fd-card-unpadded {
+  padding: 0;
+}
+
+.fd-card-header,
+.fd-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fd-card-title {
+  color: var(--card-title);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.fd-card-description {
+  color: var(--card-description);
+  font-size: 14px;
+}
+
+.fd-card-interactive {
+  cursor: pointer;
+}

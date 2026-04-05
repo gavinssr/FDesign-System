@@ -1,5 +1,52 @@
 # AI 变更日志（追加式）
 
+## 2026-04-05 — 治理补完：Phase 2 归档与 Phase 3 激活
+
+### 文档与治理
+- `docs/exec-plans/completed/phase-2.md`：归档 Phase 2 执行计划
+- `docs/exec-plans/active/phase-3.md`：新增 Phase 3 执行计划，聚焦 `real-project-1` 交付闭环
+- `.agent/checkpoint.yaml`：`active_exec_plan` 切换到 `docs/exec-plans/active/phase-3.md`
+
+### 背景
+- Phase 2 代码与准出标准已完成，但 `exec-plans` 目录仍停留在 `phase-2` 活动计划，未完成治理层阶段切换
+- 本次补完用于确保“当前阶段执行计划”与 `ROADMAP` / `checkpoint` 的阶段状态保持一致
+
+## 2026-04-05 — Phase 2: 组件集扩展 + 消费层验证完成
+
+### 代码变更
+- root：新增 `yaml` 与 `@changesets/cli` 依赖，补充 `validate-contracts` / `changeset` / `version-packages` / `release` 脚本
+- packages/contracts：新增 contracts package，提供 `ComponentContract` 类型与最小 shape 校验
+- scripts：新增 `validate-contracts.ts`，扫描 `packages/components/src/**/*.contract.yaml` 并交叉校验对应 `*.types.ts`
+- packages/components：新增 7 个高频组件目录并接入根导出
+  - `text/`
+  - `tag/`
+  - `input/`
+  - `card/`
+  - `list-item/`
+  - `icon/`
+  - `modal/`
+- packages/components：每个新增组件均包含 `*.tsx / *.types.ts / *.contract.yaml / *.module.css / *.test.tsx / *.harness.tsx / index.ts`
+- apps/stage：扩展首页导航与组件导航，新增 `text / tag / input / card / list-item / icon / modal` 展示页
+- apps/example-consumer：新增独立 Taro H5 consumer 样板，验证只通过 `@fdesign/components` 消费组件
+- `.changeset/`：初始化 changesets 版本管理配置
+- `.github/workflows/ci.yml`：新增 `pnpm validate-contracts` 校验步骤
+
+### 工程验证
+- `pnpm validate-contracts` 通过（8 个合同文件）
+- `pnpm --filter @fdesign/components test` 通过（8 个测试文件，15 个用例）
+- `pnpm --filter @fdesign/components build` 通过
+- `pnpm --filter @fdesign/stage build` 通过
+- `pnpm --filter @fdesign/example-consumer build` 通过
+- `pnpm check-boundaries` 通过
+
+### 文档与治理
+- `docs/ROADMAP.md`：Phase 2 状态改为已完成，并勾选准出标准
+- `.agent/checkpoint.yaml`：切换到 Phase 3 焦点，记录 Phase 2 完成状态与下一步建议
+
+### 背景
+- Phase 2 的核心目标是把 Phase 1 验证出的单组件模式扩展为可消费的最小组件集，并证明 consumer 不依赖 stage 也能正常使用设计系统
+- 本轮优先做最小合同校验与消费链路验证，避免过早进入完整 schema 工程或把 example-consumer 做成第二个 stage
+
 ## 2026-04-04 — Phase 1 全链路模式验证完成
 
 ### 代码变更

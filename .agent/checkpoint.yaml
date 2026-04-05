@@ -1,6 +1,6 @@
-last_session: "2026-04-04T12:00:00Z"
-current_phase: "phase-2"
-current_focus: "Phase 1 已完成，准备进入组件集扩展与消费层验证"
+last_session: "2026-04-05T16:20:00Z"
+current_phase: "phase-3"
+current_focus: "Phase 2 已完成，准备进入真实业务交付闭环"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -9,29 +9,35 @@ completed:
   - "phase-1-exec-plan — Phase 1 详细执行计划产出"
   - "red-team-review — 红队审查改进措施落地"
   - "phase-1-pattern-validation — Button 全链路模式验证完成"
+  - "phase-2-component-expansion-and-consumer-validation — 高频组件、contracts、stage、consumer、changesets 完成"
 in_progress: []
 blocked: []
 next_recommended:
-  - "按 docs/exec-plans/active/phase-2.md 开始 Phase 2"
-  - "优先创建 packages/contracts 与 scripts/validate-contracts.ts 的最小骨架"
-  - "然后扩展高频组件：Input / Text / Icon / Tag / Card / Modal / ListItem"
-  - "然后搭建 apps/example-consumer 并验证 consumer 不依赖 apps/stage"
-  - "最后引入 changeset 或类似版本管理工具"
-active_exec_plan: "docs/exec-plans/active/phase-2.md"
+  - "产出 docs/exec-plans/active/phase-3.md，明确 real-project-1 的最小交付范围"
+  - "创建 projects/real-project-1 骨架与 project.yaml"
+  - "实现 build-deliverable.ts 与 validate-deliverable.ts 的最小链路"
+  - "验证真实业务项目不依赖 apps/stage 且产物输出到 .deliverables/"
+active_exec_plan: "docs/exec-plans/active/phase-3.md"
 notes: |
-  本轮完成了（Phase 1 全链路验证）：
-  1. Step 1 — components 引入 Taro 4.1.11、Vitest、最小 CI，并建立 Phase1Probe 最小编译验证入口
-  2. Step 2 — Button 标准结构落地：types / contract / module.css / test / harness / index
-  3. Step 3 — apps/stage 搭建完成，H5 build 成功，dev 服务可在 localhost:10086 运行
-  4. Step 4 — 样式隔离与边界验证完成：components 中无 `__stage-` 命名空间，check-boundaries 通过
-  5. Step 5 — ROADMAP 勾选 Phase 1 准出标准，补充实施期运行时决策，切换到 Phase 2 执行计划
-  6. 运行时关键修正：
-     - apps/stage 显式补齐 `@tarojs/shared`、Babel 与 React refresh 依赖
-     - packages/components 构建增加 CSS 资源复制
-     - `*.module.css` 在 Phase 1 中改为 side-effect import + 命名空间 class 消费
+  本轮完成了（Phase 2 组件集扩展 + 消费层验证）：
+  1. 新建 packages/contracts，并提供最小 ComponentContract 类型与 shape 校验
+  2. 新增 scripts/validate-contracts.ts，扫描 packages/components/src/**/*.contract.yaml，并交叉校验 *.types.ts 中的 Props 接口
+  3. packages/components 扩展 7 个高频组件：Text / Tag / Input / Card / ListItem / Icon / Modal
+  4. 所有组件均补齐 types / contract / module.css / test / harness / index，并汇总到 components 根导出
+  5. apps/stage 新增上述组件展示页与统一导航，Button 旧页保留
+  6. 新建 apps/example-consumer，验证 consumer 仅通过 @fdesign/components 消费组件，不依赖 stage shell
+  7. 引入 changesets，新增 validate-contracts 根脚本，并在 CI 中补充合同校验步骤
+
+  工程验证结果：
+  - pnpm validate-contracts 通过
+  - pnpm --filter @fdesign/components test 通过（8 个测试文件）
+  - pnpm --filter @fdesign/components build 通过
+  - pnpm --filter @fdesign/stage build 通过
+  - pnpm --filter @fdesign/example-consumer build 通过
+  - pnpm check-boundaries 通过
 
   下一个 Agent 进入时：
   - 读本文件了解当前状态
-  - 读 docs/ROADMAP.md 了解准出标准
-  - 读 docs/exec-plans/active/phase-2.md 获取具体执行步骤
-  - 从 contracts 骨架、validate-contracts 最小实现和 example-consumer 样板开始
+  - 读 docs/ROADMAP.md 确认 Phase 2 已完成、Phase 3 准出标准
+  - 读 docs/exec-plans/active/phase-3.md 获取 Phase 3 的具体执行步骤
+  - 从 real-project-1 骨架、project.yaml 和最小交付脚本开始

@@ -28,7 +28,7 @@
 
 ### 0.2 补齐 validate-boundaries.ts
 
-- RULES 数组增加 `apps/example-*` 禁止 import `apps/stage/shell` 规则
+- RULES 数组增加 `apps/example-`* 禁止 import `apps/stage/shell` 规则
 - 扫描目录增加 `apps/`，与 boundaries.js 规则覆盖保持一致
 
 ### 0.3 验证
@@ -50,6 +50,7 @@ pnpm add -D @tarojs/cli @tarojs/webpack5-runner @tarojs/plugin-framework-react
 ```
 
 注意事项：
+
 - Taro 版本锁定为 4.1.11（当前稳定版）
 - packages/components 中的 @tarojs/* 依赖使用精确版本，不用 workspace:*
 - packages/tokens 不需要 Taro 依赖（纯 TypeScript）
@@ -66,6 +67,7 @@ pnpm add -D vitest @testing-library/react jsdom
 ```
 
 注意事项：
+
 - Vitest 比 Jest 更适合 Taro + ESM + monorepo 场景（原生 ESM、内置 TypeScript 支持）
 - 在 packages/components 中创建 `vitest.config.ts`，配置 jsdom 环境
 - 根 package.json 中 `test` 脚本已通过 turbo 代理，各 package 的 `test` 脚本改为 `vitest run`
@@ -79,6 +81,7 @@ pnpm add -D vitest @testing-library/react jsdom
 ### 1.4 最小编译验证（Taro monorepo 链路）
 
 在 Button 组件完整实现之前，先做一个最小编译验证：
+
 1. 在 `packages/components/src/` 中导出一个空的占位组件
 2. 在 `apps/stage` 中 import 该组件并编译
 3. 确认 Taro Webpack 能正确 resolve pnpm workspace symlink
@@ -282,6 +285,7 @@ export default defineConfig({
 ### 3.4 shell 组件（舞台私有外壳）
 
 shell 组件使用原生 React + CSS Modules 构建：
+
 - **Layout.tsx**: 整体布局（侧边导航 + 主展示区）
 - **ComponentDemo.tsx**: 单组件展示容器，提供变体/尺寸/状态切换
 - **PropControl.tsx**: Prop 编辑面板
@@ -299,6 +303,7 @@ shell 组件使用原生 React + CSS Modules 构建：
 ### 3.5 Button 展示页
 
 pages/button/index.tsx 展示：
+
 - 所有 variant（primary / secondary / ghost / danger）
 - 所有 size（sm / md / lg）
 - 所有状态（default / disabled / loading）
@@ -325,6 +330,7 @@ pages/button/index.tsx 展示：
 ### 4.2 可选加强
 
 如时间允许，在 scripts/validate-boundaries.ts 中增加样式命名空间检查：
+
 - 扫描 packages/components/ 下的 CSS 文件，确认不含 `__stage-` 前缀
 
 ---

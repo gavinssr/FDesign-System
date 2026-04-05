@@ -1,0 +1,17 @@
+.fd-tag-root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tag-min-height);
+  padding: 0 var(--tag-padding-x);
+  border: 1px solid var(--tag-border);
+  border-radius: var(--tag-radius);
+  background: var(--tag-bg);
+}
+
+.fd-tag-label {
+  color: var(--tag-color);
+  font-size: var(--tag-font-size);
+  font-weight: 600;
+  line-height: 1;
+}

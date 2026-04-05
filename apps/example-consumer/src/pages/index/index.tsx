@@ -1,0 +1,93 @@
+import { Text, View } from '@tarojs/components';
+import {
+  Button,
+  Card,
+  Icon,
+  Input,
+  ListItem,
+  Modal,
+  Tag,
+  Text as FText,
+} from '@fdesign/components';
+import { useState } from 'react';
+
+export default function IndexPage() {
+  const [value, setValue] = useState('workspace@fdesign.dev');
+  const [open, setOpen] = useState(false);
+
+  return (
+    <View className="__consumer-page">
+      <View className="__consumer-hero">
+        <Text className="__consumer-title">FDesign Example Consumer</Text>
+        <Text className="__consumer-description">
+          这是一个独立于 stage 的最小消费样板，只通过 @fdesign/components 使用设计系统组件。
+        </Text>
+        <View className="__consumer-row">
+          <Tag tone="primary" emphasis="solid">
+            consumer
+          </Tag>
+          <Tag tone="success">workspace package</Tag>
+          <Button onPress={() => setOpen(true)}>Open modal</Button>
+        </View>
+      </View>
+
+      <View className="__consumer-grid">
+        <Card
+          title="Profile form"
+          description="Consumer page composes Input, Text and Button without stage shell."
+        >
+          <View className="__consumer-stack">
+            <FText tone="muted">
+              The current input value is managed locally inside the consumer page.
+            </FText>
+            <Input
+              label="Contact email"
+              value={value}
+              helperText="This value is controlled by the consumer app."
+              onValueChange={setValue}
+            />
+            <View className="__consumer-row">
+              <Button>Save changes</Button>
+              <Button variant="secondary">Cancel</Button>
+            </View>
+          </View>
+        </Card>
+
+        <Card title="Settings list" description="List composition with leading and trailing icons.">
+          <View className="__consumer-stack">
+            <ListItem
+              title="Notifications"
+              description="Push and email preferences"
+              meta="2 new"
+              leading={<Icon name="info" label="Notifications" />}
+              trailing={<Icon name="chevron-right" decorative />}
+              onPress={() => undefined}
+            />
+            <ListItem
+              title="Security"
+              description="Passkeys and recovery methods"
+              leading={<Icon name="check" label="Security" />}
+              trailing={<Icon name="chevron-right" decorative />}
+            />
+          </View>
+        </Card>
+      </View>
+
+      <Modal
+        open={open}
+        title="Consumer modal"
+        description="This modal is rendered from apps/example-consumer, not from apps/stage."
+        primaryActionLabel="Close"
+        secondaryActionLabel="Keep open"
+        onPrimaryAction={() => setOpen(false)}
+        onSecondaryAction={() => setOpen(true)}
+        onClose={() => setOpen(false)}
+      >
+        <FText>
+          Consumer apps can compose design-system primitives directly while staying isolated from
+          the stage shell.
+        </FText>
+      </Modal>
+    </View>
+  );
+}

@@ -1,0 +1,33 @@
+{
+  "name": "@fdesign/example-consumer",
+  "private": true,
+  "scripts": {
+    "dev": "taro build --type h5 --watch",
+    "build": "taro build --type h5"
+  },
+  "dependencies": {
+    "@fdesign/components": "workspace:*",
+    "@fdesign/tokens": "workspace:*",
+    "@tarojs/components": "4.1.11",
+    "@tarojs/plugin-framework-react": "4.1.11",
+    "@tarojs/runtime": "4.1.11",
+    "@tarojs/shared": "4.1.11",
+    "@tarojs/taro": "4.1.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.6.2",
+    "@tarojs/cli": "4.1.11",
+    "@tarojs/plugin-platform-h5": "4.1.11",
+    "@tarojs/webpack5-runner": "4.1.11",
+    "@types/react": "^18.3.28",
+    "babel-preset-taro": "4.1.11",
+    "less": "^4.6.4",
+    "react-refresh": "^0.18.0",
+    "typescript": "^5.9.3",
+    "vite": "^4.5.14"
+  }
+}
