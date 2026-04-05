@@ -1,5 +1,26 @@
 # AI 变更日志（追加式）
 
+## 2026-04-05 — Phase 3 补充验收：独立拆出验证完成
+
+### 代码变更
+- `scripts/verify-standalone-project.ts`：新增独立拆出验证脚本，将 `real-project-1` 与其 design system 依赖复制到仓库外临时目录，改写依赖与 tsconfig 后执行真实 `install / build`
+- `package.json`：新增 `verify-standalone-project` 根脚本
+
+### 文档与治理
+- `docs/exec-plans/completed/phase-3-standalone-verification.md`：新增 Phase 3 补充验收执行文档，明确更严格的“独立拆出运行”验证口径
+- `.agent/checkpoint.yaml`：记录 `phase-3-standalone-extraction-validation` 已完成
+
+### 工程验证
+- `pnpm verify-standalone-project` 通过
+- 仓库外 standalone 目录中的 `pnpm install` 通过
+- 仓库外 standalone 目录中的 `pnpm build` 通过
+- 浏览器实际打开 standalone `dist/`，页面正确渲染为 `Campaign Launch Console / 活动发布台`
+- `.deliverables/standalone-verification/real-project-1/verification-report.md` 已生成
+
+### 背景
+- 项目总目标已要求真实业务项目可独立拆出、独立构建、独立交付，但此前 Phase 3 的显式验收更偏重 monorepo 内独立构建与交付
+- 本次补充验收用于将“拎出仓库后仍可 install/build/run”落成真实验证，降低治理口径和实际能力不一致的风险
+
 ## 2026-04-05 — 治理写入：Phase 4 执行计划激活
 
 ### 文档与治理

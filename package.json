@@ -14,6 +14,7 @@
     "validate-contracts": "tsx scripts/validate-contracts.ts",
     "build-deliverable": "tsx scripts/build-deliverable.ts",
     "validate-deliverable": "tsx scripts/validate-deliverable.ts",
+    "verify-standalone-project": "tsx scripts/verify-standalone-project.ts",
     "clean": "turbo run clean && rm -rf node_modules"
   },
   "devDependencies": {
