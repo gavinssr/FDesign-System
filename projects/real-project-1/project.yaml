@@ -1,0 +1,19 @@
+id: "real-project-1"
+name: "Campaign Launch Console"
+owner: "growth-team"
+targets:
+  - h5
+build:
+  entry: "src/app.tsx"
+  output: "../../.deliverables/real-project-1"
+delivery:
+  mode: "static-bundle"
+  artifacts:
+    - "dist/"
+    - "assets-manifest.json"
+    - "deploy-readme.md"
+    - "smoke-report.md"
+  verification:
+    - "workspace-build"
+    - "boundary-check"
+    - "deliverable-structure-check"

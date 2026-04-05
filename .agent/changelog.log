@@ -1,5 +1,44 @@
 # AI 变更日志（追加式）
 
+## 2026-04-05 — 治理写入：Phase 4 执行计划激活
+
+### 文档与治理
+- `docs/exec-plans/active/phase-4.md`：新增 Phase 4 执行计划，聚焦 `packages/adapters`、RN adapter、Button 首个跨端验证、H5 / WebView 性能基线、小程序构建验证与 Weex 兼容桥评估
+- `.agent/checkpoint.yaml`：`active_exec_plan` 切换到 `docs/exec-plans/active/phase-4.md`
+- `.agent/checkpoint.yaml`：`current_focus` 更新为“Phase 4 执行计划已产出，准备进入多端适配实施”
+
+### 背景
+- Phase 3 已完成且验收通过，但治理层尚未生成 Phase 4 活动执行计划，导致当前阶段缺少统一实施入口
+- 本次写入用于完成治理层切换，为下一轮 Phase 4 实施提供明确的步骤和边界
+
+## 2026-04-05 — Phase 3: 真实业务交付闭环完成
+
+### 代码变更
+- `projects/real-project-1`：新增真实业务样板项目，包含 `package.json`、`tsconfig.json`、`babel.config.js`、`config/`、`src/`、`project.yaml`
+- `projects/real-project-1/src/pages/index/index.tsx`：实现最小“Campaign Launch Console”业务页，组合 `Button / Input / Card / ListItem / Tag / Text / Modal`
+- `projects/real-project-1/manual-acceptance.md`：新增人工验收步骤文档
+- `scripts/build-deliverable.ts`：新增交付构建脚本，读取 `project.yaml` 并输出 `.deliverables/real-project-1/`
+- `scripts/validate-deliverable.ts`：新增交付校验脚本，验证 `dist/`、`assets-manifest.json`、`deploy-readme.md`、`smoke-report.md`
+- `package.json`：新增 `build-deliverable` 与 `validate-deliverable` 根脚本
+
+### 工程验证
+- `pnpm install` 通过（接入新增 workspace 项目）
+- `pnpm --filter @fdesign/real-project-1 build` 通过
+- `pnpm build-deliverable` 通过
+- `pnpm validate-deliverable` 通过
+- `pnpm check-boundaries` 通过
+- `pnpm build` 通过
+- `real-project-1` H5 构建存在 entrypoint size warning（app 约 300 KiB），当前作为性能观察项记录，未阻塞 Phase 3 闭环
+
+### 文档与治理
+- `docs/ROADMAP.md`：Phase 3 状态更新为已完成
+- `.agent/checkpoint.yaml`：切换到 Phase 4 焦点并记录 Phase 3 完成状态
+- `docs/exec-plans/completed/phase-3.md`：归档 Phase 3 执行计划
+
+### 背景
+- Phase 3 的核心目标是证明 `projects/*` 可以在不依赖 `apps/stage` 的前提下，独立消费设计系统并生成可交付产物
+- 本轮优先做单项目最小闭环，避免过早抽象成通用发布平台
+
 ## 2026-04-05 — 治理补完：Phase 2 归档与 Phase 3 激活
 
 ### 文档与治理

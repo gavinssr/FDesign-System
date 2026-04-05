@@ -1,0 +1,83 @@
+page {
+  background: #f8fafc;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.__realProject-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.__realProject-hero,
+.__realProject-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.06);
+}
+
+.__realProject-title {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.__realProject-description {
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.__realProject-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.__realProject-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.__realProject-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.__realProject-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.__realProject-kpiValue {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.__realProject-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}

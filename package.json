@@ -12,6 +12,8 @@
     "release": "changeset publish",
     "check-boundaries": "tsx scripts/validate-boundaries.ts",
     "validate-contracts": "tsx scripts/validate-contracts.ts",
+    "build-deliverable": "tsx scripts/build-deliverable.ts",
+    "validate-deliverable": "tsx scripts/validate-deliverable.ts",
     "clean": "turbo run clean && rm -rf node_modules"
   },
   "devDependencies": {
