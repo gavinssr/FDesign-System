@@ -37,17 +37,17 @@ scripts/                 ← 校验与构建脚本
 ## 每轮协议
 
 1. **进入时**（必读）：
-   - `.agent/checkpoint.yaml`（~30行）— 我在哪、做了什么
-   - `docs/ROADMAP.md`（~100行）— 要去哪、准出标准是什么
+  - `.agent/checkpoint.yaml`（~30行）— 我在哪、做了什么
+  - `docs/ROADMAP.md`（~100行）— 要去哪、准出标准是什么
 2. **执行中**（按需读取）：
-   - `docs/NORTH_STAR.md` — 不确定项目方向或边界时参考
-   - `docs/exec-plans/active/*.md` — 当前阶段的具体执行计划
-   - 相关 package 源码和文档
+  - `docs/NORTH_STAR.md` — 不确定项目方向或边界时参考
+  - `docs/exec-plans/active/*.md` — 当前阶段的具体执行计划
+  - 相关 package 源码和文档
 3. **退出时**（必写）：
-   - 更新 `.agent/checkpoint.yaml`
-   - 追加 `.agent/changelog.log`
-   - 如有架构决策变化：追加 `.agent/decisions.log`
-   - 如有 Phase 完成：更新 `docs/ROADMAP.md` 中的检查清单
+  - 更新 `.agent/checkpoint.yaml`
+  - 追加 `.agent/changelog.log`
+  - 如有架构决策变化：追加 `.agent/decisions.log`
+  - 如有 Phase 完成：更新 `docs/ROADMAP.md` 中的检查清单
 
 ## 硬性约束（机械化执行）
 
@@ -61,26 +61,31 @@ scripts/                 ← 校验与构建脚本
 
 ## 约束执行机制
 
-| 约束 | 执行方式 |
-|------|----------|
+
+| 约束        | 执行方式                                                  |
+| --------- | ----------------------------------------------------- |
 | import 边界 | `packages/eslint-config` 的 `no-restricted-imports` 规则 |
-| 样式隔离 | CSS Modules + `__stage-` 命名空间前缀 |
-| 类型-合同一致性 | `scripts/validate-contracts.ts`（Phase 2 实现） |
-| 交付产物完整性 | `scripts/validate-deliverable.ts`（Phase 3 实现） |
+| 样式隔离      | CSS Modules + `__stage-` 命名空间前缀                       |
+| 类型-合同一致性  | `scripts/validate-contracts.ts`（Phase 2 实现）           |
+| 交付产物完整性   | `scripts/validate-deliverable.ts`（Phase 3 实现）         |
+
 
 ## 去哪找什么
 
-| 需要 | 位置 |
-|------|------|
-| 项目定位与边界 | `docs/NORTH_STAR.md` |
-| 全局路线图与阶段标准 | `docs/ROADMAP.md` |
-| 架构总览 | `docs/ARCHITECTURE.md` |
-| 当前阶段与焦点 | `.agent/checkpoint.yaml` |
-| 当前执行计划 | `docs/exec-plans/active/` |
-| 历史架构决策 | `.agent/decisions.log` |
-| AI 变更记录 | `.agent/changelog.log` |
-| 设计 token | `packages/tokens/` |
-| 组件 | `packages/components/` |
-| Lint 规则 | `packages/eslint-config/` |
-| 边界校验 | `scripts/validate-boundaries.ts` |
+
+| 需要           | 位置                                                           |
+| ------------ | ------------------------------------------------------------ |
+| 项目定位与边界      | `docs/NORTH_STAR.md`                                         |
+| 全局路线图与阶段标准   | `docs/ROADMAP.md`                                            |
+| 架构总览         | `docs/ARCHITECTURE.md`                                       |
+| 当前阶段与焦点      | `.agent/checkpoint.yaml`                                     |
+| 当前执行计划       | `docs/exec-plans/active/`                                    |
+| 历史架构决策       | `.agent/decisions.log`                                       |
+| AI 变更记录      | `.agent/changelog.log`                                       |
+| 设计 token     | `packages/tokens/`                                           |
+| 组件           | `packages/components/`                                       |
+| Lint 规则      | `packages/eslint-config/`                                    |
+| 边界校验         | `scripts/validate-boundaries.ts`                             |
 | 完整需求文档（归档参考） | `docs/references/RequirementStarter.Optimized.md`（已达成共识的完整版） |
+
+
