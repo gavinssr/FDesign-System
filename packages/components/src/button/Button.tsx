@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 
 import type { ButtonProps } from './Button.types';
 import './Button.module.css';
+import { shouldUseCssVariables } from '../styleRuntime';
 
 type ButtonVariant = NonNullable<ButtonProps['variant']>;
 type ButtonSize = NonNullable<ButtonProps['size']>;
@@ -114,6 +115,7 @@ export function Button({
   onPress,
 }: ButtonProps) {
   const isInactive = disabled || loading;
+  const useCssVariables = shouldUseCssVariables();
 
   const className = [
     'fd-button-root',
@@ -132,6 +134,27 @@ export function Button({
     '--button-radius': `${radii.md}px`,
     '--button-font-weight': typography.fontWeight.semibold,
   };
+  const resolvedStyle: CSSProperties = {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: sizeStyles[size]['--button-gap'],
+    minHeight: sizeStyles[size]['--button-min-height'],
+    padding: `0 ${sizeStyles[size]['--button-padding-x']}`,
+    border: `1px solid ${variantStyles[variant]['--button-border']}`,
+    borderRadius: `${radii.md}px`,
+    background: variantStyles[variant]['--button-bg'],
+    color: variantStyles[variant]['--button-fg'],
+    fontSize: sizeStyles[size]['--button-font-size'],
+    fontWeight: typography.fontWeight.semibold,
+    lineHeight: 1,
+    boxSizing: 'border-box',
+    cursor: isInactive ? 'not-allowed' : 'pointer',
+    userSelect: 'none',
+    width: block ? '100%' : 'auto',
+    display: block ? 'flex' : 'inline-flex',
+    opacity: isInactive ? 0.72 : 1,
+    boxShadow: variant === 'ghost' ? 'none' : undefined,
+  };
 
   return (
     <View
@@ -139,7 +162,7 @@ export function Button({
       aria-disabled={isInactive}
       aria-busy={loading}
       className={className}
-      style={styleVars}
+      style={useCssVariables ? styleVars : resolvedStyle}
       onClick={isInactive ? undefined : onPress}
     >
       {loading ? (

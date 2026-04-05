@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 
 import type { InputProps } from './Input.types';
 import './Input.module.css';
+import { shouldUseCssVariables } from '../styleRuntime';
 
 type InputSize = NonNullable<InputProps['size']>;
 
@@ -70,6 +71,7 @@ export function Input({
   size = 'md',
   onValueChange,
 }: InputProps) {
+  const useCssVariables = shouldUseCssVariables();
   const className = [
     'fd-input-root',
     `fd-input-size-${size}`,
@@ -90,13 +92,41 @@ export function Input({
     '--input-radius': `${radii.md}px`,
     '--input-helper': invalid ? colors.danger[600] : colors.neutral[600],
   };
+  const resolvedRootStyle: CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    minHeight: sizeStyles[size]['--input-min-height'],
+    padding: `0 ${sizeStyles[size]['--input-padding-x']}`,
+    border: `1px solid ${invalid ? colors.danger[500] : colors.neutral[300]}`,
+    borderRadius: `${radii.md}px`,
+    background: disabled ? colors.neutral[100] : colors.neutral[0],
+  };
+  const labelStyle: CSSProperties = {
+    color: colors.neutral[900],
+    fontSize: '14px',
+    fontWeight: 600,
+  };
+  const helperStyle: CSSProperties = {
+    color: invalid ? colors.danger[600] : colors.neutral[600],
+    fontSize: '14px',
+  };
+  const inputStyle: CSSProperties = {
+    width: '100%',
+    minWidth: 0,
+    border: 0,
+    outline: 'none',
+    background: 'transparent',
+    color: colors.neutral[900],
+    fontSize: sizeStyles[size]['--input-font-size'],
+  };
 
   return (
     <View className="fd-input-fieldset">
-      {label ? <Text className="fd-input-label">{label}</Text> : null}
-      <View className={className} style={styleVars}>
+      {label ? <Text className="fd-input-label" style={useCssVariables ? undefined : labelStyle}>{label}</Text> : null}
+      <View className={className} style={useCssVariables ? styleVars : resolvedRootStyle}>
         <TaroInput
           className="fd-input-control"
+          style={useCssVariables ? undefined : inputStyle}
           value={value}
           placeholder={placeholder}
           disabled={disabled}
@@ -105,7 +135,11 @@ export function Input({
           aria-invalid={invalid}
         />
       </View>
-      {helperText ? <Text className="fd-input-helper">{helperText}</Text> : null}
+      {helperText ? (
+        <Text className="fd-input-helper" style={useCssVariables ? undefined : helperStyle}>
+          {helperText}
+        </Text>
+      ) : null}
     </View>
   );
 }

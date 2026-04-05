@@ -4,7 +4,7 @@ export default defineConfig<'webpack5'>(async (merge, { mode }) => {
   const baseConfig = {
     projectName: 'fdesign-example-consumer',
     sourceRoot: 'src',
-    outputRoot: 'dist',
+    outputRoot: process.env.TARO_OUTPUT_ROOT ?? 'dist-h5',
     designWidth: 750,
     deviceRatio: {
       640: 2.34 / 2,
@@ -24,6 +24,17 @@ export default defineConfig<'webpack5'>(async (merge, { mode }) => {
               namingPattern: 'module',
               generateScopedName: '[name]__[local]___[hash:base64:5]',
             },
+          },
+        },
+      },
+    },
+    mini: {
+      postcss: {
+        cssModules: {
+          enable: true,
+          config: {
+            namingPattern: 'module',
+            generateScopedName: '[name]__[local]___[hash:base64:5]',
           },
         },
       },

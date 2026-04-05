@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 
 import type { TextProps } from './Text.types';
 import './Text.module.css';
+import { shouldUseCssVariables } from '../styleRuntime';
 
 type TextTone = NonNullable<TextProps['tone']>;
 type TextSize = NonNullable<TextProps['size']>;
@@ -56,6 +57,7 @@ export function Text({
   weight = 'regular',
   truncate = false,
 }: TextProps) {
+  const useCssVariables = shouldUseCssVariables();
   const className = [
     'fd-text-root',
     `fd-text-tone-${tone}`,
@@ -71,9 +73,15 @@ export function Text({
     ...sizeStyles[size],
     ...weightStyles[weight],
   };
+  const resolvedStyle: CSSProperties = {
+    color: toneStyles[tone]['--text-color'] as string,
+    fontSize: sizeStyles[size]['--text-font-size'],
+    fontWeight: weightStyles[weight]['--text-font-weight'],
+    lineHeight: sizeStyles[size]['--text-line-height'],
+  };
 
   return (
-    <TaroText className={className} style={styleVars}>
+    <TaroText className={className} style={useCssVariables ? styleVars : resolvedStyle}>
       {children}
     </TaroText>
   );

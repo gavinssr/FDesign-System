@@ -1,4 +1,4 @@
-.fd-button-root {
+:global(.fd-button-root) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -24,47 +24,47 @@
     transform 120ms ease;
 }
 
-.fd-button-root:hover:not(.fd-button-disabled):not(.fd-button-loading) {
+:global(.fd-button-root):hover:not(:global(.fd-button-disabled)):not(:global(.fd-button-loading)) {
   background: var(--button-bg-hover);
   border-color: var(--button-border-hover);
 }
 
-.fd-button-root:active:not(.fd-button-disabled):not(.fd-button-loading) {
+:global(.fd-button-root):active:not(:global(.fd-button-disabled)):not(:global(.fd-button-loading)) {
   background: var(--button-bg-active);
   border-color: var(--button-border-active);
   transform: translateY(1px);
 }
 
-.fd-button-label {
+:global(.fd-button-label) {
   white-space: nowrap;
 }
 
-.fd-button-primary,
-.fd-button-secondary,
-.fd-button-ghost,
-.fd-button-danger,
-.fd-button-sm,
-.fd-button-md,
-.fd-button-lg {
+:global(.fd-button-primary),
+:global(.fd-button-secondary),
+:global(.fd-button-ghost),
+:global(.fd-button-danger),
+:global(.fd-button-sm),
+:global(.fd-button-md),
+:global(.fd-button-lg) {
   /* class names are intentionally present to make variant/size combinations explicit */
 }
 
-.fd-button-ghost {
+:global(.fd-button-ghost) {
   box-shadow: none;
 }
 
-.fd-button-block {
+:global(.fd-button-block) {
   display: flex;
   width: 100%;
 }
 
-.fd-button-disabled,
-.fd-button-loading {
+:global(.fd-button-disabled),
+:global(.fd-button-loading) {
   cursor: not-allowed;
   opacity: 0.72;
 }
 
-.fd-button-spinner {
+:global(.fd-button-spinner) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -72,6 +72,6 @@
   font-weight: var(--button-font-weight);
 }
 
-.fd-button-loadingStatus {
+:global(.fd-button-loadingStatus) {
   white-space: nowrap;
 }

@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 
 import type { IconProps } from './Icon.types';
 import './Icon.module.css';
+import { shouldUseCssVariables } from '../styleRuntime';
 
 type IconTone = NonNullable<IconProps['tone']>;
 type IconSize = NonNullable<IconProps['size']>;
@@ -41,6 +42,7 @@ export function Icon({
   decorative = false,
   label,
 }: IconProps) {
+  const useCssVariables = shouldUseCssVariables();
   const className = [
     'fd-icon-root',
     `fd-icon-size-${size}`,
@@ -51,11 +53,20 @@ export function Icon({
     ...toneStyles[tone],
     ...sizeStyles[size],
   };
+  const resolvedStyle: CSSProperties = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: toneStyles[tone]['--icon-color'],
+    fontSize: sizeStyles[size]['--icon-size'],
+    fontWeight: 700,
+    lineHeight: 1,
+  };
 
   return (
     <View
       className={className}
-      style={styleVars}
+      style={useCssVariables ? styleVars : resolvedStyle}
       role={decorative ? undefined : 'img'}
       aria-hidden={decorative}
       aria-label={decorative ? undefined : label ?? name}

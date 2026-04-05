@@ -1,4 +1,4 @@
-.fd-tag-root {
+:global(.fd-tag-root) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -9,7 +9,7 @@
   background: var(--tag-bg);
 }
 
-.fd-tag-label {
+:global(.fd-tag-label) {
   color: var(--tag-color);
   font-size: var(--tag-font-size);
   font-weight: 600;

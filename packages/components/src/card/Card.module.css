@@ -1,4 +1,4 @@
-.fd-card-root {
+:global(.fd-card-root) {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -7,32 +7,32 @@
   background: var(--card-bg);
 }
 
-.fd-card-padded {
+:global(.fd-card-padded) {
   padding: var(--card-padding);
 }
 
-.fd-card-unpadded {
+:global(.fd-card-unpadded) {
   padding: 0;
 }
 
-.fd-card-header,
-.fd-card-body {
+:global(.fd-card-header),
+:global(.fd-card-body) {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.fd-card-title {
+:global(.fd-card-title) {
   color: var(--card-title);
   font-size: 18px;
   font-weight: 700;
 }
 
-.fd-card-description {
+:global(.fd-card-description) {
   color: var(--card-description);
   font-size: 14px;
 }
 
-.fd-card-interactive {
+:global(.fd-card-interactive) {
   cursor: pointer;
 }

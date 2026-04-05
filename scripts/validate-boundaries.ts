@@ -39,6 +39,21 @@ const RULES: Array<{
     message: 'components must NOT import from projects/',
   },
   {
+    sourceGlob: 'packages/components/',
+    forbiddenImport: /(?:@fdesign\/adapters|packages\/adapters)/,
+    message: 'components must NOT import from adapters/',
+  },
+  {
+    sourceGlob: 'packages/adapters/',
+    forbiddenImport: /apps\/stage/,
+    message: 'adapters must NOT import from apps/stage/',
+  },
+  {
+    sourceGlob: 'packages/adapters/',
+    forbiddenImport: /projects\//,
+    message: 'adapters must NOT import from projects/',
+  },
+  {
     sourceGlob: 'projects/',
     forbiddenImport: /apps\/stage/,
     message: 'projects must NOT import from apps/stage/',
@@ -98,7 +113,9 @@ function checkFile(filePath: string): Violation[] {
 function main() {
   console.log('Validating import boundaries...\n');
 
-  const dirs = ['packages/components', 'projects', 'apps'].map((d) => join(ROOT, d));
+  const dirs = ['packages/components', 'packages/adapters', 'projects', 'apps'].map((d) =>
+    join(ROOT, d),
+  );
   const files = dirs.flatMap((d) => collectFiles(d, ['.ts', '.tsx']));
 
   const allViolations = files.flatMap(checkFile);

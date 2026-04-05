@@ -1,31 +1,24 @@
 {
-  "name": "@fdesign/components",
+  "name": "@fdesign/adapters",
   "version": "0.0.1",
   "private": true,
-  "description": "FDesign System UI components — built with Taro, multi-platform",
+  "description": "Platform adapters for FDesign System components",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
-    "build": "tsc --project tsconfig.json && node ../../scripts/copy-css-assets.mjs src dist",
+    "build": "tsc --project tsconfig.json",
     "clean": "rm -rf dist",
     "lint": "eslint src/",
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@fdesign/components": "workspace:*",
     "@fdesign/tokens": "workspace:*",
-    "@tarojs/components": "4.1.11",
-    "@tarojs/taro": "4.1.11",
     "react": "^18.3.1"
   },
   "devDependencies": {
     "@fdesign/eslint-config": "workspace:*",
-    "@tarojs/cli": "4.1.11",
-    "@tarojs/plugin-framework-react": "4.1.11",
-    "@tarojs/plugin-platform-weapp": "4.1.11",
-    "@tarojs/webpack5-runner": "4.1.11",
     "@testing-library/react": "^16.3.2",
     "@types/react": "^18.3.28",
     "eslint": "^9.0.0",

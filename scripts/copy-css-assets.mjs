@@ -1,4 +1,4 @@
-import { cp, mkdir, readdir } from 'node:fs/promises';
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const [sourceDirArg, outputDirArg] = process.argv.slice(2);
@@ -26,12 +26,41 @@ async function copyCssModules(currentDir) {
       continue;
     }
 
-    const relativePath = path.relative(sourceDir, sourcePath);
+    const relativePath = path
+      .relative(sourceDir, sourcePath)
+      .replace(/\.module\.css$/, '.css');
     const targetPath = path.join(outputDir, relativePath);
+    const rawCss = await readFile(sourcePath, 'utf8');
+    const publishedCss = rawCss.replaceAll(/:global\(([^)]+)\)/g, '$1');
 
     await mkdir(path.dirname(targetPath), { recursive: true });
-    await cp(sourcePath, targetPath);
+    await writeFile(targetPath, publishedCss);
+  }
+}
+
+async function rewriteDistCssImports(currentDir) {
+  const entries = await readdir(currentDir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const currentPath = path.join(currentDir, entry.name);
+
+    if (entry.isDirectory()) {
+      await rewriteDistCssImports(currentPath);
+      continue;
+    }
+
+    if (!entry.name.endsWith('.js')) {
+      continue;
+    }
+
+    const source = await readFile(currentPath, 'utf8');
+    const rewritten = source.replaceAll('.module.css', '.css');
+
+    if (rewritten !== source) {
+      await writeFile(currentPath, rewritten);
+    }
   }
 }
 
 await copyCssModules(sourceDir);
+await rewriteDistCssImports(outputDir);

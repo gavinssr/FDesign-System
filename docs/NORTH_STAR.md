@@ -48,5 +48,7 @@
 ## 完整需求源
 
 遇到本文件未覆盖的细节问题时，参考：
+
 - `docs/references/RequirementStarter.Optimized.md` — 优化后的完整需求（归档参考）
 - `docs/references/RequirementStarter.Original.md` — 原始完整需求（历史记录）
+

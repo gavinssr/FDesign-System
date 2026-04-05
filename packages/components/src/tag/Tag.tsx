@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 
 import type { TagProps } from './Tag.types';
 import './Tag.module.css';
+import { shouldUseCssVariables } from '../styleRuntime';
 
 type TagTone = NonNullable<TagProps['tone']>;
 type TagSize = NonNullable<TagProps['size']>;
@@ -114,6 +115,7 @@ export function Tag({
   size = 'md',
   emphasis = 'subtle',
 }: TagProps) {
+  const useCssVariables = shouldUseCssVariables();
   const className = [
     'fd-tag-root',
     `fd-tag-tone-${tone}`,
@@ -126,10 +128,28 @@ export function Tag({
     ...sizeStyles[size],
     '--tag-radius': `${radii.full}px`,
   };
+  const resolvedStyle: CSSProperties = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: sizeStyles[size]['--tag-min-height'],
+    padding: `0 ${sizeStyles[size]['--tag-padding-x']}`,
+    border: `1px solid ${getToneStyles(tone, emphasis)['--tag-border']}`,
+    borderRadius: `${radii.full}px`,
+    background: getToneStyles(tone, emphasis)['--tag-bg'],
+  };
+  const labelStyle: CSSProperties = {
+    color: getToneStyles(tone, emphasis)['--tag-color'],
+    fontSize: sizeStyles[size]['--tag-font-size'],
+    fontWeight: 600,
+    lineHeight: 1,
+  };
 
   return (
-    <View className={className} style={styleVars}>
-      <Text className="fd-tag-label">{children}</Text>
+    <View className={className} style={useCssVariables ? styleVars : resolvedStyle}>
+      <Text className="fd-tag-label" style={useCssVariables ? undefined : labelStyle}>
+        {children}
+      </Text>
     </View>
   );
 }

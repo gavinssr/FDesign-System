@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 
 import type { CardProps } from './Card.types';
 import './Card.module.css';
+import { shouldUseCssVariables } from '../styleRuntime';
 
 type CardTone = NonNullable<CardProps['tone']>;
 
@@ -63,6 +64,7 @@ export function Card({
   interactive = false,
   onPress,
 }: CardProps) {
+  const useCssVariables = shouldUseCssVariables();
   const className = [
     'fd-card-root',
     `fd-card-tone-${tone}`,
@@ -77,18 +79,41 @@ export function Card({
     '--card-radius': `${radii.xl}px`,
     '--card-padding': `${spacing[6]}px`,
   };
+  const resolvedStyle: CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+    border: `1px solid ${toneStyles[tone]['--card-border']}`,
+    borderRadius: `${radii.xl}px`,
+    background: toneStyles[tone]['--card-bg'],
+    padding: padded ? `${spacing[6]}px` : '0',
+    cursor: interactive ? 'pointer' : undefined,
+  };
+  const titleStyle: CSSProperties = {
+    color: toneStyles[tone]['--card-title'],
+    fontSize: '18px',
+    fontWeight: 700,
+  };
+  const descriptionStyle: CSSProperties = {
+    color: toneStyles[tone]['--card-description'],
+    fontSize: '14px',
+  };
 
   return (
     <View
       className={className}
-      style={styleVars}
+      style={useCssVariables ? styleVars : resolvedStyle}
       role={interactive ? 'button' : undefined}
       onClick={interactive ? onPress : undefined}
     >
       {title || description ? (
         <View className="fd-card-header">
-          {title ? <Text className="fd-card-title">{title}</Text> : null}
-          {description ? <Text className="fd-card-description">{description}</Text> : null}
+          {title ? <Text className="fd-card-title" style={useCssVariables ? undefined : titleStyle}>{title}</Text> : null}
+          {description ? (
+            <Text className="fd-card-description" style={useCssVariables ? undefined : descriptionStyle}>
+              {description}
+            </Text>
+          ) : null}
         </View>
       ) : null}
       <View className="fd-card-body">{children}</View>

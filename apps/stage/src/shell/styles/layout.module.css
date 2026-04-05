@@ -116,6 +116,47 @@
   gap: 20px;
 }
 
+.__stage-compareGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.__stage-compareCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.__stage-kvList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.__stage-kvRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.__stage-kvKey {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+.__stage-kvValue {
+  font-size: 14px;
+  color: #111827;
+  word-break: break-word;
+}
+
 .__stage-preview {
   display: flex;
   gap: 16px;

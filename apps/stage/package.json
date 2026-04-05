@@ -6,6 +6,7 @@
     "build": "taro build --type h5"
   },
   "dependencies": {
+    "@fdesign/adapters": "workspace:*",
     "@fdesign/components": "workspace:*",
     "@fdesign/tokens": "workspace:*",
     "@tarojs/components": "4.1.11",

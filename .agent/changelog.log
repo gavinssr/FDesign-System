@@ -1,5 +1,77 @@
 # AI 变更日志（追加式）
 
+## 2026-04-05 — Phase 4 后半段推进：小程序最小构建成功，Weex 策略补全
+
+### 代码变更
+- `apps/example-consumer/package.json`：新增 `build:weapp` 脚本，并接入 `@tarojs/plugin-platform-weapp`
+- `apps/example-consumer/config/index.ts`：新增 `mini.postcss.cssModules` 配置，保持 H5 与小程序的 CSS Modules 命名策略一致
+- `packages/components/package.json`：补充 `@tarojs/plugin-platform-weapp`，使设计系统组件包能够参与小程序平台解析
+- `packages/adapters/src/weex/compatibility-notes.md`：由占位文档补全为可审查的 Weex 兼容桥策略评估
+
+### 文档与治理
+- `docs/exec-plans/active/phase-4-weapp-validation.md`：新增微信小程序最小构建验证文档，记录三次真实构建过程与最终成功结果
+- `.agent/checkpoint.yaml`：记录“小程序最小构建已通过、运行态验证受微信开发者工具缺失阻塞”的当前状态
+
+### 工程验证
+- `pnpm --filter @fdesign/example-consumer build:weapp` 通过
+- `pnpm check-boundaries` 通过
+- `pnpm build` 通过
+- `brew install --cask wechatwebdevtools` 通过
+- `cli open --project "apps/example-consumer/dist"` 通过
+- `cli islogin` 返回 `{"login":true}`
+
+### 背景
+- 为降低首次小程序验证复杂度，选择单页面的 `apps/example-consumer` 作为首个验证载体，而非页面更多的 `apps/stage` 或业务噪音更高的 `real-project-1`
+- 两次失败都暴露了真实平台缺口：先缺 `@tarojs/react`，再缺 `packages/components` 的 `weapp` 平台解析能力；补齐后第三次构建成功，说明小程序路径已成立
+- 当前已完成工具安装、服务端口启用与 CLI 自动打开项目；剩余最后一步是人工确认开发者工具中的页面渲染结果
+
+## 2026-04-05 — Phase 4 第二段推进：stage 多端对照、H5 基线与小程序前置检查
+
+### 代码变更
+- `apps/stage/package.json`：新增 `@fdesign/adapters` 依赖，用于在 stage 中直接消费 RN render spec
+- `apps/stage/src/pages/button/index.tsx`：新增 `Phase 4 Cross-platform Mapping` 区块，展示 Button 当前 props 到 RN adapter 的最小映射结果
+- `apps/stage/src/shell/styles/layout.module.css`：新增对照卡片与键值说明样式
+
+### 文档与治理
+- `docs/exec-plans/active/phase-4-h5-webview-baseline.md`：新增 H5 / WebView 最小性能基线，记录 `real-project-1` 当前 dist 资源数量与体积
+- `docs/exec-plans/active/phase-4-weapp-precheck.md`：新增微信小程序前置检查文档，固定当前仓库缺口与本机环境缺口
+- `.agent/checkpoint.yaml`：当前 focus 更新为第二段进行中，并将下一步建议切到小程序构建验证与 Weex 策略补全
+
+### 工程验证
+- `pnpm install` 通过（stage 新增 `@fdesign/adapters` workspace 依赖）
+- `pnpm --filter @fdesign/stage build` 通过
+- `pnpm check-boundaries` 通过
+- `pnpm build` 通过
+
+### 背景
+- 第一段已完成 adapters 骨架与 RN Button 最小闭环，第二段优先补齐“可审查入口”和“基线/预检查制品”，降低后续小程序与 Weex 实施时的信息缺口
+- 当前仍未进入真实小程序构建或运行态验证，原因是平台插件与本机工具链尚未补齐，需按 precheck 文档逐项收敛
+
+## 2026-04-05 — Phase 4 第一段：adapters 骨架与 RN Button 最小闭环
+
+### 代码变更
+- `packages/adapters`：新增 adapters package，包含 `package.json`、`tsconfig.json`、`eslint.config.mjs`、`vitest.config.ts`
+- `packages/adapters/src/rn/button.tsx`：新增注入式 RN Button adapter 工厂与 `getReactNativeButtonRenderSpec`，将 `ButtonProps` 映射为 RN 容器/文本/加载态渲染规约
+- `packages/adapters/src/rn/button.test.tsx`：新增最小验证测试，通过注入 fake primitives 验证 Button 在 RN adapter 路径上的静态渲染与交互映射
+- `packages/adapters/src/weex/index.ts` 与 `packages/adapters/src/weex/compatibility-notes.md`：新增 Weex 桥接占位导出与策略文档落点
+- `packages/eslint-config/rules/boundaries.js`：新增 adapters 边界规则，并禁止 `packages/components` 反向依赖 adapters
+- `scripts/validate-boundaries.ts`：将 `packages/adapters` 纳入边界扫描范围，补齐对应禁依赖规则
+
+### 工程验证
+- `pnpm install` 通过（workspace 新增 `@fdesign/adapters`）
+- `pnpm --filter @fdesign/adapters build` 通过
+- `pnpm --filter @fdesign/adapters test` 通过
+- `pnpm --filter @fdesign/adapters lint` 通过
+- `pnpm check-boundaries` 通过
+- `pnpm build` 通过
+
+### 文档与治理
+- `.agent/checkpoint.yaml`：记录 Phase 4 第一段完成状态，并将下一步建议切换到多端对照、性能基线、小程序验证与 Weex 策略补全
+
+### 背景
+- Phase 4 第一段目标是先证明 adapters 分层与 RN Button 最小闭环成立，不在仓库平台依赖和本机移动端环境未齐备时贸然扩大 scope
+- 当前仓库仍只有 H5 平台插件，本机也缺少 Java Runtime、watchman、CocoaPods、adb 等若干移动端工具，因此本轮优先完成“可构建、可验证、可治理”的最小路径
+
 ## 2026-04-05 — Phase 3 补充验收：独立拆出验证完成
 
 ### 代码变更
@@ -191,6 +263,67 @@
 ### 背景
 - 架构红队审查发现：ESLint 边界约束未实际生效（lint 是 echo 占位）、validate-boundaries.ts 规则与 boundaries.js 不一致、测试基础设施缺失、多端策略未显式声明、Phase 3 scope 未限定等问题
 - 原架构设计师确认改进措施后，本轮执行全部 P0-P3 改进
+
+## 2026-04-05 — H5 / 小程序预览错位修复
+
+### 代码变更
+- scripts/copy-css-assets.mjs：复制 components CSS 到 dist 时同步移除 `:global(...)` 包装，保证消费端直接加载发布产物时选择器仍有效
+- apps/example-consumer/package.json：将 H5 / weapp 输出目录拆分为 `dist-h5` 与 `dist-weapp`
+- apps/example-consumer/config/index.ts：`outputRoot` 改为读取 `TARO_OUTPUT_ROOT`
+
+### 文档变更
+- docs/exec-plans/active/phase-4-weapp-validation.md：补充运行态预览错位的两个根因、修复方式与新的 H5 / weapp 验收入口
+- .agent/checkpoint.yaml：更新为“等待人工确认 dist-weapp 页面渲染”的当前状态
+
+### 验证
+- 执行 `pnpm --filter @fdesign/components build`
+- 执行 `pnpm --filter @fdesign/example-consumer build`
+- 执行 `pnpm --filter @fdesign/example-consumer build:weapp`
+- 浏览器通道确认 `http://127.0.0.1:10091` 的 example-consumer H5 页面正常渲染，无明显样式缺失
+- 微信开发者工具 CLI 成功重新打开 `apps/example-consumer/dist-weapp`
+
+### 背景
+- 之前出现的 H5 “纯文本退化”不是页面结构缺失，而是发布态 CSS 仍保留原始 CSS Modules `:global(...)` 语法，消费端未再处理导致组件选择器失效
+- 之前小程序打开成欢迎页，与 H5 / weapp 共用 `dist` 目录导致产物被另一端覆盖有关；拆分输出目录后，预览入口已稳定
+
+## 2026-04-05 — Phase 4 正式收口
+
+### 文档变更
+- docs/ROADMAP.md：将 Phase 4 状态更新为“已完成”
+- docs/exec-plans/completed/phase-4.md：归档 Phase 4 主执行计划
+- docs/exec-plans/active/phase-4-weapp-validation.md：将微信小程序验证状态从“等待人工确认”更新为“运行态验收通过”
+- .agent/checkpoint.yaml：更新为 Phase 4 已完成状态，并切换归档后的执行计划路径
+
+### 验证
+- 用户已人工确认 H5 与微信小程序两端均正常渲染
+- 执行 `pnpm build`
+- 执行 `pnpm check-boundaries`
+
+### 背景
+- Phase 4 准出项已全部满足：`packages/adapters` 骨架、RN Button 最小闭环、stage 多端对照、H5 / WebView 基线、微信小程序运行态验收，以及 Weex 兼容桥策略文档均已完成
+
+## 2026-04-05 — Phase 4 收口后目录清理
+
+### 文档变更
+- `docs/exec-plans/active/phase-4-h5-webview-baseline.md` → `docs/exec-plans/completed/phase-4-h5-webview-baseline.md`
+- `docs/exec-plans/active/phase-4-weapp-precheck.md` → `docs/exec-plans/completed/phase-4-weapp-precheck.md`
+- `docs/exec-plans/active/phase-4-weapp-validation.md` → `docs/exec-plans/completed/phase-4-weapp-validation.md`
+- `.agent/checkpoint.yaml`：移除残留的 `active/phase-4-*` 路径引用，整理为与“Phase 4 已完成”一致的当前态快照
+- `.gitignore`：补充 `dist-h5/` 与 `dist-weapp/`，避免双端构建产物误入版本控制
+
+### 背景
+- `docs/exec-plans/active/` 语义应仅承载当前未完成阶段的执行计划；Phase 4 已完成后，辅助基线与验证文档继续留在 `active/` 会误导后续 Agent
+- `phase-4-weapp-precheck.md` 补充“历史快照”说明，避免其中的旧环境判断与当前仓库状态混淆
+
+## 2026-04-05 — Phase 4 下一步 active 计划补齐
+
+### 文档变更
+- `docs/exec-plans/active/phase-4-rn-runtime-validation.md`：新增 Phase 4 后续扩展计划，聚焦真实 RN 运行态验证
+- `.agent/checkpoint.yaml`：将 `active_exec_plan` 切换到新的 RN 运行态验证计划，并同步更新当前 focus 与 next recommended
+
+### 背景
+- 按项目惯例，收口后需要在 `docs/exec-plans/active/` 中补出“下一步执行计划”
+- 当前用户已明确下一步决策为“继续 Phase 4 扩展：RN 运行态验证”，因此补出新的 active 计划而不直接跳到 Phase 5
 
 ## 2026-04-03 — 语言统一 + Phase 1 执行计划
 

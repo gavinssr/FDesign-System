@@ -28,6 +28,31 @@ const componentsBoundary = {
             group: ['**/projects/**'],
             message: 'components must NOT import from projects/ — components are generic.',
           },
+          {
+            group: ['@fdesign/adapters', '**/packages/adapters/**'],
+            message: 'components must NOT import adapters — adapters sit above components in the dependency graph.',
+          },
+        ],
+      },
+    ],
+  },
+};
+
+const adaptersBoundary = {
+  files: ['packages/adapters/**/*.{ts,tsx}'],
+  rules: {
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: [
+          {
+            group: [stagePattern],
+            message: 'adapters must NOT import from apps/stage/ — stage is a private verification surface.',
+          },
+          {
+            group: ['**/projects/**'],
+            message: 'adapters must NOT import from projects/ — adapters must remain platform-level only.',
+          },
         ],
       },
     ],
@@ -68,4 +93,4 @@ const consumerBoundary = {
   },
 };
 
-module.exports = [componentsBoundary, projectsBoundary, consumerBoundary];
+module.exports = [componentsBoundary, adaptersBoundary, projectsBoundary, consumerBoundary];

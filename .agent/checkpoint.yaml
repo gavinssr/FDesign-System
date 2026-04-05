@@ -1,6 +1,6 @@
-last_session: "2026-04-05T12:26:26Z"
+last_session: "2026-04-05T16:18:00Z"
 current_phase: "phase-4"
-current_focus: "Phase 4 执行计划已产出，准备进入多端适配实施"
+current_focus: "Phase 4 后续扩展已立项：下一步进入 RN 运行态验证，active 计划已切换到 phase-4-rn-runtime-validation"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -12,32 +12,35 @@ completed:
   - "phase-2-component-expansion-and-consumer-validation — 高频组件、contracts、stage、consumer、changesets 完成"
   - "phase-3-real-project-delivery-loop — real-project-1 独立构建与交付闭环完成"
   - "phase-3-standalone-extraction-validation — real-project-1 仓库外独立 install/build/run 验证完成"
+  - "phase-4-segment-1-adapters-and-rn-button — adapters 骨架、RN Button 注入边界与最小验证完成"
+  - "phase-4-segment-2-stage-baseline-and-weapp-build — stage 多端对照、H5 基线、Weex 策略与小程序最小构建完成"
+  - "phase-4-multi-platform-adaptation — Phase 4 全部准出项完成并通过 H5 / 微信小程序运行态验收"
 in_progress: []
 blocked: []
 next_recommended:
-  - "创建 packages/adapters 骨架，优先定义 RN adapter 的注入边界"
-  - "选择 Button 作为首个多端验证组件，建立 H5 / RN 对照用例"
-  - "为 H5 / WebView 构建产物建立最小性能基线记录"
-  - "验证微信小程序最小构建路径，并补充 Weex 兼容桥策略评估"
-active_exec_plan: "docs/exec-plans/active/phase-4.md"
+  - "按 docs/exec-plans/active/phase-4-rn-runtime-validation.md 执行 RN 运行态验证：先补齐 iOS 优先的本机工具链，再创建最小 RN 载体"
+  - "如用户提供 Figma 设计稿，可按需启动 Phase 5，替换 provisional 视觉与 token"
+  - "根据 docs/exec-plans/completed/phase-4-h5-webview-baseline.md 继续观察 adapters 接入后 H5 体积是否出现非预期增长"
+active_exec_plan: "docs/exec-plans/active/phase-4-rn-runtime-validation.md"
 notes: |
-  本轮完成了（Phase 3 补充验收：独立拆出验证）：
-  1. 新增 scripts/verify-standalone-project.ts，并在根 package.json 中暴露 verify-standalone-project 脚本
-  2. 将 real-project-1 复制到仓库外临时目录，自动改写 workspace 依赖与 tsconfig 配置
-  3. 在 standalone 目录中真实执行 pnpm install 与 pnpm build，确认 dist/index.html 产出成功
-  4. 通过静态服务与浏览器确认 standalone 产物页面可正常打开，显示 Campaign Launch Console / 活动发布台
-  5. 新增 docs/exec-plans/completed/phase-3-standalone-verification.md，固化补充验收流程
-  6. 输出 .deliverables/standalone-verification/real-project-1/verification-report.md 作为验证记录
+  Phase 4 已完成并完成归档清理；当前已按项目惯例补出下一步 active 计划。
 
-  当前 Phase 4 的实施起点保持不变：
-  - packages/adapters 尚未创建
-  - RN adapter 尚未实现
-  - Button 仍是首个跨端验证的默认组件
-  - Phase 3 中观察到的 H5 入口体积告警，将在 Phase 4 中沉淀为性能基线
+  已闭环事项：
+  1. `packages/adapters` 已建立，RN Button 注入式 adapter 最小闭环已验证通过
+  2. `apps/stage` 已补齐 Button 的 H5 / RN 对照说明区
+  3. H5 / WebView 基线已沉淀到 `docs/exec-plans/completed/phase-4-h5-webview-baseline.md`
+  4. 微信小程序验证链路已沉淀到 `docs/exec-plans/completed/phase-4-weapp-precheck.md` 与 `docs/exec-plans/completed/phase-4-weapp-validation.md`
+  5. H5 与微信小程序两端均已人工确认正常渲染
+  6. `pnpm build`、`pnpm check-boundaries` 已在收口阶段再次通过
+
+  归档清理补充：
+  1. `docs/exec-plans/active/` 下残留的 3 份 Phase 4 辅助文档已迁移到 `docs/exec-plans/completed/`
+  2. `phase-4-weapp-precheck.md` 已明确标注为历史快照，避免与当前仓库状态混淆
+  3. 新增 `docs/exec-plans/active/phase-4-rn-runtime-validation.md`，作为 Phase 4 后续扩展的当前执行计划
 
   下一个 Agent 进入时：
   - 读本文件了解当前状态
-  - 读 docs/ROADMAP.md 确认 Phase 4 准出标准
-  - 读 docs/exec-plans/active/phase-4.md 获取具体执行步骤
-  - 如需回看 Phase 3 的更严格验收口径，读 docs/exec-plans/completed/phase-3-standalone-verification.md
-  - 从 packages/adapters 骨架、RN adapter 注入边界与 Button 多端验证开始
+  - 读 docs/ROADMAP.md 确认 Phase 4 已完成状态
+  - 读 docs/exec-plans/active/phase-4-rn-runtime-validation.md 获取当前 RN 运行态验证步骤
+  - 优先补齐 iOS 优先的 RN 本机工具链，再创建最小 RN 运行态载体
+  - 如用户提供 Figma 设计稿，可准备进入 Phase 5
