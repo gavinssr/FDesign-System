@@ -1,6 +1,6 @@
-last_session: "2026-04-05T16:18:00Z"
+last_session: "2026-04-06T03:15:00Z"
 current_phase: "phase-4"
-current_focus: "Phase 4 后续扩展已立项：下一步进入 RN 运行态验证，active 计划已切换到 phase-4-rn-runtime-validation"
+current_focus: "Phase 4 主准出保持完成；用户已取消 RN 运行态验证扩展，当前等待下一步明确目标或 Figma 输入"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -18,12 +18,12 @@ completed:
 in_progress: []
 blocked: []
 next_recommended:
-  - "按 docs/exec-plans/active/phase-4-rn-runtime-validation.md 执行 RN 运行态验证：先补齐 iOS 优先的本机工具链，再创建最小 RN 载体"
-  - "如用户提供 Figma 设计稿，可按需启动 Phase 5，替换 provisional 视觉与 token"
+  - "如用户提供 Figma 设计稿，可按 docs/exec-plans/active/phase-5-await-figma-input.md 切换进入 Phase 5"
   - "根据 docs/exec-plans/completed/phase-4-h5-webview-baseline.md 继续观察 adapters 接入后 H5 体积是否出现非预期增长"
-active_exec_plan: "docs/exec-plans/active/phase-4-rn-runtime-validation.md"
+  - "如未来出现明确 RN 消费方，再单独立项重开更轻量的 RN 运行态验证"
+active_exec_plan: "docs/exec-plans/active/phase-5-await-figma-input.md"
 notes: |
-  Phase 4 已完成并完成归档清理；当前已按项目惯例补出下一步 active 计划。
+  Phase 4 主准出已完成，结论保持不变。
 
   已闭环事项：
   1. `packages/adapters` 已建立，RN Button 注入式 adapter 最小闭环已验证通过
@@ -33,14 +33,15 @@ notes: |
   5. H5 与微信小程序两端均已人工确认正常渲染
   6. `pnpm build`、`pnpm check-boundaries` 已在收口阶段再次通过
 
-  归档清理补充：
-  1. `docs/exec-plans/active/` 下残留的 3 份 Phase 4 辅助文档已迁移到 `docs/exec-plans/completed/`
-  2. `phase-4-weapp-precheck.md` 已明确标注为历史快照，避免与当前仓库状态混淆
-  3. 新增 `docs/exec-plans/active/phase-4-rn-runtime-validation.md`，作为 Phase 4 后续扩展的当前执行计划
+  本轮取消事项：
+  1. 用户已明确取消“Phase 4 扩展：RN 运行态验证”
+  2. 已移除 `apps/rn-runtime` 验证载体及其带来的 lockfile 变更
+  3. 已撤回仅为真实 RN primitives 兼容而放宽的 adapter 临时类型改动
+  4. active 计划已切换为 `docs/exec-plans/active/phase-5-await-figma-input.md`
 
   下一个 Agent 进入时：
   - 读本文件了解当前状态
   - 读 docs/ROADMAP.md 确认 Phase 4 已完成状态
-  - 读 docs/exec-plans/active/phase-4-rn-runtime-validation.md 获取当前 RN 运行态验证步骤
-  - 优先补齐 iOS 优先的 RN 本机工具链，再创建最小 RN 运行态载体
+  - 读 docs/exec-plans/active/phase-5-await-figma-input.md 获取当前待机计划
   - 如用户提供 Figma 设计稿，可准备进入 Phase 5
+  - 如未来有明确 RN 消费方，再重新评估是否需要恢复运行态验证

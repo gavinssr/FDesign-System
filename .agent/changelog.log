@@ -1,5 +1,27 @@
 # AI 变更日志（追加式）
 
+## 2026-04-06 — 取消 Phase 4 扩展：RN 运行态验证
+
+### 代码变更
+- 删除 `apps/rn-runtime`：移除本轮新增的 React Native 运行态验证载体及其 iOS/Pods/vendor 相关文件
+- `packages/adapters/src/rn/button.tsx`：撤回仅为真实 React Native primitives 运行态接入而放宽的 `ComponentType<any>` 与相关宽泛类型
+- `packages/adapters/src/rn/button.test.tsx`：撤回配套的 `ActivityIndicator` 宽泛类型测试改动
+- `pnpm-lock.yaml`：回收 RN runtime 引入的 workspace importer 与相关锁文件变更
+
+### 文档与治理
+- 删除 `docs/exec-plans/active/phase-4-rn-runtime-validation.md`
+- 新增 `docs/exec-plans/active/phase-5-await-figma-input.md`，作为取消扩展后的新的 active 入口
+- `.agent/checkpoint.yaml`：将当前 focus 切回“Phase 4 主准出已完成，等待下一步目标或 Figma 输入”
+
+### 工程验证
+- 已停止本轮 `react-native run-ios` / Metro 相关进程
+- 计划在清理完成后复跑 `pnpm build` 与 `pnpm check-boundaries`
+
+### 背景
+- 用户明确决定直接取消整个“Phase 4 扩展：RN 运行态验证”
+- 考虑到 `apps/rn-runtime` 带来的机器负载和当前主线收益不匹配，本轮不再保留真实 RN 运行链验证载体
+- Phase 4 主准出结论不受影响；未来若有明确 RN 消费方，再按需单独立项
+
 ## 2026-04-05 — Phase 4 后半段推进：小程序最小构建成功，Weex 策略补全
 
 ### 代码变更
