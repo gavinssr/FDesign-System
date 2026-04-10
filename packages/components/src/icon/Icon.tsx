@@ -21,18 +21,18 @@ const glyphMap: Record<IconProps['name'], string> = {
 };
 
 const toneStyles: Record<IconTone, Pick<IconStyleVars, '--icon-color'>> = {
-  default: { '--icon-color': colors.neutral[900] },
-  muted: { '--icon-color': colors.neutral[500] },
-  primary: { '--icon-color': colors.primary[700] },
-  success: { '--icon-color': colors.success[600] },
-  warning: { '--icon-color': colors.warning[600] },
-  danger: { '--icon-color': colors.danger[600] },
+  default: { '--icon-color': colors.semantic.icon.primary },
+  muted: { '--icon-color': colors.semantic.text.secondary },
+  primary: { '--icon-color': colors.semantic.action.primary.subtleForeground },
+  success: { '--icon-color': colors.semantic.action.success.subtleForeground },
+  warning: { '--icon-color': colors.semantic.action.warning.subtleForeground },
+  danger: { '--icon-color': colors.semantic.action.danger.subtleForeground },
 };
 
 const sizeStyles: Record<IconSize, Pick<IconStyleVars, '--icon-size'>> = {
-  sm: { '--icon-size': `${typography.fontSize.sm}px` },
-  md: { '--icon-size': `${typography.fontSize.base}px` },
-  lg: { '--icon-size': `${typography.fontSize.xl}px` },
+  sm: { '--icon-size': `${typography.size.further}px` },
+  md: { '--icon-size': `${typography.size.increase}px` },
+  lg: { '--icon-size': `${typography.size.head}px` },
 };
 
 export function Icon({
@@ -59,7 +59,7 @@ export function Icon({
     justifyContent: 'center',
     color: toneStyles[tone]['--icon-color'],
     fontSize: sizeStyles[size]['--icon-size'],
-    fontWeight: 700,
+    fontWeight: typography.weight.medium,
     lineHeight: 1,
   };
 

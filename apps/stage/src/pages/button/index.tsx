@@ -7,11 +7,12 @@ import { ComponentDemo } from '../../shell/ComponentDemo';
 import { Layout } from '../../shell/Layout';
 import { PropControl } from '../../shell/PropControl';
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
-type ButtonSize = 'sm' | 'md' | 'lg';
+type ButtonVariant = 'primary-fill' | 'primary-outline' | 'secondary-outline';
+type ButtonSize = 'xl' | 'l' | 'm' | 's' | 'xs' | 'mini';
 type PreviewButtonProps = {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  inactive?: boolean;
   disabled?: boolean;
   loading?: boolean;
   block?: boolean;
@@ -19,11 +20,12 @@ type PreviewButtonProps = {
   onPress?: () => void;
 };
 
-const variantOrder: ButtonVariant[] = ['primary', 'secondary', 'ghost', 'danger'];
-const sizeOrder: ButtonSize[] = ['sm', 'md', 'lg'];
+const variantOrder: ButtonVariant[] = ['primary-fill', 'primary-outline', 'secondary-outline'];
+const sizeOrder: ButtonSize[] = ['xl', 'l', 'm', 's', 'xs', 'mini'];
 const mappedProps = [
   'variant',
   'size',
+  'inactive',
   'disabled',
   'loading',
   'block',
@@ -31,8 +33,9 @@ const mappedProps = [
 ] as const;
 
 export default function ButtonPage() {
-  const [variant, setVariant] = useState<ButtonVariant>('primary');
-  const [size, setSize] = useState<ButtonSize>('md');
+  const [variant, setVariant] = useState<ButtonVariant>('primary-fill');
+  const [size, setSize] = useState<ButtonSize>('m');
+  const [inactive, setInactive] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [block, setBlock] = useState(false);
@@ -41,12 +44,13 @@ export default function ButtonPage() {
     () => ({
       variant,
       size,
+      inactive,
       disabled,
       loading,
       block,
       children: 'Preview button',
     }),
-    [block, disabled, loading, size, variant],
+    [block, disabled, inactive, loading, size, variant],
   );
   const reactNativeSpec = useMemo(() => getReactNativeButtonRenderSpec(currentProps), [currentProps]);
 
@@ -59,11 +63,13 @@ export default function ButtonPage() {
           <PropControl
             variant={variant}
             size={size}
+            inactive={inactive}
             disabled={disabled}
             loading={loading}
             block={block}
             onVariantChange={setVariant}
             onSizeChange={setSize}
+            onInactiveChange={setInactive}
             onDisabledChange={setDisabled}
             onLoadingChange={setLoading}
             onBlockChange={setBlock}
@@ -82,7 +88,7 @@ export default function ButtonPage() {
 
       <ComponentDemo
         title="Phase 4 Cross-platform Mapping"
-        description="当前页仍以 H5 Button 为主验证入口，同时展示 RN adapter 的最小映射结果，确保 props 语义与平台差异治理保持同步。"
+        description="当前页仍以 H5 Button 为主验证入口，同时展示 RN adapter 的映射结果，确保真实 Button 规格与平台语义保持同步。"
       >
         <View className="__stage-compareGrid">
           <View className="__stage-compareCard">
@@ -90,7 +96,7 @@ export default function ButtonPage() {
             <View className="__stage-kvList">
               <View className="__stage-kvRow">
                 <Text className="__stage-kvKey">当前阶段</Text>
-                <Text className="__stage-kvValue">Phase 4 第二段起点</Text>
+                <Text className="__stage-kvValue">Phase 5 Button Figma 对齐</Text>
               </View>
               <View className="__stage-kvRow">
                 <Text className="__stage-kvKey">H5 侧</Text>
@@ -98,11 +104,11 @@ export default function ButtonPage() {
               </View>
               <View className="__stage-kvRow">
                 <Text className="__stage-kvKey">RN 侧</Text>
-                <Text className="__stage-kvValue">通过 @fdesign/adapters 注入 primitives 做最小闭环</Text>
+                <Text className="__stage-kvValue">通过 @fdesign/adapters 注入 primitives 映射真实按钮 token</Text>
               </View>
               <View className="__stage-kvRow">
                 <Text className="__stage-kvKey">非目标</Text>
-                <Text className="__stage-kvValue">本页不追求 RN 视觉 1:1，只验证结构与状态映射</Text>
+                <Text className="__stage-kvValue">本页先验证 H5 1:1 与 RN 状态映射，不覆盖业务场景排版</Text>
               </View>
             </View>
           </View>
@@ -157,7 +163,7 @@ export default function ButtonPage() {
 
       <ComponentDemo
         title="Variant Snapshot"
-        description="展示所有 variant、size 与关键状态，确认 provisional 视觉模式稳定。"
+        description="展示 Figma 中 3 种类型、6 个尺寸与关键状态，确认真实按钮规格已替换 provisional 视觉。"
       >
         {variantOrder.map((item) => (
           <View key={item}>
@@ -166,6 +172,9 @@ export default function ButtonPage() {
               <View key={`${item}-${itemSize}`} className="__stage-preview">
                 <Button variant={item} size={itemSize}>
                   {`${item}-${itemSize}`}
+                </Button>
+                <Button variant={item} size={itemSize} inactive>
+                  inactive
                 </Button>
                 <Button variant={item} size={itemSize} disabled>
                   disabled

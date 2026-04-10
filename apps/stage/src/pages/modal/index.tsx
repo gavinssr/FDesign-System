@@ -14,7 +14,7 @@ export default function ModalPage() {
         title="Interactive Preview"
         description="用最小状态控制验证 open / close 和 action 行为。"
       >
-        <Button onPress={() => setOpen(true)}>Open modal</Button>
+        <Button size="m" onPress={() => setOpen(true)}>Open modal</Button>
         <Modal
           open={open}
           title="Confirm action"

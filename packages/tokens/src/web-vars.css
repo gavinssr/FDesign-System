@@ -1,0 +1,57 @@
+:root {
+  --fd-color-page-background: #f5f7fa;
+  --fd-color-surface-base: #ffffff;
+  --fd-color-surface-muted: #f3f4f5;
+  --fd-color-surface-overlay: rgba(0, 0, 0, 0.8);
+  --fd-color-text-primary: #1e2533;
+  --fd-color-text-secondary: #787c85;
+  --fd-color-text-tertiary: #a4a8ac;
+  --fd-color-text-inverse: #ffffff;
+  --fd-color-border-subtle: #ededee;
+  --fd-color-border-strong: #d2d3d6;
+  --fd-color-sidebar-background: #050c1c;
+  --fd-color-primary-background: #4d83ff;
+  --fd-color-primary-background-subtle: #f2f6ff;
+  --fd-color-primary-border: #ccdbff;
+  --fd-color-primary-foreground: #4d83ff;
+  --fd-color-primary-foreground-inverse: #ffffff;
+  --fd-radius-small: 2px;
+  --fd-radius-default: 4px;
+  --fd-radius-large: 8px;
+  --fd-radius-xlarge: 12px;
+  --fd-space-0: 0px;
+  --fd-space-8: 8px;
+  --fd-space-10: 10px;
+  --fd-space-12: 12px;
+  --fd-space-16: 16px;
+  --fd-space-32: 32px;
+  --fd-space-40: 40px;
+  --fd-gap-row-compact: 12px;
+  --fd-gap-row-regular: 14px;
+  --fd-font-family-text:
+    PingFang SC,
+    Noto Sans SC,
+    Microsoft YaHei,
+    Roboto,
+    Segoe UI,
+    sans-serif;
+  --fd-font-size-min: 10px;
+  --fd-font-size-base: 12px;
+  --fd-font-size-further: 14px;
+  --fd-font-size-increase: 16px;
+  --fd-font-size-head: 18px;
+  --fd-font-size-display-normal: 22px;
+  --fd-font-size-display-large: 26px;
+  --fd-font-weight-light: 300;
+  --fd-font-weight-regular: 400;
+  --fd-font-weight-medium: 500;
+  --fd-line-height-single-base: 14px;
+  --fd-line-height-single-further: 16px;
+  --fd-line-height-single-increase: 18px;
+  --fd-line-height-single-head: 20px;
+  --fd-line-height-body-base: 18px;
+  --fd-line-height-body-further: 22px;
+  --fd-line-height-body-increase: 24px;
+  --fd-shadow-surface: 0px 4px 26px 0px rgba(0, 0, 0, 0.04),
+    0px 8px 30px 2px rgba(0, 0, 0, 0.08);
+}

@@ -1,5 +1,5 @@
 import { Text, View } from '@tarojs/components';
-import { colors, radii, spacing } from '@fdesign/tokens';
+import { colors, radii, spacing, typography } from '@fdesign/tokens';
 import type { CSSProperties } from 'react';
 
 import type { ListItemProps } from './ListItem.types';
@@ -39,39 +39,39 @@ export function ListItem({
     .join(' ');
 
   const styleVars: ListItemStyleVars = {
-    '--list-item-bg': disabled ? colors.neutral[100] : colors.neutral[0],
-    '--list-item-border': colors.neutral[200],
-    '--list-item-radius': `${radii.lg}px`,
-    '--list-item-gap': `${spacing[4]}px`,
-    '--list-item-padding': `${spacing[4]}px`,
-    '--list-item-title': colors.neutral[900],
-    '--list-item-description': colors.neutral[600],
-    '--list-item-meta': colors.primary[700],
+    '--list-item-bg': disabled ? colors.semantic.surface.muted : colors.semantic.surface.base,
+    '--list-item-border': colors.semantic.border.subtle,
+    '--list-item-radius': `${radii.default}px`,
+    '--list-item-gap': `${spacing.component.listItem.gap}px`,
+    '--list-item-padding': `${spacing.component.listItem.paddingY}px ${spacing.component.listItem.paddingX}px`,
+    '--list-item-title': colors.semantic.text.primary,
+    '--list-item-description': colors.semantic.text.secondary,
+    '--list-item-meta': colors.semantic.action.primary.subtleForeground,
   };
   const resolvedStyle: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
-    gap: `${spacing[4]}px`,
-    padding: `${spacing[4]}px`,
-    border: `1px solid ${colors.neutral[200]}`,
-    borderRadius: `${radii.lg}px`,
-    background: disabled ? colors.neutral[100] : colors.neutral[0],
+    gap: `${spacing.component.listItem.gap}px`,
+    padding: `${spacing.component.listItem.paddingY}px ${spacing.component.listItem.paddingX}px`,
+    border: `1px solid ${colors.semantic.border.subtle}`,
+    borderRadius: `${radii.default}px`,
+    background: disabled ? colors.semantic.surface.muted : colors.semantic.surface.base,
     opacity: disabled ? 0.7 : 1,
     cursor: interactive ? 'pointer' : undefined,
   };
   const titleStyle: CSSProperties = {
-    color: colors.neutral[900],
-    fontSize: '16px',
-    fontWeight: 600,
+    color: colors.semantic.text.primary,
+    fontSize: `${typography.size.increase}px`,
+    fontWeight: typography.weight.medium,
   };
   const descriptionStyle: CSSProperties = {
-    color: colors.neutral[600],
-    fontSize: '14px',
+    color: colors.semantic.text.secondary,
+    fontSize: `${typography.size.further}px`,
   };
   const metaStyle: CSSProperties = {
-    color: colors.primary[700],
-    fontSize: '14px',
-    fontWeight: 600,
+    color: colors.semantic.action.primary.subtleForeground,
+    fontSize: `${typography.size.further}px`,
+    fontWeight: typography.weight.medium,
   };
 
   return (

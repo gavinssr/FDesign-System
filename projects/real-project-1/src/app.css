@@ -1,83 +1,78 @@
 page {
-  background: #f8fafc;
+  background: var(--fd-color-page-background);
   min-height: 100%;
 }
 
 body {
   margin: 0;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
-  background: #f8fafc;
-  color: #0f172a;
+  font-family: var(--fd-font-family-text);
+  background: var(--fd-color-page-background);
+  color: var(--fd-color-text-primary);
 }
 
 .__realProject-page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--fd-space-16);
   min-height: 100vh;
-  padding: 24px;
+  padding: var(--fd-space-10);
 }
 
 .__realProject-hero,
 .__realProject-section {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 24px;
-  border: 1px solid #e2e8f0;
-  border-radius: 20px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.06);
+  gap: var(--fd-space-16);
+  padding: var(--fd-space-10);
+  border: 1px solid var(--fd-color-border-subtle);
+  border-radius: var(--fd-radius-large);
+  background: var(--fd-color-surface-base);
+  box-shadow: var(--fd-shadow-surface);
 }
 
 .__realProject-title {
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: var(--fd-font-size-display-large);
+  font-weight: var(--fd-font-weight-medium);
+  line-height: var(--fd-line-height-single-display-large, 28px);
 }
 
 .__realProject-description {
-  color: #475569;
-  font-size: 14px;
-  line-height: 1.6;
+  color: var(--fd-color-text-secondary);
+  font-size: var(--fd-font-size-further);
+  line-height: var(--fd-line-height-body-further);
 }
 
 .__realProject-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--fd-space-12);
   align-items: center;
 }
 
 .__realProject-grid {
   display: grid;
-  gap: 16px;
+  gap: var(--fd-space-16);
 }
 
 .__realProject-stack {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--fd-space-12);
 }
 
 .__realProject-kpis {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
+  gap: var(--fd-space-12);
 }
 
 .__realProject-kpiValue {
-  font-size: 28px;
-  font-weight: 700;
+  font-size: var(--fd-font-size-display-large);
+  font-weight: var(--fd-font-weight-medium);
 }
 
 .__realProject-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--fd-space-12);
 }

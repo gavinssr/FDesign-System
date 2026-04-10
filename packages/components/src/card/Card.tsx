@@ -1,5 +1,5 @@
 import { Text, View } from '@tarojs/components';
-import { colors, radii, spacing } from '@fdesign/tokens';
+import { colors, radii, spacing, typography } from '@fdesign/tokens';
 import type { CSSProperties } from 'react';
 
 import type { CardProps } from './Card.types';
@@ -24,34 +24,34 @@ const toneStyles: Record<
   Pick<CardStyleVars, '--card-bg' | '--card-border' | '--card-title' | '--card-description'>
 > = {
   default: {
-    '--card-bg': colors.neutral[0],
-    '--card-border': colors.neutral[200],
-    '--card-title': colors.neutral[900],
-    '--card-description': colors.neutral[600],
+    '--card-bg': colors.semantic.surface.base,
+    '--card-border': colors.semantic.border.subtle,
+    '--card-title': colors.semantic.text.primary,
+    '--card-description': colors.semantic.text.secondary,
   },
   primary: {
-    '--card-bg': colors.primary[50],
-    '--card-border': colors.primary[100],
-    '--card-title': colors.primary[800],
-    '--card-description': colors.primary[700],
+    '--card-bg': colors.semantic.action.primary.subtleBackground,
+    '--card-border': colors.semantic.action.primary.subtleBorder,
+    '--card-title': colors.semantic.action.primary.subtleForeground,
+    '--card-description': colors.semantic.text.secondary,
   },
   success: {
-    '--card-bg': colors.neutral[0],
-    '--card-border': colors.success[500],
-    '--card-title': colors.success[600],
-    '--card-description': colors.neutral[600],
+    '--card-bg': colors.semantic.surface.base,
+    '--card-border': colors.semantic.action.success.subtleBorder,
+    '--card-title': colors.semantic.action.success.subtleForeground,
+    '--card-description': colors.semantic.text.secondary,
   },
   warning: {
-    '--card-bg': colors.neutral[0],
-    '--card-border': colors.warning[500],
-    '--card-title': colors.warning[600],
-    '--card-description': colors.neutral[600],
+    '--card-bg': colors.semantic.surface.base,
+    '--card-border': colors.semantic.action.warning.subtleBorder,
+    '--card-title': colors.semantic.action.warning.subtleForeground,
+    '--card-description': colors.semantic.text.secondary,
   },
   danger: {
-    '--card-bg': colors.neutral[0],
-    '--card-border': colors.danger[500],
-    '--card-title': colors.danger[600],
-    '--card-description': colors.neutral[600],
+    '--card-bg': colors.semantic.surface.base,
+    '--card-border': colors.semantic.action.danger.subtleBorder,
+    '--card-title': colors.semantic.action.danger.subtleForeground,
+    '--card-description': colors.semantic.text.secondary,
   },
 };
 
@@ -76,27 +76,27 @@ export function Card({
 
   const styleVars: CardStyleVars = {
     ...toneStyles[tone],
-    '--card-radius': `${radii.xl}px`,
-    '--card-padding': `${spacing[6]}px`,
+    '--card-radius': `${radii.default}px`,
+    '--card-padding': `${spacing.component.card.paddingY}px ${spacing.component.card.paddingX}px`,
   };
   const resolvedStyle: CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px',
+    gap: `${spacing.component.card.outerGap}px`,
     border: `1px solid ${toneStyles[tone]['--card-border']}`,
-    borderRadius: `${radii.xl}px`,
+    borderRadius: `${radii.default}px`,
     background: toneStyles[tone]['--card-bg'],
-    padding: padded ? `${spacing[6]}px` : '0',
+    padding: padded ? `${spacing.component.card.paddingY}px ${spacing.component.card.paddingX}px` : '0',
     cursor: interactive ? 'pointer' : undefined,
   };
   const titleStyle: CSSProperties = {
     color: toneStyles[tone]['--card-title'],
-    fontSize: '18px',
-    fontWeight: 700,
+    fontSize: `${typography.size.head}px`,
+    fontWeight: typography.weight.medium,
   };
   const descriptionStyle: CSSProperties = {
     color: toneStyles[tone]['--card-description'],
-    fontSize: '14px',
+    fontSize: `${typography.size.further}px`,
   };
 
   return (

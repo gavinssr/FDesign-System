@@ -25,7 +25,7 @@
 :global(.fd-card-title) {
   color: var(--card-title);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 :global(.fd-card-description) {

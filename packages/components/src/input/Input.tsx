@@ -29,19 +29,19 @@ const sizeStyles: Record<
   Pick<InputStyleVars, '--input-padding-x' | '--input-min-height' | '--input-font-size'>
 > = {
   sm: {
-    '--input-padding-x': `${spacing[3]}px`,
-    '--input-min-height': `${spacing[8]}px`,
-    '--input-font-size': `${typography.fontSize.sm}px`,
+    '--input-padding-x': `${spacing.component.input.paddingX.sm}px`,
+    '--input-min-height': `${spacing.component.input.minHeight.sm}px`,
+    '--input-font-size': `${typography.size.further}px`,
   },
   md: {
-    '--input-padding-x': `${spacing[4]}px`,
-    '--input-min-height': `${spacing[10]}px`,
-    '--input-font-size': `${typography.fontSize.base}px`,
+    '--input-padding-x': `${spacing.component.input.paddingX.md}px`,
+    '--input-min-height': `${spacing.component.input.minHeight.md}px`,
+    '--input-font-size': `${typography.size.increase}px`,
   },
   lg: {
-    '--input-padding-x': `${spacing[5]}px`,
-    '--input-min-height': `${spacing[12]}px`,
-    '--input-font-size': `${typography.fontSize.lg}px`,
+    '--input-padding-x': `${spacing.component.input.paddingX.lg}px`,
+    '--input-min-height': `${spacing.component.input.minHeight.lg}px`,
+    '--input-font-size': `${typography.size.head}px`,
   },
 };
 
@@ -83,32 +83,34 @@ export function Input({
 
   const styleVars: InputStyleVars = {
     ...sizeStyles[size],
-    '--input-border': invalid ? colors.danger[500] : colors.neutral[300],
-    '--input-border-focus': invalid ? colors.danger[600] : colors.primary[600],
-    '--input-label': colors.neutral[900],
-    '--input-bg': disabled ? colors.neutral[100] : colors.neutral[0],
-    '--input-fg': colors.neutral[900],
-    '--input-placeholder': colors.neutral[400],
-    '--input-radius': `${radii.md}px`,
-    '--input-helper': invalid ? colors.danger[600] : colors.neutral[600],
+    '--input-border': invalid ? colors.semantic.action.danger.border : colors.semantic.border.subtle,
+    '--input-border-focus': invalid
+      ? colors.semantic.action.danger.backgroundHover
+      : colors.semantic.action.primary.background,
+    '--input-label': colors.semantic.text.primary,
+    '--input-bg': disabled ? colors.semantic.surface.muted : colors.semantic.surface.base,
+    '--input-fg': colors.semantic.text.primary,
+    '--input-placeholder': colors.semantic.text.tertiary,
+    '--input-radius': `${radii.default}px`,
+    '--input-helper': invalid ? colors.semantic.action.danger.subtleForeground : colors.semantic.text.secondary,
   };
   const resolvedRootStyle: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
     minHeight: sizeStyles[size]['--input-min-height'],
     padding: `0 ${sizeStyles[size]['--input-padding-x']}`,
-    border: `1px solid ${invalid ? colors.danger[500] : colors.neutral[300]}`,
-    borderRadius: `${radii.md}px`,
-    background: disabled ? colors.neutral[100] : colors.neutral[0],
+    border: `1px solid ${invalid ? colors.semantic.action.danger.border : colors.semantic.border.subtle}`,
+    borderRadius: `${radii.default}px`,
+    background: disabled ? colors.semantic.surface.muted : colors.semantic.surface.base,
   };
   const labelStyle: CSSProperties = {
-    color: colors.neutral[900],
-    fontSize: '14px',
-    fontWeight: 600,
+    color: colors.semantic.text.primary,
+    fontSize: `${typography.size.further}px`,
+    fontWeight: typography.weight.medium,
   };
   const helperStyle: CSSProperties = {
-    color: invalid ? colors.danger[600] : colors.neutral[600],
-    fontSize: '14px',
+    color: invalid ? colors.semantic.action.danger.subtleForeground : colors.semantic.text.secondary,
+    fontSize: `${typography.size.further}px`,
   };
   const inputStyle: CSSProperties = {
     width: '100%',
@@ -116,7 +118,7 @@ export function Input({
     border: 0,
     outline: 'none',
     background: 'transparent',
-    color: colors.neutral[900],
+    color: colors.semantic.text.primary,
     fontSize: sizeStyles[size]['--input-font-size'],
   };
 

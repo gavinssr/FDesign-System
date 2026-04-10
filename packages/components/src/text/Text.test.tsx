@@ -17,7 +17,7 @@ afterEach(() => {
 describe('Text', () => {
   it('renders children with tone and size classes', () => {
     const { getByText } = render(
-      <Text tone="primary" size="lg" weight="bold">
+      <Text tone="primary" size="lg" weight="medium">
         Status text
       </Text>,
     );
@@ -25,7 +25,7 @@ describe('Text', () => {
     const node = getByText('Status text');
     expect(node.className).toContain('fd-text-tone-primary');
     expect(node.className).toContain('fd-text-size-lg');
-    expect(node.className).toContain('fd-text-weight-bold');
+    expect(node.className).toContain('fd-text-weight-medium');
   });
 
   it('supports truncate mode', () => {

@@ -1,5 +1,5 @@
 import { Text, View } from '@tarojs/components';
-import { colors, radii, spacing } from '@fdesign/tokens';
+import { colors, radii, spacing, typography } from '@fdesign/tokens';
 import type { CSSProperties } from 'react';
 
 import { Button } from '../button/Button';
@@ -14,6 +14,7 @@ type ModalStyleVars = CSSProperties &
     | '--modal-surface'
     | '--modal-border'
     | '--modal-close-bg'
+    | '--modal-close-radius'
     | '--modal-title'
     | '--modal-description'
     | '--modal-radius'
@@ -38,21 +39,22 @@ export function Modal({
 
   const useCssVariables = shouldUseCssVariables();
   const styleVars: ModalStyleVars = {
-    '--modal-backdrop': colors.neutral[900],
-    '--modal-surface': colors.neutral[0],
-    '--modal-border': colors.neutral[200],
-    '--modal-close-bg': colors.neutral[100],
-    '--modal-title': colors.neutral[900],
-    '--modal-description': colors.neutral[600],
-    '--modal-radius': `${radii.xl}px`,
-    '--modal-padding': `${spacing[6]}px`,
+    '--modal-backdrop': colors.semantic.surface.overlay,
+    '--modal-surface': colors.semantic.surface.base,
+    '--modal-border': colors.semantic.border.subtle,
+    '--modal-close-bg': colors.semantic.surface.muted,
+    '--modal-close-radius': `${radii.default}px`,
+    '--modal-title': colors.semantic.text.primary,
+    '--modal-description': colors.semantic.text.secondary,
+    '--modal-radius': `${radii.large}px`,
+    '--modal-padding': `${spacing.component.modal.paddingY}px ${spacing.component.modal.paddingX}px`,
   };
   const backdropStyle: CSSProperties = {
     position: 'absolute',
     inset: 0,
-    background: colors.neutral[900],
+    background: colors.semantic.surface.overlay,
     opacity: 0.56,
-    borderRadius: `${radii.xl}px`,
+    borderRadius: `${radii.large}px`,
   };
   const panelStyle: CSSProperties = {
     position: 'relative',
@@ -61,20 +63,20 @@ export function Modal({
     width: '100%',
     maxWidth: '520px',
     flexDirection: 'column',
-    gap: '20px',
-    padding: `${spacing[6]}px`,
-    border: `1px solid ${colors.neutral[200]}`,
-    borderRadius: `${radii.xl}px`,
-    background: colors.neutral[0],
+    gap: `${spacing.component.modal.panelGap}px`,
+    padding: `${spacing.component.modal.paddingY}px ${spacing.component.modal.paddingX}px`,
+    border: `1px solid ${colors.semantic.border.subtle}`,
+    borderRadius: `${radii.large}px`,
+    background: colors.semantic.surface.base,
   };
   const titleStyle: CSSProperties = {
-    color: colors.neutral[900],
-    fontSize: '20px',
-    fontWeight: 700,
+    color: colors.semantic.text.primary,
+    fontSize: `${typography.size.head}px`,
+    fontWeight: typography.weight.medium,
   };
   const descriptionStyle: CSSProperties = {
-    color: colors.neutral[600],
-    fontSize: '14px',
+    color: colors.semantic.text.secondary,
+    fontSize: `${typography.size.further}px`,
   };
   const closeStyle: CSSProperties = {
     display: 'inline-flex',
@@ -82,8 +84,8 @@ export function Modal({
     justifyContent: 'center',
     minWidth: '32px',
     minHeight: '32px',
-    borderRadius: '999px',
-    background: colors.neutral[100],
+    borderRadius: `${radii.default}px`,
+    background: colors.semantic.surface.muted,
   };
 
   return (
@@ -112,11 +114,11 @@ export function Modal({
         {children ? <View className="fd-modal-body">{children}</View> : null}
         <View className="fd-modal-footer">
           {secondaryActionLabel ? (
-            <Button variant="secondary" onPress={onSecondaryAction}>
+            <Button variant="secondary-outline" size="m" onPress={onSecondaryAction}>
               {secondaryActionLabel}
             </Button>
           ) : null}
-          <Button onPress={onPrimaryAction}>{primaryActionLabel}</Button>
+          <Button size="m" onPress={onPrimaryAction}>{primaryActionLabel}</Button>
         </View>
       </View>
     </View>

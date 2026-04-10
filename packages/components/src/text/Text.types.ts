@@ -4,6 +4,6 @@ export interface TextProps {
   children: ReactNode;
   tone?: 'default' | 'muted' | 'primary' | 'success' | 'warning' | 'danger';
   size?: 'sm' | 'md' | 'lg';
-  weight?: 'regular' | 'medium' | 'semibold' | 'bold';
+  weight?: 'light' | 'regular' | 'medium';
   truncate?: boolean;
 }

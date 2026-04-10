@@ -30,7 +30,7 @@ describe('Button', () => {
 
   it('marks disabled and loading states accessibly', () => {
     const { getByRole, getByText } = render(
-      <Button disabled loading>
+      <Button loading size="xl">
         Busy button
       </Button>,
     );
@@ -40,5 +40,18 @@ describe('Button', () => {
     expect(button.getAttribute('aria-disabled')).toBe('true');
     expect(button.getAttribute('aria-busy')).toBe('true');
     expect(getByText('Loading')).toBeTruthy();
+  });
+
+  it('supports inactive visual state without triggering onPress', () => {
+    const onPress = vi.fn();
+    const { getByRole } = render(
+      <Button inactive onPress={onPress}>
+        Inactive button
+      </Button>,
+    );
+
+    fireEvent.click(getByRole('button'));
+
+    expect(onPress).not.toHaveBeenCalled();
   });
 });

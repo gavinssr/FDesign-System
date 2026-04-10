@@ -1,6 +1,6 @@
 component: Button
-purpose: "通用交互按钮，支持多变体和状态"
-provisional: true
+purpose: "通用交互按钮，已按 Phase 5 Figma 规范对齐 primary-fill / primary-outline / secondary-outline"
+provisional: false
 platform_notes:
   h5: "默认渲染为 Taro View/Text，并映射 onPress 到点击事件"
   rn: "需要 TouchableOpacity adapter（Phase 4 实现）"
@@ -16,6 +16,7 @@ slots:
   children: "按钮文字或图标内容"
 states:
   - default
+  - inactive
   - hover
   - pressed
   - disabled

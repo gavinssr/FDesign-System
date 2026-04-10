@@ -1,16 +1,11 @@
 page {
-  background: #f3f4f6;
+  background: var(--fd-color-page-background);
   min-height: 100%;
 }
 
 body {
   margin: 0;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
-  background: #f3f4f6;
-  color: #111827;
+  font-family: var(--fd-font-family-text);
+  background: var(--fd-color-page-background);
+  color: var(--fd-color-text-primary);
 }

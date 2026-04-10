@@ -58,8 +58,8 @@ export default function IndexPage() {
           内消费设计系统、独立构建，并整理为可交付产物的完整闭环。
         </Text>
         <View className="__realProject-actions">
-          <Button onPress={() => setPublishOpen(true)}>生成交付确认</Button>
-          <Button variant="secondary">查看投放排期</Button>
+          <Button size="m" onPress={() => setPublishOpen(true)}>生成交付确认</Button>
+          <Button size="m" variant="secondary-outline">查看投放排期</Button>
         </View>
       </View>
 

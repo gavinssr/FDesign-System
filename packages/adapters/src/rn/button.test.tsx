@@ -59,16 +59,16 @@ describe('React Native button adapter', () => {
       block: true,
       children: 'Submit',
       loading: true,
-      size: 'lg',
-      variant: 'danger',
+      size: 'xl',
+      variant: 'primary-fill',
     });
 
     expect(spec.disabled).toBe(true);
     expect(spec.accessibilityState).toEqual({ busy: true, disabled: true });
     expect(spec.spinnerSize).toBe('large');
+    expect(spec.showSpinner).toBe(true);
     expect(spec.containerStyle[0]).toMatchObject({
       alignSelf: 'stretch',
-      opacity: 0.6,
       width: '100%',
     });
   });
@@ -83,7 +83,7 @@ describe('React Native button adapter', () => {
     });
 
     render(
-      <ReactNativeButton loading={false} onPress={onPress} variant="secondary">
+      <ReactNativeButton loading={false} onPress={onPress} size="m" variant="secondary-outline">
         Save
       </ReactNativeButton>,
     );
@@ -95,6 +95,6 @@ describe('React Native button adapter', () => {
 
     expect(onPress).toHaveBeenCalledTimes(1);
     expect((button as HTMLButtonElement).disabled).toBe(false);
-    expect(label.getAttribute('data-style')).toContain('"color":"#1F2937"');
+    expect(label.getAttribute('data-style')).toContain('"color":"#1e2533"');
   });
 });

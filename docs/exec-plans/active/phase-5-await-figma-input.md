@@ -1,5 +1,8 @@
 # Phase 5 预备：等待 Figma 设计输入
 
+> 该文档已被 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md` 取代，保留仅作历史待机状态说明。
+> 当前 active plan 以 `.agent/checkpoint.yaml` 中的 `active_exec_plan` 为准。
+
 > 本文件用于承接 Phase 4 主准出完成、且 RN 运行态验证扩展被取消后的当前 active 状态。
 > 当前仓库不再推进 `apps/rn-runtime` 或真实 RN 运行链；后续如需继续 RN，只在出现明确 RN 消费方时再单独立项。
 

@@ -4,16 +4,16 @@ import { Button } from './Button';
 import type { ButtonProps } from './Button.types';
 
 const variants: Array<NonNullable<ButtonProps['variant']>> = [
-  'primary',
-  'secondary',
-  'ghost',
-  'danger',
+  'primary-fill',
+  'primary-outline',
+  'secondary-outline',
 ];
 
-const sizes: Array<NonNullable<ButtonProps['size']>> = ['sm', 'md', 'lg'];
+const sizes: Array<NonNullable<ButtonProps['size']>> = ['xl', 'l', 'm', 's', 'xs', 'mini'];
 
 const states = [
   { id: 'default', props: {} },
+  { id: 'inactive', props: { inactive: true } },
   { id: 'disabled', props: { disabled: true } },
   { id: 'loading', props: { loading: true } },
 ] as const;

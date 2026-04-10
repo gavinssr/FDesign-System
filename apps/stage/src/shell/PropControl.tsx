@@ -1,32 +1,36 @@
 import { Text, View } from '@tarojs/components';
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
-type ButtonSize = 'sm' | 'md' | 'lg';
+type ButtonVariant = 'primary-fill' | 'primary-outline' | 'secondary-outline';
+type ButtonSize = 'xl' | 'l' | 'm' | 's' | 'xs' | 'mini';
 
 interface PropControlProps {
   variant: ButtonVariant;
   size: ButtonSize;
+  inactive: boolean;
   disabled: boolean;
   loading: boolean;
   block: boolean;
   onVariantChange: (variant: ButtonVariant) => void;
   onSizeChange: (size: ButtonSize) => void;
+  onInactiveChange: (inactive: boolean) => void;
   onDisabledChange: (disabled: boolean) => void;
   onLoadingChange: (loading: boolean) => void;
   onBlockChange: (block: boolean) => void;
 }
 
-const variants: ButtonVariant[] = ['primary', 'secondary', 'ghost', 'danger'];
-const sizes: ButtonSize[] = ['sm', 'md', 'lg'];
+const variants: ButtonVariant[] = ['primary-fill', 'primary-outline', 'secondary-outline'];
+const sizes: ButtonSize[] = ['xl', 'l', 'm', 's', 'xs', 'mini'];
 
 export function PropControl({
   variant,
   size,
+  inactive,
   disabled,
   loading,
   block,
   onVariantChange,
   onSizeChange,
+  onInactiveChange,
   onDisabledChange,
   onLoadingChange,
   onBlockChange,
@@ -70,6 +74,14 @@ export function PropControl({
       <View className="__stage-controlGroup">
         <Text className="__stage-controlLabel">State</Text>
         <View className="__stage-chipRow">
+          <button
+            className="__stage-toggle"
+            data-active={inactive}
+            onClick={() => onInactiveChange(!inactive)}
+            type="button"
+          >
+            inactive
+          </button>
           <button
             className="__stage-toggle"
             data-active={disabled}

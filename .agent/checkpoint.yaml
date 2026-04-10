@@ -1,6 +1,6 @@
 last_session: "2026-04-06T03:15:00Z"
-current_phase: "phase-4"
-current_focus: "Phase 4 主准出保持完成；用户已取消 RN 运行态验证扩展，当前等待下一步明确目标或 Figma 输入"
+current_phase: "phase-5"
+current_focus: "Phase 5 token 收口已落地，且 Button 已按 Figma 节点完成首个真实组件对齐；下一步等待用户继续提供后续组件的 Figma 链接"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -18,12 +18,12 @@ completed:
 in_progress: []
 blocked: []
 next_recommended:
-  - "如用户提供 Figma 设计稿，可按 docs/exec-plans/active/phase-5-await-figma-input.md 切换进入 Phase 5"
+  - "继续按 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 推进其余组件对齐"
+  - "优先等待用户提供下一个组件的 Figma 链接，按组件逐个实施"
   - "根据 docs/exec-plans/completed/phase-4-h5-webview-baseline.md 继续观察 adapters 接入后 H5 体积是否出现非预期增长"
-  - "如未来出现明确 RN 消费方，再单独立项重开更轻量的 RN 运行态验证"
-active_exec_plan: "docs/exec-plans/active/phase-5-await-figma-input.md"
+active_exec_plan: "docs/exec-plans/active/phase-5-token-protocol-and-mapping.md"
 notes: |
-  Phase 4 主准出已完成，结论保持不变。
+  Phase 4 主准出已完成，结论保持不变；当前已进入 Phase 5 的 token 收口前置阶段。
 
   已闭环事项：
   1. `packages/adapters` 已建立，RN Button 注入式 adapter 最小闭环已验证通过
@@ -33,15 +33,27 @@ notes: |
   5. H5 与微信小程序两端均已人工确认正常渲染
   6. `pnpm build`、`pnpm check-boundaries` 已在收口阶段再次通过
 
+  Phase 5 当前进展：
+  1. 用户提供了 `/Users/gavinss/Desktop/GUI-playgournd/GUIbySpec/vars.css` 作为 token 输入参考
+  2. 已在 `vars.css` 中补齐当前仓库迁移所需的缺失项占位，并由用户完成回填
+  3. 已从 `vars.css` 中抽取 radius / spacing / typography 协议，并落入 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
+  4. 用户已确认 `Text.weight` 采用“收缩 API”策略，不保留 `semibold / bold`
+  5. 用户已确认 `Card / Modal` spacing 采用“外层容器 + 内容行节奏”两级协议，不做单值映射
+  6. 用户补充确认：内容行的 `18 / 14 / 12 / 14` 更多表示与相邻行元素之间的间距；若内容行是首个子容器，不得与外层顶部 padding 叠加形成双重留白
+  7. 已完成仓库内 token 分层重构与 Web CSS variables 镜像
+  8. 已完成首个 Phase 5 Figma 组件：`Button`
+  9. `Button` 已按 Figma 节点切换为 `primary-fill / primary-outline / secondary-outline`、`xl / l / m / s / xs / mini` 与 `inactive / disabled / loading`
+  10. 当前 `pnpm build`、`pnpm validate-contracts`、`pnpm check-boundaries` 通过；组件测试仍受既有 `@tarojs/runtime` 环境问题影响
+
   本轮取消事项：
   1. 用户已明确取消“Phase 4 扩展：RN 运行态验证”
   2. 已移除 `apps/rn-runtime` 验证载体及其带来的 lockfile 变更
   3. 已撤回仅为真实 RN primitives 兼容而放宽的 adapter 临时类型改动
-  4. active 计划已切换为 `docs/exec-plans/active/phase-5-await-figma-input.md`
+  4. 历史上的“等待 Figma 输入”待机状态已结束，active 计划切换为 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
 
   下一个 Agent 进入时：
   - 读本文件了解当前状态
-  - 读 docs/ROADMAP.md 确认 Phase 4 已完成状态
-  - 读 docs/exec-plans/active/phase-5-await-figma-input.md 获取当前待机计划
-  - 如用户提供 Figma 设计稿，可准备进入 Phase 5
+  - 读 docs/ROADMAP.md 确认当前已进入 Phase 5 前置执行
+  - 读 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 获取当前 token 协议与映射方案
+  - Button 已完成 Figma 对齐；继续做下一个组件前，先获取用户提供的 Figma 链接
   - 如未来有明确 RN 消费方，再重新评估是否需要恢复运行态验证

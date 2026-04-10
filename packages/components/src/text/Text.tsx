@@ -17,12 +17,12 @@ type TextStyleVars = CSSProperties &
   >;
 
 const toneStyles: Record<TextTone, Pick<TextStyleVars, '--text-color'>> = {
-  default: { '--text-color': colors.neutral[900] },
-  muted: { '--text-color': colors.neutral[600] },
-  primary: { '--text-color': colors.primary[700] },
-  success: { '--text-color': colors.success[600] },
-  warning: { '--text-color': colors.warning[600] },
-  danger: { '--text-color': colors.danger[600] },
+  default: { '--text-color': colors.semantic.text.primary },
+  muted: { '--text-color': colors.semantic.text.secondary },
+  primary: { '--text-color': colors.semantic.action.primary.subtleForeground },
+  success: { '--text-color': colors.semantic.action.success.subtleForeground },
+  warning: { '--text-color': colors.semantic.action.warning.subtleForeground },
+  danger: { '--text-color': colors.semantic.action.danger.subtleForeground },
 };
 
 const sizeStyles: Record<
@@ -30,24 +30,23 @@ const sizeStyles: Record<
   Pick<TextStyleVars, '--text-font-size' | '--text-line-height'>
 > = {
   sm: {
-    '--text-font-size': `${typography.fontSize.sm}px`,
-    '--text-line-height': typography.lineHeight.normal,
+    '--text-font-size': `${typography.size.base}px`,
+    '--text-line-height': `${typography.lineHeight.body.base}px`,
   },
   md: {
-    '--text-font-size': `${typography.fontSize.base}px`,
-    '--text-line-height': typography.lineHeight.normal,
+    '--text-font-size': `${typography.size.further}px`,
+    '--text-line-height': `${typography.lineHeight.body.further}px`,
   },
   lg: {
-    '--text-font-size': `${typography.fontSize.lg}px`,
-    '--text-line-height': typography.lineHeight.relaxed,
+    '--text-font-size': `${typography.size.increase}px`,
+    '--text-line-height': `${typography.lineHeight.body.increase}px`,
   },
 };
 
 const weightStyles: Record<TextWeight, Pick<TextStyleVars, '--text-font-weight'>> = {
-  regular: { '--text-font-weight': typography.fontWeight.regular },
-  medium: { '--text-font-weight': typography.fontWeight.medium },
-  semibold: { '--text-font-weight': typography.fontWeight.semibold },
-  bold: { '--text-font-weight': typography.fontWeight.bold },
+  light: { '--text-font-weight': typography.weight.light },
+  regular: { '--text-font-weight': typography.weight.regular },
+  medium: { '--text-font-weight': typography.weight.medium },
 };
 
 export function Text({

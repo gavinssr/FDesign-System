@@ -12,6 +12,6 @@
 :global(.fd-tag-label) {
   color: var(--tag-color);
   font-size: var(--tag-font-size);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1;
 }

@@ -27,7 +27,7 @@ export default function IndexPage() {
             consumer
           </Tag>
           <Tag tone="success">workspace package</Tag>
-          <Button onPress={() => setOpen(true)}>Open modal</Button>
+          <Button size="m" onPress={() => setOpen(true)}>Open modal</Button>
         </View>
       </View>
 
@@ -47,8 +47,8 @@ export default function IndexPage() {
               onValueChange={setValue}
             />
             <View className="__consumer-row">
-              <Button>Save changes</Button>
-              <Button variant="secondary">Cancel</Button>
+              <Button size="m">Save changes</Button>
+              <Button size="m" variant="secondary-outline">Cancel</Button>
             </View>
           </View>
         </Card>

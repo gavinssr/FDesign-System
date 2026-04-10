@@ -34,44 +34,44 @@ const tonePalette: Record<
   }
 > = {
   neutral: {
-    subtleBg: colors.neutral[100],
-    subtleBorder: colors.neutral[200],
-    subtleColor: colors.neutral[700],
-    solidBg: colors.neutral[800],
-    solidBorder: colors.neutral[800],
-    solidColor: colors.neutral[0],
+    subtleBg: colors.semantic.action.neutral.subtleBackground,
+    subtleBorder: colors.semantic.action.neutral.subtleBorder,
+    subtleColor: colors.semantic.text.secondary,
+    solidBg: colors.semantic.text.primary,
+    solidBorder: colors.semantic.text.primary,
+    solidColor: colors.semantic.text.inversePrimary,
   },
   primary: {
-    subtleBg: colors.primary[50],
-    subtleBorder: colors.primary[100],
-    subtleColor: colors.primary[700],
-    solidBg: colors.primary[600],
-    solidBorder: colors.primary[600],
-    solidColor: colors.neutral[0],
+    subtleBg: colors.semantic.action.primary.subtleBackground,
+    subtleBorder: colors.semantic.action.primary.subtleBorder,
+    subtleColor: colors.semantic.action.primary.subtleForeground,
+    solidBg: colors.semantic.action.primary.background,
+    solidBorder: colors.semantic.action.primary.border,
+    solidColor: colors.semantic.action.primary.foreground,
   },
   success: {
-    subtleBg: '#ECFDF3',
-    subtleBorder: '#A6F4C5',
-    subtleColor: colors.success[600],
-    solidBg: colors.success[500],
-    solidBorder: colors.success[500],
-    solidColor: colors.neutral[0],
+    subtleBg: colors.semantic.action.success.subtleBackground,
+    subtleBorder: colors.semantic.action.success.subtleBorder,
+    subtleColor: colors.semantic.action.success.subtleForeground,
+    solidBg: colors.semantic.action.success.background,
+    solidBorder: colors.semantic.action.success.border,
+    solidColor: colors.semantic.action.success.foreground,
   },
   warning: {
-    subtleBg: '#FFFAEB',
-    subtleBorder: '#FDE68A',
-    subtleColor: colors.warning[600],
-    solidBg: colors.warning[500],
-    solidBorder: colors.warning[500],
-    solidColor: colors.neutral[0],
+    subtleBg: colors.semantic.action.warning.subtleBackground,
+    subtleBorder: colors.semantic.action.warning.subtleBorder,
+    subtleColor: colors.semantic.action.warning.subtleForeground,
+    solidBg: colors.semantic.action.warning.background,
+    solidBorder: colors.semantic.action.warning.border,
+    solidColor: colors.semantic.action.warning.foreground,
   },
   danger: {
-    subtleBg: '#FEF3F2',
-    subtleBorder: '#FECACA',
-    subtleColor: colors.danger[600],
-    solidBg: colors.danger[500],
-    solidBorder: colors.danger[500],
-    solidColor: colors.neutral[0],
+    subtleBg: colors.semantic.action.danger.subtleBackground,
+    subtleBorder: colors.semantic.action.danger.subtleBorder,
+    subtleColor: colors.semantic.action.danger.subtleForeground,
+    solidBg: colors.semantic.action.danger.background,
+    solidBorder: colors.semantic.action.danger.border,
+    solidColor: colors.semantic.action.danger.foreground,
   },
 };
 
@@ -80,14 +80,14 @@ const sizeStyles: Record<
   Pick<TagStyleVars, '--tag-padding-x' | '--tag-min-height' | '--tag-font-size'>
 > = {
   sm: {
-    '--tag-padding-x': `${spacing[2]}px`,
-    '--tag-min-height': `${spacing[6]}px`,
-    '--tag-font-size': `${typography.fontSize.xs}px`,
+    '--tag-padding-x': `${spacing.component.tag.paddingX.sm}px`,
+    '--tag-min-height': `${spacing.component.tag.minHeight.sm}px`,
+    '--tag-font-size': `${typography.size.min}px`,
   },
   md: {
-    '--tag-padding-x': `${spacing[3]}px`,
-    '--tag-min-height': `${spacing[8]}px`,
-    '--tag-font-size': `${typography.fontSize.sm}px`,
+    '--tag-padding-x': `${spacing.component.tag.paddingX.md}px`,
+    '--tag-min-height': `${spacing.component.tag.minHeight.md}px`,
+    '--tag-font-size': `${typography.size.base}px`,
   },
 };
 
@@ -126,7 +126,7 @@ export function Tag({
   const styleVars: TagStyleVars = {
     ...getToneStyles(tone, emphasis),
     ...sizeStyles[size],
-    '--tag-radius': `${radii.full}px`,
+    '--tag-radius': `${radii.small}px`,
   };
   const resolvedStyle: CSSProperties = {
     display: 'inline-flex',
@@ -135,13 +135,13 @@ export function Tag({
     minHeight: sizeStyles[size]['--tag-min-height'],
     padding: `0 ${sizeStyles[size]['--tag-padding-x']}`,
     border: `1px solid ${getToneStyles(tone, emphasis)['--tag-border']}`,
-    borderRadius: `${radii.full}px`,
+    borderRadius: `${radii.small}px`,
     background: getToneStyles(tone, emphasis)['--tag-bg'],
   };
   const labelStyle: CSSProperties = {
     color: getToneStyles(tone, emphasis)['--tag-color'],
     fontSize: sizeStyles[size]['--tag-font-size'],
-    fontWeight: 600,
+    fontWeight: typography.weight.medium,
     lineHeight: 1,
   };
 

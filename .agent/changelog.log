@@ -360,3 +360,54 @@
 - 项目人类负责人为中文母语者，中英混杂增加审查成本
 - 代码、变量名、package name 保持英文（行业标准）
 - 治理文档统一中文，提升可审查性
+
+## 2026-04-06 — Phase 5 token 协议抽取与映射方案落档
+
+### 文档变更
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：新增 Phase 5 token 协议抽取与仓库映射方案
+- `.agent/checkpoint.yaml`：将当前阶段切换为 `phase-5`，并将 active plan 指向新的 token 协议文档
+
+### 背景
+- 用户已提供 `/Users/gavinss/Desktop/GUI-playgournd/GUIbySpec/vars.css`，并补齐了 spacing、radius、typography 等缺失项与使用备注
+- 本轮输入已超出“token 值”本身，包含了 radius、spacing、font-weight、line-height 等协议层约束
+- 为避免后续新对话丢失这些规则，先将协议与映射方案固化到仓库文档，待用户确认后再进入仓库 token 实施
+
+## 2026-04-06 — Phase 5 协议确认补记
+
+### 文档变更
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：补充 `Card / Modal` 的“外层容器 + 内层内容行”两级 padding 协议，并记录 `Text.weight` 收缩 API 的确认结论
+- `.agent/checkpoint.yaml`：同步记录上述确认已完成
+
+### 背景
+- 用户明确选择 `Text.weight` 采用“收缩 API”而非兼容 remap
+- 用户认可 `Card / Modal` 不采用单一 padding 值，而是按外层容器与内层内容行分层建模
+
+## 2026-04-06 — Phase 5 内容行节奏歧义修正
+
+### 文档变更
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：将“内层内容行 padding”修正为“内容行间距 / 内容行节奏”，并补充首行/末行不得与外层容器 padding 机械叠加的规则
+- `.agent/checkpoint.yaml`：同步记录该歧义修正
+
+### 背景
+- 用户补充说明：`18 / 14 / 12 / 14` 更接近内容行与相邻行元素之间的间距定义，而非统一作用在内容行自身上下的 padding
+- 若不显式记录，后续实施时容易把外层容器 padding 与首行 top padding 叠加，造成顶部留白过大
+
+## 2026-04-06 — Phase 5 Button Figma 对齐
+
+### 代码变更
+- `packages/components/src/button/*`：按 Figma 节点重构 Button API、尺寸、状态与样式，实现 `primary-fill / primary-outline / secondary-outline`、`xl / l / m / s / xs / mini` 与 `inactive`
+- `packages/adapters/src/rn/button.tsx` 与 `button.test.tsx`：同步 RN adapter 映射到新的 Button 规格
+- `apps/stage/src/pages/button/index.tsx` 与 `apps/stage/src/shell/PropControl.tsx`：同步 Stage 的 Button 演示页与控制面板到真实 Figma 规格
+- `packages/components/src/modal/Modal.tsx`、`apps/example-consumer/src/pages/index/index.tsx`、`projects/real-project-1/src/pages/index/index.tsx`：更新 Button 消费用法到新的变体命名
+- `packages/components/src/button/Button.contract.yaml`：Button 从 `provisional: true` 切为 `provisional: false`
+
+### 文档变更
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：标记 Button 已完成首个 Figma 组件对齐
+- `.agent/checkpoint.yaml`：同步记录 token 收口落地与 Button 已完成
+
+### 验证
+- `pnpm build`：通过
+- `pnpm validate-contracts`：通过
+- `pnpm check-boundaries`：通过
+- `pnpm --filter @fdesign/adapters test -- --run src/rn/button.test.tsx`：通过
+- `pnpm test` / `pnpm --filter @fdesign/components test ...`：仍受既有 `@tarojs/runtime` 环境问题 `ENABLE_INNER_HTML is not defined` 影响

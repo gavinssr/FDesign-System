@@ -105,3 +105,38 @@
 2. 代码、变量名、package name 保持英文（行业标准）
 3. 代码注释保持英文（行业标准）
 4. YAML/JSON 的 key 保持英文（机器解析标准），value 中的描述性文字用中文
+
+## 2026-04-06 — Phase 5 token 协议优先于 provisional 实现
+
+**背景**: 用户提供的 `vars.css` 不仅包含 token 值，还通过备注明确了 radius、spacing、typography 的使用边界；其中部分规则与仓库当前 provisional 实现直接冲突，例如额外 radius 档位、`600/700` 字重、以及若干旧 spacing 刻度。
+
+**决策**:
+1. Phase 5 中，`vars.css` 回填后的协议层输入作为设计约束来源，优先级高于仓库当前 provisional token 与组件实现
+2. token 实施前，必须先将协议抽取与映射方案固化为仓库文档，并等待用户确认
+3. TS token 继续作为多端主源；Web 端可输出 CSS variables 镜像，但不以运行时 CSS 变量替代 TS 主源
+4. 不为兼容旧实现而保留被协议明确禁用的 token：
+   - 不新增额外 radius 档位
+   - 不保留 `600 / 700` 作为正式字体字重 token
+5. 若组件当前实现与协议冲突，应调整组件实现或 API，而不是反向放宽协议
+6. `Text.weight` 直接收缩 API，不保留 `semibold / bold` 作为对外合同
+7. `Card / Modal` 的 padding 协议采用“两层模型”：
+   - 外层容器 padding：承担壳层留白
+   - 内容行节奏：按内容 archetype 区分纯文字、icon-leading、信息行等间距规则
+   - 不再将 `Card / Modal` 映射为单一统一 padding 值
+8. 内容行的 `18 / 14 / 12 / 14` 优先解释为“与相邻行元素之间的间距/节奏”，不是无条件叠加在内容行自身上下的 padding
+9. 若内容行是外层容器内的首个或最后一个子容器，不得与外层容器的顶部/底部 padding 机械叠加，避免形成双重留白
+
+## 2026-04-06 — Button 按 Figma 节点收缩到真实规格
+
+**背景**: Phase 5 的首个 Figma 组件是 Button。设计稿定义的真实规格与仓库原有 provisional API 不一致：类型从 `primary / secondary / ghost / danger` 收缩为 3 种，尺寸从 `sm / md / lg` 扩展为 6 档，并新增 `inactive` 状态；同时 loading 只有大尺寸展示 spinner。
+
+**决策**:
+1. Button 以 Figma 真实规格为准，不继续保留 provisional 变体命名
+2. Button 对外变体收敛为：
+   - `primary-fill`
+   - `primary-outline`
+   - `secondary-outline`
+3. Button 对外尺寸切换为：
+   - `xl / l / m / s / xs / mini`
+4. `inactive` 作为独立于 `disabled` 的真实状态进入 Button 对外合同
+5. `loading` 仅在 `xl / l` 展示 spinner；其余尺寸保持加载状态语义但不强行添加 spinner

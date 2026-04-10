@@ -5,7 +5,7 @@ import { ComponentDemo } from '../../shell/ComponentDemo';
 import { Layout } from '../../shell/Layout';
 
 const tones = ['default', 'muted', 'primary', 'success', 'warning', 'danger'] as const;
-const weights = ['regular', 'medium', 'semibold', 'bold'] as const;
+const weights = ['light', 'regular', 'medium'] as const;
 
 export default function TextPage() {
   return (
