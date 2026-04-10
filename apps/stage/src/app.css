@@ -1,11 +1,44 @@
 page {
-  background: var(--fd-color-page-background);
   min-height: 100%;
+  background: #fafafa;
+}
+
+:root {
+  --stage-header-height: 176px;
+  --stage-sidebar-width: 360px;
+  --stage-page-bg: #fafafa;
+  --stage-surface: #ffffff;
+  --stage-surface-hover: #f2f2f2;
+  --stage-surface-muted: #f6f6f6;
+  --stage-border: #d9d9d9;
+  --stage-border-subtle: #e9e9e9;
+  --stage-text: #111111;
+  --stage-text-muted: #666666;
+  --stage-text-soft: #888888;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: var(--fd-font-family-text);
-  background: var(--fd-color-page-background);
-  color: var(--fd-color-text-primary);
+  background: var(--stage-page-bg);
+  color: var(--stage-text);
+  font-family:
+    var(--fd-font-family-text),
+    "PingFang SC",
+    "Noto Sans SC",
+    "Microsoft YaHei",
+    sans-serif;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }

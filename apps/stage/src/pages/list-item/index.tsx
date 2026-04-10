@@ -5,7 +5,7 @@ import { Layout } from '../../shell/Layout';
 
 export default function ListItemPage() {
   return (
-    <Layout title="ListItem">
+    <Layout title="List Item / 列表项">
       <ComponentDemo
         title="Basic Preview"
         description="验证 leading、trailing、description 和 meta 区域。"

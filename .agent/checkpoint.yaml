@@ -1,6 +1,6 @@
-last_session: "2026-04-06T03:15:00Z"
+last_session: "2026-04-10T23:32:00Z"
 current_phase: "phase-5"
-current_focus: "Phase 5 token 收口已落地，且 Button 已按 Figma 节点完成首个真实组件对齐；下一步等待用户继续提供后续组件的 Figma 链接"
+current_focus: "Phase 5 token 收口已落地；同时已启动 apps/stage 舞台层重构，先完成固定顶栏/左侧导航/私有黑白灰壳层与 Button 样板页改造"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -18,8 +18,8 @@ completed:
 in_progress: []
 blocked: []
 next_recommended:
+  - "继续按新的 stage 壳层模板批量迁移 Text / Input / Modal / Card / Tag / Icon / ListItem 页面"
   - "继续按 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 推进其余组件对齐"
-  - "优先等待用户提供下一个组件的 Figma 链接，按组件逐个实施"
   - "根据 docs/exec-plans/completed/phase-4-h5-webview-baseline.md 继续观察 adapters 接入后 H5 体积是否出现非预期增长"
 active_exec_plan: "docs/exec-plans/active/phase-5-token-protocol-and-mapping.md"
 notes: |
@@ -44,6 +44,8 @@ notes: |
   8. 已完成首个 Phase 5 Figma 组件：`Button`
   9. `Button` 已按 Figma 节点切换为 `primary-fill / primary-outline / secondary-outline`、`xl / l / m / s / xs / mini` 与 `inactive / disabled / loading`
   10. 当前 `pnpm build`、`pnpm validate-contracts`、`pnpm check-boundaries` 通过；组件测试仍受既有 `@tarojs/runtime` 环境问题影响
+  11. 已按用户确认启动 `apps/stage` 重构：移除首页入口，改为固定顶栏 + 左侧可滚动导航 + 右侧独立展示区，并建立舞台层私有黑白灰零圆角样式基线
+  12. `Button` 页已升级为 Hero / Playground / Gallery / Verification 四段结构，工程映射信息已从主展示区下沉到底部辅助区
 
   本轮取消事项：
   1. 用户已明确取消“Phase 4 扩展：RN 运行态验证”
@@ -55,5 +57,5 @@ notes: |
   - 读本文件了解当前状态
   - 读 docs/ROADMAP.md 确认当前已进入 Phase 5 前置执行
   - 读 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 获取当前 token 协议与映射方案
-  - Button 已完成 Figma 对齐；继续做下一个组件前，先获取用户提供的 Figma 链接
+  - Button 已完成 Figma 对齐，且 stage 的新壳层已落地；优先沿同一模板继续迁移其余组件页
   - 如未来有明确 RN 消费方，再重新评估是否需要恢复运行态验证

@@ -31,6 +31,19 @@ const mappedProps = [
   'block',
   'onPress',
 ] as const;
+const variantLabels: Record<ButtonVariant, string> = {
+  'primary-fill': 'Primary Fill / 主按钮填充',
+  'primary-outline': 'Primary Outline / 主按钮描边',
+  'secondary-outline': 'Secondary Outline / 次按钮描边',
+};
+const sizeLabels: Record<ButtonSize, string> = {
+  xl: 'XL',
+  l: 'L',
+  m: 'M',
+  s: 'S',
+  xs: 'XS',
+  mini: 'Mini',
+};
 
 export default function ButtonPage() {
   const [variant, setVariant] = useState<ButtonVariant>('primary-fill');
@@ -55,10 +68,36 @@ export default function ButtonPage() {
   const reactNativeSpec = useMemo(() => getReactNativeButtonRenderSpec(currentProps), [currentProps]);
 
   return (
-    <Layout title="Button">
+    <Layout title="Button / 按钮" showPageTitle={false}>
+      <View className="__stage-demoCard">
+        <View className="__stage-hero">
+          <View className="__stage-heroBody">
+            <Text className="__stage-heroLabel">Component Preview</Text>
+            <Text className="__stage-heroTitle">Button / 按钮</Text>
+            <Text className="__stage-heroDescription">
+              Button 页用于核对设计系统按钮本体的视觉、状态和交互表现。当前主视区只展示组件本体能力，工程映射信息下沉到底部辅助验证区。
+            </Text>
+            <View className="__stage-heroMeta">
+              <View className="__stage-metaItem">
+                <Text className="__stage-metaKey">Variants</Text>
+                <Text className="__stage-metaValue">3 种类型</Text>
+              </View>
+              <View className="__stage-metaItem">
+                <Text className="__stage-metaKey">Sizes</Text>
+                <Text className="__stage-metaValue">6 种尺寸</Text>
+              </View>
+              <View className="__stage-metaItem">
+                <Text className="__stage-metaKey">States</Text>
+                <Text className="__stage-metaValue">4 种状态</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+
       <ComponentDemo
-        title="Interactive Preview"
-        description="先用实时控件验证 Button 本体，再通过矩阵视图检查所有变体和状态。"
+        title="Playground / 实时预览"
+        description="通过最常用的属性组合直接查看按钮本体，右侧展示区只承载组件真实视觉和交互。"
         controls={
           <PropControl
             variant={variant}
@@ -76,20 +115,59 @@ export default function ButtonPage() {
           />
         }
       >
-        <View className="__stage-preview">
-          <Button {...currentProps} />
-        </View>
-        <View className="__stage-blockPreview">
-          <Button {...currentProps} block>
-            Block button
-          </Button>
+        <View className="__stage-playgroundCanvas">
+          <View className="__stage-preview">
+            <Button {...currentProps} />
+          </View>
         </View>
       </ComponentDemo>
 
       <ComponentDemo
-        title="Phase 4 Cross-platform Mapping"
-        description="当前页仍以 H5 Button 为主验证入口，同时展示 RN adapter 的映射结果，确保真实 Button 规格与平台语义保持同步。"
+        title="Gallery / 变体总览"
+        description="按设计语义读取按钮规格，优先看得懂各类型、尺寸与关键状态，而不是直接看工程矩阵。"
       >
+        <View className="__stage-galleryStack">
+          {variantOrder.map((item) => (
+            <View key={item} className="__stage-gallerySection">
+              <Text className="__stage-subsectionTitle">{variantLabels[item]}</Text>
+              <View className="__stage-galleryGrid">
+                {sizeOrder.map((itemSize) => (
+                  <View key={`${item}-${itemSize}`} className="__stage-galleryCard">
+                    <View className="__stage-galleryCardHeader">
+                      <Text className="__stage-galleryCardLabel">{sizeLabels[itemSize]}</Text>
+                      <Text className="__stage-galleryCardHint">{itemSize}</Text>
+                    </View>
+                    <View className="__stage-stack">
+                      <Button variant={item} size={itemSize}>
+                        Default
+                      </Button>
+                      <Button variant={item} size={itemSize} inactive>
+                        inactive
+                      </Button>
+                      <Button variant={item} size={itemSize} disabled>
+                        disabled
+                      </Button>
+                      <Button variant={item} size={itemSize} loading>
+                        loading
+                      </Button>
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ))}
+        </View>
+      </ComponentDemo>
+
+      <ComponentDemo
+        title="Verification / 辅助验证"
+        description="工程核对信息保留在页面底部，便于确认跨端映射与状态矩阵，但不再占据主展示区。"
+      >
+        <View className="__stage-verificationNote">
+          <Text className="__stage-caption">
+            当前页主验证目标仍是 H5 Button 本体；下列信息用于辅助核对 RN adapter 映射与状态覆盖范围。
+          </Text>
+        </View>
         <View className="__stage-compareGrid">
           <View className="__stage-compareCard">
             <Text className="__stage-sectionTitle">Scope</Text>
@@ -108,7 +186,7 @@ export default function ButtonPage() {
               </View>
               <View className="__stage-kvRow">
                 <Text className="__stage-kvKey">非目标</Text>
-                <Text className="__stage-kvValue">本页先验证 H5 1:1 与 RN 状态映射，不覆盖业务场景排版</Text>
+                <Text className="__stage-kvValue">不覆盖业务场景排版，只核对组件本体与状态语义</Text>
               </View>
             </View>
           </View>
@@ -159,39 +237,6 @@ export default function ButtonPage() {
             </View>
           </View>
         </View>
-      </ComponentDemo>
-
-      <ComponentDemo
-        title="Variant Snapshot"
-        description="展示 Figma 中 3 种类型、6 个尺寸与关键状态，确认真实按钮规格已替换 provisional 视觉。"
-      >
-        {variantOrder.map((item) => (
-          <View key={item}>
-            <Text className="__stage-sectionTitle">{item}</Text>
-            {sizeOrder.map((itemSize) => (
-              <View key={`${item}-${itemSize}`} className="__stage-preview">
-                <Button variant={item} size={itemSize}>
-                  {`${item}-${itemSize}`}
-                </Button>
-                <Button variant={item} size={itemSize} inactive>
-                  inactive
-                </Button>
-                <Button variant={item} size={itemSize} disabled>
-                  disabled
-                </Button>
-                <Button variant={item} size={itemSize} loading>
-                  loading
-                </Button>
-              </View>
-            ))}
-          </View>
-        ))}
-      </ComponentDemo>
-
-      <ComponentDemo
-        title="Harness Matrix"
-        description="渲染 36 种组合，作为状态矩阵的人工核对视图。"
-      >
         <ButtonHarness />
       </ComponentDemo>
     </Layout>

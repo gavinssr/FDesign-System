@@ -1,6 +1,5 @@
 export default defineAppConfig({
   pages: [
-    'pages/index/index',
     'pages/button/index',
     'pages/text/index',
     'pages/tag/index',
@@ -11,9 +10,9 @@ export default defineAppConfig({
     'pages/modal/index',
   ],
   window: {
-    navigationBarTitleText: 'FDesign Stage',
+    navigationBarTitleText: 'FenQiLe Components Preview',
     navigationBarBackgroundColor: '#FFFFFF',
     navigationBarTextStyle: 'black',
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#FAFAFA',
   },
 });

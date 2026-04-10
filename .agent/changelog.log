@@ -411,3 +411,17 @@
 - `pnpm check-boundaries`：通过
 - `pnpm --filter @fdesign/adapters test -- --run src/rn/button.test.tsx`：通过
 - `pnpm test` / `pnpm --filter @fdesign/components test ...`：仍受既有 `@tarojs/runtime` 环境问题 `ENABLE_INNER_HTML is not defined` 影响
+
+## 2026-04-10 — Stage 壳层重构首轮
+
+### 代码变更
+- `apps/stage/src/app.config.ts`：移除首页入口，默认从 `Button` 页进入，并同步窗口标题为 `FenQiLe Components Preview`
+- `apps/stage/src/app.css`、`apps/stage/src/shell/styles/layout.module.css`：建立舞台层私有黑白灰样式基线，改为固定顶栏、左侧可滚动导航、右侧独立展示区，并统一移除舞台壳层圆角与过渡效果
+- `apps/stage/src/shell/Layout.tsx`、`componentLinks.ts`、`PropControl.tsx`：导航改为“英文 / 中文”，增加当前页高亮，按钮控制面板同步切为双语标签
+- `apps/stage/src/pages/button/index.tsx`：重构为 Hero / Playground / Gallery / Verification 四段结构，把 RN 映射和 harness 下沉到底部辅助验证区
+- `apps/stage/src/pages/index/index.tsx`：删除旧首页页面；其它组件页同步切换为双语标题
+
+### 验证
+- `pnpm --filter @fdesign/stage build`：通过
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+- 当前仍存在既有打包体积告警：`app` 入口 309 KiB 超过 webpack 推荐阈值，但不影响本轮功能落地

@@ -8,7 +8,7 @@ const tones = ['default', 'primary', 'success', 'warning', 'danger'] as const;
 
 export default function CardPage() {
   return (
-    <Layout title="Card">
+    <Layout title="Card / 卡片">
       <ComponentDemo
         title="Tone Preview"
         description="展示不同 tone 的容器表现。"

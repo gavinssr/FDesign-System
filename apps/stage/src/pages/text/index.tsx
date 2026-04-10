@@ -9,7 +9,7 @@ const weights = ['light', 'regular', 'medium'] as const;
 
 export default function TextPage() {
   return (
-    <Layout title="Text">
+    <Layout title="Text / 文本">
       <ComponentDemo
         title="Tone And Size"
         description="覆盖常用 tone 和 size 组合，确认基础文案样式可用。"

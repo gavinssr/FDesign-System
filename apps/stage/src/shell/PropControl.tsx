@@ -38,7 +38,7 @@ export function PropControl({
   return (
     <View className="__stage-controls">
       <View className="__stage-controlGroup">
-        <Text className="__stage-controlLabel">Variant</Text>
+        <Text className="__stage-controlLabel">Variant / 类型</Text>
         <View className="__stage-chipRow">
           {variants.map((item) => (
             <button
@@ -55,7 +55,7 @@ export function PropControl({
       </View>
 
       <View className="__stage-controlGroup">
-        <Text className="__stage-controlLabel">Size</Text>
+        <Text className="__stage-controlLabel">Size / 尺寸</Text>
         <View className="__stage-chipRow">
           {sizes.map((item) => (
             <button
@@ -72,7 +72,7 @@ export function PropControl({
       </View>
 
       <View className="__stage-controlGroup">
-        <Text className="__stage-controlLabel">State</Text>
+        <Text className="__stage-controlLabel">State / 状态</Text>
         <View className="__stage-chipRow">
           <button
             className="__stage-toggle"

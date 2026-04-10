@@ -8,7 +8,7 @@ const tones = ['neutral', 'primary', 'success', 'warning', 'danger'] as const;
 
 export default function TagPage() {
   return (
-    <Layout title="Tag">
+    <Layout title="Tag / 标签">
       <ComponentDemo
         title="Tone Preview"
         description="覆盖 subtle 和 solid 两种强调方式。"

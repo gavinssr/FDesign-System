@@ -9,7 +9,7 @@ const tones = ['default', 'muted', 'primary', 'success', 'warning', 'danger'] as
 
 export default function IconPage() {
   return (
-    <Layout title="Icon">
+    <Layout title="Icon / 图标">
       <ComponentDemo
         title="Glyph Preview"
         description="当前用字符型占位 glyph 验证 API 和视觉节奏。"
