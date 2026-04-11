@@ -83,6 +83,8 @@ notes: |
   47. 已按 Button 页样板调整舞台展示区纵向节奏：提升页级、卡片级、分区级与子分组级间距层级，未改动 Button 组件自身内部 padding/gap，用于验证后续 stage 私有 spacing token 方案
   48. 已按方案 A 将 Button 页展示区 spacing 抽为 stage 私有 token，但 token 值保留为会继续经过 `pxTransform` 的小写 `px`，以保持与用户手调后的视觉结果一致
   49. 已将 `apps/stage/src/app.css` 与 `apps/stage/src/shell/styles/layout.module.css` 切换为文件级禁用 `pxTransform`，并统一为 Web 原生 `px` 语义；当前 Button 页展示区 spacing token 数值保持不变，以延续桌面 stage 预览下的现有视觉
+  50. 已按最新反馈收敛 Button 状态矩阵：`__stage-matrixGrid` 改为更易容纳三列的 `minmax(320px, 1fr)`，并将 `__stage-matrixRow` 的最小子项间距提升为 `24px`
+  51. 已移除 `__stage-main` 在 `1024px` 与 `720px` 断点下的 padding 覆盖，主展示区内边距现统一保持默认 token 值，不再随视口缩小而变化
 
   本轮取消事项：
   1. 用户已明确取消“Phase 4 扩展：RN 运行态验证”

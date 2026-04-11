@@ -726,3 +726,23 @@
 - `pnpm --filter @fdesign/stage build`
 - 构建产物 `apps/stage/dist/css/app.css` 已确认 stage 壳层变量与布局样式输出为原生 `px`，未再被编译为 `rem`
 
+## 2026-04-11 — Button 状态矩阵横向收敛
+
+### 代码变更
+- `apps/stage/src/app.css`：新增 stage 私有 token `--stage-space-matrix-row-gap-min`，用于约束状态矩阵行内最小间距
+- `apps/stage/src/shell/styles/layout.module.css`：将 `__stage-matrixGrid` 的列宽下限从 `420px` 收窄到 `320px`，使状态矩阵在当前桌面展示宽度下优先三列横排
+- `apps/stage/src/shell/styles/layout.module.css`：将 `__stage-matrixRow` 的 `gap` 改为消费 `--stage-space-matrix-row-gap-min`，在保留两端自适应分布的同时保证子项最小间距为 `24px`
+
+### 验证
+- `ReadLints`：`apps/stage/src/app.css`、`apps/stage/src/shell/styles/layout.module.css` 未发现新增 linter 问题
+- `pnpm --filter @fdesign/stage build`
+- 构建通过；仅保留既有 `EntrypointsOverSizeLimitWarning`，与本次样式调整无关
+
+## 2026-04-11 — Stage 主展示区 padding 固定化
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：移除 `__stage-main` 在 `1024px` 与 `720px` 断点下的 padding 覆盖，主展示区统一保持默认 `var(--stage-space-main-padding)`
+
+### 验证
+- `ReadLints`：`apps/stage/src/shell/styles/layout.module.css` 未发现新增 linter 问题
+

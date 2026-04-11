@@ -423,7 +423,7 @@
 
 .__stage-matrixGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--stage-space-matrix-grid-gap);
 }
 
@@ -437,7 +437,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--stage-space-matrix-row-gap-min);
 }
 
 .__stage-matrixRow .__stage-metaKey {
@@ -473,10 +473,6 @@
 }
 
 @media (max-width: 1024px) {
-  .__stage-main {
-    padding: 24px;
-  }
-
 }
 
 @media (max-width: 720px) {
@@ -487,10 +483,6 @@
 
   .__stage-sidebar {
     top: var(--stage-header-height);
-  }
-
-  .__stage-main {
-    padding: 16px;
   }
 
   .__stage-navLink {

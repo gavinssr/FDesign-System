@@ -68,7 +68,7 @@ page {
   --stage-space-hero-gap: 32px;
   --stage-space-section-gap-tight: 8px;
   --stage-space-hero-meta-margin-top: 8px;
-  --stage-space-hero-meta-padding-y: 12px;
+  --stage-space-hero-meta-padding-y: 0px;
   --stage-space-gallery-stack-gap: 24px;
   --stage-space-gallery-section-gap: 16px;
   --stage-space-gallery-section-padding-top: 24px;
@@ -76,6 +76,7 @@ page {
   --stage-space-overview-row-gap-y: 20px;
   --stage-space-matrix-grid-gap: 16px;
   --stage-space-matrix-stack-gap: 12px;
+  --stage-space-matrix-row-gap-min: 24px;
   --stage-page-bg: #fafafa;
   --stage-surface: #ffffff;
   --stage-surface-hover: #f2f2f2;
