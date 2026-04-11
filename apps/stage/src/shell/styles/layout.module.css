@@ -1,3 +1,5 @@
+/*postcss-pxtransform disable*/
+
 .__stage-layout {
   height: 100vh;
   display: flex;
@@ -16,7 +18,7 @@
   display: flex;
   align-items: center;
   min-height: var(--stage-header-height);
-  padding: 16PX;
+  padding: 16px;
   border-bottom: 1px solid var(--stage-border);
   background: var(--stage-page-bg);
 }
@@ -53,7 +55,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: 88px;
+  min-height: auto;
   padding: var(--stage-space-nav-link-padding);
   border-bottom: 1px solid var(--stage-border-subtle);
   background: var(--stage-page-bg);
@@ -105,7 +107,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--stage-space-demo-card-gap);
-  padding: 24px;
+  padding: 16px;
   border: 1px solid var(--stage-border);
   background: var(--stage-surface);
 }
@@ -480,7 +482,7 @@
 @media (max-width: 720px) {
   .__stage-header {
     min-height: var(--stage-header-height);
-    padding: 16PX;
+    padding: 16px;
   }
 
   .__stage-sidebar {

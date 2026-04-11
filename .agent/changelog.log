@@ -714,3 +714,15 @@
 ### 验证
 - `ReadLints`：`apps/stage/src/app.css`、`apps/stage/src/shell/styles/layout.module.css` 未发现新增 linter 问题
 
+## 2026-04-11 — Stage 壳层切换为 Web 原生 px 语义
+
+### 代码变更
+- `apps/stage/src/app.css`：添加 `/*postcss-pxtransform disable*/`，并将 stage 私有尺寸/字号/间距 token 的单位统一收敛为原生小写 `px`
+- `apps/stage/src/shell/styles/layout.module.css`：添加 `/*postcss-pxtransform disable*/`，并将残留 `PX` 收敛为原生小写 `px`
+- 保持 Button 页当前展示区 spacing token 数值不变；在当前桌面 stage 预览基准下，不再依赖 `pxTransform` 也能延续现有视觉大小
+
+### 验证
+- `ReadLints`：`apps/stage/src/app.css`、`apps/stage/src/shell/styles/layout.module.css` 未发现新增 linter 问题
+- `pnpm --filter @fdesign/stage build`
+- 构建产物 `apps/stage/dist/css/app.css` 已确认 stage 壳层变量与布局样式输出为原生 `px`，未再被编译为 `rem`
+

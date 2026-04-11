@@ -1,3 +1,5 @@
+/*postcss-pxtransform disable*/
+
 html,
 body,
 #app,
@@ -31,45 +33,45 @@ page {
 }
 
 :root {
-  --stage-header-height: 84PX;
-  --stage-sidebar-width: 288PX;
-  --stage-font-size-header-title: 44PX;
-  --stage-line-height-header-title: 52PX;
-  --stage-font-size-nav-link: 16PX;
-  --stage-line-height-nav-link: 24PX;
-  --stage-space-nav-link-padding: 16PX;
-  --stage-font-size-component-title: 24PX;
-  --stage-line-height-component-title: 32PX;
-  --stage-font-size-section-title: 16PX;
-  --stage-line-height-section-title: 24PX;
-  --stage-font-size-hero-label: 12PX;
-  --stage-line-height-hero-label: 18PX;
-  --stage-font-size-hero-description: 12PX;
-  --stage-line-height-hero-description: 18PX;
-  --stage-font-size-meta-key: 12PX;
-  --stage-line-height-meta-key: 18PX;
-  --stage-font-size-meta-value: 14PX;
-  --stage-line-height-meta-value: 22PX;
-  --stage-font-size-control-label: 12PX;
-  --stage-line-height-control-label: 18PX;
-  --stage-font-size-toggle: 10PX;
-  --stage-line-height-toggle: 14PX;
-  --stage-font-size-subsection-title: 14PX;
-  --stage-line-height-subsection-title: 20PX;
-  --stage-font-size-description: 12PX;
-  --stage-line-height-description: 18PX;
-  --stage-space-main-gap: 32px;
-  --stage-space-main-padding: 32px;
-  --stage-space-demo-card-gap: 32px;
+  --stage-header-height: 84px;
+  --stage-sidebar-width: 288px;
+  --stage-font-size-header-title: 44px;
+  --stage-line-height-header-title: 52px;
+  --stage-font-size-nav-link: 16px;
+  --stage-line-height-nav-link: 24px;
+  --stage-space-nav-link-padding: 16px;
+  --stage-font-size-component-title: 24px;
+  --stage-line-height-component-title: 32px;
+  --stage-font-size-section-title: 16px;
+  --stage-line-height-section-title: 24px;
+  --stage-font-size-hero-label: 12px;
+  --stage-line-height-hero-label: 18px;
+  --stage-font-size-hero-description: 12px;
+  --stage-line-height-hero-description: 18px;
+  --stage-font-size-meta-key: 12px;
+  --stage-line-height-meta-key: 18px;
+  --stage-font-size-meta-value: 14px;
+  --stage-line-height-meta-value: 22px;
+  --stage-font-size-control-label: 12px;
+  --stage-line-height-control-label: 18px;
+  --stage-font-size-toggle: 10px;
+  --stage-line-height-toggle: 14px;
+  --stage-font-size-subsection-title: 14px;
+  --stage-line-height-subsection-title: 20px;
+  --stage-font-size-description: 12px;
+  --stage-line-height-description: 18px;
+  --stage-space-main-gap: 16px;
+  --stage-space-main-padding: 16px;
+  --stage-space-demo-card-gap: 16px;
   --stage-space-demo-header-gap: 12px;
   --stage-space-demo-body-gap: 32px;
   --stage-space-hero-gap: 32px;
-  --stage-space-section-gap-tight: 16px;
+  --stage-space-section-gap-tight: 8px;
   --stage-space-hero-meta-margin-top: 8px;
   --stage-space-hero-meta-padding-y: 12px;
-  --stage-space-gallery-stack-gap: 48px;
-  --stage-space-gallery-section-gap: 24px;
-  --stage-space-gallery-section-padding-top: 48px;
+  --stage-space-gallery-stack-gap: 24px;
+  --stage-space-gallery-section-gap: 16px;
+  --stage-space-gallery-section-padding-top: 24px;
   --stage-space-gallery-card-gap: 16px;
   --stage-space-overview-row-gap-y: 20px;
   --stage-space-matrix-grid-gap: 16px;
