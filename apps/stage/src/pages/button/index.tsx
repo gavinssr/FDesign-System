@@ -36,10 +36,9 @@ export default function ButtonPage() {
       <View className="__stage-demoCard">
         <View className="__stage-hero">
           <View className="__stage-heroBody">
-            <Text className="__stage-heroLabel">Component Preview</Text>
             <Text className="__stage-heroTitle">Button / 按钮</Text>
             <Text className="__stage-heroDescription">
-              Button 页用于核对设计系统按钮本体的视觉、状态和交互表现。当前主视区仅保留设计对照所需的核心展示内容。
+              按钮用于执行用户在交互流程中触发指令、提交更改或完成的即时操作。
             </Text>
             <View className="__stage-heroMeta">
               <View className="__stage-metaItem">
@@ -61,7 +60,6 @@ export default function ButtonPage() {
 
       <ComponentDemo
         title="Gallery / 变体总览"
-        description="按类型、尺寸、状态矩阵与小尺寸 loading 对照收纳，便于逐块核对设计稿。"
       >
         <View className="__stage-galleryStack">
           <View className="__stage-gallerySection">

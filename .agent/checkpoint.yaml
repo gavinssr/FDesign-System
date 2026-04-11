@@ -79,6 +79,9 @@ notes: |
   43. 已完成 Button token 收口第一轮：新增 `primary.outline/inactive` 颜色语义位、Button 六档 spacing token、hairline 边框语义位与 motion token，并同步回灌 H5 Button 与 RN adapter
   44. 本轮 `pnpm --filter @fdesign/tokens build`、`pnpm --filter @fdesign/components build`、`pnpm --filter @fdesign/adapters build` 通过，`ReadLints` 无新增问题
   45. 本地 stage Button 页 DOM 已确认存在且 webpack 编译成功；浏览器侧仍观察到内容被头部区域遮挡，需后续单独排查 stage 布局覆盖问题
+  46. 已按最新舞台页反馈继续收敛 Button 首屏文案：移除 Hero 顶部英文标签、移除 Gallery 说明文案，并将 Hero 主描述改为更贴近按钮交互语义的中文定义
+  47. 已按 Button 页样板调整舞台展示区纵向节奏：提升页级、卡片级、分区级与子分组级间距层级，未改动 Button 组件自身内部 padding/gap，用于验证后续 stage 私有 spacing token 方案
+  48. 已按方案 A 将 Button 页展示区 spacing 抽为 stage 私有 token，但 token 值保留为会继续经过 `pxTransform` 的小写 `px`，以保持与用户手调后的视觉结果一致
 
   本轮取消事项：
   1. 用户已明确取消“Phase 4 扩展：RN 运行态验证”

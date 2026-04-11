@@ -684,3 +684,33 @@
 - `ReadLints`：`packages/tokens/src`、`packages/components/src/button`、`packages/adapters/src/rn/button.tsx` 无新增 linter 问题
 - `pnpm --filter @fdesign/tokens build && pnpm --filter @fdesign/components build && pnpm --filter @fdesign/adapters build`
 - 本地 stage dev server 已重新编译成功，Button 页 DOM 内容存在；浏览器侧仍观察到页面内容被头部区域遮挡，属于后续需单独排查的 stage 布局问题
+
+## 2026-04-11 — Stage Button 页文案收敛
+
+### 代码变更
+- `apps/stage/src/pages/button/index.tsx`：移除 Hero 顶部 `Component Preview` 标签，避免主卡片首屏出现多余英文辅助信息
+- `apps/stage/src/pages/button/index.tsx`：移除 `Gallery / 变体总览` 模块描述文案，使总览区直接进入设计对照内容
+- `apps/stage/src/pages/button/index.tsx`：将 Hero 主描述改为“按钮用于执行用户在交互流程中触发指令、提交更改或完成的即时操作。”
+
+## 2026-04-11 — Stage 展示区纵向间距分级
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：提升 `__stage-main`、`__stage-demoCard`、`__stage-demoBody` 的纵向间距，拉开页面级与卡片级内容分组
+- `apps/stage/src/shell/styles/layout.module.css`：将 `__stage-heroBody`、`__stage-galleryStack`、`__stage-gallerySection`、`__stage-gallerySection + .__stage-gallerySection` 的间距改为更清晰的层级节奏，增强 Button 页分区辨识度
+- `apps/stage/src/shell/styles/layout.module.css`：同步放宽 `__stage-heroMeta`、`__stage-galleryCard`、`__stage-overviewRow`、`__stage-matrixGrid`、`__stage-matrixStack` 的纵向留白，使信息块更透气，但未修改 Button 组件自身内部 spacing
+
+### 验证
+- `ReadLints`：`apps/stage/src/shell/styles/layout.module.css` 未发现新增 linter 问题
+
+## 2026-04-11 — Stage spacing token 方案 A
+
+### 代码变更
+- `apps/stage/src/app.css`：为 Button 页当前确认过的展示区纵向节奏新增 stage 私有 spacing token，token 值使用小写 `px`，保留现有 `pxTransform` 链路
+- `apps/stage/src/shell/styles/layout.module.css`：将展示区相关间距改为消费上述 spacing token，保持当前手调后的视觉效果不变
+
+### 说明
+- 本次不采用大写 `PX`。原因是 stage 当前展示区 spacing 以用户手调后的 `pxTransform` 效果为验收基准；若直接切到 `PX`，同数字会按真实物理像素渲染，视觉会整体变大
+
+### 验证
+- `ReadLints`：`apps/stage/src/app.css`、`apps/stage/src/shell/styles/layout.module.css` 未发现新增 linter 问题
+
