@@ -135,7 +135,6 @@ export default function ButtonPage() {
                   <View key={`${item}-${itemSize}`} className="__stage-galleryCard">
                     <View className="__stage-galleryCardHeader">
                       <Text className="__stage-galleryCardLabel">{sizeLabels[itemSize]}</Text>
-                      <Text className="__stage-galleryCardHint">{itemSize}</Text>
                     </View>
                     <View className="__stage-stack">
                       <Button variant={item} size={itemSize}>

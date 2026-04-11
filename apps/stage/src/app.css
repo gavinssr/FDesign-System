@@ -1,11 +1,63 @@
+html,
+body,
+#app,
 page {
-  min-height: 100%;
+  height: 100%;
+}
+
+#app {
+  overflow: hidden;
+}
+
+#app > div {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Disable route container transitions only; keep component-level animations intact. */
+#app .taro_router,
+#app .taro_router > div,
+#app .taro_page,
+#app .taro_page.taro_page_show,
+#app .taro_page.taro_page_hide {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+page {
+  overflow: hidden;
   background: #fafafa;
 }
 
 :root {
-  --stage-header-height: 176px;
-  --stage-sidebar-width: 360px;
+  --stage-header-height: 84PX;
+  --stage-sidebar-width: 288PX;
+  --stage-font-size-header-title: 44PX;
+  --stage-line-height-header-title: 52PX;
+  --stage-font-size-nav-link: 16PX;
+  --stage-line-height-nav-link: 24PX;
+  --stage-space-nav-link-padding: 16PX;
+  --stage-font-size-component-title: 24PX;
+  --stage-line-height-component-title: 32PX;
+  --stage-font-size-section-title: 16PX;
+  --stage-line-height-section-title: 24PX;
+  --stage-font-size-hero-label: 12PX;
+  --stage-line-height-hero-label: 18PX;
+  --stage-font-size-hero-description: 12PX;
+  --stage-line-height-hero-description: 18PX;
+  --stage-font-size-meta-key: 12PX;
+  --stage-line-height-meta-key: 18PX;
+  --stage-font-size-meta-value: 14PX;
+  --stage-line-height-meta-value: 22PX;
+  --stage-font-size-control-label: 12PX;
+  --stage-line-height-control-label: 18PX;
+  --stage-font-size-toggle: 10PX;
+  --stage-line-height-toggle: 14PX;
+  --stage-font-size-subsection-title: 14PX;
+  --stage-line-height-subsection-title: 20PX;
+  --stage-font-size-description: 12PX;
+  --stage-line-height-description: 18PX;
   --stage-page-bg: #fafafa;
   --stage-surface: #ffffff;
   --stage-surface-hover: #f2f2f2;
@@ -25,6 +77,7 @@ page {
 
 body {
   margin: 0;
+  overflow: hidden;
   background: var(--stage-page-bg);
   color: var(--stage-text);
   font-family:

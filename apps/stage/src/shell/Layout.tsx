@@ -12,12 +12,17 @@ interface LayoutProps {
 }
 
 export function Layout({ title, children, showPageTitle = true }: LayoutProps) {
+  const stopSidebarWheel: JSX.GenericEventHandler = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   return (
     <View className="__stage-layout">
       <View className="__stage-header">
         <Text className="__stage-headerTitle">FenQiLe Components Preview</Text>
       </View>
-      <View className="__stage-sidebar">
+      <View className="__stage-sidebar" onWheel={stopSidebarWheel}>
         <View className="__stage-navList">
           {componentLinks.map((item) => {
             const isActive = item.title === title;
@@ -32,11 +37,7 @@ export function Layout({ title, children, showPageTitle = true }: LayoutProps) {
                     return;
                   }
 
-                  void Taro.navigateTo({
-                    url: item.url,
-                    animationType: 'none',
-                    animationDuration: 0,
-                  });
+                  void Taro.reLaunch({ url: item.url });
                 }}
               >
                 {item.label}

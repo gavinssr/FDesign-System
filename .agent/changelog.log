@@ -425,3 +425,145 @@
 - `pnpm --filter @fdesign/stage build`：通过
 - `ReadLints`：本轮改动文件未发现新增 linter 问题
 - 当前仍存在既有打包体积告警：`app` 入口 309 KiB 超过 webpack 推荐阈值，但不影响本轮功能落地
+
+## 2026-04-11 — Stage 文字样式 token 收口
+
+### 代码变更
+- `apps/stage/src/app.css`：新增舞台页私有 typography token（header/nav/component title/section title 的字号与行高）
+- `apps/stage/src/shell/styles/layout.module.css`：将 `__stage-headerTitle`、`__stage-navLink`、`__stage-title`、`__stage-heroTitle`、`__stage-sectionTitle` 切换为引用私有 token
+- `apps/stage/src/shell/styles/layout.module.css`：移除会覆盖上述字号的响应式字体重写，确保全场景统一遵循新规格
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 描述文案字号收敛
+
+### 代码变更
+- `apps/stage/src/app.css`：新增舞台私有 token `--stage-font-size-description: 12PX` 与 `--stage-line-height-description: 18PX`
+- `apps/stage/src/shell/styles/layout.module.css`：`__stage-description` 与 `__stage-caption` 统一引用上述 token
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 切页残余抖动清零
+
+### 代码变更
+- `apps/stage/src/shell/Layout.tsx`：导航切页从 `redirectTo` 进一步收敛为 `reLaunch`，避免首次命中页面时的短程过渡抖动
+- `apps/stage/src/app.css`：仅针对 Taro 路由容器层（`.taro_router` / `.taro_page`）强制禁用 `animation/transition/transform`
+- 保持禁用范围仅在路由壳层，不影响展示区组件内部动效（如 Button loading）
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 导航跳页无转场修正
+
+### 代码变更
+- `apps/stage/src/shell/Layout.tsx`：导航切页从 `Taro.navigateTo` 改为 `Taro.redirectTo`，避免入栈页面转场动画
+- `apps/stage/src/shell/Layout.tsx`：增加失败兜底 `Taro.reLaunch`，保证跳页稳定
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 侧栏滚轮穿透兜底修正
+
+### 代码变更
+- `apps/stage/src/app.css`：补充 `#app` 与 `#app > div` 锁高与禁滚，避免路由首层容器参与页面滚动
+- `apps/stage/src/shell/Layout.tsx`：在 `__stage-sidebar` 增加 `onWheel` 拦截（`preventDefault + stopPropagation`），阻止侧栏滚轮事件穿透到展示区或整页
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 滚动容器隔离修正
+
+### 代码变更
+- `apps/stage/src/app.css`：将 `html/body/#app/page` 高度统一为 `100%`，并对 `body/page` 设置 `overflow: hidden`，禁止整页滚动
+- `apps/stage/src/shell/styles/layout.module.css`：
+  - `__stage-layout` 改为固定 `height: 100vh` 并 `overflow: hidden`
+  - `__stage-sidebar`、`__stage-main` 添加 `overscroll-behavior: contain`，阻断滚动链路向页面冒泡
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 侧栏宽度改为内容自适应
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：
+  - `__stage-layout` 改为 `flex` 布局，主区与侧栏进入同一流式布局
+  - `__stage-sidebar` 从固定宽度改为 `width/min-width: max-content`，由最长导航项决定宽度
+  - `__stage-main` 移除固定 `left` 偏移，改为 `flex: 1` 跟随侧栏自适应
+  - 移除断点里基于固定侧栏宽度的覆盖逻辑
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 导航宽度按最长文案收敛
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：
+  - `__stage-navList` 改为 `inline-flex` + `width/min-width: max-content`，使导航列表宽度由最长文案决定
+  - `__stage-navLink` 增加 `width: 100%`，确保所有导航项统一跟随最长项宽度
+  - `__stage-navLink` 增加 `white-space: nowrap`，避免换行导致宽度计算不稳定
+- `__stage-navLink` 仍保持 `padding: var(--stage-space-nav-link-padding)`，当前固定为 `16PX`
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 文案密度与导航节奏二次收敛
+
+### 代码变更
+- `apps/stage/src/app.css`：新增舞台私有 token，覆盖导航内边距与本轮指定字号（heroLabel、heroDescription、metaKey、metaValue、controlLabel、toggle、subsectionTitle）
+- `apps/stage/src/shell/styles/layout.module.css`：
+  - 导航项内边距改为统一 `--stage-space-nav-link-padding`（固定 16PX，移除断点差异）
+  - 头部背景从 `--stage-surface` 改为 `--stage-page-bg`，与页面/侧栏保持一致
+  - 指定文本类改为引用舞台私有 token，并保持 `PX` 物理像素
+- `apps/stage/src/pages/button/index.tsx`：移除 Gallery 卡片头部右侧重复的尺寸 `hint` 文案
+- `apps/stage/src/shell/styles/layout.module.css`：删除已不再使用的 `__stage-galleryCardHint` 样式
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 头部内边距与高度修正
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：`__stage-header` 调整为四边一致内边距 `16PX`
+- `apps/stage/src/app.css`：`--stage-header-height` 从 `176PX` 收敛到 `84PX`，避免头部上下留白过大
+- `apps/stage/src/shell/styles/layout.module.css`：小屏断点下 `sidebar/main` 的 `top` 改为复用 `--stage-header-height`，保持壳层一致
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 导航项内边距对齐修正
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：将 `__stage-navLink` 内边距改为四边一致，默认 `32PX`
+- `apps/stage/src/shell/styles/layout.module.css`：在断点下同步改为 `24PX` 与 `16PX`，分别对应主区 `padding`，建立左对齐关系并保持上下右内边距一致
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 侧栏宽度下调 20%
+
+### 代码变更
+- `apps/stage/src/app.css`：`--stage-sidebar-width` 从 `360PX` 调整为 `288PX`
+- `apps/stage/src/shell/styles/layout.module.css`：断点侧栏宽度与主区 `left` 同步按 20% 下调（`280PX -> 224PX`，`220PX -> 176PX`）
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 侧栏宽度适配修正
+
+### 代码变更
+- `apps/stage/src/app.css`：将 `--stage-header-height`、`--stage-sidebar-width` 改为 `PX`，避免壳层关键尺寸被 Taro px transform 缩放
+- `apps/stage/src/shell/styles/layout.module.css`：将 `@media` 下侧栏宽度与主区 `left` 偏移改为 `PX`，保证导航变宽后布局仍对齐
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 字号缩放修正
+
+### 代码变更
+- `apps/stage/config/index.ts` 排查确认：H5 使用 `designWidth: 750`，小写 `px` 会参与 Taro 自适应换算
+- `apps/stage/src/app.css`：将舞台私有字号 token 与对应行高从 `px` 改为 `PX`，避免被 px transform 缩放
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题

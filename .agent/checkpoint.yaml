@@ -1,4 +1,4 @@
-last_session: "2026-04-10T23:32:00Z"
+last_session: "2026-04-11T12:00:00Z"
 current_phase: "phase-5"
 current_focus: "Phase 5 token 收口已落地；同时已启动 apps/stage 舞台层重构，先完成固定顶栏/左侧导航/私有黑白灰壳层与 Button 样板页改造"
 completed:
@@ -46,6 +46,20 @@ notes: |
   10. 当前 `pnpm build`、`pnpm validate-contracts`、`pnpm check-boundaries` 通过；组件测试仍受既有 `@tarojs/runtime` 环境问题影响
   11. 已按用户确认启动 `apps/stage` 重构：移除首页入口，改为固定顶栏 + 左侧可滚动导航 + 右侧独立展示区，并建立舞台层私有黑白灰零圆角样式基线
   12. `Button` 页已升级为 Hero / Playground / Gallery / Verification 四段结构，工程映射信息已从主展示区下沉到底部辅助区
+  13. 已将 stage 指定文字调整收敛为私有样式 token：header 标题 44px、导航 16px、组件标题 24px、展示区子容器标题 16px
+  14. 已修正 stage 字号被 Taro px transform 缩放的问题：相关私有字号/行高 token 改为 `PX` 以保持物理像素
+  15. 已同步修正侧栏与头部关键壳层尺寸缩放问题：`header-height`、`sidebar-width` 及断点宽度偏移改为 `PX`
+  16. 已按反馈将侧栏宽度整体下调 20%，并同步主区偏移，避免导航过宽
+  17. 已按反馈将导航项内边距改为四边一致，并在各断点与主区内容起始内边距对齐（32/24/16）
+  18. 已按反馈收敛头部上下留白：header 改为四边 16PX 内边距，并将 header-height 调整为 84PX
+  19. 已按最新反馈继续收敛：导航项 padding 固定 16PX（无断点差异）、header 背景与页面一致、指定文本类字号落到舞台私有 token、Gallery 重复 hint 文案移除
+  20. 已将导航列表改为内容驱动等宽：所有导航项宽度统一跟随最长文案项，且每项四边 padding 固定 16PX
+  21. 已进一步把侧栏容器本身改为内容驱动宽度（max-content），并让主区通过 flex 自适应，移除固定 left 偏移依赖
+  22. 已修正滚动链路：整页禁滚，仅保留 sidebar/main 内部滚动，并阻断滚轮事件向页面冒泡
+  23. 已新增滚轮穿透兜底：锁定 `#app` 首层容器禁滚，并在 sidebar 上拦截 wheel 事件
+  24. 已将导航切页由 `navigateTo` 改为 `redirectTo`（失败兜底 `reLaunch`），消除舞台页切换转场
+  25. 已进一步清零切页抖动：导航改用 `reLaunch`，并仅对 Taro 路由容器层禁用动画/过渡，不影响组件内部动效
+  26. 已将 `__stage-description` 与 `__stage-caption` 字号统一收敛为 12PX，并落到舞台私有 token
 
   本轮取消事项：
   1. 用户已明确取消“Phase 4 扩展：RN 运行态验证”
