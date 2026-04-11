@@ -567,3 +567,120 @@
 
 ### 验证
 - `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Button 舞台宽度与 outline 状态修正
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：为 `__stage-stack` 增加 `align-items: flex-start`，避免 Gallery 中按钮被列容器横向拉伸
+- `packages/components/src/button/Button.tsx`：补充宽度变量（`--button-width/min-width/max-width`），并将 `l` 尺寸约束到 `min 178px / max min(327px, calc(100vw - 48px))`
+- `packages/components/src/button/Button.tsx`：修正 `fd-button-loadingWithSpinner` 仅在 `loading && spinner.show` 时生效，避免默认态误挂 loading 专用 class
+- `packages/components/src/button/Button.tsx` 与 `packages/adapters/src/rn/button.tsx`：修正 `primary-outline` 默认/loading 的前景色来源，RN 同步 `l` 尺寸宽度区间约束
+- `packages/components/src/button/Button.module.css`：引入宽度变量消费，并补充 `primary-outline` 文案色兜底规则
+
+### 验证
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+- 本地舞台页（`http://localhost:10086/#/pages/button/index`）复看：按钮不再在 Gallery 列容器内自动撑满
+
+## 2026-04-11 — Button XL/L 尺寸与 loading 素材对齐 GUIbySpec
+
+### 代码变更
+- `packages/components/src/button/Button.tsx`：按 GUIbySpec 将 `xl/l` 固定宽度改为 `355px/327px`，并保持按钮文案字重 `500`
+- `packages/components/src/button/Button.module.css`：spinner 改为使用 SVG 资源渲染并保留旋转动效
+- `packages/components/src/button/assets/loading-on-primary-true.svg`、`packages/components/src/button/assets/loading-on-primary-false.svg`：新增 loading 素材
+- `packages/adapters/src/rn/button.tsx`：RN 映射同步 `xl/l` 宽度 `355/327`
+- `scripts/copy-css-assets.mjs`：扩展构建脚本，除 CSS 外同步复制组件静态资源到 `dist`，修复 stage 对 `dist` 消费时的 SVG 丢失
+
+### 验证
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/adapters build`
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+## 2026-04-11 — Stage 全站移除 Playground/辅助验证模块
+
+### 代码变更
+- `apps/stage/src/pages/button/index.tsx`：移除 `Playground / 实时预览` 模块
+- `apps/stage/src/pages/button/index.tsx`：移除 `Verification / 辅助验证` 模块
+- `apps/stage/src/pages/button/index.tsx`：同步清理相关状态、映射变量与无用导入，页面结构收敛为 Hero + Gallery
+
+### 验证
+- `ReadLints`：`apps/stage/src/pages/button/index.tsx` 未发现新增 linter 问题
+
+## 2026-04-11 — Button 总览重组为四块收纳
+
+### 代码变更
+- `apps/stage/src/pages/button/index.tsx`：Gallery 改为「类型 / 尺寸 / 状态矩阵 / 不同尺寸 Loading」四块结构
+- `apps/stage/src/pages/button/index.tsx`：类型区使用 `L + default` 展示三种类型，并在按钮下使用灰色 `__stage-metaKey` 标注类型名称
+- `apps/stage/src/pages/button/index.tsx`：尺寸区使用 `primary-fill + default` 展示全尺寸，并在按钮下使用灰色 `__stage-metaKey` 标注尺寸名称
+- `apps/stage/src/pages/button/index.tsx`：状态矩阵区改为按类型分卡片，每卡使用 `L` 尺寸并在按钮左侧以灰色文案标注 `default/inactive/disabled/loading`
+- `apps/stage/src/pages/button/index.tsx`：loading 对照区改为 `primary-outline` 下全尺寸 loading 展示，并在按钮下使用灰色 `__stage-metaKey` 标注尺寸名称
+- `apps/stage/src/shell/styles/layout.module.css`：新增总览行、矩阵网格与矩阵行样式，适配上述四块布局
+
+### 验证
+- `ReadLints`：改动文件无新增 linter 问题
+- 本地预览：`http://localhost:10086/#/pages/button/index?stamp=matrix` 结构已按四块收纳呈现
+
+## 2026-04-11 — Button 矩阵布局与文案/Loading 细节修正
+
+### 代码变更
+- `apps/stage/src/pages/button/index.tsx`：状态矩阵行内按钮包裹层改为独立容器，便于两端布局与统一按钮宽度
+- `apps/stage/src/shell/styles/layout.module.css`：状态矩阵行改为 `space-between`，按钮列固定宽度并统一撑满，保证各状态按钮等宽
+- `packages/components/src/button/Button.tsx`：收敛 `m/s/xs` 文案字号与行高（`m/s=12/14`，`xs=10/11`），并更新 `m/s/xs/mini` 的 loading spinner 显示规则与尺寸
+- `packages/adapters/src/rn/button.tsx`：同步 `m/xs` 文案字号行高与 `m/s/xs/mini` loading spinner 显示规则
+
+### 验证
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/adapters build`
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+- 本地预览：`http://localhost:10086/#/pages/button/index?stamp=matrix2` 已看到矩阵两端布局、等宽按钮与 M-mini loading 展示生效
+
+## 2026-04-11 — Button 文案统一与小尺寸 Loading 宽度保持
+
+### 代码变更
+- `apps/stage/src/pages/button/index.tsx`：舞台页按钮文案统一为“操作文本”
+- `packages/components/src/button/Button.tsx`：新增小尺寸 loading 隐文案规则（`m/s/xs/mini`），以隐藏文案占位保持宽度并仅显示 spinner
+- `packages/components/src/button/Button.module.css`：新增 `fd-button-loadingHideLabel`、`fd-button-spinnerAnchor`、`fd-button-labelGhost` 样式，支撑“无可见文案但宽度不变”
+- `apps/stage/src/pages/button/index.tsx` + `apps/stage/src/shell/styles/layout.module.css`：状态矩阵按钮容器固定列宽并撑满，确保按 default 基准等宽
+
+### 验证
+- `pnpm --filter @fdesign/components build`
+- `ReadLints`：改动文件无新增 linter 问题
+- 本地预览：`http://localhost:10086/#/pages/button/index?stamp=optext` 已看到文案统一、矩阵等宽、M-mini loading 无可见文案
+
+## 2026-04-11 — Stage 文案真实 PX 对齐
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：将 stage 内残留裸写小写 `px` 的文本样式改为复用舞台私有字号 token，避免再次走 Taro `px` transform 缩放
+- `apps/stage/src/shell/styles/layout.module.css`：`__stage-galleryCardLabel` 改为复用 `__stage-description` 同链路的 `12PX/18PX`，使矩阵卡片标题与说明文案按真实像素等大
+- `apps/stage/src/shell/styles/layout.module.css`：`__stage-kvKey`、`__stage-kvValue` 同步改为复用 `meta` 字号 token，保证后续凡标注为多少 `px` 都按真实物理像素理解
+
+### 验证
+- `ReadLints`：`apps/stage/src/shell/styles/layout.module.css` 未发现新增 linter 问题
+
+## 2026-04-11 — 组件样式 token 治理约束补记
+
+### 治理变更
+- `.agent/decisions.log`：追加用户确认的新约束：新增组件样式值只能来自本项目全局 token；设计稿硬编码值必须先映射到仓库 token，禁止直接落到组件实现
+- `.agent/checkpoint.yaml`：同步记录上述治理约束，供后续 Agent 接续执行
+
+## 2026-04-11 — 组件样式 token 治理约束修正
+
+### 治理变更
+- `.agent/decisions.log`：将“必须只用全局 token”的规则修正为“优先使用全局 token；若当前 token 暂无对应项，需先询问用户确认，才允许临时使用硬编码或 reference token”
+- `.agent/decisions.log`：补充过渡态闭环要求：当前实现任务结束前，必须把临时值做语义抽取，落到本项目全局 token，再回灌替换组件实现
+- `.agent/checkpoint.yaml`：同步记录上述修正规则，供后续 Agent 按同一口径执行
+
+## 2026-04-11 — Button token 收口与回灌
+
+### 代码变更
+- `packages/tokens/src/colors.ts`：为 `semantic.action.primary` 新增 `outlineForeground`、`inactiveBackground`、`inactiveBorder`、`inactiveForeground`，收口 Button 对 `reference brand blue` 的直接消费
+- `packages/tokens/src/spacing.ts`：新增 `spacing.semantic.borderWidthHairline`，并为 `spacing.component.button` 扩展 `xl / l / m / s / xs / mini` 六档高度、宽度、内部 `paddingX` 与 `spinnerSize`
+- `packages/tokens/src/motion.ts` + `packages/tokens/src/index.ts`：新增并导出 `motion / duration / easing / distance`，承接 Button transition、spinner rotation 与 press offset
+- `packages/tokens/src/web-vars.css`：同步补齐上述颜色、border width、Button 尺寸与 motion 的 Web CSS variables 镜像
+- `packages/components/src/button/Button.tsx`：Button H5 实现改为消费新全局 token；移除直接 `reference token` 与尺寸硬编码；`xl/l` 在 `block` 场景下切到 `paddingXFluidMin`
+- `packages/components/src/button/Button.module.css`：transition、spinner size、active 位移全部改为消费 token 映射值，不再直接写死 `120ms / 1000ms / 1px / 20px`
+- `packages/adapters/src/rn/button.tsx`：RN adapter 同步改为消费新全局 token；颜色、hairline 边框与六档尺寸规格对齐 H5，并修正 `block` 场景被固定宽度覆盖的问题
+
+### 验证
+- `ReadLints`：`packages/tokens/src`、`packages/components/src/button`、`packages/adapters/src/rn/button.tsx` 无新增 linter 问题
+- `pnpm --filter @fdesign/tokens build && pnpm --filter @fdesign/components build && pnpm --filter @fdesign/adapters build`
+- 本地 stage dev server 已重新编译成功，Button 页 DOM 内容存在；浏览器侧仍观察到页面内容被头部区域遮挡，属于后续需单独排查的 stage 布局问题

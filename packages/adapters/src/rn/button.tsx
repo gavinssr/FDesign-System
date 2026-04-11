@@ -28,7 +28,7 @@ interface ViewLikeProps {
 
 interface ActivityIndicatorLikeProps {
   color?: string;
-  size?: 'small' | 'large';
+  size?: 'small' | 'large' | number;
 }
 
 export interface ReactNativeButtonPrimitives {
@@ -45,10 +45,13 @@ export interface ReactNativeButtonRenderSpec {
   disabled: boolean;
   labelStyle: ReactNativeStyle[];
   loading: boolean;
+  loadingContentStyle: ReactNativeStyle;
+  loadingLabelStyle: ReactNativeStyle[];
   onPress?: () => void;
+  preserveDefaultWidthWithLoadingLabel: boolean;
   showSpinner: boolean;
   spinnerColor: string;
-  spinnerSize: 'small' | 'large';
+  spinnerSize: number;
   spinnerStyle: ReactNativeStyle;
 }
 
@@ -78,18 +81,38 @@ function getButtonState({
 }
 
 const sizeContainerStyles: Record<ButtonSize, ReactNativeStyle> = {
-  xl: { minHeight: 48, paddingHorizontal: spacing.scale[10] },
-  l: { minHeight: 44, paddingHorizontal: spacing.scale[10] },
-  m: { minHeight: 36, paddingHorizontal: 38 },
-  s: { minHeight: 28, paddingHorizontal: 12 },
-  xs: { minHeight: 24, paddingHorizontal: 10 },
-  mini: { minHeight: 16, paddingHorizontal: 6 },
+  xl: {
+    minHeight: spacing.component.button.xl.minHeight,
+    width: spacing.component.button.xl.width,
+    paddingHorizontal: spacing.component.button.xl.paddingXFixed,
+  },
+  l: {
+    minHeight: spacing.component.button.l.minHeight,
+    width: spacing.component.button.l.width,
+    paddingHorizontal: spacing.component.button.l.paddingXFixed,
+  },
+  m: {
+    minHeight: spacing.component.button.m.minHeight,
+    paddingHorizontal: spacing.component.button.m.paddingXDefault,
+  },
+  s: {
+    minHeight: spacing.component.button.s.minHeight,
+    paddingHorizontal: spacing.component.button.s.paddingXDefault,
+  },
+  xs: {
+    minHeight: spacing.component.button.xs.minHeight,
+    paddingHorizontal: spacing.component.button.xs.paddingXDefault,
+  },
+  mini: {
+    minHeight: spacing.component.button.mini.minHeight,
+    paddingHorizontal: spacing.component.button.mini.paddingXDefault,
+  },
 };
 
 const sizeLabelStyles: Record<ButtonSize, ReactNativeStyle> = {
   xl: { fontSize: typography.size.increase, lineHeight: typography.lineHeight.singleLine.increase },
   l: { fontSize: typography.size.increase, lineHeight: typography.lineHeight.singleLine.increase },
-  m: { fontSize: typography.size.further, lineHeight: typography.lineHeight.singleLine.further },
+  m: { fontSize: typography.size.base, lineHeight: typography.lineHeight.singleLine.base },
   s: { fontSize: typography.size.base, lineHeight: typography.lineHeight.singleLine.base },
   xs: { fontSize: typography.size.base, lineHeight: typography.lineHeight.singleLine.base },
   mini: { fontSize: typography.size.min, lineHeight: typography.lineHeight.singleLine.min },
@@ -104,13 +127,13 @@ const sizeRadii: Record<ButtonSize, number> = {
   mini: radii.small,
 };
 
-const sizeSpinner: Record<ButtonSize, { show: boolean; size: 'small' | 'large' }> = {
-  xl: { show: true, size: 'large' },
-  l: { show: true, size: 'large' },
-  m: { show: false, size: 'small' },
-  s: { show: false, size: 'small' },
-  xs: { show: false, size: 'small' },
-  mini: { show: false, size: 'small' },
+const sizeSpinner: Record<ButtonSize, { show: boolean; size: number }> = {
+  xl: { show: true, size: spacing.component.button.xl.spinnerSize },
+  l: { show: true, size: spacing.component.button.l.spinnerSize },
+  m: { show: true, size: spacing.component.button.m.spinnerSize },
+  s: { show: true, size: spacing.component.button.s.spinnerSize },
+  xs: { show: true, size: spacing.component.button.xs.spinnerSize },
+  mini: { show: true, size: spacing.component.button.mini.spinnerSize },
 };
 
 const stateVariantStyles: Record<ButtonVariant, Record<ButtonState, { container: ReactNativeStyle; label: ReactNativeStyle }>> = {
@@ -124,7 +147,11 @@ const stateVariantStyles: Record<ButtonVariant, Record<ButtonState, { container:
       label: { color: colors.semantic.action.primary.foreground },
     },
     inactive: {
-      container: { backgroundColor: colors.reference.brand.blue[4], borderColor: 'transparent', borderWidth: 0 },
+      container: {
+        backgroundColor: colors.semantic.action.primary.inactiveBackground,
+        borderColor: 'transparent',
+        borderWidth: 0,
+      },
       label: { color: colors.semantic.action.primary.foreground },
     },
     disabled: {
@@ -134,37 +161,69 @@ const stateVariantStyles: Record<ButtonVariant, Record<ButtonState, { container:
   },
   'primary-outline': {
     default: {
-      container: { backgroundColor: 'transparent', borderColor: colors.semantic.action.primary.border, borderWidth: 0.5 },
-      label: { color: colors.semantic.action.primary.foreground },
+      container: {
+        backgroundColor: 'transparent',
+        borderColor: colors.semantic.action.primary.border,
+        borderWidth: spacing.semantic.borderWidthHairline,
+      },
+      label: { color: colors.semantic.action.primary.outlineForeground },
     },
     loading: {
-      container: { backgroundColor: 'transparent', borderColor: colors.semantic.action.primary.border, borderWidth: 0.5 },
-      label: { color: colors.semantic.action.primary.foreground },
+      container: {
+        backgroundColor: 'transparent',
+        borderColor: colors.semantic.action.primary.border,
+        borderWidth: spacing.semantic.borderWidthHairline,
+      },
+      label: { color: colors.semantic.action.primary.outlineForeground },
     },
     inactive: {
-      container: { backgroundColor: 'transparent', borderColor: colors.reference.brand.blue[4], borderWidth: 0.5 },
-      label: { color: colors.reference.brand.blue[4] },
+      container: {
+        backgroundColor: 'transparent',
+        borderColor: colors.semantic.action.primary.inactiveBorder,
+        borderWidth: spacing.semantic.borderWidthHairline,
+      },
+      label: { color: colors.semantic.action.primary.inactiveForeground },
     },
     disabled: {
-      container: { backgroundColor: 'transparent', borderColor: colors.semantic.border.strong, borderWidth: 0.5 },
+      container: {
+        backgroundColor: 'transparent',
+        borderColor: colors.semantic.border.strong,
+        borderWidth: spacing.semantic.borderWidthHairline,
+      },
       label: { color: colors.semantic.text.disabled },
     },
   },
   'secondary-outline': {
     default: {
-      container: { backgroundColor: colors.semantic.surface.base, borderColor: colors.semantic.border.subtle, borderWidth: 0.5 },
+      container: {
+        backgroundColor: colors.semantic.surface.base,
+        borderColor: colors.semantic.border.subtle,
+        borderWidth: spacing.semantic.borderWidthHairline,
+      },
       label: { color: colors.semantic.text.primary },
     },
     loading: {
-      container: { backgroundColor: colors.semantic.surface.base, borderColor: colors.semantic.border.subtle, borderWidth: 0.5 },
+      container: {
+        backgroundColor: colors.semantic.surface.base,
+        borderColor: colors.semantic.border.subtle,
+        borderWidth: spacing.semantic.borderWidthHairline,
+      },
       label: { color: colors.semantic.text.primary },
     },
     inactive: {
-      container: { backgroundColor: colors.semantic.surface.base, borderColor: colors.semantic.border.subtle, borderWidth: 0.5 },
+      container: {
+        backgroundColor: colors.semantic.surface.base,
+        borderColor: colors.semantic.border.subtle,
+        borderWidth: spacing.semantic.borderWidthHairline,
+      },
       label: { color: colors.semantic.text.tertiary },
     },
     disabled: {
-      container: { backgroundColor: colors.semantic.action.primary.disabled, borderColor: colors.semantic.border.subtle, borderWidth: 0.5 },
+      container: {
+        backgroundColor: colors.semantic.action.primary.disabled,
+        borderColor: colors.semantic.border.subtle,
+        borderWidth: spacing.semantic.borderWidthHairline,
+      },
       label: { color: colors.semantic.text.disabled },
     },
   },
@@ -183,6 +242,27 @@ export function getReactNativeButtonRenderSpec({
   const isInactive = state !== 'default';
   const variantStateStyle = stateVariantStyles[variant][state];
   const spinner = sizeSpinner[size];
+  const preserveDefaultWidthWithLoadingLabel = loading && spinner.show && size === 'm';
+  const loadingLabelStyle =
+    loading && size === 'm'
+      ? {
+          fontSize: typography.size.further,
+          lineHeight: typography.lineHeight.singleLine.further,
+        }
+      : sizeLabelStyles[size];
+  const sizeContainerStyle = {
+    ...sizeContainerStyles[size],
+    ...(block
+      ? {
+          width: '100%',
+          ...(size === 'xl'
+            ? { paddingHorizontal: spacing.component.button.xl.paddingXFluidMin }
+            : size === 'l'
+              ? { paddingHorizontal: spacing.component.button.l.paddingXFluidMin }
+              : {}),
+        }
+      : {}),
+  };
 
   return {
     accessibilityState: {
@@ -193,6 +273,7 @@ export function getReactNativeButtonRenderSpec({
       alignItems: 'center',
       flexDirection: 'row',
       justifyContent: 'center',
+      position: preserveDefaultWidthWithLoadingLabel ? 'relative' : undefined,
     },
     containerStyle: [
       {
@@ -203,22 +284,43 @@ export function getReactNativeButtonRenderSpec({
         width: block ? '100%' : 'auto',
       },
       variantStateStyle.container,
-      sizeContainerStyles[size],
+      sizeContainerStyle,
     ],
     disabled: isInactive,
     labelStyle: [
       {
         fontWeight: typography.weight.medium,
+        opacity: preserveDefaultWidthWithLoadingLabel ? 0 : 1,
       },
       variantStateStyle.label,
       sizeLabelStyles[size],
     ],
     loading,
+    loadingContentStyle: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      gap: spacing.semantic.gapBetweenButtons,
+      justifyContent: 'center',
+      left: '50%',
+      position: preserveDefaultWidthWithLoadingLabel ? 'absolute' : undefined,
+      top: '50%',
+      transform: preserveDefaultWidthWithLoadingLabel ? 'translate(-50%, -50%)' : undefined,
+    },
+    loadingLabelStyle: [
+      {
+        fontWeight: typography.weight.medium,
+      },
+      variantStateStyle.label,
+      loadingLabelStyle,
+    ],
     showSpinner: loading && spinner.show,
     onPress: isInactive ? undefined : onPress,
+    preserveDefaultWidthWithLoadingLabel,
     spinnerColor: (variantStateStyle.label.color as string | undefined) ?? colors.semantic.text.inversePrimary,
     spinnerSize: spinner.size,
     spinnerStyle: {
+      width: spinner.size,
+      height: spinner.size,
       marginRight: spacing.semantic.gapBetweenButtons,
     },
   };
@@ -244,7 +346,19 @@ export function createReactNativeButtonAdapter({
       >
         <View style={spec.contentStyle}>
           {spec.showSpinner ? (
-            ActivityIndicator ? (
+            spec.preserveDefaultWidthWithLoadingLabel ? (
+              <View style={spec.loadingContentStyle}>
+                {ActivityIndicator ? (
+                  <ActivityIndicator
+                    color={spec.spinnerColor}
+                    size={spec.spinnerSize}
+                  />
+                ) : (
+                  <Text style={spec.spinnerStyle}>...</Text>
+                )}
+                <Text style={spec.loadingLabelStyle}>{children}</Text>
+              </View>
+            ) : ActivityIndicator ? (
               <ActivityIndicator
                 color={spec.spinnerColor}
                 size={spec.spinnerSize}

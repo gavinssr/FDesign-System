@@ -48,7 +48,7 @@ function ActivityIndicator({
   size,
 }: {
   color?: string;
-  size?: 'small' | 'large';
+  size?: 'small' | 'large' | number;
 }) {
   return <span data-spinner={`${size ?? 'small'}:${color ?? 'none'}`}>spinner</span>;
 }
@@ -65,7 +65,7 @@ describe('React Native button adapter', () => {
 
     expect(spec.disabled).toBe(true);
     expect(spec.accessibilityState).toEqual({ busy: true, disabled: true });
-    expect(spec.spinnerSize).toBe('large');
+    expect(spec.spinnerSize).toBe(20);
     expect(spec.showSpinner).toBe(true);
     expect(spec.containerStyle[0]).toMatchObject({
       alignSelf: 'stretch',

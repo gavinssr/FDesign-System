@@ -1,4 +1,4 @@
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const [sourceDirArg, outputDirArg] = process.argv.slice(2);
@@ -62,5 +62,29 @@ async function rewriteDistCssImports(currentDir) {
   }
 }
 
+async function copyStaticAssets(currentDir) {
+  const entries = await readdir(currentDir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const sourcePath = path.join(currentDir, entry.name);
+
+    if (entry.isDirectory()) {
+      await copyStaticAssets(sourcePath);
+      continue;
+    }
+
+    if (entry.name.endsWith('.module.css') || entry.name.endsWith('.ts') || entry.name.endsWith('.tsx')) {
+      continue;
+    }
+
+    const relativePath = path.relative(sourceDir, sourcePath);
+    const targetPath = path.join(outputDir, relativePath);
+
+    await mkdir(path.dirname(targetPath), { recursive: true });
+    await copyFile(sourcePath, targetPath);
+  }
+}
+
 await copyCssModules(sourceDir);
 await rewriteDistCssImports(outputDir);
+await copyStaticAssets(sourceDir);

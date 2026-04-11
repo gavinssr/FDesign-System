@@ -127,9 +127,13 @@ export const semanticColors = {
       borderHover: referenceColors.brand.blue[7],
       borderActive: referenceColors.brand.blue[9],
       foreground: referenceColors.neutral.white[1],
+      outlineForeground: referenceColors.brand.blue[8],
       subtleBackground: referenceColors.brand.blue[1],
       subtleBorder: referenceColors.brand.blue[3],
       subtleForeground: referenceColors.brand.blue[8],
+      inactiveBackground: referenceColors.brand.blue[4],
+      inactiveBorder: referenceColors.brand.blue[4],
+      inactiveForeground: referenceColors.brand.blue[4],
       disabled: referenceColors.neutral.gray[6],
     },
     success: {

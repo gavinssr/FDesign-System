@@ -27,6 +27,7 @@ export const spacingSemantic = {
   gapCellIconLeadingY: 14,
   gapRowCompactY: 12,
   gapRowRegularY: 14,
+  borderWidthHairline: 0.5,
 } as const;
 
 export const spacingComponent = {
@@ -41,6 +42,41 @@ export const spacingComponent = {
       sm: spacingScale[32],
       md: spacingScale[40],
       lg: spacingScale[40],
+    },
+    xl: {
+      minHeight: 48,
+      width: 355,
+      paddingXFixed: spacingScale[0],
+      paddingXFluidMin: spacingScale[16],
+      spinnerSize: 20,
+    },
+    l: {
+      minHeight: 44,
+      width: 327,
+      paddingXFixed: spacingScale[0],
+      paddingXFluidMin: spacingScale[16],
+      spinnerSize: 20,
+    },
+    m: {
+      minHeight: 36,
+      paddingXDefault: 38,
+      paddingXMin: spacingScale[12],
+      spinnerSize: 18,
+    },
+    s: {
+      minHeight: 28,
+      paddingXDefault: spacingScale[12],
+      spinnerSize: 16,
+    },
+    xs: {
+      minHeight: 24,
+      paddingXDefault: spacingScale[10],
+      spinnerSize: 16,
+    },
+    mini: {
+      minHeight: 16,
+      paddingXDefault: 6,
+      spinnerSize: 12,
     },
   },
   input: {

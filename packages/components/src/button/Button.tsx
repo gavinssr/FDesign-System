@@ -1,5 +1,5 @@
 import { Text, View } from '@tarojs/components';
-import { colors, radii, spacing, typography } from '@fdesign/tokens';
+import { colors, motion, radii, spacing, typography } from '@fdesign/tokens';
 import type { CSSProperties } from 'react';
 
 import type { ButtonProps } from './Button.types';
@@ -20,12 +20,22 @@ type ButtonStyleVars = CSSProperties &
     | '--button-border-width'
     | '--button-fg'
     | '--button-radius'
-    | '--button-gap'
+    | '--button-content-gap'
     | '--button-padding-x'
+    | '--button-padding-x-min'
+    | '--button-padding-x-effective'
     | '--button-min-height'
     | '--button-font-size'
     | '--button-line-height'
-    | '--button-font-weight',
+    | '--button-font-weight'
+    | '--button-width'
+    | '--button-min-width'
+    | '--button-max-width'
+    | '--button-spinner-size'
+    | '--button-transition-duration'
+    | '--button-transition-easing'
+    | '--button-spinner-duration'
+    | '--button-press-offset-y',
     string
   >;
 
@@ -72,7 +82,7 @@ const variantStyles: Record<
     '--button-border': 'transparent',
     '--button-border-hover': 'transparent',
     '--button-border-active': 'transparent',
-    '--button-border-width': '0px',
+    '--button-border-width': `${spacing.scale[0]}px`,
     '--button-fg': colors.semantic.action.primary.foreground,
   },
   'primary-outline': {
@@ -82,8 +92,8 @@ const variantStyles: Record<
     '--button-border': colors.semantic.action.primary.border,
     '--button-border-hover': colors.semantic.action.primary.border,
     '--button-border-active': colors.semantic.action.primary.border,
-    '--button-border-width': '0.5px',
-    '--button-fg': colors.semantic.action.primary.foreground,
+    '--button-border-width': `${spacing.semantic.borderWidthHairline}px`,
+    '--button-fg': colors.semantic.action.primary.outlineForeground,
   },
   'secondary-outline': {
     '--button-bg': colors.semantic.surface.base,
@@ -92,7 +102,7 @@ const variantStyles: Record<
     '--button-border': colors.semantic.border.subtle,
     '--button-border-hover': colors.semantic.border.subtle,
     '--button-border-active': colors.semantic.border.subtle,
-    '--button-border-width': '0.5px',
+    '--button-border-width': `${spacing.semantic.borderWidthHairline}px`,
     '--button-fg': colors.semantic.text.primary,
   },
 };
@@ -101,54 +111,89 @@ const sizeStyles: Record<
   ButtonSize,
   Pick<
     ButtonStyleVars,
-    | '--button-gap'
+    | '--button-content-gap'
     | '--button-padding-x'
+    | '--button-padding-x-min'
     | '--button-min-height'
     | '--button-font-size'
     | '--button-line-height'
+    | '--button-width'
+    | '--button-min-width'
+    | '--button-max-width'
+    | '--button-spinner-size'
   >
 > = {
   xl: {
-    '--button-gap': `${spacing.semantic.gapBetweenButtons}px`,
-    '--button-padding-x': `${spacing.scale[10]}px`,
-    '--button-min-height': '48px',
+    '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
+    '--button-padding-x': `${spacing.component.button.xl.paddingXFixed}px`,
+    '--button-padding-x-min': `${spacing.component.button.xl.paddingXFluidMin}px`,
+    '--button-min-height': `${spacing.component.button.xl.minHeight}px`,
     '--button-font-size': `${typography.size.increase}px`,
     '--button-line-height': `${typography.lineHeight.singleLine.increase}px`,
+    '--button-width': `${spacing.component.button.xl.width}px`,
+    '--button-min-width': 'auto',
+    '--button-max-width': 'none',
+    '--button-spinner-size': `${spacing.component.button.xl.spinnerSize}px`,
   },
   l: {
-    '--button-gap': `${spacing.semantic.gapBetweenButtons}px`,
-    '--button-padding-x': `${spacing.scale[10]}px`,
-    '--button-min-height': '44px',
+    '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
+    '--button-padding-x': `${spacing.component.button.l.paddingXFixed}px`,
+    '--button-padding-x-min': `${spacing.component.button.l.paddingXFluidMin}px`,
+    '--button-min-height': `${spacing.component.button.l.minHeight}px`,
     '--button-font-size': `${typography.size.increase}px`,
     '--button-line-height': `${typography.lineHeight.singleLine.increase}px`,
+    '--button-width': `${spacing.component.button.l.width}px`,
+    '--button-min-width': 'auto',
+    '--button-max-width': 'none',
+    '--button-spinner-size': `${spacing.component.button.l.spinnerSize}px`,
   },
   m: {
-    '--button-gap': `${spacing.semantic.gapBetweenButtons}px`,
-    '--button-padding-x': '38px',
-    '--button-min-height': '36px',
-    '--button-font-size': `${typography.size.further}px`,
-    '--button-line-height': `${typography.lineHeight.singleLine.further}px`,
+    '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
+    '--button-padding-x': `${spacing.component.button.m.paddingXDefault}px`,
+    '--button-padding-x-min': `${spacing.component.button.m.paddingXMin}px`,
+    '--button-min-height': `${spacing.component.button.m.minHeight}px`,
+    '--button-font-size': `${typography.size.base}px`,
+    '--button-line-height': `${typography.lineHeight.singleLine.base}px`,
+    '--button-width': 'auto',
+    '--button-min-width': 'auto',
+    '--button-max-width': 'none',
+    '--button-spinner-size': `${spacing.component.button.m.spinnerSize}px`,
   },
   s: {
-    '--button-gap': '0px',
-    '--button-padding-x': '12px',
-    '--button-min-height': '28px',
+    '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
+    '--button-padding-x': `${spacing.component.button.s.paddingXDefault}px`,
+    '--button-padding-x-min': `${spacing.component.button.s.paddingXDefault}px`,
+    '--button-min-height': `${spacing.component.button.s.minHeight}px`,
     '--button-font-size': `${typography.size.base}px`,
     '--button-line-height': `${typography.lineHeight.singleLine.base}px`,
+    '--button-width': 'auto',
+    '--button-min-width': 'auto',
+    '--button-max-width': 'none',
+    '--button-spinner-size': `${spacing.component.button.s.spinnerSize}px`,
   },
   xs: {
-    '--button-gap': '0px',
-    '--button-padding-x': '10px',
-    '--button-min-height': '24px',
+    '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
+    '--button-padding-x': `${spacing.component.button.xs.paddingXDefault}px`,
+    '--button-padding-x-min': `${spacing.component.button.xs.paddingXDefault}px`,
+    '--button-min-height': `${spacing.component.button.xs.minHeight}px`,
     '--button-font-size': `${typography.size.base}px`,
     '--button-line-height': `${typography.lineHeight.singleLine.base}px`,
+    '--button-width': 'auto',
+    '--button-min-width': 'auto',
+    '--button-max-width': 'none',
+    '--button-spinner-size': `${spacing.component.button.xs.spinnerSize}px`,
   },
   mini: {
-    '--button-gap': '0px',
-    '--button-padding-x': '6px',
-    '--button-min-height': '16px',
+    '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
+    '--button-padding-x': `${spacing.component.button.mini.paddingXDefault}px`,
+    '--button-padding-x-min': `${spacing.component.button.mini.paddingXDefault}px`,
+    '--button-min-height': `${spacing.component.button.mini.minHeight}px`,
     '--button-font-size': `${typography.size.min}px`,
     '--button-line-height': `${typography.lineHeight.singleLine.min}px`,
+    '--button-width': 'auto',
+    '--button-min-width': 'auto',
+    '--button-max-width': 'none',
+    '--button-spinner-size': `${spacing.component.button.mini.spinnerSize}px`,
   },
 };
 
@@ -174,9 +219,9 @@ const stateStyles: Record<
     loading: variantStyles['primary-fill'],
     inactive: {
       ...variantStyles['primary-fill'],
-      '--button-bg': colors.reference.brand.blue[4],
-      '--button-bg-hover': colors.reference.brand.blue[4],
-      '--button-bg-active': colors.reference.brand.blue[4],
+      '--button-bg': colors.semantic.action.primary.inactiveBackground,
+      '--button-bg-hover': colors.semantic.action.primary.inactiveBackground,
+      '--button-bg-active': colors.semantic.action.primary.inactiveBackground,
     },
     disabled: {
       ...variantStyles['primary-fill'],
@@ -187,14 +232,20 @@ const stateStyles: Record<
     },
   },
   'primary-outline': {
-    default: variantStyles['primary-outline'],
-    loading: variantStyles['primary-outline'],
+    default: {
+      ...variantStyles['primary-outline'],
+      '--button-fg': colors.semantic.action.primary.outlineForeground,
+    },
+    loading: {
+      ...variantStyles['primary-outline'],
+      '--button-fg': colors.semantic.action.primary.outlineForeground,
+    },
     inactive: {
       ...variantStyles['primary-outline'],
-      '--button-border': colors.reference.brand.blue[4],
-      '--button-border-hover': colors.reference.brand.blue[4],
-      '--button-border-active': colors.reference.brand.blue[4],
-      '--button-fg': colors.reference.brand.blue[4],
+      '--button-border': colors.semantic.action.primary.inactiveBorder,
+      '--button-border-hover': colors.semantic.action.primary.inactiveBorder,
+      '--button-border-active': colors.semantic.action.primary.inactiveBorder,
+      '--button-fg': colors.semantic.action.primary.inactiveForeground,
     },
     disabled: {
       ...variantStyles['primary-outline'],
@@ -231,12 +282,20 @@ const sizeRadii: Record<ButtonSize, number> = {
 };
 
 const sizeSpinner: Record<ButtonSize, { show: boolean; size: string }> = {
-  xl: { show: true, size: '20px' },
-  l: { show: true, size: '20px' },
-  m: { show: false, size: '0px' },
-  s: { show: false, size: '0px' },
-  xs: { show: false, size: '0px' },
-  mini: { show: false, size: '0px' },
+  xl: { show: true, size: `${spacing.component.button.xl.spinnerSize}px` },
+  l: { show: true, size: `${spacing.component.button.l.spinnerSize}px` },
+  m: { show: true, size: `${spacing.component.button.m.spinnerSize}px` },
+  s: { show: true, size: `${spacing.component.button.s.spinnerSize}px` },
+  xs: { show: true, size: `${spacing.component.button.xs.spinnerSize}px` },
+  mini: { show: true, size: `${spacing.component.button.mini.spinnerSize}px` },
+};
+const compactLoadingSizes: Record<ButtonSize, boolean> = {
+  xl: false,
+  l: false,
+  m: false,
+  s: true,
+  xs: true,
+  mini: true,
 };
 
 export function Button({
@@ -255,7 +314,13 @@ export function Button({
   const currentSizeStyles = sizeStyles[size];
   const currentRadius = sizeRadii[size];
   const spinner = sizeSpinner[size];
+  const preserveDefaultWidthWithLoadingLabel = loading && spinner.show && size === 'm';
+  const hideLabelWhenLoading = loading && spinner.show && compactLoadingSizes[size];
   const useCssVariables = shouldUseCssVariables();
+  const currentPaddingX =
+    block && (size === 'xl' || size === 'l')
+      ? currentSizeStyles['--button-padding-x-min']
+      : currentSizeStyles['--button-padding-x'];
 
   const className = [
     'fd-button-root',
@@ -265,7 +330,9 @@ export function Button({
     inactive ? 'fd-button-inactive' : '',
     disabled ? 'fd-button-disabled' : '',
     loading ? 'fd-button-loading' : '',
-    spinner.show ? 'fd-button-loadingWithSpinner' : '',
+    loading && spinner.show ? 'fd-button-loadingWithSpinner' : '',
+    preserveDefaultWidthWithLoadingLabel ? 'fd-button-loadingLockWidth' : '',
+    hideLabelWhenLoading ? 'fd-button-loadingHideLabel' : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -273,15 +340,20 @@ export function Button({
   const styleVars: ButtonStyleVars = {
     ...currentVariantStyles,
     ...currentSizeStyles,
+    '--button-padding-x-effective': currentPaddingX,
     '--button-radius': `${currentRadius}px`,
     '--button-font-weight': typography.weight.medium,
+    '--button-transition-duration': `${motion.duration.fast}ms`,
+    '--button-transition-easing': motion.easing.standard,
+    '--button-spinner-duration': `${motion.duration.spin}ms`,
+    '--button-press-offset-y': `${motion.distance.pressOffsetY}px`,
   };
   const resolvedStyle: CSSProperties = {
     alignItems: 'center',
     justifyContent: 'center',
-    gap: currentSizeStyles['--button-gap'],
+    gap: currentSizeStyles['--button-content-gap'],
     minHeight: currentSizeStyles['--button-min-height'],
-    padding: `0 ${currentSizeStyles['--button-padding-x']}`,
+    padding: `0 ${currentPaddingX}`,
     border: `${currentVariantStyles['--button-border-width']} solid ${currentVariantStyles['--button-border']}`,
     borderRadius: `${currentRadius}px`,
     background: currentVariantStyles['--button-bg'],
@@ -292,8 +364,33 @@ export function Button({
     boxSizing: 'border-box',
     cursor: isNonInteractive ? 'not-allowed' : 'pointer',
     userSelect: 'none',
-    width: block ? '100%' : 'auto',
+    width: block ? '100%' : currentSizeStyles['--button-width'],
+    minWidth: block ? undefined : currentSizeStyles['--button-min-width'],
+    maxWidth: block ? undefined : currentSizeStyles['--button-max-width'],
     display: block ? 'flex' : 'inline-flex',
+  };
+  const defaultLabelStyle: CSSProperties = {
+    color: currentVariantStyles['--button-fg'],
+    fontWeight: typography.weight.medium,
+    fontSize: currentSizeStyles['--button-font-size'],
+    lineHeight: currentSizeStyles['--button-line-height'],
+  };
+  const loadingLabelStyle: CSSProperties = {
+    color: currentVariantStyles['--button-fg'],
+    fontWeight: typography.weight.medium,
+    fontSize:
+      loading && size === 'm'
+        ? `${typography.size.further}px`
+        : currentSizeStyles['--button-font-size'],
+    lineHeight:
+      loading && size === 'm'
+        ? `${typography.lineHeight.singleLine.further}px`
+        : currentSizeStyles['--button-line-height'],
+  };
+  const spinnerStyle: CSSProperties = {
+    width: currentSizeStyles['--button-spinner-size'],
+    height: currentSizeStyles['--button-spinner-size'],
+    color: currentVariantStyles['--button-fg'],
   };
 
   return (
@@ -308,15 +405,41 @@ export function Button({
     >
       {loading && spinner.show ? (
         <>
-          <View
-            className="fd-button-spinner"
-            aria-hidden="true"
-            style={useCssVariables ? undefined : { width: spinner.size, height: spinner.size }}
-          />
+          {hideLabelWhenLoading ? (
+            <View className="fd-button-spinnerAnchor">
+              <View
+                className="fd-button-spinner"
+                aria-hidden="true"
+                style={spinnerStyle}
+              />
+            </View>
+          ) : preserveDefaultWidthWithLoadingLabel ? (
+            <View className="fd-button-loadingContent">
+              <View
+                className="fd-button-spinner"
+                aria-hidden="true"
+                style={spinnerStyle}
+              />
+              <Text className="fd-button-loadingLabel" style={loadingLabelStyle}>
+                {children}
+              </Text>
+            </View>
+          ) : (
+            <View
+              className="fd-button-spinner"
+              aria-hidden="true"
+              style={spinnerStyle}
+            />
+          )}
           <Text className="fd-button-loadingStatus">Loading</Text>
         </>
       ) : null}
-      <Text className="fd-button-label">{children}</Text>
+      <Text
+        className={`fd-button-label ${hideLabelWhenLoading || preserveDefaultWidthWithLoadingLabel ? 'fd-button-labelGhost' : ''}`}
+        style={defaultLabelStyle}
+      >
+        {children}
+      </Text>
     </View>
   );
 }

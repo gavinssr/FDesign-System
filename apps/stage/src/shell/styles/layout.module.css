@@ -220,15 +220,15 @@
 }
 
 .__stage-kvKey {
-  font-size: 12px;
+  font-size: var(--stage-font-size-meta-key);
   font-weight: 500;
   color: var(--stage-text-soft);
   text-transform: uppercase;
 }
 
 .__stage-kvValue {
-  font-size: 14px;
-  line-height: 22px;
+  font-size: var(--stage-font-size-meta-value);
+  line-height: var(--stage-line-height-meta-value);
   color: var(--stage-text);
   word-break: break-word;
 }
@@ -372,7 +372,7 @@
 
 .__stage-galleryGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(390px, 1fr));
   gap: 12px;
 }
 
@@ -394,14 +394,70 @@
 
 .__stage-galleryCardLabel {
   color: var(--stage-text);
-  font-size: 14px;
-  line-height: 20px;
+  font-size: var(--stage-font-size-description);
+  line-height: var(--stage-line-height-description);
   font-weight: 500;
+}
+
+.__stage-overviewRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.__stage-captionedItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.__stage-captionedItem .__stage-metaKey {
+  width: 100%;
+  text-align: center;
+}
+
+.__stage-matrixGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 12px;
+}
+
+.__stage-matrixStack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.__stage-matrixRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.__stage-matrixRow .__stage-metaKey {
+  width: 64px;
+  flex-shrink: 0;
+  text-transform: capitalize;
+}
+
+.__stage-matrixButton {
+  width: 188px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.__stage-matrixButton :global(.fd-button-root) {
+  width: 100%;
 }
 
 .__stage-stack {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
 }
 

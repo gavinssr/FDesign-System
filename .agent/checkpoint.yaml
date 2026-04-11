@@ -1,4 +1,4 @@
-last_session: "2026-04-11T12:00:00Z"
+last_session: "2026-04-11T16:30:00Z"
 current_phase: "phase-5"
 current_focus: "Phase 5 token 收口已落地；同时已启动 apps/stage 舞台层重构，先完成固定顶栏/左侧导航/私有黑白灰壳层与 Button 样板页改造"
 completed:
@@ -60,6 +60,25 @@ notes: |
   24. 已将导航切页由 `navigateTo` 改为 `redirectTo`（失败兜底 `reLaunch`），消除舞台页切换转场
   25. 已进一步清零切页抖动：导航改用 `reLaunch`，并仅对 Taro 路由容器层禁用动画/过渡，不影响组件内部动效
   26. 已将 `__stage-description` 与 `__stage-caption` 字号统一收敛为 12PX，并落到舞台私有 token
+  27. 已修正 Button Gallery 容器拉伸：`__stage-stack` 改为 `align-items: flex-start`，按钮宽度按组件规格显示而非填满卡片列宽
+  28. 已补充 Button 宽度规则：`l` 增加 `178-327` 区间约束（H5 与 RN 同步），`xl` 保持既有行为，其他尺寸保持 padding 驱动的内容自适应
+  29. 已修正 Button `primary-outline` 默认/loading 前景色映射与 loading class 误挂问题，避免非 loading 态携带 `fd-button-loadingWithSpinner`
+  30. 已按 GUIbySpec 收敛 Button 尺寸与素材：`xl/l` 固定宽度切换为 `355/327`，loading 改为设计稿 SVG 动画资源
+  31. 已扩展 `scripts/copy-css-assets.mjs` 以复制组件静态资源到 `dist`，修复 stage 消费 `@fdesign/components/dist` 时的 SVG 解析失败
+  32. 已按最新要求移除 stage Button 页的 `Playground / 实时预览` 与 `Verification / 辅助验证` 模块，仅保留核心设计对照内容
+  33. 已将 Button 总览重组为四块收纳：类型（L+default）、尺寸（primary-fill+default）、状态矩阵（L 尺寸）、不同尺寸 loading（primary-outline）
+  34. 总览新增灰色标注文案统一复用 `__stage-metaKey`，并在状态矩阵中改为按钮左侧标注状态名称
+  35. 已将状态矩阵行改为两端自动布局并固定按钮列宽，确保不同状态按钮在矩阵内等宽展示
+  36. 已收敛 Button 文案样式：`m/s` 为 `12/14`、`xs/mini` 为 `10/11`（字重保持 `500`）
+  37. 已将 `m/s/xs/mini` loading 纳入 spinner 展示规则，并同步到 RN adapter
+  38. 已将舞台页按钮文案统一为“操作文本”
+  39. 已在 Button 本体实现小尺寸 loading 隐文案占位策略：`m/s/xs/mini` 可见文案隐藏但按钮宽度保持原文案态
+  40. 状态矩阵按钮已以 default 宽度为基准统一展示（固定按钮列宽并撑满）
+  41. 已将 stage 残留裸写小写 `px` 文本样式收敛到舞台私有字号 token；`__stage-galleryCardLabel` 已与 `__stage-description` 使用同一真实 `12PX/18PX` 链路
+  42. 用户已修正规治理约束：组件样式值优先来自本项目全局 token；若设计稿值暂找不到可用 token，需先询问用户确认，才可临时用硬编码或 reference token 落地，但必须在当前任务收尾前完成语义抽取、补齐全局 token 并回灌组件
+  43. 已完成 Button token 收口第一轮：新增 `primary.outline/inactive` 颜色语义位、Button 六档 spacing token、hairline 边框语义位与 motion token，并同步回灌 H5 Button 与 RN adapter
+  44. 本轮 `pnpm --filter @fdesign/tokens build`、`pnpm --filter @fdesign/components build`、`pnpm --filter @fdesign/adapters build` 通过，`ReadLints` 无新增问题
+  45. 本地 stage Button 页 DOM 已确认存在且 webpack 编译成功；浏览器侧仍观察到内容被头部区域遮挡，需后续单独排查 stage 布局覆盖问题
 
   本轮取消事项：
   1. 用户已明确取消“Phase 4 扩展：RN 运行态验证”

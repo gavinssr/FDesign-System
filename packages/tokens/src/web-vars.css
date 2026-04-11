@@ -13,8 +13,12 @@
   --fd-color-primary-background: #4d83ff;
   --fd-color-primary-background-subtle: #f2f6ff;
   --fd-color-primary-border: #ccdbff;
+  --fd-color-primary-outline-foreground: #4d83ff;
   --fd-color-primary-foreground: #4d83ff;
   --fd-color-primary-foreground-inverse: #ffffff;
+  --fd-color-primary-inactive-background: #b2caff;
+  --fd-color-primary-inactive-border: #b2caff;
+  --fd-color-primary-inactive-foreground: #b2caff;
   --fd-radius-small: 2px;
   --fd-radius-default: 4px;
   --fd-radius-large: 8px;
@@ -26,8 +30,32 @@
   --fd-space-16: 16px;
   --fd-space-32: 32px;
   --fd-space-40: 40px;
+  --fd-border-width-hairline: 0.5px;
   --fd-gap-row-compact: 12px;
   --fd-gap-row-regular: 14px;
+  --fd-button-xl-min-height: 48px;
+  --fd-button-xl-width: 355px;
+  --fd-button-xl-padding-x-fixed: 0px;
+  --fd-button-xl-padding-x-fluid-min: 16px;
+  --fd-button-xl-spinner-size: 20px;
+  --fd-button-l-min-height: 44px;
+  --fd-button-l-width: 327px;
+  --fd-button-l-padding-x-fixed: 0px;
+  --fd-button-l-padding-x-fluid-min: 16px;
+  --fd-button-l-spinner-size: 20px;
+  --fd-button-m-min-height: 36px;
+  --fd-button-m-padding-x-default: 38px;
+  --fd-button-m-padding-x-min: 12px;
+  --fd-button-m-spinner-size: 18px;
+  --fd-button-s-min-height: 28px;
+  --fd-button-s-padding-x-default: 12px;
+  --fd-button-s-spinner-size: 16px;
+  --fd-button-xs-min-height: 24px;
+  --fd-button-xs-padding-x-default: 10px;
+  --fd-button-xs-spinner-size: 16px;
+  --fd-button-mini-min-height: 16px;
+  --fd-button-mini-padding-x-default: 6px;
+  --fd-button-mini-spinner-size: 12px;
   --fd-font-family-text:
     PingFang SC,
     Noto Sans SC,
@@ -52,6 +80,10 @@
   --fd-line-height-body-base: 18px;
   --fd-line-height-body-further: 22px;
   --fd-line-height-body-increase: 24px;
+  --fd-motion-duration-fast: 120ms;
+  --fd-motion-duration-spin: 1000ms;
+  --fd-motion-easing-standard: ease;
+  --fd-motion-distance-press-offset-y: 1px;
   --fd-shadow-surface: 0px 4px 26px 0px rgba(0, 0, 0, 0.04),
     0px 8px 30px 2px rgba(0, 0, 0, 0.08);
 }
