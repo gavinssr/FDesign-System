@@ -1,15 +1,44 @@
-# Phase 5：Token 协议抽取与映射方案
+# Phase 5：长期滚动主计划（Token 协议与组件对齐）
 
-> 本文件承接用户已提供的 `vars.css` 与回填备注。
-> 当前目标不是立即实施组件改造，而是先把 token 协议与仓库映射方案固化为可审阅、可延续的项目文档。
-> 在用户再次明确确认前，不进入仓库内 token 与组件实现改造。
+> 本文件是 Phase 5 的唯一 active 入口。
+> 它不是一次性收口清单，而是跨组件、跨对话长期滚动维护的主计划。
+> `checkpoint.yaml` 只记录当前工作窗口；长期协议、批次顺序与滚动 backlog 统一收敛到本文件。
 
-## 当前结论
+## 文档定位
 
-- Phase 5 已进入 token 收口前置阶段，不再处于“仅等待 Figma 输入”的待机态
-- `vars.css` 已提供颜色、字体、圆角、阴影基础定义，并由用户补齐了 spacing、字体、line-height 与协议备注
-- 本轮输入已经不仅是 token 值，还包含可直接落地的设计使用协议
-- 后续仓库实现必须同时遵循“值映射”和“协议约束”，不能只做数值替换
+- 记录 Phase 5 的长期稳定约束：token 协议、分层策略、不可回退决策
+- 记录当前事实快照：已经落地到什么程度，哪些组件还在迭代中
+- 记录当前工作窗口：本轮应优先处理什么
+- 记录滚动 backlog：后续组件与 token 缺口按批次持续推进
+
+## 状态词口径
+
+- 阶段层：只使用 `进行中`、`已完成`
+- 组件批次层：优先使用 `已落地首轮`、`收尾中`、`可冻结`
+- `已落地首轮`：核心实现已进仓并能继续作为后续迭代基础
+- `收尾中`：首轮已落地，但仍有当前批次内的展示、映射或体验问题待继续校正
+- `可冻结`：当前批次目标已达成，可暂时停止主动调整，后续只接受新输入驱动的增量修正
+
+## 当前事实快照
+
+- Phase 5 已启动，且已从“等待 Figma 输入”切换到长期滚动执行
+- `vars.css` 已提供颜色、字体、圆角、阴影基础定义，并由用户补齐 spacing、字体、line-height 与协议备注
+- 仓库已落地基础全局样式 token 的首轮收口，并已建立 TS 主源 + Web CSS variables 镜像
+- 当前唯一已落地首轮 Figma 对齐的组件是 `Button`
+- `Button` 当前状态为“收尾中”，仍在配合 `apps/stage` 展示效果继续微调
+- 其余组件与其语义 token 仍按批次持续推进，不按一次性全部完成来管理
+
+## 当前工作窗口
+
+- 第一优先级：继续收尾 `Button`，让组件本体与 `apps/stage` 展示效果达到“可冻结”
+- 第二优先级：沿同一协议继续推进 `Text / Input / Tag / Card / Modal / ListItem / Icon`
+- 第三优先级：当新增组件或修正既有组件暴露 token 缺口时，先补齐全局 token 语义，再回灌组件实现
+
+## 滚动 backlog 管理方式
+
+- backlog 只维护到“组件批次 + 主要冲突点”层级，不写成要求一次性清空的 checklist
+- 每完成一个组件批次后，只更新其状态与下一批优先级，不重写整份协议
+- 若当前 focus 发生变化，由 `checkpoint.yaml` 记录短期窗口；本文件只同步结构性变化与阶段性结论
 
 ## 已确认协议
 
@@ -160,27 +189,21 @@
 
 ### 2. 当前已知会受影响的组件
 
-- `Button`
-- `Input`
-- `Text`
-- `Tag`
-- `Card`
-- `Modal`
-- `ListItem`
-- `Icon`
-- `apps/stage` 全局壳层
-- `projects/real-project-1` 全局壳层
+- 第一批：`Button`（已落地首轮对齐，当前收尾中）
+- 第二批：`Text`、`Input`、`Tag`
+- 第三批：`Card`、`Modal`、`ListItem`、`Icon`
+- 横向跟进：`apps/stage` 全局壳层、`projects/real-project-1` 全局壳层
 
 ### 3. 组件级协议映射建议
 
 #### Button
 
-- 已完成 Figma 对齐：Button API 已切换到 `primary-fill / primary-outline / secondary-outline`
-- 已完成 Figma 对齐：size 已切换到 `xl / l / m / s / xs / mini`
-- 已完成 Figma 对齐：新增 `inactive` 状态，并与 `disabled` 分离
-- 已完成 Figma 对齐：`Text.weight` 的历史 `semibold / bold` 不再用于 Button 文案
-- 已完成 Figma 对齐：`xl / l` 使用 `radius=8`，`m / s / xs` 使用 `radius=4`，`mini` 使用 `radius=2`
-- 已完成 Figma 对齐：`loading` 仅在 `xl / l` 渲染 spinner，`m / s / xs / mini` 保持“加载中状态但不展示 spinner”的设计稿行为
+- 已落地首轮对齐：Button API 已切换到 `primary-fill / primary-outline / secondary-outline`
+- 已落地首轮对齐：size 已切换到 `xl / l / m / s / xs / mini`
+- 已落地首轮对齐：新增 `inactive` 状态，并与 `disabled` 分离
+- 已落地首轮对齐：`Text.weight` 的历史 `semibold / bold` 不再用于 Button 文案
+- 已落地首轮对齐：`xl / l` 使用 `radius=8`，`m / s / xs` 使用 `radius=4`，`mini` 使用 `radius=2`
+- 已落地首轮对齐：`loading` 仅在 `xl / l` 渲染 spinner，`m / s / xs / mini` 保持“加载中状态但不展示 spinner”的设计稿行为
 
 #### Input
 
@@ -233,10 +256,17 @@
 
 - 是否需要将“协议层”进一步写入组件 contract 的规则说明
 
-## 后续执行顺序
+## 当前完成判定
 
-1. 用户确认本协议抽取与映射方案
-2. 在仓库内建立新的 TS token 分层与 Web CSS variables 镜像
-3. 已完成：优先改造 `Button` 与公共 token 运行时
-4. 逐个修正其余受影响组件，去除与协议冲突的 radius / font-weight / spacing
-5. 按用户提供的 Figma 链接继续进入后续组件实施
+- `Button` 达到“可冻结”：组件本体、token 映射与 stage 展示在本轮目标内达成一致，且没有待继续收尾的关键视觉问题
+- 某组件进入下一轮：当前组件已达到“可冻结”，后续只接受新输入驱动的增量修正
+- token 一轮达到“已落地首轮”：本轮涉及组件所需的新增语义 token 已从临时值中抽取并回灌，不留长期硬编码或长期 reference token 直连
+
+## 滚动推进顺序
+
+1. 继续维护本文件中的长期协议与批次顺序，不把它当作一次性收口文档
+2. 已落地首轮：建立 TS token 分层与 Web CSS variables 镜像
+3. 已落地首轮：`Button` 与公共 token 运行时
+4. 当前优先：继续收尾 `Button`，同步校正 `apps/stage` 展示效果
+5. 后续按批次推进其余组件，逐步消除与协议冲突的 radius / font-weight / spacing / color 用法
+6. 如用户继续提供 Figma 输入或新的组件范围，再按同一主计划扩展，而不是新开平行 active 文档

@@ -1,6 +1,8 @@
 # Phase 4 H5 / WebView 性能基线
 
+> 归档角色：Phase 4 补充基线记录。
 > 目的：把 Phase 3 中已观察到的 H5 入口体积告警，沉淀为可复核的最小基线。
+> 对应主计划：`docs/exec-plans/completed/phase-4.md`
 
 ## 基线范围
 

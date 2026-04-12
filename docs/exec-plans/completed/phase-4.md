@@ -1,7 +1,9 @@
 # Phase 4: 多端适配 — 执行计划
 
-> 本文件是 Phase 4 的详细执行计划，供 Agent 在新对话中按步骤执行。
-> 准出标准见 docs/ROADMAP.md 的 Phase 4 部分。
+> 归档角色：Phase 4 主执行计划。
+> 本文件记录 Phase 4 当时的主线执行方案，当前保留用于回溯“多端适配主准出”是如何达成的。
+> 准出标准见 `docs/ROADMAP.md` 的 Phase 4 部分。
+> 相关补充归档：`phase-4-h5-webview-baseline.md`、`phase-4-weapp-precheck.md`、`phase-4-weapp-validation.md`
 
 ## 目标
 

@@ -1,6 +1,8 @@
 # Phase 3 补充验收：独立拆出验证
 
-> 本文件用于补充 Phase 3 的显式验收项，验证 `real-project-1` 是否能够在脱离 monorepo 工作区后完成独立 `install / build / run`。
+> 归档角色：Phase 3 补充验收记录。
+> 本文件用于补充 Phase 3 主执行计划，验证 `real-project-1` 是否能够在脱离 monorepo 工作区后完成独立 `install / build / run`。
+> 对应主计划：`docs/exec-plans/completed/phase-3.md`
 
 ## 背景
 

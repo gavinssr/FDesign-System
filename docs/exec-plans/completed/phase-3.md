@@ -1,7 +1,9 @@
 # Phase 3: 真实业务交付闭环 — 执行计划
 
-> 本文件是 Phase 3 的详细执行计划，供 Agent 在新对话中按步骤执行。
-> 准出标准见 docs/ROADMAP.md 的 Phase 3 部分。
+> 归档角色：Phase 3 主执行计划。
+> 本文件记录 Phase 3 当时的主线执行方案，当前保留用于回溯“真实业务交付闭环”是如何达成的。
+> 准出标准见 `docs/ROADMAP.md` 的 Phase 3 部分。
+> 相关补充归档：`docs/exec-plans/completed/phase-3-standalone-verification.md`
 
 ## 目标
 

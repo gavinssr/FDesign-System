@@ -746,3 +746,48 @@
 ### 验证
 - `ReadLints`：`apps/stage/src/shell/styles/layout.module.css` 未发现新增 linter 问题
 
+## 2026-04-12 — 治理层 Phase 5 跟踪准度校正
+
+### 治理变更
+- `docs/ROADMAP.md`：将 Phase 5 从“未开始”校正为“进行中”，并明确其为按需插入、长期滚动推进的工作面
+- `.agent/checkpoint.yaml`：收缩为当前事实快照，移除过长流水账，统一到“当前 focus / 当前约束 / next recommended”口径
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：升级为 Phase 5 唯一长期滚动主计划，补充当前事实快照、当前工作窗口、滚动 backlog 管理方式与完成判定
+- `docs/exec-plans/completed/phase-5-await-figma-input.md`：将旧等待态文档移出 `active/`，改为历史归档记录，避免与当前主计划并列造成歧义
+
+### 说明
+- 本轮未改动组件实现代码；目标仅为校正治理层对实际工程进度的跟踪精度
+- 当前 Phase 5 的统一事实源为：`docs/ROADMAP.md` + `.agent/checkpoint.yaml` + `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
+
+## 2026-04-12 — completed 执行计划归档口径统一
+
+### 治理变更
+- `docs/exec-plans/completed/phase-3.md`：补充“Phase 3 主执行计划”归档角色说明，并指向独立拆出验证补充文档
+- `docs/exec-plans/completed/phase-3-standalone-verification.md`：补充“Phase 3 补充验收记录”定位，并回链主计划
+- `docs/exec-plans/completed/phase-4.md`：补充“Phase 4 主执行计划”归档角色说明，并列出相关补充基线/验证文档
+- `docs/exec-plans/completed/phase-4-h5-webview-baseline.md`、`phase-4-weapp-precheck.md`、`phase-4-weapp-validation.md`：统一补充归档角色与主计划回链
+- `docs/exec-plans/completed/phase-5-await-figma-input.md`：补充“Phase 5 历史等待态记录”归档角色说明
+
+### 说明
+- 本轮不做大规模文件重命名，避免制造新的路径漂移
+- 归档层统一策略改为：保留既有文件名，优先通过文档头部明确“主计划 / 补充验证 / 基线 / 历史等待态”的角色分工
+
+## 2026-04-12 — Phase 5 状态术语收敛
+
+### 治理变更
+- `docs/ROADMAP.md`：为 Phase 5 补充状态词口径说明，并将当前状态表述收敛到“进行中 / 已完成”这一阶段层术语
+- `.agent/checkpoint.yaml`：将当前 focus、事实快照与 next recommended 的措辞统一到“已落地首轮 / 收尾中 / 可冻结”
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：新增“状态词口径”小节，并将 `Button`、token 与当前工作窗口的表述统一到同一套组件批次术语
+
+### 说明
+- 本轮只统一当前事实源中的状态术语，不回写历史文档与历史 changelog 条目
+- 当前约定为：阶段层使用“进行中 / 已完成”；组件批次层使用“已落地首轮 / 收尾中 / 可冻结”
+
+## 2026-04-12 — Phase 5 状态词口径决策入库
+
+### 治理变更
+- `.agent/decisions.log`：追加“Phase 5 状态词口径统一”决策，明确阶段层与组件批次层的状态词边界，并指定 `ROADMAP / checkpoint / active plan` 的职责分工
+
+### 说明
+- 本轮是治理收尾动作，不涉及代码实现调整
+- 至此，Phase 5 的状态词约定已同时落到事实源文档与决策层文档
+
