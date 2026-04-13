@@ -836,3 +836,16 @@
 - 本轮仅调整可折叠一级导航本身的着色，不改动 hover 反馈与二级导航的选中态样式
 - 展开态仍通过箭头方向和二级列表显隐表达状态，不再额外用一级项激活色强调
 
+## 2026-04-13 — stage 组件命名双语格式统一
+
+### 代码变更
+- `apps/stage/src/shell/componentLinks.ts`：统一导航与页面标题中的组件命名格式，将 `English / 中文` 收敛为 `English 中文`
+- `apps/stage/src/pages/button/index.tsx`：同步调整 Button 页标题、Hero 标题与变体命名文案
+- `apps/stage/src/pages/button-flush/index.tsx`、`button-griditem/index.tsx`、`button-text-button/index.tsx`、`button-fab/index.tsx`：同步调整占位页中的组件命名文案
+- `apps/stage/src/pages/text/index.tsx`、`input/index.tsx`、`tag/index.tsx`、`card/index.tsx`、`list-item/index.tsx`、`icon/index.tsx`、`modal/index.tsx`：同步调整页面级组件标题
+- `apps/stage/src/pages/button/index.config.ts`、`button-flush/index.config.ts`、`button-griditem/index.config.ts`、`button-text-button/index.config.ts`、`button-fab/index.config.ts`：同步调整页面导航栏标题
+
+### 说明
+- 本轮只调整“组件命名”相关双语展示，不改动 `Coming Soon / 待补充`、`Variant / 类型` 等通用说明性文案
+- 当前 stage 中组件命名相关文案已统一为“英文名 + 一个空格 + 中文名”的格式
+

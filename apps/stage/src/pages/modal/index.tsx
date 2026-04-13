@@ -9,7 +9,7 @@ export default function ModalPage() {
   const [open, setOpen] = useState(false);
 
   return (
-    <Layout title="Modal / 弹窗">
+    <Layout title="Modal 弹窗">
       <ComponentDemo
         title="Interactive Preview"
         description="用最小状态控制验证 open / close 和 action 行为。"

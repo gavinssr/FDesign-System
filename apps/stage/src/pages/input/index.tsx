@@ -9,7 +9,7 @@ export default function InputPage() {
   const [value, setValue] = useState('hello@fdesign.dev');
 
   return (
-    <Layout title="Input / 输入框">
+    <Layout title="Input 输入框">
       <ComponentDemo
         title="Interactive Preview"
         description="通过统一的 onValueChange 验证最小输入链路。"

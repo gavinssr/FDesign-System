@@ -11,9 +11,9 @@ const variantOrder: ButtonVariant[] = ['primary-fill', 'primary-outline', 'secon
 const sizeOrder: ButtonSize[] = ['xl', 'l', 'm', 's', 'xs', 'mini'];
 const stateOrder = ['default', 'inactive', 'disabled', 'loading'] as const;
 const variantLabels: Record<ButtonVariant, string> = {
-  'primary-fill': 'Primary Fill / 主按钮填充',
-  'primary-outline': 'Primary Outline / 主按钮描边',
-  'secondary-outline': 'Secondary Outline / 次按钮描边',
+  'primary-fill': 'Primary Fill 主按钮填充',
+  'primary-outline': 'Primary Outline 主按钮描边',
+  'secondary-outline': 'Secondary Outline 次按钮描边',
 };
 const variantLabelShort: Record<ButtonVariant, string> = {
   'primary-fill': 'Primary Fill',
@@ -32,11 +32,11 @@ const buttonText = '操作文本';
 
 export default function ButtonPage() {
   return (
-    <Layout title="Base / 基础按钮" navKey="button-base" showPageTitle={false}>
+    <Layout title="Base 基础按钮" navKey="button-base" showPageTitle={false}>
       <View className="__stage-demoCard">
         <View className="__stage-hero">
           <View className="__stage-heroBody">
-            <Text className="__stage-heroTitle">Button / 按钮</Text>
+            <Text className="__stage-heroTitle">Button 按钮</Text>
             <Text className="__stage-heroDescription">
               按钮用于执行用户在交互流程中触发指令、提交更改或完成的即时操作。
             </Text>

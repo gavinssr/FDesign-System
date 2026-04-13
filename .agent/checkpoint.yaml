@@ -1,4 +1,4 @@
-last_session: "2026-04-13T12:37:45Z"
+last_session: "2026-04-13T13:52:53Z"
 current_phase: "phase-5"
 current_focus: "Phase 5 正在进行中；当前以 Button 收尾中与 stage 展示校正为先，同时为后续组件持续补齐全局样式 token"
 completed:
@@ -40,7 +40,8 @@ notes: |
   9. 一级折叠导航在展开态下点击仍仅折叠，不切换当前二级项
   10. 一级折叠导航展开状态已持久化到 stage 本地存储；切换到非折叠一级导航后不会因为页面重建自动折叠既有已展开分组
   11. 可折叠一级导航的文案与箭头着色已与展开状态解耦；无论展开或折叠都维持未展开态颜色，仅保留 hover 反馈
-  12. 历史上的“等待 Figma 输入”待机状态已结束；当前唯一 active 计划为 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
+  12. stage 组件命名的双语展示格式已统一：组件名中的 `English / 中文` 已收敛为 `English 中文`，英文名与中文名之间只保留一个空格
+  13. 历史上的“等待 Figma 输入”待机状态已结束；当前唯一 active 计划为 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出

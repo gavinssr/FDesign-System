@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'FAB / 悬浮按钮',
+  navigationBarTitleText: 'FAB 悬浮按钮',
 });
