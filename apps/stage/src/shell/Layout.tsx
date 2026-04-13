@@ -1,10 +1,11 @@
 import { Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { componentLinks, getNavPageByTitle, getParentGroupByChildKey } from './componentLinks';
 
 type LayoutChildren = JSX.Element | JSX.Element[] | string | number | null;
+const STAGE_EXPANDED_GROUPS_STORAGE_KEY = '__stage-expanded-groups';
 
 interface LayoutProps {
   title: string;
@@ -21,9 +22,24 @@ export function Layout({ title, children, showPageTitle = true, navKey }: Layout
 
   const activeNavKey = navKey ?? getNavPageByTitle(title)?.key;
   const activeGroupKey = activeNavKey ? getParentGroupByChildKey(activeNavKey)?.key : undefined;
-  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(() =>
-    activeGroupKey ? { [activeGroupKey]: true } : {},
-  );
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(() => {
+    const storedExpandedGroups = Taro.getStorageSync(STAGE_EXPANDED_GROUPS_STORAGE_KEY);
+    const baseExpandedGroups =
+      storedExpandedGroups && typeof storedExpandedGroups === 'object' ? storedExpandedGroups : {};
+
+    if (activeGroupKey && baseExpandedGroups[activeGroupKey] === undefined) {
+      return {
+        ...baseExpandedGroups,
+        [activeGroupKey]: true,
+      };
+    }
+
+    return baseExpandedGroups;
+  });
+
+  useEffect(() => {
+    Taro.setStorageSync(STAGE_EXPANDED_GROUPS_STORAGE_KEY, expandedGroups);
+  }, [expandedGroups]);
 
   const handleNavigate = (url: string, isActive: boolean) => {
     if (isActive) {
@@ -31,6 +47,30 @@ export function Layout({ title, children, showPageTitle = true, navKey }: Layout
     }
 
     void Taro.reLaunch({ url });
+  };
+
+  const handleGroupClick = (
+    groupKey: string,
+    firstChildUrl: string,
+    isExpanded: boolean,
+    hasActiveChild: boolean,
+  ) => {
+    if (isExpanded) {
+      setExpandedGroups((prev) => ({
+        ...prev,
+        [groupKey]: false,
+      }));
+      return;
+    }
+
+    setExpandedGroups((prev) => ({
+      ...prev,
+      [groupKey]: true,
+    }));
+
+    if (!hasActiveChild) {
+      handleNavigate(firstChildUrl, false);
+    }
   };
 
   return (
@@ -44,27 +84,25 @@ export function Layout({ title, children, showPageTitle = true, navKey }: Layout
             if (item.type === 'group') {
               const isExpanded = expandedGroups[item.key] ?? item.key === activeGroupKey;
               const isGroupActive = item.key === activeGroupKey;
-              const isGroupHighlighted = isExpanded || isGroupActive;
 
               return (
                 <View key={item.key} className="__stage-navGroup">
                   <View
-                    className={`__stage-navLink __stage-navLinkGroup ${isGroupHighlighted ? '__stage-navLinkActive' : ''}`}
+                    className="__stage-navLink __stage-navLinkGroup"
                     role="button"
                     onClick={() => {
-                      setExpandedGroups((prev) => ({
-                        ...prev,
-                        [item.key]: !isExpanded,
-                      }));
+                      handleGroupClick(item.key, item.children[0].url, isExpanded, isGroupActive);
                     }}
                   >
                     <View className="__stage-navLinkText">
                       <Text className="__stage-navLinkLabelSizer">{item.label}</Text>
                       <Text className="__stage-navLinkLabel">{item.label}</Text>
                     </View>
-                    <View
-                      className={`__stage-navArrow ${isExpanded ? '__stage-navArrowExpanded' : ''}`}
-                    />
+                    <View className="__stage-navArrowWrap">
+                      <View
+                        className={`__stage-navArrow ${isExpanded ? '__stage-navArrowExpanded' : ''}`}
+                      />
+                    </View>
                   </View>
                   <View
                     className={`__stage-navSubList ${isExpanded ? '' : '__stage-navSubListCollapsed'}`}

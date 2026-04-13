@@ -49,6 +49,16 @@
   background: var(--stage-page-bg);
 }
 
+/* stage 壳层点击热区统一使用手型光标；组件本体不默认纳入，非导航点击区可显式挂 __stage-clickable */
+.__stage-sidebar [role='button'],
+.__stage-sidebar [role='link'],
+.__stage-controlPanel button,
+.__stage-controlPanel [role='button'],
+.__stage-controlPanel [role='link'],
+.__stage-clickable {
+  cursor: pointer;
+}
+
 .__stage-navList {
   display: inline-flex;
   flex-direction: column;
@@ -83,13 +93,23 @@
 }
 
 .__stage-navLinkGroup {
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
 }
 
 .__stage-navLinkText {
   display: grid;
   flex: 1;
+  min-width: 0;
+}
+
+.__stage-navArrowWrap {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .__stage-navLinkLabel {
@@ -104,17 +124,27 @@
 }
 
 .__stage-navArrow {
-  width: 8px;
-  height: 8px;
-  margin-right: 4px;
-  border-right: 1px solid var(--stage-text-muted);
-  border-bottom: 1px solid var(--stage-text-muted);
-  transform: rotate(45deg);
+  position: relative;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
+  color: var(--stage-text-muted);
+  transform: rotate(180deg);
+}
+
+.__stage-navArrow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: currentColor;
+  -webkit-mask: center / 24px 24px no-repeat
+    url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18.0001 15L12.0001 9.00004L6.00007 15' stroke='black'/%3E%3C/svg%3E");
+  mask: center / 24px 24px no-repeat
+    url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18.0001 15L12.0001 9.00004L6.00007 15' stroke='black'/%3E%3C/svg%3E");
 }
 
 .__stage-navArrowExpanded {
-  transform: rotate(-135deg);
+  transform: rotate(0deg);
 }
 
 .__stage-navSubLink {
@@ -134,12 +164,16 @@
 
 .__stage-navLinkGroup:hover .__stage-navArrow,
 .__stage-navLinkActive .__stage-navArrow {
-  border-color: var(--stage-text);
+  color: var(--stage-text);
 }
 
 .__stage-navLinkActive {
   color: var(--stage-text);
   font-weight: 500;
+  background: var(--stage-surface);
+}
+
+.__stage-navLinkActive:hover {
   background: var(--stage-surface);
 }
 
@@ -237,7 +271,6 @@
   border: 1px solid var(--stage-border);
   background: var(--stage-surface);
   color: var(--stage-text-muted);
-  cursor: pointer;
   font-size: var(--stage-font-size-toggle);
   line-height: var(--stage-line-height-toggle);
 }
@@ -489,7 +522,7 @@
 
 .__stage-matrixGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 240px));
   gap: var(--stage-space-matrix-grid-gap);
 }
 

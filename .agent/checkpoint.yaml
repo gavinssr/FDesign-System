@@ -1,4 +1,4 @@
-last_session: "2026-04-12T13:20:31Z"
+last_session: "2026-04-13T12:37:45Z"
 current_phase: "phase-5"
 current_focus: "Phase 5 正在进行中；当前以 Button 收尾中与 stage 展示校正为先，同时为后续组件持续补齐全局样式 token"
 completed:
@@ -33,7 +33,14 @@ notes: |
   2. 仓库已落地基础全局样式 token 的首轮分层与 Web CSS variables 镜像；后续会随组件新增/迭代继续补齐语义 token
   3. `Button` 是当前唯一已落地首轮 Figma 对齐的组件：已切换到 `primary-fill / primary-outline / secondary-outline`、`xl / l / m / s / xs / mini` 与 `inactive / disabled / loading`
   4. `apps/stage` 新壳层与 `Button` 样板页已落地，但 `Button` 仍在按展示反馈继续调整，当前状态为“收尾中”，尚未达到“可冻结”
-  5. 历史上的“等待 Figma 输入”待机状态已结束；当前唯一 active 计划为 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
+  5. stage 侧栏分组导航箭头已按 Figma 节点 `25860:3434` 完成一轮图标对齐，当前采用与设计稿一致的 chevron 路径替换原 border 拼接形状
+  6. stage 壳层点击热区已收敛为通用 cursor 规则：侧栏导航与控制面板内的可点击项默认使用手型光标，组件本体默认不纳入
+  7. 已为未来 stage 非导航类自定义点击区预留 `__stage-clickable` 能力，后续新增热区可显式复用而无需再单点补样式
+  8. 一级折叠导航点击规则已细化：折叠态点击仅在当前分组没有已选中二级项时才跳到第一个二级导航；若该分组已有选中项，则仅展开
+  9. 一级折叠导航在展开态下点击仍仅折叠，不切换当前二级项
+  10. 一级折叠导航展开状态已持久化到 stage 本地存储；切换到非折叠一级导航后不会因为页面重建自动折叠既有已展开分组
+  11. 可折叠一级导航的文案与箭头着色已与展开状态解耦；无论展开或折叠都维持未展开态颜色，仅保留 hover 反馈
+  12. 历史上的“等待 Figma 输入”待机状态已结束；当前唯一 active 计划为 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出
