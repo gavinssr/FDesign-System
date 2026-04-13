@@ -20,7 +20,7 @@
   min-height: var(--stage-header-height);
   padding: 16px;
   border-bottom: 1px solid var(--stage-border);
-  background: var(--stage-page-bg);
+  background: var(--stage-surface);
 }
 
 .__stage-headerTitle {
@@ -75,6 +75,7 @@
 .__stage-navLinkActive {
   color: var(--stage-text);
   font-weight: 500;
+  background: var(--stage-surface);
 }
 
 .__stage-main {

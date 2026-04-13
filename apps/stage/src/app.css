@@ -37,7 +37,7 @@ page {
   --stage-sidebar-width: 288px;
   --stage-font-size-header-title: 44px;
   --stage-line-height-header-title: 52px;
-  --stage-font-size-nav-link: 16px;
+  --stage-font-size-nav-link: 14px;
   --stage-line-height-nav-link: 24px;
   --stage-space-nav-link-padding: 16px;
   --stage-font-size-component-title: 24px;
@@ -60,8 +60,8 @@ page {
   --stage-line-height-subsection-title: 20px;
   --stage-font-size-description: 12px;
   --stage-line-height-description: 18px;
-  --stage-space-main-gap: 16px;
-  --stage-space-main-padding: 16px;
+  --stage-space-main-gap: 8px;
+  --stage-space-main-padding: 8px;
   --stage-space-demo-card-gap: 16px;
   --stage-space-demo-header-gap: 12px;
   --stage-space-demo-body-gap: 32px;
@@ -74,16 +74,16 @@ page {
   --stage-space-gallery-section-padding-top: 24px;
   --stage-space-gallery-card-gap: 16px;
   --stage-space-overview-row-gap-y: 20px;
-  --stage-space-matrix-grid-gap: 16px;
+  --stage-space-matrix-grid-gap: 12px;
   --stage-space-matrix-stack-gap: 12px;
   --stage-space-matrix-row-gap-min: 24px;
   --stage-page-bg: #fafafa;
   --stage-surface: #ffffff;
   --stage-surface-hover: #f2f2f2;
   --stage-surface-muted: #f6f6f6;
-  --stage-border: #d9d9d9;
-  --stage-border-subtle: #e9e9e9;
-  --stage-text: #111111;
+  --stage-border: #F5F5F5;
+  --stage-border-subtle: #F5F5F5;
+  --stage-text: #1E2533;
   --stage-text-muted: #666666;
   --stage-text-soft: #888888;
 }
