@@ -24,10 +24,15 @@
 }
 
 .__stage-headerTitle {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
   color: var(--stage-text);
   font-size: var(--stage-font-size-header-title);
   line-height: var(--stage-line-height-header-title);
   font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .__stage-sidebar {
@@ -51,6 +56,16 @@
   min-width: max-content;
 }
 
+.__stage-navGroup,
+.__stage-navSubList {
+  display: flex;
+  flex-direction: column;
+}
+
+.__stage-navGroup {
+  width: 100%;
+}
+
 .__stage-navLink {
   display: flex;
   align-items: center;
@@ -67,9 +82,59 @@
   font-weight: 400;
 }
 
+.__stage-navLinkGroup {
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.__stage-navLinkText {
+  display: grid;
+  flex: 1;
+}
+
+.__stage-navLinkLabel {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.__stage-navLinkLabelSizer {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  font-weight: 500;
+}
+
+.__stage-navArrow {
+  width: 8px;
+  height: 8px;
+  margin-right: 4px;
+  border-right: 1px solid var(--stage-text-muted);
+  border-bottom: 1px solid var(--stage-text-muted);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.__stage-navArrowExpanded {
+  transform: rotate(-135deg);
+}
+
+.__stage-navSubLink {
+  padding-left: 32px;
+}
+
+.__stage-navSubListCollapsed {
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .__stage-navLink:hover {
   background: var(--stage-surface-hover);
   color: var(--stage-text);
+}
+
+.__stage-navLinkGroup:hover .__stage-navArrow,
+.__stage-navLinkActive .__stage-navArrow {
+  border-color: var(--stage-text);
 }
 
 .__stage-navLinkActive {

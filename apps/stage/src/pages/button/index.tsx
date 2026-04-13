@@ -32,7 +32,7 @@ const buttonText = '操作文本';
 
 export default function ButtonPage() {
   return (
-    <Layout title="Button / 按钮" showPageTitle={false}>
+    <Layout title="Base / 基础按钮" navKey="button-base" showPageTitle={false}>
       <View className="__stage-demoCard">
         <View className="__stage-hero">
           <View className="__stage-heroBody">

@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'Button',
+  navigationBarTitleText: 'Base / 基础按钮',
 });
