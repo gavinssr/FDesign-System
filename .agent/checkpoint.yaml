@@ -1,4 +1,4 @@
-last_session: "2026-04-13T13:52:53Z"
+last_session: "2026-04-14T11:36:13Z"
 current_phase: "phase-5"
 current_focus: "Phase 5 正在进行中；当前以 Button 收尾中与 stage 展示校正为先，stage 已将 Text 组件页重构为 CssToken 下的 Typography 排版验证页，同时继续为后续组件补齐全局样式 token"
 completed:
@@ -46,6 +46,7 @@ notes: |
   15. stage 展示页已移除 `矩阵验证 / Harness Matrix` 模块；舞台页只保留面向展示的内容，不再承载代码层矩阵验证
   16. `Text` 不再作为设计系统通用组件保留；`apps/stage` 已新增折叠一级导航 `CssToken 全局样式`，并将原 `Text 文本` 页重构为其下的 `Typography 排版` 基础验证页
   17. `apps/example-consumer` 与 `projects/real-project-1` 中原先依赖 `@fdesign/components/Text` 的文案已回收为“原生文本元素 + 页面层样式”写法，不再通过通用 `Text` 组件承载排版组合
+  18. `packages/components` 的 Vitest 测试基座已补齐统一 `setupFiles`；通过注入最小 Taro mock 与 `ENABLE_INNER_HTML` 全局常量，组件测试已恢复可运行状态
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出

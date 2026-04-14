@@ -887,3 +887,13 @@
 - 本轮确认“文字展示由全局 typography token 与页面/组件语义样式组合完成”，不再围绕通用 `Text` 组件扩展 API
 - 已执行 `pnpm --filter @fdesign/components build && pnpm --filter @fdesign/stage build && pnpm --filter @fdesign/example-consumer build && pnpm --filter @fdesign/real-project-1 build`，全部通过；仅保留既有的 H5 entry size warning
 
+## 2026-04-14 — components 测试基座恢复可用
+
+### 代码变更
+- `packages/components/vitest.config.ts`：新增 `setupFiles`，为组件测试统一注入运行前预置逻辑
+- 新增 `packages/components/vitest.setup.ts`：补齐 `ENABLE_INNER_HTML` 全局常量，并统一 mock `@tarojs/taro` 的最小能力，避免 Vitest 在 jsdom 下直接拉起真实 Taro 运行时
+
+### 说明
+- 本轮未修改任何组件生产实现，只修复 `packages/components` 的测试环境隔离问题
+- 已执行 `pnpm --filter @fdesign/components test`，7 个测试文件、14 个测试全部通过
+
