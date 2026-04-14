@@ -177,3 +177,14 @@
 3. `Typography 排版` 归入可折叠一级导航 `CssToken 全局样式`，用于验证字体族、字号、字重、行高和基础文本行为
 4. 真实业务页面中的文字由原生文本元素承载，视觉结果由全局 typography token 与页面/组件语义样式组合决定
 5. 若后续需要更高层排版抽象，应优先新增语义化封装，而不是恢复一个通用 `Text` 组件 API
+
+## 2026-04-14 — Icon 采用双源统一入口与自动分发
+
+**背景**: 历史 `Icon` 组件仍是 Phase 2 的字符型 placeholder，只能表达极少数语义，既无法承接 Figma 自有图标，也无法兼容用户要求的 Google Material Symbols 线上资源。同时仓库内已有 `info / check / chevron-right` 等旧调用，若直接切断会放大迁移成本。
+
+**决策**:
+1. `Icon` 对外采用单一统一入口，新增 `source?: 'local' | 'material'`，但未显式传值时按“local registry 优先，否则 material”自动分发
+2. local source 使用仓库内联 SVG registry 承载，图标资源统一收敛到 `packages/components/src/icon/iconRegistry.tsx`，不允许业务页面零散硬编码资源
+3. material source 使用 `Material Symbols Rounded` 可变字体，并按既定尺寸协议映射 `wght / GRAD`；字体加载由 H5 消费方负责
+4. 为兼容现有消费方，旧 icon 名 `info / check / chevron-right` 保留可用，并通过 material source 兜底
+5. 当前首轮本地图标集先以内联 SVG 稳定落地；后续若拿到稳定可入库的 Figma SVG/path，再按同一 registry 批量补齐，不在正式组件里长期依赖临时远程 Figma 资产 URL

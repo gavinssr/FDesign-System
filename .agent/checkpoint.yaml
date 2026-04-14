@@ -1,6 +1,6 @@
 last_session: "2026-04-14T11:36:13Z"
 current_phase: "phase-5"
-current_focus: "Phase 5 正在进行中；当前以 Button 收尾中与 stage 展示校正为先，stage 已将 Text 组件页重构为 CssToken 下的 Typography 排版验证页，同时继续为后续组件补齐全局样式 token"
+current_focus: "Phase 5 正在进行中；当前仍以 Button 收尾中与 stage 展示校正为先，同时 Icon 已落地双源架构首轮实现与 stage/consumer 构建验证，后续继续为组件批次补齐全局样式 token"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -18,10 +18,11 @@ completed:
 in_progress:
   - "Button 已落地首轮 Figma 对齐，当前仍处于收尾中"
   - "Phase 5 active plan 正作为长期滚动主计划维护，后续组件按批次推进"
+  - "Icon 已落地首轮双源架构（local inline SVG + material font），后续可继续按 registry 扩充本地图标集"
 blocked: []
 next_recommended:
   - "先收尾 Button：继续按 stage 展示反馈校正页面效果，并确认 Button 当前轮次达到可冻结"
-  - "以 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 为唯一主计划，按批次推进 Typography / Input / Tag / Card / Modal / ListItem / Icon"
+  - "以 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 为唯一主计划，按批次推进 Typography / Input / Tag / Card / Modal / ListItem，并继续补齐 Icon 本地图标集"
   - "新增组件或迭代既有组件时，若现有全局 token 不足，先补齐 token 语义再回灌组件实现"
   - "继续按 docs/exec-plans/completed/phase-4-h5-webview-baseline.md 观察 adapters 接入后的 H5 体积变化"
 active_exec_plan: "docs/exec-plans/active/phase-5-token-protocol-and-mapping.md"
@@ -47,6 +48,15 @@ notes: |
   16. `Text` 不再作为设计系统通用组件保留；`apps/stage` 已新增折叠一级导航 `CssToken 全局样式`，并将原 `Text 文本` 页重构为其下的 `Typography 排版` 基础验证页
   17. `apps/example-consumer` 与 `projects/real-project-1` 中原先依赖 `@fdesign/components/Text` 的文案已回收为“原生文本元素 + 页面层样式”写法，不再通过通用 `Text` 组件承载排版组合
   18. `packages/components` 的 Vitest 测试基座已补齐统一 `setupFiles`；通过注入最小 Taro mock 与 `ENABLE_INNER_HTML` 全局常量，组件测试已恢复可运行状态
+  19. `Icon` 已从字符型 placeholder 重构为双源统一入口：未显式传 `source` 时按“local registry 优先，否则 material”自动分发
+  20. `packages/tokens` 已新增 `spacing.component.icon` 尺寸协议；`Icon` 已接入 `special-mini / xxs / xs / s / m / special-large` 六档尺寸、tone/color 覆盖与 Material Symbols 的 `wght/GRAD` 映射
+  21. 当前仓库已接入用户提供的 40 个自有导出 SVG，并统一收敛到 `Icon` local registry；旧用法中的 `info / check / chevron-right` 已通过 material source 兼容，且本地图标已完成两轮非破坏式语义别名整理，旧文件名风格名称仍保持兼容
+  22. `apps/stage` 的 `Icon 图标` 页已重写为 Hero + Local / Material / Sizes / Tones 分节，且导航位置已移到 Button 分组之后；当前 local 图标区优先展示语义别名，已覆盖卡类、账单/还款、公积金、红包提现等业务命名
+  23. `apps/stage` 的通用 `Gallery / 组件总览` 描述文案已从 `ComponentDemo` 头部全局移除，后续所有组件页不再显示该行说明文字
+  24. `apps/stage` 的 Icon 展示区已补齐统一 tile 排版：local/material 两区的单项展示容器宽度一致，仅展示单个 display name，超长名称按单词换行；tile 的 top/left/right padding 为 24px，bottom padding 与 icon-label gap 保持一致，且已进一步收紧横向密度
+  25. `apps/stage` 的 Icon 页中 `Tones` 分节已收敛为仅展示注释图标 `info`；`Sizes` 分节已改为对 `fd-icon-root` 施加仅 stage 生效的 inside border 说明样式，border 粗细等于尺寸协议中的 padding，并通过预览层放大校正使图形更贴近绘图区边缘；展示名称改为 `mini / xxs / xs / s / m / large`
+  26. `apps/stage` 已新增可复用的备注类小组件 `StageNoteText`：默认文案为“备注文案”，当前已在 Icon 页 `Material / info` 尺寸卡标题旁落地“外部组件绘图区不受控”说明
+  27. `apps/stage`、`apps/example-consumer` 与 `projects/real-project-1` 已接入 Material Symbols Rounded 字体加载；`pnpm --filter @fdesign/tokens build && pnpm --filter @fdesign/components test && pnpm --filter @fdesign/components build && pnpm --filter @fdesign/stage build && pnpm --filter @fdesign/example-consumer build && pnpm --filter @fdesign/real-project-1 build` 全部通过，仅保留既有 H5 entry size warning
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出

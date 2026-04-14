@@ -120,6 +120,34 @@ export const spacingComponent = {
     paddingX: spacingScale[10],
     paddingY: spacingSemantic.gapRowCompactY,
   },
+  icon: {
+    size: {
+      specialMini: {
+        box: 12,
+        padding: 1,
+      },
+      xxs: {
+        box: 16,
+        padding: 1,
+      },
+      xs: {
+        box: 20,
+        padding: 2,
+      },
+      s: {
+        box: 24,
+        padding: 2,
+      },
+      m: {
+        box: 28,
+        padding: 2,
+      },
+      specialLarge: {
+        box: 48,
+        padding: 8,
+      },
+    },
+  },
 } as const;
 
 export const spacing = {

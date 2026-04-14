@@ -3,7 +3,40 @@
   align-items: center;
   justify-content: center;
   color: var(--icon-color);
-  font-size: var(--icon-size);
-  font-weight: 700;
+  width: var(--icon-box);
+  height: var(--icon-box);
   line-height: 1;
+  flex-shrink: 0;
+}
+
+:global(.fd-icon-glyph) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+:global(.fd-icon-glyph-local) {
+  width: var(--icon-content-size);
+  height: var(--icon-content-size);
+}
+
+:global(.fd-icon-glyph-material) {
+  font-family: 'Material Symbols Rounded';
+  font-size: var(--icon-box);
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' var(--icon-material-wght),
+    'GRAD' var(--icon-material-grad),
+    'opsz' 24;
 }

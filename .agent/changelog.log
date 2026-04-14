@@ -897,3 +897,87 @@
 - 本轮未修改任何组件生产实现，只修复 `packages/components` 的测试环境隔离问题
 - 已执行 `pnpm --filter @fdesign/components test`，7 个测试文件、14 个测试全部通过
 
+## 2026-04-14 — Icon 双源架构与首轮展示落地
+
+### 代码变更
+- `packages/tokens/src/spacing.ts`：新增 `spacing.component.icon`，沉淀 `special-mini / xxs / xs / s / m / special-large` 六档 icon 容器尺寸与 padding 协议
+- `packages/components/src/icon/Icon.tsx`、`Icon.types.ts`、`Icon.module.css`、`Icon.contract.yaml`、`Icon.test.tsx`、`Icon.harness.tsx`：将旧字符型 placeholder 重构为统一 `Icon` 入口，支持 `local / material` 双源、六档尺寸、tone/color 覆盖与无障碍属性
+- 新增 `packages/components/src/icon/iconRegistry.tsx`、`LocalIconRenderer.tsx`、`MaterialIcon.tsx`：落地 local inline SVG 注册表、Material Symbols 渲染器，以及自动分发兼容层
+- `apps/stage/src/pages/icon/index.tsx`、`apps/stage/src/shell/componentLinks.ts`：重写 Icon 展示页为 Hero + Local / Material / Sizes / Tones 分节，并将导航位置移到 Button 之后
+- `apps/stage/src/app.css`、`apps/example-consumer/src/app.css`、`projects/real-project-1/src/app.css`：引入 Material Symbols Rounded 字体，保证 H5 路径下 material source 与旧 icon 名兼容可用
+
+### 说明
+- 本轮先稳定落地双源架构与首轮本地图标集；受当前 Figma MCP 返回远程资产 URL 而非稳定可入库 path 数据限制，local registry 先以内联 SVG 首轮集起步，并保留后续继续批量补齐的扩展位
+- 旧调用中的 `info / check / chevron-right` 无需立即改代码即可继续工作；未显式传 `source` 时，组件默认按“本地注册表优先，否则 material”分发
+- 已执行 `pnpm --filter @fdesign/tokens build && pnpm --filter @fdesign/components test && pnpm --filter @fdesign/components build && pnpm --filter @fdesign/stage build && pnpm --filter @fdesign/example-consumer build && pnpm --filter @fdesign/real-project-1 build`，全部通过；仅保留既有的 H5 entry size warning
+
+## 2026-04-14 — 本地图标集扩充到用户导出的 40 个 SVG
+
+### 代码变更
+- `packages/components/src/icon/iconRegistry.tsx`：用用户提供的 `/Users/gavinss/Downloads/Icons` 导出结果替换首轮示例图标，完整接入 40 个本地 SVG，并按 kebab-case 名称统一收口为 local registry
+- `packages/components/src/icon/LocalIconRenderer.tsx`：改为基于 registry 中的 `path d + fillRule/clipRule` 通用渲染，不再只依赖少量手写示例组件
+- `apps/stage/src/pages/icon/index.tsx`：将 local 图标展示扩充为完整 40 图标预览，Hero 元信息同步更新
+
+### 说明
+- 本轮使用的是用户本地导出的正式 SVG 文件，不再依赖临时 Figma 远程资产 URL 作为本地图标源
+- 现有 `Icon` 双源架构不变，仅将 local source 从“首轮子集”提升为“完整 40 图标集”
+- 已再次执行 `pnpm --filter @fdesign/components test && pnpm --filter @fdesign/components build && pnpm --filter @fdesign/stage build && pnpm --filter @fdesign/example-consumer build && pnpm --filter @fdesign/real-project-1 build`，全部通过；仅保留既有的 H5 entry size warning
+
+## 2026-04-14 — Icon local 图标补充语义别名层
+
+### 代码变更
+- `packages/components/src/icon/iconRegistry.tsx`：新增 `LOCAL_ICON_ALIASES`、`resolveLocalIconName()` 与 `hasLocalIcon()`，为部分文件名风格的 local icon 补充语义别名，同时保留旧名兼容
+- `packages/components/src/icon/Icon.tsx`：自动分发逻辑改为识别 alias 后的 local icon，未显式传 `source` 时新旧命名都能正确路由到 local source
+- `apps/stage/src/pages/icon/index.tsx`：local 图标展示切换为“语义别名优先，旧 registry 名对照展示”的口径
+- `packages/components/src/icon/Icon.test.tsx`、`Icon.contract.yaml`：补充 alias 自动路由回归测试与命名约束说明
+
+### 说明
+- 本轮采用“非破坏式整理”：优先新增语义别名，而不是直接删除旧文件名派生名称，避免影响现有消费方
+- 当前已整理的重点是明显偏资源文件名风格的命名，如 `credit-card / cards-1 / automatic-deduction / we-chat` 等；其余名称后续仍可继续按业务语义微调
+- 已执行 `pnpm --filter @fdesign/components test && pnpm --filter @fdesign/components build && pnpm --filter @fdesign/stage build`，全部通过；仅保留既有的 H5 entry size warning
+
+## 2026-04-14 — Icon local 图标补充第二轮业务语义别名
+
+### 代码变更
+- `packages/components/src/icon/iconRegistry.tsx`：继续补充 `amount-increase / encryption / billing-reminder / repayment-history / housing-fund / document-details / red-envelope-cashout` 等第二轮 local alias
+- `apps/stage/src/pages/icon/index.tsx`：将对应图标展示名称切换到第二轮业务语义别名，并继续保留 legacy registry 名对照
+
+### 说明
+- 本轮仍保持“新增 alias、旧名不删”的兼容策略，避免影响已经依赖旧 registry 名的页面
+- 第二轮主要收敛账单、还款、加额、公积金、红包提现等业务场景名称，使展示与后续调用更接近业务语义，而不是资源导出名
+- 已执行 `pnpm --filter @fdesign/components test && pnpm --filter @fdesign/components build && pnpm --filter @fdesign/stage build`，全部通过；仅保留既有的 H5 entry size warning
+
+## 2026-04-14 — stage Icon 展示区排版优化
+
+### 代码变更
+- `apps/stage/src/pages/icon/index.tsx`：新增 `toDisplayLabel()` 与 `IconGalleryItem`，将 local/material 展示区收口为统一 tile 渲染；local 区不再并排展示 `alias + legacyName`，仅显示单个 display name
+- `apps/stage/src/app.css`：新增 `__stage-iconTile*` 样式，为 icon 展示项提供统一宽度、固定内边距、居中预览与多词换行标签布局
+
+### 说明
+- 本轮仅针对 `Icon` 页展示区做局部排版优化，未改动全局 `__stage-captionedItem`，因此不会影响 Button、Tag、Typography 等其他展示页
+- 当前 tile 规则为：top/left/right `24px`、bottom `12px`，并让 bottom padding 与 icon-label gap 保持一致
+- 名称展示统一转成空格分词形式，例如 `bank-card` -> `bank card`、`shopping_cart_checkout` -> `shopping cart checkout`，超长名称可按词换行
+- 已执行 `pnpm --filter @fdesign/stage build`，构建通过；仅保留既有 H5 entry size warning
+
+## 2026-04-14 — stage Gallery 头部与 Icon 页细节继续收敛
+
+### 代码变更
+- `apps/stage/src/shell/ComponentDemo.tsx`：移除 demo 卡片头部的描述文本渲染，`Gallery / 组件总览` 下方说明行不再出现在任何页面
+- `apps/stage/src/pages/icon/index.tsx`：`Tones` 分节改为仅展示 `info` 图标；`Sizes` 分节为 local/material 两列补充尺寸展示名映射，页面中改显示 `mini / large`
+- `apps/stage/src/app.css`：为 `Sizes` 分节预览容器补充 `rgb(255 61 111 / 30%)` 底色
+
+### 说明
+- 本轮“尺寸名称更改”当前仅体现在 stage 展示层文案，未改动 `Icon` 组件运行时 API 与 token 协议，避免引入不必要的兼容性风险
+- 已执行 `pnpm --filter @fdesign/stage build`，构建通过；仅保留既有 H5 entry size warning
+
+## 2026-04-14 — stage 新增备注类小组件并接入 Icon 页
+
+### 代码变更
+- 新增 `apps/stage/src/shell/StageNoteText.tsx`：提供仅供 stage 展示层使用的备注文字组件，默认文案为“备注文案”
+- `apps/stage/src/pages/icon/index.tsx`：在 `Material / info` 尺寸卡标题旁接入 `StageNoteText`，当前展示“外部组件绘图区不受控”
+- `apps/stage/src/app.css`：新增 `__stage-noteText` 样式，使用灰色 `10px` 备注文案口径
+
+### 说明
+- 该组件仅用于 stage 展示层备注，不进入 `packages/components`，也不参与设计系统组件合同
+- 已执行 `pnpm --filter @fdesign/stage build`，构建通过；仅保留既有 H5 entry size warning
+

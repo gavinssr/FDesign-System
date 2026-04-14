@@ -1,13 +1,20 @@
 component: Icon
-purpose: "基础图标占位组件，用于表达轻量状态和方向信息"
-provisional: true
+purpose: "基础图标组件，支持自有 SVG 图标与 Material Symbols 两种来源"
+provisional: false
 platform_notes:
-  h5: "当前使用字符型占位 glyph，等待后续真实设计资源替换"
+  h5: "完整支持 local inline SVG；使用 material source 时需要消费方预先加载 Material Symbols Rounded 字体"
+  weapp: "local source 可继续扩展为图片或 base64 SVG；material source 当前不支持"
+  rn: "local source 需后续接入 react-native-svg；material source 需原生字体安装"
 forbidden:
-  - "不允许在 Icon 内部耦合业务图标资源集合"
+  - "不允许在业务页面零散硬编码图标资源，必须通过 Icon registry 统一收敛"
+  - "local 图标新增调用优先使用语义别名；导出文件名风格命名仅保留兼容用途"
   - "不允许硬编码颜色值，必须使用 @fdesign/tokens"
+  - "不允许将临时 Figma 远程资源 URL 直接作为长期正式资源入库"
 a11y:
   - "非装饰性图标应提供可访问名称"
+sources:
+  - local
+  - material
 slots: {}
 states:
   - default
