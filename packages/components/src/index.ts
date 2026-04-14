@@ -13,5 +13,3 @@ export { Modal, ModalHarness } from './modal';
 export type { ModalProps } from './modal';
 export { Tag, TagHarness } from './tag';
 export type { TagProps } from './tag';
-export { Text, TextHarness } from './text';
-export type { TextProps } from './text';

@@ -1,21 +1,47 @@
 import { Text, View } from '@tarojs/components';
 
-import { ComponentDemo } from '../../shell/ComponentDemo';
-import { Layout } from '../../shell/Layout';
+import { StageShowcasePage } from '../../shell/StageShowcasePage';
 
 export default function ButtonGriditemPage() {
   return (
-    <Layout title="Griditem 格子按钮" navKey="button-griditem">
-      <ComponentDemo
-        title="Coming Soon / 待补充"
-        description="当前先补齐 stage 导航结构，后续会在这里补充格子按钮的完整展示。"
-      >
-        <View className="__stage-demoBody">
-          <Text className="__stage-description">
-            Griditem 格子按钮页面已预留，后续会补充真实示例、状态矩阵和使用说明。
-          </Text>
-        </View>
-      </ComponentDemo>
-    </Layout>
+    <StageShowcasePage
+      title="Griditem 格子按钮"
+      navKey="button-griditem"
+      heroTitle="Griditem 格子按钮"
+      heroDescription="格子按钮通常用于宫格入口和功能分发，当前页面先按统一样板预留结构。"
+      heroMeta={[
+        { key: 'Status', value: '待补充' },
+        { key: 'States', value: '待梳理' },
+        { key: 'Examples', value: '已占位' },
+      ]}
+      sections={[
+        {
+          title: '组件概览 / Overview',
+          children: (
+            <View className="__stage-galleryCard">
+              <Text className="__stage-description">
+                Griditem 格子按钮的图标、文案和宫格布局示例后续补充。
+              </Text>
+            </View>
+          ),
+        },
+        {
+          title: '状态矩阵 / State Matrix',
+          children: (
+            <View className="__stage-galleryCard">
+              <Text className="__stage-description">选中、禁用和角标等状态内容待补充。</Text>
+            </View>
+          ),
+        },
+        {
+          title: '使用说明 / Guidelines',
+          children: (
+            <View className="__stage-galleryCard">
+              <Text className="__stage-description">适用场景、间距规则和信息层级待补充。</Text>
+            </View>
+          ),
+        },
+      ]}
+    />
   );
 }

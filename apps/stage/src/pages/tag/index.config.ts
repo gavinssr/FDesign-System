@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'Tag',
+  navigationBarTitleText: 'Tag 标签',
 });

@@ -7,7 +7,6 @@ import {
   ListItem,
   Modal,
   Tag,
-  Text as FText,
 } from '@fdesign/components';
 import { useState } from 'react';
 
@@ -34,12 +33,12 @@ export default function IndexPage() {
       <View className="__consumer-grid">
         <Card
           title="Profile form"
-          description="Consumer page composes Input, Text and Button without stage shell."
+          description="Consumer page composes Input, token-styled copy and Button without stage shell."
         >
           <View className="__consumer-stack">
-            <FText tone="muted">
+            <Text className="__consumer-copy __consumer-copyMuted">
               The current input value is managed locally inside the consumer page.
-            </FText>
+            </Text>
             <Input
               label="Contact email"
               value={value}
@@ -83,10 +82,10 @@ export default function IndexPage() {
         onSecondaryAction={() => setOpen(true)}
         onClose={() => setOpen(false)}
       >
-        <FText>
+        <Text className="__consumer-copy">
           Consumer apps can compose design-system primitives directly while staying isolated from
           the stage shell.
-        </FText>
+        </Text>
       </Modal>
     </View>
   );

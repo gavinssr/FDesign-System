@@ -42,6 +42,17 @@ body {
   line-height: var(--fd-line-height-body-further);
 }
 
+.__realProject-copy {
+  font-family: var(--fd-font-family-text);
+  font-size: var(--fd-font-size-further);
+  line-height: var(--fd-line-height-body-further);
+  color: var(--fd-color-text-primary);
+}
+
+.__realProject-copyMuted {
+  color: var(--fd-color-text-secondary);
+}
+
 .__realProject-row {
   display: flex;
   flex-wrap: wrap;

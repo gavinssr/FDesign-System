@@ -166,3 +166,14 @@
 3. `.agent/checkpoint.yaml` 记录当前工作窗口时，可使用组件批次层状态词，但需与 active 主计划保持一致
 4. `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md` 作为 Phase 5 唯一长期主计划，负责维护组件批次状态的正式口径
 5. 历史文档与历史 changelog 不强制回写为新术语，避免污染历史语境；新进入的治理事实源必须遵循本口径
+
+## 2026-04-14 — Text 不再作为设计系统组件保留
+
+**背景**: 用户确认文字展示应由真实业务需求按多个全局 token 组合生成，而不是围绕一个通用 `Text` 组件的 `tone / size / weight` props 继续扩展。现有 `Text 文本` 页既不能完整表达 typography token 协议，也容易把排版基础能力误叙述为组件 API。
+
+**决策**:
+1. `Text` 不再作为 `@fdesign/components` 的设计系统通用组件保留
+2. `apps/stage` 中原 `Text 文本` 页重构为 `Typography 排版` 基础验证页
+3. `Typography 排版` 归入可折叠一级导航 `CssToken 全局样式`，用于验证字体族、字号、字重、行高和基础文本行为
+4. 真实业务页面中的文字由原生文本元素承载，视觉结果由全局 typography token 与页面/组件语义样式组合决定
+5. 若后续需要更高层排版抽象，应优先新增语义化封装，而不是恢复一个通用 `Text` 组件 API

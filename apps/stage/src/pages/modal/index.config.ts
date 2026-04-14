@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'Modal',
+  navigationBarTitleText: 'Modal 弹窗',
 });

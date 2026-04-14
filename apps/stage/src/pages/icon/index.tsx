@@ -1,45 +1,54 @@
-import { View } from '@tarojs/components';
-import { Icon, IconHarness } from '@fdesign/components';
+import { Text, View } from '@tarojs/components';
+import { Icon } from '@fdesign/components';
 
-import { ComponentDemo } from '../../shell/ComponentDemo';
-import { Layout } from '../../shell/Layout';
+import { StageShowcasePage } from '../../shell/StageShowcasePage';
 
 const names = ['search', 'check', 'info', 'close', 'chevron-right'] as const;
 const tones = ['default', 'muted', 'primary', 'success', 'warning', 'danger'] as const;
 
 export default function IconPage() {
   return (
-    <Layout title="Icon 图标">
-      <ComponentDemo
-        title="Glyph Preview"
-        description="当前用字符型占位 glyph 验证 API 和视觉节奏。"
-      >
-        {names.map((name) => (
-          <View key={name} className="__stage-preview">
-            <Icon name={name} size="sm" label={`${name} small`} />
-            <Icon name={name} size="md" label={`${name} medium`} />
-            <Icon name={name} size="lg" label={`${name} large`} />
-          </View>
-        ))}
-      </ComponentDemo>
-
-      <ComponentDemo
-        title="Tone Preview"
-        description="验证 tone 颜色切换。"
-      >
-        <View className="__stage-preview">
-          {tones.map((tone) => (
-            <Icon key={tone} name="info" tone={tone} label={`${tone} icon`} />
-          ))}
-        </View>
-      </ComponentDemo>
-
-      <ComponentDemo
-        title="Harness Matrix"
-        description="矩阵化输出 name 与 tone 组合。"
-      >
-        <IconHarness />
-      </ComponentDemo>
-    </Layout>
+    <StageShowcasePage
+      title="Icon 图标"
+      heroTitle="Icon 图标"
+      heroDescription="图标用于补充识别、状态和方向信息，帮助用户在有限空间内更快理解交互语义。"
+      heroMeta={[
+        { key: 'Names', value: '5 个示例图标' },
+        { key: 'Sizes', value: '3 种尺寸' },
+        { key: 'Tones', value: '6 种语气' },
+      ]}
+      sections={[
+        {
+          title: '字形预览 / Glyph Preview',
+          children: (
+            <View className="__stage-overviewRow">
+              {names.map((name) => (
+                <View key={name} className="__stage-captionedItem">
+                  <View className="__stage-preview">
+                    <Icon name={name} size="sm" label={`${name} small`} />
+                    <Icon name={name} size="md" label={`${name} medium`} />
+                    <Icon name={name} size="lg" label={`${name} large`} />
+                  </View>
+                  <Text className="__stage-metaKey">{name}</Text>
+                </View>
+              ))}
+            </View>
+          ),
+        },
+        {
+          title: '语气 / Tones',
+          children: (
+            <View className="__stage-overviewRow">
+              {tones.map((tone) => (
+                <View key={tone} className="__stage-captionedItem">
+                  <Icon name="info" tone={tone} label={`${tone} icon`} />
+                  <Text className="__stage-metaKey">{tone}</Text>
+                </View>
+              ))}
+            </View>
+          ),
+        },
+      ]}
+    />
   );
 }

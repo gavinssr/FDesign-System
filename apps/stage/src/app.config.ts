@@ -1,11 +1,11 @@
 export default defineAppConfig({
   pages: [
+    'pages/typography/index',
     'pages/button/index',
     'pages/button-flush/index',
     'pages/button-griditem/index',
     'pages/button-text-button/index',
     'pages/button-fab/index',
-    'pages/text/index',
     'pages/tag/index',
     'pages/input/index',
     'pages/card/index',

@@ -1,45 +1,48 @@
-import { Text } from '@tarojs/components';
-import { Card, CardHarness } from '@fdesign/components';
+import { Text, View } from '@tarojs/components';
+import { Card } from '@fdesign/components';
 
-import { ComponentDemo } from '../../shell/ComponentDemo';
-import { Layout } from '../../shell/Layout';
+import { StageShowcasePage } from '../../shell/StageShowcasePage';
 
 const tones = ['default', 'primary', 'success', 'warning', 'danger'] as const;
 
 export default function CardPage() {
   return (
-    <Layout title="Card 卡片">
-      <ComponentDemo
-        title="Tone Preview"
-        description="展示不同 tone 的容器表现。"
-      >
-        {tones.map((tone) => (
-          <Card
-            key={tone}
-            tone={tone}
-            title={`${tone} card`}
-            description="Card used in stage preview"
-          >
-            <Text>{`Body content for ${tone}.`}</Text>
-          </Card>
-        ))}
-      </ComponentDemo>
-
-      <ComponentDemo
-        title="Interactive Preview"
-        description="验证 interactive 模式的点击语义。"
-      >
-        <Card interactive title="Clickable card" description="Acts like a selection surface">
-          <Text>Tap the card area to simulate selection.</Text>
-        </Card>
-      </ComponentDemo>
-
-      <ComponentDemo
-        title="Harness Matrix"
-        description="矩阵化输出 tone 与 interactive 状态。"
-      >
-        <CardHarness />
-      </ComponentDemo>
-    </Layout>
+    <StageShowcasePage
+      title="Card 卡片"
+      heroTitle="Card 卡片"
+      heroDescription="卡片用于承载一组关联信息与操作，适合在信息流、概览页和设置页中组织内容层级。"
+      heroMeta={[
+        { key: 'Tones', value: '5 种语气' },
+        { key: 'States', value: 'default / interactive' },
+        { key: 'Slots', value: 'title / description / body' },
+      ]}
+      sections={[
+        {
+          title: '语气 / Tones',
+          children: (
+            <View className="__stage-galleryGrid">
+              {tones.map((tone) => (
+                <Card
+                  key={tone}
+                  tone={tone}
+                  title={`${tone} card`}
+                  description="Card used in stage preview"
+                >
+                  <Text>{`Body content for ${tone}.`}</Text>
+                </Card>
+              ))}
+            </View>
+          ),
+        },
+        {
+          title: '交互态 / Interactive',
+          children: (
+            <Card interactive title="Clickable card" description="Acts like a selection surface">
+              <Text>Tap the card area to simulate selection.</Text>
+            </Card>
+          ),
+        },
+      ]}
+    />
   );
 }

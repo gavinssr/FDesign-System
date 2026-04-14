@@ -1,6 +1,6 @@
 last_session: "2026-04-13T13:52:53Z"
 current_phase: "phase-5"
-current_focus: "Phase 5 正在进行中；当前以 Button 收尾中与 stage 展示校正为先，同时为后续组件持续补齐全局样式 token"
+current_focus: "Phase 5 正在进行中；当前以 Button 收尾中与 stage 展示校正为先，stage 已将 Text 组件页重构为 CssToken 下的 Typography 排版验证页，同时继续为后续组件补齐全局样式 token"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -21,7 +21,7 @@ in_progress:
 blocked: []
 next_recommended:
   - "先收尾 Button：继续按 stage 展示反馈校正页面效果，并确认 Button 当前轮次达到可冻结"
-  - "以 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 为唯一主计划，按批次推进 Text / Input / Tag / Card / Modal / ListItem / Icon"
+  - "以 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 为唯一主计划，按批次推进 Typography / Input / Tag / Card / Modal / ListItem / Icon"
   - "新增组件或迭代既有组件时，若现有全局 token 不足，先补齐 token 语义再回灌组件实现"
   - "继续按 docs/exec-plans/completed/phase-4-h5-webview-baseline.md 观察 adapters 接入后的 H5 体积变化"
 active_exec_plan: "docs/exec-plans/active/phase-5-token-protocol-and-mapping.md"
@@ -42,11 +42,15 @@ notes: |
   11. 可折叠一级导航的文案与箭头着色已与展开状态解耦；无论展开或折叠都维持未展开态颜色，仅保留 hover 反馈
   12. stage 组件命名的双语展示格式已统一：组件名中的 `English / 中文` 已收敛为 `English 中文`，英文名与中文名之间只保留一个空格
   13. 历史上的“等待 Figma 输入”待机状态已结束；当前唯一 active 计划为 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
+  14. stage 全部已接入组件页面的内容区已按 `Base 基础按钮` 页样板统一为“Hero + Gallery 分节”结构；Button 二级页也已补齐同结构占位，未改动 stage 壳层 header、主导航和展示区布局
+  15. stage 展示页已移除 `矩阵验证 / Harness Matrix` 模块；舞台页只保留面向展示的内容，不再承载代码层矩阵验证
+  16. `Text` 不再作为设计系统通用组件保留；`apps/stage` 已新增折叠一级导航 `CssToken 全局样式`，并将原 `Text 文本` 页重构为其下的 `Typography 排版` 基础验证页
+  17. `apps/example-consumer` 与 `projects/real-project-1` 中原先依赖 `@fdesign/components/Text` 的文案已回收为“原生文本元素 + 页面层样式”写法，不再通过通用 `Text` 组件承载排版组合
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出
   2. 组件样式值优先来自本项目全局 token；若当前 token 暂无对应项，必须先询问用户确认，才可临时使用硬编码或 reference token，并在当前任务收尾前完成语义抽取与回灌
-  3. `Text.weight` 不保留 `semibold / bold`
+  3. 排版协议不保留 `600 / 700` 字重，也不再保留设计系统通用 `Text` 组件
   4. `Card / Modal` spacing 采用“外层容器 padding + 内容行节奏”两级协议，不做单值映射
   5. 状态词口径：阶段层使用“进行中 / 已完成”；组件批次层使用“已落地首轮 / 收尾中 / 可冻结”
 

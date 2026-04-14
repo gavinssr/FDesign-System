@@ -53,9 +53,19 @@ const buttonLinks = [
   },
 ] as const satisfies readonly ComponentNavPage[];
 
+const cssTokenLinks = [
+  {
+    type: 'page',
+    key: 'typography',
+    label: 'Typography 排版',
+    title: 'Typography 排版',
+    url: '/pages/typography/index',
+  },
+] as const satisfies readonly ComponentNavPage[];
+
 export const componentLinks = [
+  { type: 'group', key: 'css-token', label: 'CssToken 全局样式', children: cssTokenLinks },
   { type: 'group', key: 'button', label: 'Button 按钮', children: buttonLinks },
-  { type: 'page', key: 'text', label: 'Text 文本', title: 'Text 文本', url: '/pages/text/index' },
   { type: 'page', key: 'tag', label: 'Tag 标签', title: 'Tag 标签', url: '/pages/tag/index' },
   { type: 'page', key: 'input', label: 'Input 输入框', title: 'Input 输入框', url: '/pages/input/index' },
   { type: 'page', key: 'card', label: 'Card 卡片', title: 'Card 卡片', url: '/pages/card/index' },

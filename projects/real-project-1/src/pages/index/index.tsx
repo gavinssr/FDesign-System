@@ -7,8 +7,8 @@ import {
   ListItem,
   Modal,
   Tag,
-  Text as FText,
 } from '@fdesign/components';
+import { colors } from '@fdesign/tokens';
 import { useState } from 'react';
 
 const launchChecklist = [
@@ -42,6 +42,13 @@ export default function IndexPage() {
         description: '请补充有效联系邮箱，避免交付后无人接手。',
       };
 
+  const campaignStatusDescriptionStyle = {
+    color:
+      campaignStatus.tone === 'success'
+        ? colors.semantic.action.success.subtleForeground
+        : colors.semantic.action.warning.subtleForeground,
+  } as const;
+
   return (
     <View className="__realProject-page">
       <View className="__realProject-hero">
@@ -67,13 +74,17 @@ export default function IndexPage() {
         <Card title="预计曝光" description="首波投放资源预估" tone="primary">
           <View className="__realProject-stack">
             <Text className="__realProject-kpiValue">128k</Text>
-            <FText tone="muted">覆盖 3 个流量入口，首日峰值预计在 10:00-14:00。</FText>
+            <Text className="__realProject-copy __realProject-copyMuted">
+              覆盖 3 个流量入口，首日峰值预计在 10:00-14:00。
+            </Text>
           </View>
         </Card>
         <Card title="目标转化" description="报名或加购行为" tone="success">
           <View className="__realProject-stack">
             <Text className="__realProject-kpiValue">8.4%</Text>
-            <FText tone="muted">基于上一轮活动数据，作为本次冒烟验收的观察基线。</FText>
+            <Text className="__realProject-copy __realProject-copyMuted">
+              基于上一轮活动数据，作为本次冒烟验收的观察基线。
+            </Text>
           </View>
         </Card>
       </View>
@@ -92,7 +103,9 @@ export default function IndexPage() {
             />
             <View className="__realProject-row">
               <Tag tone={campaignStatus.tone}>{campaignStatus.label}</Tag>
-              <FText tone={campaignStatus.tone}>{campaignStatus.description}</FText>
+              <Text className="__realProject-copy" style={campaignStatusDescriptionStyle}>
+                {campaignStatus.description}
+              </Text>
             </View>
           </View>
         </Card>
@@ -128,14 +141,14 @@ export default function IndexPage() {
         onClose={() => setPublishOpen(false)}
       >
         <View className="__realProject-stack">
-          <FText>
+          <Text className="__realProject-copy">
             当前联系人：{ownerEmail || '未填写'}。交付脚本会根据 `project.yaml`
             输出独立产物目录，并生成部署说明与最小 smoke report。
-          </FText>
-          <FText tone="muted">
+          </Text>
+          <Text className="__realProject-copy __realProject-copyMuted">
             这一步证明业务项目只通过 `@fdesign/components`
             组织页面，不依赖 `apps/stage` 或其私有 shell。
-          </FText>
+          </Text>
         </View>
       </Modal>
     </View>

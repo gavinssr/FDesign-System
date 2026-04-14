@@ -215,7 +215,7 @@
 .__stage-demoHeader {
   display: flex;
   flex-direction: column;
-  gap: var(--stage-space-demo-header-gap);
+  gap: var(--stage-space-section-gap-tight);
 }
 
 .__stage-title,
@@ -518,6 +518,14 @@
 .__stage-captionedItem .__stage-metaKey {
   width: 100%;
   text-align: center;
+}
+
+.__stage-captionedItemStart {
+  align-items: flex-start;
+}
+
+.__stage-captionedItemStart .__stage-metaKey {
+  text-align: left;
 }
 
 .__stage-matrixGrid {

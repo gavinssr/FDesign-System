@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'Icon',
+  navigationBarTitleText: 'Icon 图标',
 });

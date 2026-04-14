@@ -31,7 +31,7 @@
 ## 当前工作窗口
 
 - 第一优先级：继续收尾 `Button`，让组件本体与 `apps/stage` 展示效果达到“可冻结”
-- 第二优先级：沿同一协议继续推进 `Text / Input / Tag / Card / Modal / ListItem / Icon`
+- 第二优先级：沿同一协议继续推进 `Typography / Input / Tag / Card / Modal / ListItem / Icon`
 - 第三优先级：当新增组件或修正既有组件暴露 token 缺口时，先补齐全局 token 语义，再回灌组件实现
 
 ## 滚动 backlog 管理方式
@@ -190,7 +190,7 @@
 ### 2. 当前已知会受影响的组件
 
 - 第一批：`Button`（已落地首轮对齐，当前收尾中）
-- 第二批：`Text`、`Input`、`Tag`
+- 第二批：`Typography`、`Input`、`Tag`
 - 第三批：`Card`、`Modal`、`ListItem`、`Icon`
 - 横向跟进：`apps/stage` 全局壳层、`projects/real-project-1` 全局壳层
 
@@ -210,10 +210,11 @@
 - 当前输入框 radius `8` 不符合默认矩形容器协议，建议改为 `4`
 - label / helper 的字重与字号需改为 typography 协议值
 
-#### Text
+#### Typography
 
-- `weight` 中的 `semibold` / `bold` 与协议冲突
-- 已确认：直接收缩 API，仅保留协议允许的字重取值
+- 不再保留 `Text` 作为设计系统通用组件
+- stage 中改为 `Typography` 基础排版验证页，挂到 `CssToken 全局样式` 分组下
+- 排版能力由全局 typography token 与页面/组件语义封装组合完成，不再围绕 `Text` props 扩展 API
 
 #### Tag
 
@@ -250,7 +251,7 @@
 - 不新增 `radius-full`
 - 不新增 `radius-16`
 - 不保留 `600 / 700` 字重作为正式 token
-- `Text.weight` 不保留 `semibold / bold`，按协议收缩 API
+- 不保留 `600 / 700` 作为正式排版字重 token，也不再围绕 `Text` 组件保留历史字重 API
 
 ### 实施前仍需用户确认
 

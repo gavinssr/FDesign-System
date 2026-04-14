@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'Card',
+  navigationBarTitleText: 'Card 卡片',
 });

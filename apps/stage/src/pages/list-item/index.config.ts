@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'ListItem',
+  navigationBarTitleText: 'List Item 列表项',
 });

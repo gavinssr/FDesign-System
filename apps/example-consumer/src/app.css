@@ -44,6 +44,16 @@ body {
   font-size: 14px;
 }
 
+.__consumer-copy {
+  font-size: 14px;
+  line-height: 22px;
+  color: #0f172a;
+}
+
+.__consumer-copyMuted {
+  color: #475569;
+}
+
 .__consumer-row {
   display: flex;
   flex-wrap: wrap;

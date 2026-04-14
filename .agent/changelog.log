@@ -849,3 +849,41 @@
 - 本轮只调整“组件命名”相关双语展示，不改动 `Coming Soon / 待补充`、`Variant / 类型` 等通用说明性文案
 - 当前 stage 中组件命名相关文案已统一为“英文名 + 一个空格 + 中文名”的格式
 
+## 2026-04-13 — stage 页面内容结构按 Base 样板统一
+
+### 代码变更
+- 新增 `apps/stage/src/shell/StageShowcasePage.tsx`：抽出仅负责内容区的统一样板，复用 `Base 基础按钮` 页的 `Hero + Gallery 分节` 结构与既有 stage 样式类
+- `apps/stage/src/pages/text/index.tsx`、`input/index.tsx`、`tag/index.tsx`、`card/index.tsx`、`list-item/index.tsx`、`icon/index.tsx`、`modal/index.tsx`：改为统一样板结构，保留各组件现有示例内容并重排为英雄区、统计信息和分节展示
+- `apps/stage/src/pages/button-flush/index.tsx`、`button-griditem/index.tsx`、`button-text-button/index.tsx`、`button-fab/index.tsx`：改为与 `Base 基础按钮` 同结构的占位页，先补齐 Hero、元信息和分节占位内容
+- `apps/stage/src/pages/text/index.config.ts`、`input/index.config.ts`、`tag/index.config.ts`、`card/index.config.ts`、`icon/index.config.ts`、`list-item/index.config.ts`、`modal/index.config.ts`：同步将导航栏标题改为与页面一致的双语标题
+
+### 说明
+- `apps/stage/src/pages/button/index.tsx` 未改动，继续作为所有 stage 组件页的内容样板
+- 本轮未改动 `apps/stage/src/shell/Layout.tsx`、`componentLinks.ts` 或 stage 壳层样式，因此 header、主导航栏和展示区整体布局保持不变
+- 已执行 `pnpm --filter @fdesign/stage build`，构建通过；仅保留既有的入口体积 warning，未引入新的构建错误
+
+## 2026-04-13 — stage 移除矩阵验证模块
+
+### 代码变更
+- `apps/stage/src/pages/text/index.tsx`、`input/index.tsx`、`tag/index.tsx`、`card/index.tsx`、`icon/index.tsx`、`list-item/index.tsx`、`modal/index.tsx`：删除 `矩阵验证 / Harness Matrix` 分节，并移除对应的 `*Harness` 组件导入
+
+### 说明
+- 本轮遵循 `Base 基础按钮` 页的展示取向：舞台页只保留面向设计和交互预览的内容，不再承载代码层矩阵验证
+- `Base 基础按钮` 页未改动，stage 壳层布局也未改动
+- 已确认 stage 源码中不再残留 `Harness Matrix` 相关文案，且本轮修改无新增 lint 问题
+
+## 2026-04-14 — Text 组件下线并重构为 Typography 基础页
+
+### 代码变更
+- `apps/stage/src/shell/componentLinks.ts`、`apps/stage/src/app.config.ts`：新增一级折叠导航 `CssToken 全局样式` 并置于最前，将 `Typography 排版` 作为其下唯一二级页；移除原顶层 `Text 文本` 导航
+- 新增 `apps/stage/src/pages/typography/index.tsx`、`index.config.ts`：以字体族、字号、字重、行高和基础文本行为重建排版验证页，不再展示 `Text` 组件 props 矩阵
+- 删除 `apps/stage/src/pages/text/index.tsx`、`index.config.ts`：移除旧的 `Text 文本` 页面实现
+- `packages/components/src/index.ts`、`packages/components/src/text/*`：移除 `Text` 组件、类型、合同、测试与 harness 出口
+- `apps/example-consumer/src/pages/index/index.tsx`、`projects/real-project-1/src/pages/index/index.tsx`：将原先依赖 `@fdesign/components/Text` 的文案替换为原生文本元素 + 页面层样式/局部 token 样式写法
+- `apps/example-consumer/src/app.css`、`projects/real-project-1/src/app.css`：补齐页面层文本样式类，承接 `Text` 组件下线后的文案展示
+- `docs/ROADMAP.md`、`docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`、`.agent/checkpoint.yaml`、`.agent/decisions.log`：同步治理层口径，明确 `Text` 不再作为设计系统组件保留，排版验证改由 `Typography` 基础页承担
+
+### 说明
+- 本轮确认“文字展示由全局 typography token 与页面/组件语义样式组合完成”，不再围绕通用 `Text` 组件扩展 API
+- 已执行 `pnpm --filter @fdesign/components build && pnpm --filter @fdesign/stage build && pnpm --filter @fdesign/example-consumer build && pnpm --filter @fdesign/real-project-1 build`，全部通过；仅保留既有的 H5 entry size warning
+
