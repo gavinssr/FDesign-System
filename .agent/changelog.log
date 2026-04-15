@@ -1043,3 +1043,13 @@
 - 本轮仅调整导航顺序和颜色页展示结构，不改动 token 源数据
 - 已执行 `ReadLints` 与 `pnpm --filter @fdesign/stage build`，均通过；仅保留既有 H5 entry size warning
 
+## 2026-04-15 — stage 导航高亮渐变优化
+
+### 代码变更
+- `apps/stage/src/app.css`：新增 stage 导航选中左侧高亮渐变与折叠一级导航展开态渐变背景变量
+- `apps/stage/src/shell/styles/layout.module.css`：将 `__stage-navLinkGroupActive` 背景改为半透明横向渐变，并为 `__stage-navLinkActive` 改用左侧伪元素渲染 4px 渐变高亮条
+
+### 说明
+- 本轮仅调整 stage 壳层导航视觉，不改动 `Layout` 中的展开、折叠与跳转逻辑
+- 已执行 `ReadLints` 与 `pnpm --filter @fdesign/stage build`，均通过；仅保留既有 H5 entry size warning
+

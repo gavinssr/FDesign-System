@@ -92,6 +92,7 @@
 }
 
 .__stage-navLink {
+  position: relative;
   display: flex;
   align-items: center;
   width: 100%;
@@ -113,7 +114,13 @@
 }
 
 .__stage-navLinkGroupActive {
-  background: var(--stage-surface-group-active);
+  background: var(--stage-page-bg);
+  color: var(--stage-text);
+}
+
+.__stage-navLinkGroupActive:hover {
+  background: var(--stage-nav-group-expanded-bg);
+  color: var(--stage-text);
 }
 
 .__stage-navLinkText {
@@ -168,6 +175,11 @@
 
 .__stage-navSubLink {
   padding-left: 32px;
+  background: var(--stage-surface-sublink);
+}
+
+.__stage-navSubLink:hover {
+  background: var(--stage-surface-sublink-hover);
 }
 
 .__stage-navSubListCollapsed {
@@ -190,7 +202,16 @@
   color: var(--stage-text);
   font-weight: 500;
   background: var(--stage-surface);
-  border-left: 4px solid #1E2533;
+}
+
+.__stage-navLinkActive::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--stage-nav-active-border-gradient);
 }
 
 .__stage-navLinkActive:hover {

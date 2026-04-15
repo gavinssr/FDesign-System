@@ -82,10 +82,13 @@ page {
   --stage-space-matrix-row-gap-min: 24px;
   --stage-page-bg: #fafafa;
   --stage-surface: #ffffff;
-  --stage-surface-hover: #f2f2f2;
+  --stage-surface-sublink: #F5F5F5;
+  --stage-surface-hover: linear-gradient(90deg, #F2F6FF 30%, #FFF6F9 100%);
   --stage-surface-hover-active: #F7F7F7;
+  --stage-surface-sublink-hover: #f2f2f2;
   --stage-surface-muted: #f6f6f6;
   --stage-surface-group-active: #FCFCFC;
+  --stage-nav-active-border-gradient: linear-gradient(180deg, #4D83FF 0%, #6694FF 50%, #FF6694 100%);
   --stage-border: #F5F5F5;
   --stage-border-subtle: #F5F5F5;
   --stage-text: #1E2533;
