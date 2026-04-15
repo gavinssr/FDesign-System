@@ -1,6 +1,9 @@
 export default defineAppConfig({
   pages: [
-    'pages/typography/index',
+    'pages/css-token/typography/index',
+    'pages/css-token/color/index',
+    'pages/css-token/radii/index',
+    'pages/css-token/spacing/index',
     'pages/button/index',
     'pages/button-flush/index',
     'pages/button-griditem/index',

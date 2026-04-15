@@ -2,7 +2,7 @@ import { Text, View } from '@tarojs/components';
 import { colors, fontFamilies, fontSize, fontWeight, lineHeight, typography } from '@fdesign/tokens';
 import type { CSSProperties } from 'react';
 
-import { StageShowcasePage } from '../../shell/StageShowcasePage';
+import { StageShowcasePage } from '../../../shell/StageShowcasePage';
 
 const familySamples = [
   {

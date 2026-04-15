@@ -59,7 +59,28 @@ const cssTokenLinks = [
     key: 'typography',
     label: 'Typography 排版',
     title: 'Typography 排版',
-    url: '/pages/typography/index',
+    url: '/pages/css-token/typography/index',
+  },
+  {
+    type: 'page',
+    key: 'color',
+    label: 'Color 颜色',
+    title: 'Color 颜色',
+    url: '/pages/css-token/color/index',
+  },
+  {
+    type: 'page',
+    key: 'radii',
+    label: 'Radii 圆角',
+    title: 'Radii 圆角',
+    url: '/pages/css-token/radii/index',
+  },
+  {
+    type: 'page',
+    key: 'spacing',
+    label: 'Spacing 间距',
+    title: 'Spacing 间距',
+    url: '/pages/css-token/spacing/index',
   },
 ] as const satisfies readonly ComponentNavPage[];
 

@@ -1013,3 +1013,33 @@
 - 本轮只补一级折叠导航的背景激活态，不复用 `__stage-navLinkActive`，因此不会给一级项带上左侧 active 边框
 - 已执行 `ReadLints` 与 `pnpm --filter @fdesign/stage build`，均通过；仅保留既有 H5 entry size warning
 
+## 2026-04-15 — stage 扩建 CssToken 展示页
+
+### 代码变更
+- `apps/stage/src/app.config.ts`：将 CssToken 页统一迁移到 `pages/css-token/*` 路由下，并新增 `Color / Spacing / Radii` 页面入口
+- `apps/stage/src/shell/componentLinks.ts`：补齐 `CssToken 全局样式` 分组下的 `Typography / Color / Spacing / Radii` 四个二级导航
+- `apps/stage/src/pages/css-token/typography/index.tsx`：将既有 `Typography` 页迁移到新目录，保留 Hero + Gallery 展示结构
+- `apps/stage/src/pages/css-token/color/index.tsx`：新增颜色展示页，完整展开 `referenceColors` 与 `semanticColors` 叶子节点，并展示色块、token 路径、实际值与已存在的 CSS var 镜像
+- `apps/stage/src/pages/css-token/spacing/index.tsx`：新增间距展示页，拆分为 `Scale / Semantic / Component Horizontal / Component Vertical / Component Metrics` 五个分节；component 间距改为使用示意矩形与标注矩形表达，不再借用真实组件
+- `apps/stage/src/pages/css-token/radii/index.tsx`：新增圆角展示页，展示四档圆角值及统一矩形示意
+- `apps/stage/src/pages/css-token/shared.tsx`：新增 css-token 共享辅助，统一处理 token 叶子节点展开、路径文案、CSS var 映射与基础预览卡片
+- `apps/stage/src/app.css`：新增 stage 私有示意 token `--stage-preview-element` 与 `--stage-annotation`，并补充颜色块、圆角块、尺寸示意、间距标注矩形等展示样式
+- 删除 `apps/stage/src/pages/typography/index.tsx`：旧路径已收敛到 `pages/css-token/typography/index.tsx`
+
+### 说明
+- 本轮明确不纳入 `Motion` 与 `Shadow`；当前 `CssToken` 仅覆盖已确认并要求展示的 `Typography / Color / Spacing / Radii`
+- `Spacing` 页中 `component` 的尺寸类指标（如 `minHeight / width / spinnerSize / box`）单独归入 `Component Metrics`，避免将尺寸值误展示为相邻间距
+- 已执行 `ReadLints` 与 `pnpm --filter @fdesign/stage build`，均通过；仅保留既有 H5 entry size warning
+
+## 2026-04-15 — stage 调整 CssToken 导航顺序与颜色分层展示
+
+### 代码变更
+- `apps/stage/src/shell/componentLinks.ts`：交换 `CssToken 全局样式` 分组下 `Radii` 与 `Spacing` 的导航顺序
+- `apps/stage/src/app.config.ts`：同步调整 css-token 页面注册顺序，保持与导航一致
+- `apps/stage/src/pages/css-token/color/index.tsx`：将颜色页从按层平铺改为按嵌套结构递归分组展示；当前能按 `reference -> brand -> blue`、`semantic -> text -> primary` 等层级明确分栏
+- `apps/stage/src/app.css`：新增颜色分组树的展示样式，包括分组标题、分组栈与层级缩进
+
+### 说明
+- 本轮仅调整导航顺序和颜色页展示结构，不改动 token 源数据
+- 已执行 `ReadLints` 与 `pnpm --filter @fdesign/stage build`，均通过；仅保留既有 H5 entry size warning
+

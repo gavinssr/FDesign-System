@@ -1,6 +1,6 @@
-last_session: "2026-04-14T14:43:23Z"
+last_session: "2026-04-15T03:10:00Z"
 current_phase: "phase-5"
-current_focus: "Phase 5 正在进行中；当前仍以 Button 收尾中与 stage 展示校正为先，同时 Icon 已落地双源架构首轮实现与 stage/consumer 构建验证，后续继续为组件批次补齐全局样式 token"
+current_focus: "Phase 5 正在进行中；当前仍以 Button 收尾中与 stage 展示校正为先，同时 stage 已补齐 CssToken 分组下的 Typography / Color / Spacing / Radii 页面，后续继续为组件批次补齐全局样式 token"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -22,7 +22,7 @@ in_progress:
 blocked: []
 next_recommended:
   - "先收尾 Button：继续按 stage 展示反馈校正页面效果，并确认 Button 当前轮次达到可冻结"
-  - "以 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 为唯一主计划，按批次推进 Typography / Input / Tag / Card / Modal / ListItem，并继续补齐 Icon 本地图标集"
+  - "以 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 为唯一主计划，继续收尾 CssToken 展示细节后，按批次推进 Input / Tag / Card / Modal / ListItem，并继续补齐 Icon 本地图标集"
   - "新增组件或迭代既有组件时，若现有全局 token 不足，先补齐 token 语义再回灌组件实现"
   - "继续按 docs/exec-plans/completed/phase-4-h5-webview-baseline.md 观察 adapters 接入后的 H5 体积变化"
 active_exec_plan: "docs/exec-plans/active/phase-5-token-protocol-and-mapping.md"
@@ -60,6 +60,8 @@ notes: |
   28. `apps/stage` header 已新增品牌 logo：资源复制到 `src/assets/fd-logo.png`，并在壳层 `Layout` 左侧接入；当前 logo 尺寸已接入 header 样式变量，与标题字号口径保持联动
   29. `apps/stage/src/index.html` 已补齐浏览器页签配置：当前 H5 页签标题为 `FDesign System`，并以内联 data URL 方式接入 favicon，避免额外静态路径耦合
   30. `apps/stage` 一级折叠导航已补充“展开且其下存在当前选中二级项”态：当前通过 `__stage-navLinkGroupActive` 单独上背景色，背景值先复用二级导航选中态的 `var(--stage-surface)`，便于后续继续微调
+  31. `apps/stage` 的 `CssToken 全局样式` 已统一迁移到 `pages/css-token/*` 路径下，当前导航已补齐 `Typography / Color / Spacing / Radii` 四个二级页
+  32. `apps/stage` 已为 token 展示补充通用叶子节点展开与示意预览能力；其中 `Spacing` 页的 component 分节不再借用真实组件，而是使用 stage 私有的蓝色元素示意与浅红标注色矩形来表达横向/纵向间距
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出

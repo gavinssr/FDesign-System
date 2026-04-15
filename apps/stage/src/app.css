@@ -91,6 +91,8 @@ page {
   --stage-text: #1E2533;
   --stage-text-muted: #666666;
   --stage-text-soft: #888888;
+  --stage-preview-element: #ccdbff;
+  --stage-annotation: rgb(255 61 111 / 30%);
 }
 
 *,
@@ -175,6 +177,184 @@ body {
   background: var(--stage-surface-muted);
   padding: 4px;
   border-radius: 2px;
+}
+
+.__stage-tokenSwatch,
+.__stage-radiusPreview {
+  width: 96px;
+  height: 64px;
+  border: 1px solid var(--stage-border);
+  background: var(--stage-preview-element);
+}
+
+.__stage-sizePreviewFrame {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 80px;
+}
+
+.__stage-sizePreviewBlock {
+  flex: 0 0 auto;
+  border-radius: 4px;
+  background: var(--stage-preview-element);
+}
+
+.__stage-measurePreview {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.__stage-measurePreviewHorizontal {
+  align-items: flex-start;
+  padding-bottom: 24px;
+}
+
+.__stage-measurePreviewVertical {
+  align-items: flex-start;
+  padding-right: 40px;
+}
+
+.__stage-paddingPreviewStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.__stage-paddingPreviewRow {
+  display: inline-flex;
+  align-items: center;
+}
+
+.__stage-measureHorizontalGroup {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.__stage-measureVerticalGroup {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.__stage-measureBlock {
+  width: 80px;
+  height: 80px;
+  flex: 0 0 auto;
+  border-radius: 4px;
+  background: var(--stage-preview-element);
+}
+
+.__stage-measureAnnotation {
+  flex: 0 0 auto;
+  background: var(--stage-annotation);
+}
+
+.__stage-measureAnnotationVertical {
+  min-height: 1px;
+}
+
+.__stage-measureLabel {
+  position: absolute;
+  flex: 0 0 auto;
+  color: var(--stage-annotation);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.__stage-measurePreviewHorizontal .__stage-measureLabel {
+  text-align: center;
+}
+
+.__stage-measurePreviewVertical .__stage-measureLabel {
+  white-space: nowrap;
+}
+
+.__stage-paddingPreview {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.__stage-paddingPreviewHorizontal {
+  align-items: flex-start;
+}
+
+.__stage-paddingPreviewVertical {
+  align-items: center;
+}
+
+.__stage-paddingPreviewFrame {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex: 0 0 auto;
+  border: 1px solid var(--stage-preview-element);
+  background: transparent;
+  border-radius: 4px;
+}
+
+.__stage-paddingPreviewInset {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.__stage-paddingPreviewInsetAll {
+  border: var(--stage-padding-preview-value) solid var(--stage-annotation);
+}
+
+.__stage-paddingPreviewInsetX {
+  border-left: var(--stage-padding-preview-value) solid var(--stage-annotation);
+  border-right: var(--stage-padding-preview-value) solid var(--stage-annotation);
+}
+
+.__stage-paddingPreviewInsetY {
+  border-top: var(--stage-padding-preview-value) solid var(--stage-annotation);
+  border-bottom: var(--stage-padding-preview-value) solid var(--stage-annotation);
+}
+
+.__stage-paddingPreviewInsetTop {
+  border-top: var(--stage-padding-preview-value) solid var(--stage-annotation);
+}
+
+.__stage-paddingPreviewInsetRight {
+  border-right: var(--stage-padding-preview-value) solid var(--stage-annotation);
+}
+
+.__stage-paddingPreviewInsetBottom {
+  border-bottom: var(--stage-padding-preview-value) solid var(--stage-annotation);
+}
+
+.__stage-paddingPreviewInsetLeft {
+  border-left: var(--stage-padding-preview-value) solid var(--stage-annotation);
+}
+
+.__stage-tokenGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.__stage-tokenGroupStack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-left: 16px;
+  border-left: 1px solid var(--stage-border-subtle);
+}
+
+.__stage-tokenGroupTitle {
+  color: var(--stage-text);
+  font-size: var(--stage-font-size-description);
+  line-height: var(--stage-line-height-description);
+  font-weight: 500;
+  text-transform: capitalize;
 }
 
 a,
