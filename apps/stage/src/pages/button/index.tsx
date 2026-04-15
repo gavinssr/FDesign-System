@@ -36,7 +36,7 @@ export default function ButtonPage() {
       <View className="__stage-demoCard">
         <View className="__stage-hero">
           <View className="__stage-heroBody">
-            <Text className="__stage-heroTitle">Button 按钮</Text>
+            <Text className="__stage-heroTitle">Base 基础按钮</Text>
             <Text className="__stage-heroDescription">
               按钮用于执行用户在交互流程中触发指令、提交更改或完成的即时操作。
             </Text>

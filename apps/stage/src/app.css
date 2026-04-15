@@ -35,10 +35,11 @@ page {
 }
 
 :root {
-  --stage-header-height: 84px;
+  --stage-header-height: 64px;
   --stage-sidebar-width: 288px;
-  --stage-font-size-header-title: 44px;
-  --stage-line-height-header-title: 52px;
+  --stage-header-logo: 20px;
+  --stage-font-size-header-title: 24px;
+  --stage-line-height-header-title: 28px;
   --stage-font-size-nav-link: 14px;
   --stage-line-height-nav-link: 24px;
   --stage-space-nav-link-padding: 16px;
@@ -84,6 +85,7 @@ page {
   --stage-surface-hover: #f2f2f2;
   --stage-surface-hover-active: #F7F7F7;
   --stage-surface-muted: #f6f6f6;
+  --stage-surface-group-active: #FCFCFC;
   --stage-border: #F5F5F5;
   --stage-border-subtle: #F5F5F5;
   --stage-text: #1E2533;

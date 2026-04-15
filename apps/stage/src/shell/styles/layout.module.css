@@ -18,9 +18,23 @@
   display: flex;
   align-items: center;
   min-height: var(--stage-header-height);
-  padding: 16px;
+  padding-left: 16px;
   border-bottom: 1px solid var(--stage-border);
   background: var(--stage-surface);
+}
+
+.__stage-headerBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.__stage-headerLogo {
+  width: var(--stage-header-logo);
+  height: var(--stage-header-logo);
+  flex-shrink: 0;
+  background: center / contain no-repeat url('../../assets/fd-logo.png');
 }
 
 .__stage-headerTitle {
@@ -28,9 +42,10 @@
   max-width: 100%;
   overflow: hidden;
   color: var(--stage-text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: var(--stage-font-size-header-title);
   line-height: var(--stage-line-height-header-title);
-  font-weight: 500;
+  font-weight: 700;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -95,6 +110,10 @@
 .__stage-navLinkGroup {
   justify-content: flex-start;
   gap: 12px;
+}
+
+.__stage-navLinkGroupActive {
+  background: var(--stage-surface-group-active);
 }
 
 .__stage-navLinkText {
@@ -171,6 +190,7 @@
   color: var(--stage-text);
   font-weight: 500;
   background: var(--stage-surface);
+  border-left: 4px solid #1E2533;
 }
 
 .__stage-navLinkActive:hover {

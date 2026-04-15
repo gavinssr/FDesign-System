@@ -76,7 +76,10 @@ export function Layout({ title, children, showPageTitle = true, navKey }: Layout
   return (
     <View className="__stage-layout">
       <View className="__stage-header">
-        <Text className="__stage-headerTitle">FenQiLe Components Preview</Text>
+        <View className="__stage-headerBrand">
+          <View className="__stage-headerLogo" aria-hidden />
+          <Text className="__stage-headerTitle">FDesign System</Text>
+        </View>
       </View>
       <View className="__stage-sidebar" onWheel={stopSidebarWheel}>
         <View className="__stage-navList">
@@ -84,11 +87,12 @@ export function Layout({ title, children, showPageTitle = true, navKey }: Layout
             if (item.type === 'group') {
               const isExpanded = expandedGroups[item.key] ?? item.key === activeGroupKey;
               const isGroupActive = item.key === activeGroupKey;
+              const isExpandedGroupActive = isExpanded && isGroupActive;
 
               return (
                 <View key={item.key} className="__stage-navGroup">
                   <View
-                    className="__stage-navLink __stage-navLinkGroup"
+                    className={`__stage-navLink __stage-navLinkGroup ${isExpandedGroupActive ? '__stage-navLinkGroupActive' : ''}`}
                     role="button"
                     onClick={() => {
                       handleGroupClick(item.key, item.children[0].url, isExpanded, isGroupActive);

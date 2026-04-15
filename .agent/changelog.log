@@ -981,3 +981,35 @@
 - 该组件仅用于 stage 展示层备注，不进入 `packages/components`，也不参与设计系统组件合同
 - 已执行 `pnpm --filter @fdesign/stage build`，构建通过；仅保留既有 H5 entry size warning
 
+## 2026-04-14 — stage header 接入品牌 logo
+
+### 代码变更
+- 新增 `apps/stage/src/assets/fd-logo.png`：复制用户提供的 logo 资源到 stage 内部静态资源目录，避免直接引用下载目录文件
+- `apps/stage/src/shell/Layout.tsx`：在 header 标题左侧新增品牌 logo 容器
+- `apps/stage/src/shell/styles/layout.module.css`：新增 `__stage-headerBrand` 与 `__stage-headerLogo` 样式，logo 使用 `background-image` 引用本地资源，并将尺寸绑定到 `--stage-font-size-header-title`
+
+### 说明
+- 用户提供的原图为 `168 x 168`，当前按方形资源等比缩放，不做额外裁切或拉伸
+- 已执行 `pnpm --filter @fdesign/stage build`，构建通过；仅保留既有 H5 entry size warning
+
+## 2026-04-14 — stage 浏览器页签补齐 favicon 与站点名
+
+### 代码变更
+- `apps/stage/src/index.html`：新增 `<link rel="icon">`，使用现有 `fd-logo.png` 的 base64 data URL 作为浏览器 favicon
+- `apps/stage/src/index.html`：将页签标题统一为 `FDesign System`
+
+### 说明
+- 本轮仅修改 H5 入口模板，不影响 stage 壳层、组件运行时逻辑和静态资源输出结构
+- favicon 采用内联 data URL，避免新增 public 目录或额外 copy 配置，降低路径失配风险
+- 已执行 `pnpm --filter @fdesign/stage build`，构建通过；仅保留既有 H5 entry size warning
+
+## 2026-04-14 — stage 一级折叠导航补充展开激活背景态
+
+### 代码变更
+- `apps/stage/src/shell/Layout.tsx`：为一级折叠导航新增 `isExpandedGroupActive` 判定，仅在“一级已展开且其下存在当前选中二级项”时挂载 `__stage-navLinkGroupActive`
+- `apps/stage/src/shell/styles/layout.module.css`：新增 `.__stage-navLinkGroupActive`，背景色先复用二级导航选中态的 `var(--stage-surface)`
+
+### 说明
+- 本轮只补一级折叠导航的背景激活态，不复用 `__stage-navLinkActive`，因此不会给一级项带上左侧 active 边框
+- 已执行 `ReadLints` 与 `pnpm --filter @fdesign/stage build`，均通过；仅保留既有 H5 entry size warning
+

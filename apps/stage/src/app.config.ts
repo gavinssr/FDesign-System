@@ -14,7 +14,7 @@ export default defineAppConfig({
     'pages/modal/index',
   ],
   window: {
-    navigationBarTitleText: 'FenQiLe Components Preview',
+    navigationBarTitleText: 'FDesign System',
     navigationBarBackgroundColor: '#FFFFFF',
     navigationBarTextStyle: 'black',
     backgroundColor: '#FAFAFA',
