@@ -1053,3 +1053,24 @@
 - 本轮仅调整 stage 壳层导航视觉，不改动 `Layout` 中的展开、折叠与跳转逻辑
 - 已执行 `ReadLints` 与 `pnpm --filter @fdesign/stage build`，均通过；仅保留既有 H5 entry size warning
 
+## 2026-04-16 — stage 侧栏恢复独立滚动
+
+### 代码变更
+- `apps/stage/src/shell/Layout.tsx`：移除侧栏 `onWheel` 中对原生滚轮的 `preventDefault()` 阻断，恢复导航列表原生纵向滚动
+- `apps/stage/src/shell/styles/layout.module.css`：为侧栏改用 `overscroll-behavior-y: contain`，并给导航列表追加底部滚动缓冲区；导航项最小高度统一改为变量驱动，确保最后一项可在极限滚动时上移到侧栏可视区中线附近
+- `apps/stage/src/app.css`：新增 `--stage-nav-link-min-height` 与 `--stage-nav-scroll-bottom-spacer`，并在窄屏下同步提升导航项最小高度，保证滚动极限计算一致
+
+### 说明
+- 本轮目标是让侧栏在内容超出时独立滚动，同时禁止滚动链影响 header、展示区和整页
+- 已执行 `ReadLints` 与 `pnpm --filter @fdesign/stage build`，均通过；仅保留既有 H5 entry size warning
+
+## 2026-04-16 — stage 侧栏滚动条收窄并按溢出启用滚动
+
+### 代码变更
+- `apps/stage/src/shell/Layout.tsx`：新增侧栏与导航列表的运行时测量逻辑，基于真实内容高度切换 `data-nav-overflowing`，仅在导航超出侧栏高度时启用滚动态
+- `apps/stage/src/shell/styles/layout.module.css`：将侧栏滚动条宽度收窄到 `4px`，并新增非溢出态 `overflow-y: hidden` 与真实 spacer 节点样式
+
+### 说明
+- 本轮收口两点：滚动条宽度缩为上一版的一半；导航未超出屏幕底部时不再出现可滚动距离
+- 已执行 `ReadLints` 与 `pnpm --filter @fdesign/stage build`，均通过；仅保留既有 H5 entry size warning
+

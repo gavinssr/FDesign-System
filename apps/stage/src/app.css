@@ -43,6 +43,8 @@ page {
   --stage-font-size-nav-link: 14px;
   --stage-line-height-nav-link: 24px;
   --stage-space-nav-link-padding: 16px;
+  --stage-nav-link-min-height: 56px;
+  --stage-nav-scroll-bottom-spacer: max(0px, calc((100vh - var(--stage-header-height)) / 2 - var(--stage-nav-link-min-height) / 2));
   --stage-font-size-component-title: 24px;
   --stage-line-height-component-title: 32px;
   --stage-font-size-section-title: 16px;
@@ -366,4 +368,10 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --stage-nav-link-min-height: 64px;
+  }
 }

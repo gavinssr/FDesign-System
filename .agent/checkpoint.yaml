@@ -1,4 +1,4 @@
-last_session: "2026-04-15T13:40:37Z"
+last_session: "2026-04-16T03:49:29Z"
 current_phase: "phase-5"
 current_focus: "Phase 5 正在进行中；当前仍以 Button 收尾中与 stage 展示校正为先，同时 stage 已补齐 CssToken 分组下的 Typography / Color / Spacing / Radii 页面，后续继续为组件批次补齐全局样式 token"
 completed:
@@ -62,7 +62,9 @@ notes: |
   30. `apps/stage` 一级折叠导航已补充“展开且其下存在当前选中二级项”态：当前通过 `__stage-navLinkGroupActive` 单独上背景色，并已切换为蓝到粉的半透明横向渐变背景
   31. `apps/stage` 的 `CssToken 全局样式` 已统一迁移到 `pages/css-token/*` 路径下，当前导航已补齐 `Typography / Color / Spacing / Radii` 四个二级页
   32. `apps/stage` 已为 token 展示补充通用叶子节点展开与示意预览能力；其中 `Spacing` 页的 component 分节不再借用真实组件，而是使用 stage 私有的蓝色元素示意与浅红标注色矩形来表达横向/纵向间距
-  33. `apps/stage` 非折叠导航选中态的左侧高亮已从纯色边框改为蓝到粉的横向渐变条，当前通过 active 伪元素实现，不改动既有导航交互逻辑
+  33. `apps/stage` 非折叠导航选中态的左侧高亮已从纯色边框改为蓝到粉的纵向渐变条，当前通过 active 伪元素实现，不改动既有导航交互逻辑
+  34. `apps/stage` 侧栏导航已恢复独立纵向滚动：移除了阻断原生滚轮的 `preventDefault()`，并为导航列表补充底部滚动缓冲区；当前最后一个导航项在极限滚动时可上移到可视区垂直中线附近，且滚动不会链到 header、展示区或整页
+  35. `apps/stage` 侧栏滚动行为已细化为“仅真实溢出时可滚动”：当前通过运行时测量导航内容高度来切换溢出态；未溢出时隐藏侧栏纵向滚动，溢出时才挂载底部缓冲区；同时滚动条宽度已收窄为上一版的一半
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出
