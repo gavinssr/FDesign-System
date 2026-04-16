@@ -1,0 +1,26 @@
+.__stage-tagFlow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.__stage-tagCard {
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 16px;
+  border: 1px solid var(--stage-border);
+  background: var(--stage-surface);
+}
+
+.__stage-tagCardLabel {
+  color: var(--stage-text);
+  font-size: var(--stage-font-size-description);
+  line-height: var(--stage-line-height-description);
+  font-weight: 500;
+}

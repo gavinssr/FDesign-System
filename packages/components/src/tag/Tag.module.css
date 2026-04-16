@@ -4,14 +4,29 @@
   justify-content: center;
   min-height: var(--tag-min-height);
   padding: 0 var(--tag-padding-x);
-  border: 1px solid var(--tag-border);
+  border-style: solid;
+  border-width: var(--tag-border-width);
+  border-color: var(--tag-border);
   border-radius: var(--tag-radius);
   background: var(--tag-bg);
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+:global(.fd-tag-has-coupon) {
+  gap: var(--tag-coupon-gap);
 }
 
 :global(.fd-tag-label) {
   color: var(--tag-color);
   font-size: var(--tag-font-size);
-  font-weight: 500;
-  line-height: 1;
+  font-weight: 400;
+  line-height: var(--tag-line-height);
+}
+
+:global(.fd-tag-divider) {
+  width: 0;
+  height: var(--tag-divider-height);
+  border-left: var(--tag-border-width) solid var(--tag-divider-color);
+  flex-shrink: 0;
 }

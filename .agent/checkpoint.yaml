@@ -1,6 +1,6 @@
-last_session: "2026-04-16T03:49:29Z"
+last_session: "2026-04-16T06:52:44Z"
 current_phase: "phase-5"
-current_focus: "Phase 5 正在进行中；当前仍以 Button 收尾中与 stage 展示校正为先，同时 stage 已补齐 CssToken 分组下的 Typography / Color / Spacing / Radii 页面，后续继续为组件批次补齐全局样式 token"
+current_focus: "Phase 5 正在进行中；当前仍以 Button（当前范围为多个分类下的 Base 类）收尾中与 stage 展示校正为先，同时 Tag 已可冻结、Icon 已落地首轮，后续继续为组件批次补齐全局样式 token"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -16,9 +16,9 @@ completed:
   - "phase-4-segment-2-stage-baseline-and-weapp-build — stage 多端对照、H5 基线、Weex 策略与小程序最小构建完成"
   - "phase-4-multi-platform-adaptation — Phase 4 全部准出项完成并通过 H5 / 微信小程序运行态验收"
 in_progress:
-  - "Button 已落地首轮 Figma 对齐，当前仍处于收尾中"
+  - "Button 已落地首轮 Figma 对齐，但当前准确范围仅为多个分类下的 Base 类，仍处于收尾中"
   - "Phase 5 active plan 正作为长期滚动主计划维护，后续组件按批次推进"
-  - "Icon 已落地首轮双源架构（local inline SVG + material font），后续可继续按 registry 扩充本地图标集"
+  - "Icon 已落地首轮 Figma 对齐与双源架构（local inline SVG + material font），后续可继续按 registry 扩充本地图标集"
 blocked: []
 next_recommended:
   - "先收尾 Button：继续按 stage 展示反馈校正页面效果，并确认 Button 当前轮次达到可冻结"
@@ -32,8 +32,8 @@ notes: |
   当前事实快照：
   1. `vars.css` 已落地首轮输入与协议抽取，radius / spacing / typography 规则已沉淀到 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
   2. 仓库已落地基础全局样式 token 的首轮分层与 Web CSS variables 镜像；后续会随组件新增/迭代继续补齐语义 token
-  3. `Button` 是当前唯一已落地首轮 Figma 对齐的组件：已切换到 `primary-fill / primary-outline / secondary-outline`、`xl / l / m / s / xs / mini` 与 `inactive / disabled / loading`
-  4. `apps/stage` 新壳层与 `Button` 样板页已落地，但 `Button` 仍在按展示反馈继续调整，当前状态为“收尾中”，尚未达到“可冻结”
+  3. 当前已完成首轮 Figma 对齐的组件包括 `Button`、`Tag` 与 `Icon`；其中 `Button` 当前准确范围仅为多个分类下的 `Base` 类 button，不代表全部 button 分类均已完成
+  4. `apps/stage` 新壳层与 `Button` 样板页已落地，但 `Button` 当前仍在按展示反馈继续调整；现阶段收尾对象仍以多个分类下的 `Base` 类 button 为主，尚未达到“可冻结”
   5. stage 侧栏分组导航箭头已按 Figma 节点 `25860:3434` 完成一轮图标对齐，当前采用与设计稿一致的 chevron 路径替换原 border 拼接形状
   6. stage 壳层点击热区已收敛为通用 cursor 规则：侧栏导航与控制面板内的可点击项默认使用手型光标，组件本体默认不纳入
   7. 已为未来 stage 非导航类自定义点击区预留 `__stage-clickable` 能力，后续新增热区可显式复用而无需再单点补样式
@@ -65,6 +65,9 @@ notes: |
   33. `apps/stage` 非折叠导航选中态的左侧高亮已从纯色边框改为蓝到粉的纵向渐变条，当前通过 active 伪元素实现，不改动既有导航交互逻辑
   34. `apps/stage` 侧栏导航已恢复独立纵向滚动：移除了阻断原生滚轮的 `preventDefault()`，并为导航列表补充底部滚动缓冲区；当前最后一个导航项在极限滚动时可上移到可视区垂直中线附近，且滚动不会链到 header、展示区或整页
   35. `apps/stage` 侧栏滚动行为已细化为“仅真实溢出时可滚动”：当前通过运行时测量导航内容高度来切换溢出态；未溢出时隐藏侧栏纵向滚动，溢出时才挂载底部缓冲区；同时滚动条宽度已收窄为上一版的一半
+  36. `Tag` 已按 Figma 节点 `26117:11255` 完成一轮组件本体对齐：API 已切换到 `variant / color / couponPrefix`，并新增 `purple` 语义色与 tag 紧凑尺寸协议；`apps/stage` 的 `Tag 标签` 页已改为 `Variants / Colors / Coupon` 三分节展示结构
+  37. `apps/stage` 的 `Tag 标签` 页颜色卡片与券式卡片已从通用栅格卡片切换为页面私有的内容自适应容器：当前容器宽度以内部标签实际宽度为基准，左右 padding 对称收口，不再被父级列宽拉伸
+  38. `Tag` 当前轮次已通过用户验收：组件本体、token 映射与 stage 展示统一进入“可冻结”，后续仅接受新输入驱动的增量修正
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出

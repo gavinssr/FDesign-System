@@ -1,27 +1,32 @@
 import { View } from '@tarojs/components';
 
 import { Tag } from './Tag';
-import type { TagProps } from './Tag.types';
+import type { TagColor, TagVariant } from './Tag.types';
 
-const tones: Array<NonNullable<TagProps['tone']>> = [
-  'neutral',
-  'primary',
-  'success',
-  'warning',
-  'danger',
+const variants: TagVariant[] = [
+  'fill-primary',
+  'outline',
+  'fill-secondary',
 ];
-
-const emphases: Array<NonNullable<TagProps['emphasis']>> = ['subtle', 'solid'];
+const colors: TagColor[] = [
+  'blue',
+  'pink',
+  'red',
+  'yellow',
+  'green',
+  'purple',
+  'grey',
+];
 
 export function TagHarness() {
   return (
     <View>
-      {tones.map((tone) => (
-        <View key={tone}>
-          {emphases.map((emphasis) => (
-            <View key={`${tone}-${emphasis}`}>
-              <Tag tone={tone} emphasis={emphasis}>
-                {`${tone}-${emphasis}`}
+      {variants.map((variant) => (
+        <View key={variant}>
+          {colors.map((color) => (
+            <View key={`${variant}-${color}`}>
+              <Tag variant={variant} color={color} couponPrefix={variant === 'outline' ? '券' : undefined}>
+                {variant === 'outline' ? '满300减30' : `${variant}-${color}`}
               </Tag>
             </View>
           ))}

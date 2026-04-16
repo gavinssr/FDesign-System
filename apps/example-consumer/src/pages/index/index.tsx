@@ -22,10 +22,10 @@ export default function IndexPage() {
           这是一个独立于 stage 的最小消费样板，只通过 @fdesign/components 使用设计系统组件。
         </Text>
         <View className="__consumer-row">
-          <Tag tone="primary" emphasis="solid">
+          <Tag variant="fill-primary" color="blue">
             consumer
           </Tag>
-          <Tag tone="success">workspace package</Tag>
+          <Tag variant="fill-secondary" color="green">workspace package</Tag>
           <Button size="m" onPress={() => setOpen(true)}>Open modal</Button>
         </View>
       </View>

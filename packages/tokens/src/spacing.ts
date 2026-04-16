@@ -92,14 +92,10 @@ export const spacingComponent = {
     },
   },
   tag: {
-    paddingX: {
-      sm: spacingScale[8],
-      md: spacingScale[10],
-    },
-    minHeight: {
-      sm: 18,
-      md: 22,
-    },
+    paddingX: 4,
+    minHeight: 16,
+    couponGap: 2,
+    couponDividerHeight: 8,
   },
   card: {
     headerGap: spacingScale[8],

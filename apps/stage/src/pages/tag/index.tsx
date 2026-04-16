@@ -2,49 +2,85 @@ import { Text, View } from '@tarojs/components';
 import { Tag } from '@fdesign/components';
 
 import { StageShowcasePage } from '../../shell/StageShowcasePage';
+import './index.css';
 
-const tones = ['neutral', 'primary', 'success', 'warning', 'danger'] as const;
+const variants = ['fill-primary', 'outline', 'fill-secondary'] as const;
+const colors = ['blue', 'pink', 'red', 'yellow', 'green', 'purple', 'grey'] as const;
+
+const variantLabels: Record<(typeof variants)[number], string> = {
+  'fill-primary': 'Fill Primary',
+  outline: 'Outline',
+  'fill-secondary': 'Fill Secondary',
+};
+
+const colorLabels: Record<(typeof colors)[number], string> = {
+  blue: 'Blue',
+  pink: 'Pink',
+  red: 'Red',
+  yellow: 'Yellow',
+  green: 'Green',
+  purple: 'Purple',
+  grey: 'Grey',
+};
 
 export default function TagPage() {
   return (
     <StageShowcasePage
       title="Tag 标签"
       heroTitle="Tag 标签"
-      heroDescription="标签用于标记状态、分类和轻量信息，适合在列表、卡片和内容摘要中快速建立视觉识别。"
+      heroDescription="标签用于呈现轻量分类与状态信息，当前已按 Figma 对齐为三种样式变体、七种颜色与券式前缀结构。"
       heroMeta={[
-        { key: 'Tones', value: '5 种语气' },
-        { key: 'Emphasis', value: 'subtle / solid' },
-        { key: 'Sizes', value: '2 种尺寸' },
+        { key: 'Variants', value: '3 种样式' },
+        { key: 'Colors', value: '7 种颜色' },
+        { key: 'Coupon', value: '支持前缀券样式' },
       ]}
       sections={[
         {
-          title: '语气与强调 / Tone And Emphasis',
+          title: '样式类型 / Variants',
           children: (
             <View className="__stage-overviewRow">
-              {tones.map((tone) => (
-                <View key={tone} className="__stage-captionedItem">
-                  <View className="__stage-stack">
-                    <Tag tone={tone}>{`${tone} subtle`}</Tag>
-                    <Tag tone={tone} emphasis="solid">{`${tone} solid`}</Tag>
-                  </View>
-                  <Text className="__stage-metaKey">{tone}</Text>
+              {variants.map((variant) => (
+                <View key={variant} className="__stage-captionedItem">
+                  <Tag variant={variant} color="blue">
+                    标签
+                  </Tag>
+                  <Text className="__stage-metaKey">{variantLabels[variant]}</Text>
                 </View>
               ))}
             </View>
           ),
         },
         {
-          title: '尺寸 / Sizes',
+          title: '颜色 / Colors',
           children: (
-            <View className="__stage-overviewRow">
-              <View className="__stage-captionedItem">
-                <Tag size="sm">small tag</Tag>
-                <Text className="__stage-metaKey">SM</Text>
-              </View>
-              <View className="__stage-captionedItem">
-                <Tag size="md">medium tag</Tag>
-                <Text className="__stage-metaKey">MD</Text>
-              </View>
+            <View className="__stage-tagFlow">
+              {colors.map((color) => (
+                <View key={color} className="__stage-tagCard">
+                  <Text className="__stage-tagCardLabel">{colorLabels[color]}</Text>
+                  <View className="__stage-stack">
+                    {variants.map((variant) => (
+                      <Tag key={`${color}-${variant}`} variant={variant} color={color}>
+                        标签
+                      </Tag>
+                    ))}
+                  </View>
+                </View>
+              ))}
+            </View>
+          ),
+        },
+        {
+          title: '券式标签 / Coupon',
+          children: (
+            <View className="__stage-tagFlow">
+              {colors.map((color) => (
+                <View key={`coupon-${color}`} className="__stage-tagCard">
+                  <Text className="__stage-tagCardLabel">{colorLabels[color]}</Text>
+                  <Tag variant="outline" color={color} couponPrefix="券">
+                    满300减30
+                  </Tag>
+                </View>
+              ))}
             </View>
           ),
         },

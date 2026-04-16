@@ -35,6 +35,7 @@ export const fontWeight = {
 
 export const lineHeight = {
   singleLine: {
+    micro: 9,
     min: 11,
     base: 14,
     further: 16,

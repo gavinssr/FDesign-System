@@ -24,14 +24,16 @@
 - Phase 5 已启动，且已从“等待 Figma 输入”切换到长期滚动执行
 - `vars.css` 已提供颜色、字体、圆角、阴影基础定义，并由用户补齐 spacing、字体、line-height 与协议备注
 - 仓库已落地基础全局样式 token 的首轮收口，并已建立 TS 主源 + Web CSS variables 镜像
-- 当前唯一已落地首轮 Figma 对齐的组件是 `Button`
-- `Button` 当前状态为“收尾中”，仍在配合 `apps/stage` 展示效果继续微调
+- 当前已完成首轮 Figma 对齐的组件包括 `Button`（当前仅多个分类下的 `Base` 类 button 已完成，其余分类后续补齐）、`Tag` 与 `Icon`
+- `Button` 当前状态为“收尾中”，准确范围为多个分类下的 `Base` 类 button；其余分类仍待后续继续补齐
+- `Tag` 当前状态为“可冻结”，本轮组件本体、token 映射与 stage 展示已通过验收
+- `Icon` 当前状态为“已落地首轮”，双源架构、尺寸协议与 stage 展示已完成一轮对齐
 - 其余组件与其语义 token 仍按批次持续推进，不按一次性全部完成来管理
 
 ## 当前工作窗口
 
 - 第一优先级：继续收尾 `Button`，让组件本体与 `apps/stage` 展示效果达到“可冻结”
-- 第二优先级：沿同一协议继续推进 `Typography / Input / Tag / Card / Modal / ListItem / Icon`
+- 第二优先级：沿同一协议继续推进 `Typography / Input / Card / Modal / ListItem / Icon`
 - 第三优先级：当新增组件或修正既有组件暴露 token 缺口时，先补齐全局 token 语义，再回灌组件实现
 
 ## 滚动 backlog 管理方式
@@ -189,21 +191,23 @@
 
 ### 2. 当前已知会受影响的组件
 
-- 第一批：`Button`（已落地首轮对齐，当前收尾中）
-- 第二批：`Typography`、`Input`、`Tag`
-- 第三批：`Card`、`Modal`、`ListItem`、`Icon`
+- 第一批：`Button`（当前仅多个分类下的 `Base` 类 button 已落地首轮对齐，仍在收尾中）、`Tag`（已通过本轮验收，当前可冻结）、`Icon`（已落地首轮对齐）
+- 第二批：`Typography`、`Input`
+- 第三批：`Card`、`Modal`、`ListItem`
 - 横向跟进：`apps/stage` 全局壳层、`projects/real-project-1` 全局壳层
 
 ### 3. 组件级协议映射建议
 
 #### Button
 
-- 已落地首轮对齐：Button API 已切换到 `primary-fill / primary-outline / secondary-outline`
-- 已落地首轮对齐：size 已切换到 `xl / l / m / s / xs / mini`
-- 已落地首轮对齐：新增 `inactive` 状态，并与 `disabled` 分离
-- 已落地首轮对齐：`Text.weight` 的历史 `semibold / bold` 不再用于 Button 文案
-- 已落地首轮对齐：`xl / l` 使用 `radius=8`，`m / s / xs` 使用 `radius=4`，`mini` 使用 `radius=2`
-- 已落地首轮对齐：`loading` 仅在 `xl / l` 渲染 spinner，`m / s / xs / mini` 保持“加载中状态但不展示 spinner”的设计稿行为
+- 已落地首轮对齐：当前完成范围为多个分类下的 `Base` 类 button，而非全部 button 分类
+- 已落地首轮对齐：`Base` 类 Button API 已切换到 `primary-fill / primary-outline / secondary-outline`
+- 已落地首轮对齐：`Base` 类 size 已切换到 `xl / l / m / s / xs / mini`
+- 已落地首轮对齐：`Base` 类新增 `inactive` 状态，并与 `disabled` 分离
+- 已落地首轮对齐：`Text.weight` 的历史 `semibold / bold` 不再用于 `Base` 类 Button 文案
+- 已落地首轮对齐：`Base` 类 `xl / l` 使用 `radius=8`，`m / s / xs` 使用 `radius=4`，`mini` 使用 `radius=2`
+- 已落地首轮对齐：`Base` 类 `loading` 仅在 `xl / l` 渲染 spinner，`m / s / xs / mini` 保持“加载中状态但不展示 spinner”的设计稿行为
+- 当前状态：其余 button 分类后续继续补齐
 
 #### Input
 
@@ -218,9 +222,11 @@
 
 #### Tag
 
-- 当前 `radii.full` 与协议冲突，建议改为 `small=2`
-- 当前 success / warning / danger 的浅色背景与边框存在硬编码，需要转成语义色
-- label 字重需改为 `500` 或更轻
+- 已落地首轮对齐：API 已切换到 `variant / color / couponPrefix`
+- 已落地首轮对齐：组件已支持 `fill-primary / outline / fill-secondary`、七种颜色与券式前缀结构
+- 已落地首轮对齐：`purple` 已经按用户确认进入 `semantic.tag`，未新增 reference 层
+- 已落地首轮对齐：Tag 紧凑协议已抽取到 token，当前包含 `minHeight=16 / paddingX=4 / couponGap=2 / couponDividerHeight=8 / line-height=9`
+- 当前状态：`apps/stage` 的 `Tag 标签` 页展示已通过验收，本轮可冻结
 
 #### Card
 
@@ -242,7 +248,9 @@
 
 #### Icon
 
-- 当前 fallback `700` 需 remap 到 `500` 或取消该强调语义
+- 已落地首轮对齐：已完成 local registry + material 的双源统一入口
+- 已落地首轮对齐：已接入 `special-mini / xxs / xs / s / m / special-large` 六档尺寸、tone/color 覆盖与 stage 展示
+- 当前剩余工作：后续按 registry 继续扩充本地图标集，并在有新 Figma 输入时继续增量校正
 
 ## 阻塞项与待确认项
 
@@ -269,5 +277,5 @@
 2. 已落地首轮：建立 TS token 分层与 Web CSS variables 镜像
 3. 已落地首轮：`Button` 与公共 token 运行时
 4. 当前优先：继续收尾 `Button`，同步校正 `apps/stage` 展示效果
-5. 后续按批次推进其余组件，逐步消除与协议冲突的 radius / font-weight / spacing / color 用法
+5. 后续按批次推进其余组件，逐步消除与协议冲突的 radius / font-weight / spacing / color 用法；`Tag` 仅接受新输入驱动的增量修正
 6. 如用户继续提供 Figma 输入或新的组件范围，再按同一主计划扩展，而不是新开平行 active 文档

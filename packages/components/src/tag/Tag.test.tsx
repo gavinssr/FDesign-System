@@ -18,15 +18,27 @@ afterEach(() => {
 });
 
 describe('Tag', () => {
-  it('renders content with tone and emphasis classes', () => {
+  it('renders content with variant and color classes', () => {
     const { getByText } = render(
-      <Tag tone="success" emphasis="solid">
+      <Tag variant="fill-secondary" color="purple">
         Ready
       </Tag>,
     );
 
     const label = getByText('Ready').parentElement;
-    expect(label?.className).toContain('fd-tag-tone-success');
-    expect(label?.className).toContain('fd-tag-emphasis-solid');
+    expect(label?.className).toContain('fd-tag-variant-fill-secondary');
+    expect(label?.className).toContain('fd-tag-color-purple');
+  });
+
+  it('renders coupon prefix and divider classes', () => {
+    const { getByText } = render(
+      <Tag variant="outline" color="blue" couponPrefix="券">
+        满300减30
+      </Tag>,
+    );
+
+    const root = getByText('满300减30').parentElement;
+    expect(getByText('券')).toBeTruthy();
+    expect(root?.className).toContain('fd-tag-has-coupon');
   });
 });

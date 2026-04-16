@@ -32,32 +32,32 @@ export default function IndexPage() {
 
   const campaignStatus = ownerEmail.includes('@')
     ? {
-        tone: 'success',
+        tagColor: 'green',
         label: '可发布',
         description: '联系人信息完整，交付链路可继续推进。',
       }
     : {
-        tone: 'warning',
+        tagColor: 'yellow',
         label: '待补充',
         description: '请补充有效联系邮箱，避免交付后无人接手。',
       };
 
   const campaignStatusDescriptionStyle = {
     color:
-      campaignStatus.tone === 'success'
-        ? colors.semantic.action.success.subtleForeground
-        : colors.semantic.action.warning.subtleForeground,
+      campaignStatus.tagColor === 'green'
+        ? colors.semantic.tag.green.fillSecondaryForeground
+        : colors.semantic.tag.yellow.fillSecondaryForeground,
   } as const;
 
   return (
     <View className="__realProject-page">
       <View className="__realProject-hero">
         <View className="__realProject-row">
-          <Tag tone="primary" emphasis="solid">
+          <Tag variant="fill-primary" color="blue">
             growth campaign
           </Tag>
-          <Tag tone="success">h5 deliverable</Tag>
-          <Tag tone="neutral">real-project-1</Tag>
+          <Tag variant="fill-secondary" color="green">h5 deliverable</Tag>
+          <Tag variant="outline" color="grey">real-project-1</Tag>
         </View>
         <Text className="__realProject-title">Campaign Launch Console</Text>
         <Text className="__realProject-description">
@@ -102,7 +102,7 @@ export default function IndexPage() {
               onValueChange={setOwnerEmail}
             />
             <View className="__realProject-row">
-              <Tag tone={campaignStatus.tone}>{campaignStatus.label}</Tag>
+              <Tag variant="fill-secondary" color={campaignStatus.tagColor}>{campaignStatus.label}</Tag>
               <Text className="__realProject-copy" style={campaignStatusDescriptionStyle}>
                 {campaignStatus.description}
               </Text>

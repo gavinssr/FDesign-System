@@ -1,13 +1,15 @@
 component: Tag
-purpose: "小体量状态标签，用于展示分类、状态或强调信息"
-provisional: true
+purpose: "轻量标签组件，按 Figma 规范支持填充、描边与券式标签展示"
+provisional: false
 forbidden:
-  - "不允许在 Tag 内部包含业务状态映射表"
+  - "不允许在 Tag 内部包含业务状态到颜色的映射表"
   - "不允许硬编码颜色值，必须使用 @fdesign/tokens"
 a11y:
   - "颜色表达应能被文本内容补充，不依赖纯色彩传递语义"
 slots:
-  children: "标签文本"
+  couponPrefix: "券式标签左侧前缀文案"
+  children: "标签主体文案"
 states:
-  - subtle
-  - solid
+  - fill-primary
+  - outline
+  - fill-secondary

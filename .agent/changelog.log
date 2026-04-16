@@ -1074,3 +1074,45 @@
 - 本轮收口两点：滚动条宽度缩为上一版的一半；导航未超出屏幕底部时不再出现可滚动距离
 - 已执行 `ReadLints` 与 `pnpm --filter @fdesign/stage build`，均通过；仅保留既有 H5 entry size warning
 
+## 2026-04-16 — Tag 组件按 Figma 首轮对齐
+
+### 代码变更
+- `packages/tokens/src/colors.ts`：新增 `colors.semantic.tag` 语义色分组，覆盖 `blue / pink / red / yellow / green / purple / grey` 七种 Tag 专用颜色，并将 `purple` 直接落到语义层
+- `packages/tokens/src/spacing.ts`、`packages/tokens/src/typography.ts`、`packages/tokens/src/web-vars.css`：新增 Tag 紧凑协议所需的 `minHeight=16`、`paddingX=4`、`couponGap=2`、`couponDividerHeight=8` 与单行 `line-height=9` 镜像变量
+- `packages/components/src/tag/*`：将 `Tag` API 从 `tone / emphasis / size` 重构为 `variant / color / couponPrefix`，按 Figma 支持 `fill-primary / outline / fill-secondary` 与券式前缀结构，并同步更新 contract、harness、test 与样式实现
+- `apps/stage/src/pages/tag/index.tsx`：将舞台页改为 `Variants / Colors / Coupon` 三分节展示，复用既有 `StageShowcasePage` 结构
+- `apps/example-consumer/src/pages/index/index.tsx`、`projects/real-project-1/src/pages/index/index.tsx`：同步迁移仓内 `Tag` 用法到新 API，避免旧 props 残留
+
+### 说明
+- 本轮遵循“现有 token 优先，缺口先经用户确认再新增”的协议；`purple` 按用户确认直接进入语义层，不新增 reference 层
+- 已执行 `ReadLints`，并通过 `pnpm --filter @fdesign/tokens build && pnpm --filter @fdesign/components test && pnpm --filter @fdesign/components build && pnpm --filter @fdesign/stage build && pnpm --filter @fdesign/example-consumer build && pnpm --filter @fdesign/real-project-1 build`；仅保留既有 H5 entry size warning
+
+## 2026-04-16 — Tag 舞台页卡片改为内容自适应
+
+### 代码变更
+- `apps/stage/src/pages/tag/index.tsx`：将 `颜色 / Colors` 与 `券式标签 / Coupon` 两个分节从通用 `__stage-galleryGrid + __stage-galleryCard` 切换为页面私有的流式布局与自适应卡片类
+- `apps/stage/src/pages/tag/index.css`：新增 `__stage-tagFlow / __stage-tagCard / __stage-tagCardLabel`，让卡片宽度以内部标签内容为基准收缩，保持左右 padding 对称，不再随父级列宽拉伸
+
+### 说明
+- 本轮仅调整 `Tag` 舞台页展示容器，不改动 `Tag` 组件本体 API 与视觉 token
+- 已执行 `ReadLints` 与 `pnpm --filter @fdesign/stage build`，均通过；仅保留既有 H5 entry size warning
+
+## 2026-04-16 — Tag 本轮验收通过并冻结
+
+### 代码变更
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：将 `Tag` 从第二批推进组件中移出，补记其当前状态为“可冻结”，并在组件级协议映射中收口已完成事实
+- `.agent/checkpoint.yaml`：同步更新当前 focus 与事实快照，确认 `Tag` 本轮已通过用户验收，后续仅接受新输入驱动的增量修正
+
+### 说明
+- 本轮为治理收尾，不改动任何业务代码或组件实现
+- `Tag` 当前收口结论：组件本体、token 映射与 stage 展示已达成一致，可暂时停止主动调整
+
+## 2026-04-16 — 修正 Figma 对齐治理口径
+
+### 代码变更
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：修正“已完成首轮 Figma 对齐”的组件范围，明确应为 `Button`（当前仅多个分类下的 `Base` 类）、`Tag` 与 `Icon`
+- `.agent/checkpoint.yaml`：同步修正当前 focus、进行中事项与事实快照中的组件对齐口径，避免继续误写为“只有 Button/Tag”或把 `Button` 表述成全部分类已完成
+
+### 说明
+- 本轮仅修正治理记录口径，不改动代码实现
+
