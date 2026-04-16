@@ -1116,3 +1116,37 @@
 ### 说明
 - 本轮仅修正治理记录口径，不改动代码实现
 
+## 2026-04-16 — translucent 颜色 token 接入与 stage 分节展示
+
+### 代码变更
+- `packages/tokens/src/colors.ts`：补齐 reference 层透明度颜色（`brand.blue/pink`、`functional.red/orange/green` 的 `1a10/1a30/1a50/1a70`），并新增 `colors.semantic.translucent` 语义分组
+- `packages/tokens/src/web-vars.css`：新增 `--fd-color-translucent-*` 镜像变量，覆盖上述 translucent 语义路径
+- `apps/stage/src/pages/css-token/color/index.tsx`：在 Color 页新增独立 `Translucent` 分节，并将 translucent 从通用 semantic 区块中拆出单独展示
+- `apps/stage/src/pages/css-token/shared.tsx`：补齐 `colors.semantic.translucent.*` 到 `--fd-color-translucent-*` 的 path 映射，确保卡片展示 CSS Var 名
+
+### 验证
+- `pnpm --filter @fdesign/tokens lint`
+- `pnpm --filter @fdesign/tokens build`
+- `pnpm --filter @fdesign/stage build`
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+### 说明
+- 本轮按“fd 语义风格”完成透明度 token 接入，不保留 `--ref-*` 命名对外暴露
+- stage 构建仍仅保留既有 `EntrypointsOverSizeLimitWarning`，与本轮改动无关
+
+## 2026-04-16 — vars.css 补齐执行（仅 PR-2 + PR-3）
+
+### 代码变更
+- `packages/tokens/src/web-vars.css`：补齐 typography 原子镜像缺口（family semantic、`display-xlarge/xxlarge`、`line-height single/body` 缺失项）
+- `packages/tokens/src/typography.ts`：新增 `typographyStyles` 复合样式层（head/body/link/display），并新增精确匹配函数 `matchTypographyStyleKey`、`resolveTypographyStyle`
+- `packages/tokens/src/index.ts`：导出 `typographyStyles` 与上述匹配函数，供后续设计稿落地时按机制消费
+
+### 机制说明
+- 复合样式命中条件为：`fontFamily + fontSize + lineHeight + fontWeight` 四项完全一致
+- 只要任一属性不一致，就不命中 `typography.styles`，应继续走原子 token 组合
+
+### 验证
+- `pnpm --filter @fdesign/tokens lint`
+- `pnpm --filter @fdesign/tokens build`
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+

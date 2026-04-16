@@ -6,6 +6,8 @@ import { ColorSwatchPreview, TokenCard, flattenTokenEntries } from '../shared';
 
 const referenceEntries = flattenTokenEntries(referenceColors, 'colors.reference');
 const semanticEntries = flattenTokenEntries(semanticColors, 'colors.semantic');
+const translucentEntries = flattenTokenEntries(semanticColors.translucent, 'colors.semantic.translucent');
+const { translucent: semanticTranslucent, ...semanticWithoutTranslucent } = semanticColors;
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -64,6 +66,7 @@ export default function ColorPage() {
       heroMeta={[
         { key: 'Reference', value: `${referenceEntries.length} 项` },
         { key: 'Semantic', value: `${semanticEntries.length} 项` },
+        { key: 'Translucent', value: `${translucentEntries.length} 项` },
         { key: 'Preview', value: '色块 + 值 + 路径' },
         { key: 'CSS Var', value: '有镜像时一并展示' },
       ]}
@@ -77,7 +80,15 @@ export default function ColorPage() {
         },
         {
           title: 'Semantic',
-          children: renderColorGroup('semantic', semanticColors, 'colors.semantic'),
+          children: renderColorGroup('semantic', semanticWithoutTranslucent, 'colors.semantic'),
+        },
+        {
+          title: 'Translucent',
+          children: renderColorGroup(
+            'translucent',
+            semanticTranslucent,
+            'colors.semantic.translucent',
+          ),
         },
       ]}
     />

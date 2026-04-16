@@ -55,9 +55,133 @@ export const lineHeight = {
   },
 } as const;
 
+export const typographyStyles = {
+  head18Head: {
+    fontFamily: fontFamilies.semantic.textChinese,
+    fontSize: fontSize.head,
+    lineHeight: lineHeight.singleLine.head,
+    fontWeight: fontWeight.medium,
+  },
+  head16Sub: {
+    fontFamily: fontFamilies.semantic.textChinese,
+    fontSize: fontSize.increase,
+    lineHeight: lineHeight.singleLine.increase,
+    fontWeight: fontWeight.medium,
+  },
+  body10Min: {
+    fontFamily: fontFamilies.semantic.textChinese,
+    fontSize: fontSize.min,
+    lineHeight: lineHeight.body.min,
+    fontWeight: fontWeight.regular,
+  },
+  body10Strong: {
+    fontFamily: fontFamilies.semantic.textChinese,
+    fontSize: fontSize.min,
+    lineHeight: lineHeight.body.min,
+    fontWeight: fontWeight.medium,
+  },
+  body12Base: {
+    fontFamily: fontFamilies.semantic.textChinese,
+    fontSize: fontSize.base,
+    lineHeight: lineHeight.body.base,
+    fontWeight: fontWeight.regular,
+  },
+  body12Strong: {
+    fontFamily: fontFamilies.semantic.textChinese,
+    fontSize: fontSize.base,
+    lineHeight: lineHeight.body.base,
+    fontWeight: fontWeight.medium,
+  },
+  body14Further: {
+    fontFamily: fontFamilies.semantic.textChinese,
+    fontSize: fontSize.further,
+    lineHeight: lineHeight.body.further,
+    fontWeight: fontWeight.regular,
+  },
+  body16Increase: {
+    fontFamily: fontFamilies.semantic.textChinese,
+    fontSize: fontSize.increase,
+    lineHeight: lineHeight.body.increase,
+    fontWeight: fontWeight.regular,
+  },
+  link12Base: {
+    fontFamily: fontFamilies.semantic.textChinese,
+    fontSize: fontSize.base,
+    lineHeight: lineHeight.body.base,
+    fontWeight: fontWeight.regular,
+  },
+  link14Further: {
+    fontFamily: fontFamilies.semantic.textChinese,
+    fontSize: fontSize.further,
+    lineHeight: lineHeight.body.further,
+    fontWeight: fontWeight.regular,
+  },
+  link16Increase: {
+    fontFamily: fontFamilies.semantic.textChinese,
+    fontSize: fontSize.increase,
+    lineHeight: lineHeight.body.increase,
+    fontWeight: fontWeight.regular,
+  },
+  displayNumber44XXLarge: {
+    fontFamily: fontFamilies.semantic.displayLatin,
+    fontSize: fontSize.displayXXLarge,
+    lineHeight: lineHeight.singleLine.displayXXLarge,
+    fontWeight: fontWeight.medium,
+  },
+  displayNumber36XLarge: {
+    fontFamily: fontFamilies.semantic.displayLatin,
+    fontSize: fontSize.displayXLarge,
+    lineHeight: lineHeight.singleLine.displayXLarge,
+    fontWeight: fontWeight.medium,
+  },
+  displayNumber26Large: {
+    fontFamily: fontFamilies.semantic.displayLatin,
+    fontSize: fontSize.displayLarge,
+    lineHeight: lineHeight.singleLine.displayLarge,
+    fontWeight: fontWeight.medium,
+  },
+  displayNumber22Normal: {
+    fontFamily: fontFamilies.semantic.displayLatin,
+    fontSize: fontSize.displayNormal,
+    lineHeight: lineHeight.singleLine.displayNormal,
+    fontWeight: fontWeight.medium,
+  },
+  displayChinese26Large: {
+    fontFamily: fontFamilies.semantic.displayChinese,
+    fontSize: fontSize.displayLarge,
+    lineHeight: lineHeight.singleLine.displayLarge,
+    fontWeight: fontWeight.medium,
+  },
+} as const;
+
+export type TypographyStyleKey = keyof typeof typographyStyles;
+export type TypographyStyleSpec = (typeof typographyStyles)[TypographyStyleKey];
+
+const typographyStyleSignatureMap = new Map<string, TypographyStyleKey>(
+  Object.entries(typographyStyles).map(([key, style]) => [
+    `${style.fontFamily}|${style.fontSize}|${style.lineHeight}|${style.fontWeight}`,
+    key as TypographyStyleKey,
+  ]),
+);
+
+export function matchTypographyStyleKey(spec: TypographyStyleSpec): TypographyStyleKey | null {
+  const signature = `${spec.fontFamily}|${spec.fontSize}|${spec.lineHeight}|${spec.fontWeight}`;
+  return typographyStyleSignatureMap.get(signature) ?? null;
+}
+
+export function resolveTypographyStyle(spec: TypographyStyleSpec): TypographyStyleSpec | null {
+  const matchedKey = matchTypographyStyleKey(spec);
+  if (!matchedKey) {
+    return null;
+  }
+
+  return typographyStyles[matchedKey];
+}
+
 export const typography = {
   family: fontFamilies,
   size: fontSize,
   weight: fontWeight,
   lineHeight,
+  styles: typographyStyles,
 } as const;

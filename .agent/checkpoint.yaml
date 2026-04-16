@@ -1,4 +1,4 @@
-last_session: "2026-04-16T06:52:44Z"
+last_session: "2026-04-16T08:24:00Z"
 current_phase: "phase-5"
 current_focus: "Phase 5 正在进行中；当前仍以 Button（当前范围为多个分类下的 Base 类）收尾中与 stage 展示校正为先，同时 Tag 已可冻结、Icon 已落地首轮，后续继续为组件批次补齐全局样式 token"
 completed:
@@ -68,6 +68,9 @@ notes: |
   36. `Tag` 已按 Figma 节点 `26117:11255` 完成一轮组件本体对齐：API 已切换到 `variant / color / couponPrefix`，并新增 `purple` 语义色与 tag 紧凑尺寸协议；`apps/stage` 的 `Tag 标签` 页已改为 `Variants / Colors / Coupon` 三分节展示结构
   37. `apps/stage` 的 `Tag 标签` 页颜色卡片与券式卡片已从通用栅格卡片切换为页面私有的内容自适应容器：当前容器宽度以内部标签实际宽度为基准，左右 padding 对称收口，不再被父级列宽拉伸
   38. `Tag` 当前轮次已通过用户验收：组件本体、token 映射与 stage 展示统一进入“可冻结”，后续仅接受新输入驱动的增量修正
+  39. `packages/tokens` 已新增 `colors.semantic.translucent` 语义分组，并接入 `brandBlue / brandPink / functionalRed / functionalOrange / functionalGreen / neutralGray` 的透明度颜色协议
+  40. `apps/stage` 的 `CssToken / Color` 页已新增独立 `Translucent` 分节，并补齐 `colors.semantic.translucent.*` 到 `--fd-color-translucent-*` 的 CSS Var 映射展示
+  41. `packages/tokens` 已按用户确认执行 `PR-2 + PR-3`：补齐 Typography 原子缺失镜像（display xlarge/xxlarge、single/body 相关 line-height 与 family semantic），并新增 `typography.styles` 与“仅当 fontFamily/fontSize/lineHeight/fontWeight 全量完全一致时命中”的复合样式匹配机制
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出

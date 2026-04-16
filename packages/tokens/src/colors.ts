@@ -2,6 +2,10 @@ export const referenceColors = {
   brand: {
     blue: {
       1: '#f2f6ff',
+      '1a10': '#fefeff',
+      '1a30': '#fbfcff',
+      '1a50': '#f8faff',
+      '1a70': '#f5f8ff',
       2: '#e5edff',
       3: '#ccdbff',
       4: '#b2caff',
@@ -13,6 +17,10 @@ export const referenceColors = {
     },
     pink: {
       1: '#fff2f6',
+      '1a10': '#fffefe',
+      '1a30': '#fffbfc',
+      '1a50': '#fff8fa',
+      '1a70': '#fff6f9',
       2: '#ffe5ed',
       3: '#ffccdb',
       4: '#ffb2c9',
@@ -26,6 +34,10 @@ export const referenceColors = {
   functional: {
     red: {
       1: '#ffd9dc',
+      '1a10': '#fffbfb',
+      '1a30': '#fff4f5',
+      '1a50': '#ffeced',
+      '1a70': '#fee4e6',
       2: '#ffccd0',
       3: '#ffb2b9',
       4: '#ffa6ad',
@@ -37,6 +49,10 @@ export const referenceColors = {
     },
     orange: {
       1: '#ffecd9',
+      '1a10': '#fffdfb',
+      '1a30': '#fff9f4',
+      '1a50': '#fff5ec',
+      '1a70': '#fff1e3',
       2: '#ffe1bf',
       3: '#fed4a5',
       4: '#ffc78c',
@@ -48,6 +64,10 @@ export const referenceColors = {
     },
     green: {
       1: '#cef2e0',
+      '1a10': '#fafefc',
+      '1a30': '#f0fbf6',
+      '1a50': '#e6f8ee',
+      '1a70': '#ddf6e9',
       2: '#c2f2d9',
       3: '#ace5c8',
       4: '#8dd9b2',
@@ -182,6 +202,43 @@ export const semanticColors = {
   data: {
     up: referenceColors.functional.red[8],
     down: referenceColors.functional.green[8],
+  },
+  translucent: {
+    brandBlue: {
+      a10: referenceColors.brand.blue['1a10'],
+      a30: referenceColors.brand.blue['1a30'],
+      a50: referenceColors.brand.blue['1a50'],
+      a70: referenceColors.brand.blue['1a70'],
+    },
+    brandPink: {
+      a10: referenceColors.brand.pink['1a10'],
+      a30: referenceColors.brand.pink['1a30'],
+      a50: referenceColors.brand.pink['1a50'],
+      a70: referenceColors.brand.pink['1a70'],
+    },
+    functionalRed: {
+      a10: referenceColors.functional.red['1a10'],
+      a30: referenceColors.functional.red['1a30'],
+      a50: referenceColors.functional.red['1a50'],
+      a70: referenceColors.functional.red['1a70'],
+    },
+    functionalOrange: {
+      a10: referenceColors.functional.orange['1a10'],
+      a30: referenceColors.functional.orange['1a30'],
+      a50: referenceColors.functional.orange['1a50'],
+      a70: referenceColors.functional.orange['1a70'],
+    },
+    functionalGreen: {
+      a10: referenceColors.functional.green['1a10'],
+      a30: referenceColors.functional.green['1a30'],
+      a50: referenceColors.functional.green['1a50'],
+      a70: referenceColors.functional.green['1a70'],
+    },
+    neutralGray: {
+      a60: referenceColors.neutral.gray['2a60'],
+      a40: referenceColors.neutral.gray['2a40'],
+      a20: referenceColors.neutral.gray['2a20'],
+    },
   },
   action: {
     primary: {
