@@ -1150,3 +1150,18 @@
 - `pnpm --filter @fdesign/tokens build`
 - `ReadLints`：本轮改动文件未发现新增 linter 问题
 
+## 2026-04-17 — Cursor Cloud 开发环境搭建与运行验收
+
+### 工程验证
+- 执行 `pnpm install` 完成 monorepo 依赖安装
+- 分别启动并验收以下开发服务：
+  - `pnpm --filter @fdesign/stage dev`（端口 `10086`）
+  - `pnpm --filter @fdesign/example-consumer dev`（端口 `10087`）
+  - `pnpm --filter @fdesign/real-project-1 dev`（端口 `10088`）
+- 通过 `curl -I` 对三个端口执行 HTTP 可达性检查，均返回 `200 OK`
+- 在浏览器中完成运行态验证：三个应用均成功渲染，且 `stage` 侧栏导航可交互切换页面
+
+### 说明
+- 本轮目标是环境搭建与可运行性证明，不涉及组件/业务代码实现改动
+- 当前 dev server 会在本地生成 `.swc/plugins/*` 目录作为运行时缓存；该目录未纳入版本控制
+
