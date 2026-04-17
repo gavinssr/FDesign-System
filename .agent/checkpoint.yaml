@@ -71,7 +71,7 @@ notes: |
   39. `packages/tokens` 已新增 `colors.semantic.translucent` 语义分组，并接入 `brandBlue / brandPink / functionalRed / functionalOrange / functionalGreen / neutralGray` 的透明度颜色协议
   40. `apps/stage` 的 `CssToken / Color` 页已新增独立 `Translucent` 分节，并补齐 `colors.semantic.translucent.*` 到 `--fd-color-translucent-*` 的 CSS Var 映射展示
   41. `packages/tokens` 已按用户确认执行 `PR-2 + PR-3`：补齐 Typography 原子缺失镜像（display xlarge/xxlarge、single/body 相关 line-height 与 family semantic），并新增 `typography.styles` 与“仅当 fontFamily/fontSize/lineHeight/fontWeight 全量完全一致时命中”的复合样式匹配机制
-  42. Cursor Cloud Agent：已补齐 `.cursor/environment.json`（pnpm 固定版本 + frozen install）、对齐 `.cursor/worktrees.json`，并在根 `package.json` 增加 `pnpm.onlyBuiltDependencies`，避免 pnpm 10 默认拦截 Taro/esbuild 等依赖的 postinstall 导致云端构建不完整
+  42. Cursor Cloud Agent：已补齐 `.cursor/environment.json`（pnpm 固定版本 + frozen install）、对齐 `.cursor/worktrees.json`，并在根 `package.json` 增加 `pnpm.onlyBuiltDependencies`，避免 pnpm 10 默认拦截 Taro/esbuild 等依赖的 postinstall 导致云端构建不完整；已从 git 中移除误跟踪的各应用 `.swc` 插件缓存文件
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出
