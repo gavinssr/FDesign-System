@@ -1,0 +1,4 @@
+{
+  "name": "FDesign monorepo (pnpm + Node 22)",
+  "install": "corepack enable && corepack prepare pnpm@10.31.0 --activate && pnpm install --frozen-lockfile"
+}

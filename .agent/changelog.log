@@ -1,5 +1,34 @@
 # AI 变更日志（追加式）
 
+## 2026-04-17 — setup-dev-env 分支合并 `dev-listCell` 并解决 `checkpoint.yaml` 冲突
+
+### 文档与治理
+- `.agent/checkpoint.yaml`：`last_session` 与 `dev-listCell` 对齐；`notes` 中第 42 条保留 Cloud Agent 仓库级安装约定，第 43 条保留 Cursor Cloud 上三端 dev server 端口实测记录
+
+## 2026-04-17 — 将 Cloud Agent 环境配置合并入 dev-listCell
+
+### 工程与发布
+- 已将 `cursor/cloud-agent-env-deps-3a63` 快进合并至 `dev-listCell` 并推送 `origin/dev-listCell`；本地 `dev-listCell` 与远端一致
+
+## 2026-04-17 — 从版本库移除误跟踪的 SWC 插件缓存
+
+### 代码变更
+- 删除 `apps/example-consumer`、`apps/stage`、`projects/real-project-1` 下已入库的 `.swc/plugins/...` 二进制缓存文件（与既有 `.gitignore` 的 `.swc/` 规则一致）
+
+## 2026-04-17 — Cursor Cloud Agent 环境依赖对齐
+
+### 代码变更
+- 新增 `.cursor/environment.json`：`install` 使用 Corepack 激活 `pnpm@10.31.0` 并执行 `pnpm install --frozen-lockfile`，与 CI 及 `packageManager` 字段一致
+- 更新 `.cursor/worktrees.json`：将 worktree 初始化从 `npm install` 改为与云端相同的 pnpm 安装命令，避免破坏 workspace 协议
+- 根 `package.json`：新增 `pnpm.onlyBuiltDependencies`，显式允许 `@tarojs/cli`、`@tarojs/binding`、`@swc/core`、`esbuild` 等依赖执行安装期脚本，消除 pnpm 10 默认“忽略构建脚本”在干净环境中的风险
+- `.gitignore`：忽略各包下的 `.swc/` 插件缓存目录，避免本地构建产物误入版本控制
+
+### 文档与治理
+- `AGENTS.md`：新增「Cursor Cloud Agent 环境」小节，说明环境文件位置、解析优先级与常用验证命令
+
+### 工程验证
+- 在干净 `pnpm install --frozen-lockfile` 后复跑 `pnpm build` 与 `pnpm test` 通过
+
 ## 2026-04-06 — 取消 Phase 4 扩展：RN 运行态验证
 
 ### 代码变更
