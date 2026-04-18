@@ -1,4 +1,5 @@
 node_modules/
+.swc/
 dist/
 dist-h5/
 dist-weapp/

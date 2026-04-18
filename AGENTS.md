@@ -70,6 +70,14 @@ scripts/                 ← 校验与构建脚本
 | 交付产物完整性   | `scripts/validate-deliverable.ts`（Phase 3 实现）         |
 
 
+## Cursor Cloud Agent 环境
+
+本仓库在根目录 `package.json` 中声明 `packageManager: pnpm@10.31.0` 与 `engines.node: >=22.0.0`，与 `.github/workflows/ci.yml` 一致。
+
+- **云端依赖刷新**：仓库级配置见 `.cursor/environment.json` 的 `install` 字段（`pnpm install --frozen-lockfile`，并通过 Corepack 固定 pnpm 版本）。Cursor 会按 [Cloud Agent 环境解析顺序](https://cursor.com/docs/cloud-agent/setup)优先使用该文件。
+- **本地 worktree 初始化**：`.cursor/worktrees.json` 中的 `setup-worktree` 与上述安装命令对齐，避免误用 `npm install` 破坏 workspace 链接。
+- **常见验证命令**（按需执行，不必每次全量）：`pnpm build`、`pnpm lint`、`pnpm test`、`pnpm check-boundaries`。
+
 ## 去哪找什么
 
 
