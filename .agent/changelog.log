@@ -1,5 +1,10 @@
 # AI 变更日志（追加式）
 
+## 2026-04-17 — 将 Cloud Agent 环境配置合并入 dev-listCell
+
+### 工程与发布
+- 已将 `cursor/cloud-agent-env-deps-3a63` 快进合并至 `dev-listCell` 并推送 `origin/dev-listCell`；本地 `dev-listCell` 与远端一致
+
 ## 2026-04-17 — 从版本库移除误跟踪的 SWC 插件缓存
 
 ### 代码变更
