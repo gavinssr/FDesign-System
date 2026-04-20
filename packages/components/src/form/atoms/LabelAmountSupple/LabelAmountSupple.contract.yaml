@@ -1,0 +1,7 @@
+component: form/atoms/LabelAmountSupple
+purpose: "金额补充文本（body12 / text.secondary）"
+provisional: false
+forbidden:
+  - "禁止内联颜色与字号，必须使用 @fdesign/tokens 复合样式"
+states:
+  - default

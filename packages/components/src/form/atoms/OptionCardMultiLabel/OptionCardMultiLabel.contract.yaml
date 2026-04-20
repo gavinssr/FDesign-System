@@ -1,0 +1,8 @@
+component: form/atoms/OptionCardMultiLabel
+purpose: "多行标签选项卡，2 态（default/selected），含主标题与可选副标题"
+provisional: false
+forbidden:
+  - "禁止默认 cursor 与 hover 样式"
+states:
+  - default
+  - selected

@@ -10,5 +10,6 @@ export {
   matchTypographyStyleKey,
   resolveTypographyStyle,
 } from './typography';
+export type { TypographyStyleKey, TypographyStyleSpec } from './typography';
 export { radii } from './radii';
 export { motion, duration, easing, distance } from './motion';

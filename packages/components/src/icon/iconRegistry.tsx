@@ -1,3 +1,5 @@
+import type { ReactElement } from 'react';
+
 export const LOCAL_ICON_NAMES = [
   'wallet',
   'credit-card',
@@ -39,12 +41,20 @@ export const LOCAL_ICON_NAMES = [
   'red-envelope-withdrawal',
   'red-envelope-withdrawal-2',
   'cards',
+  'camera',
+  'placeholder-icon',
+  'supplement-annotation',
+  'supplement-jump',
+  'collapse-on',
+  'collapse-off',
+  'action-jump',
 ] as const;
 
 export type LocalIconName = (typeof LOCAL_ICON_NAMES)[number];
 
 export interface LocalIconDefinition {
   d: string;
+  viewBox?: string;
   fillRule?: 'evenodd';
   clipRule?: 'evenodd';
 }
@@ -194,6 +204,29 @@ const localIconRegistry = {
   cards: {
     d: 'M19.25 3.25C20.7688 3.25 22 4.48122 22 6V9.5C22 9.91421 21.6642 10.25 21.25 10.25C20.3244 10.25 19.5654 11.0291 19.5654 12C19.5654 12.9709 20.3244 13.75 21.25 13.75L21.2939 13.751C21.6876 13.7738 22 14.1006 22 14.5V18C22 19.5188 20.7688 20.75 19.25 20.75H4.75C3.23122 20.75 2 19.5188 2 18V14.5C2 14.0858 2.33579 13.75 2.75 13.75L2.80762 13.749C3.70689 13.7175 4.43457 12.9507 4.43457 12C4.43457 11.0291 3.67562 10.25 2.75 10.25C2.33579 10.25 2 9.91421 2 9.5V6C2 4.48122 3.23122 3.25 4.75 3.25H19.25ZM4.75 4.75C4.05964 4.75 3.5 5.30964 3.5 6V8.84082L3.5625 8.85645C4.90625 9.21717 5.89975 10.4519 5.93359 11.9229L5.93457 12C5.93457 13.5051 4.92983 14.7765 3.5625 15.1436L3.5 15.1592V18C3.5 18.672 4.03033 19.2204 4.69531 19.249L4.75 19.25H19.25C19.9404 19.25 20.5 18.6904 20.5 18V15.1592L20.4375 15.1436C19.0702 14.7765 18.0654 13.5051 18.0654 12C18.0654 10.4949 19.0702 9.2235 20.4375 8.85645L20.5 8.84082V6C20.5 5.32797 19.9697 4.7796 19.3047 4.75098L19.25 4.75H4.75ZM14.5 13.5C14.9142 13.5 15.25 13.8358 15.25 14.25C15.25 14.6494 14.9376 14.9762 14.5439 14.999L14.5 15H9.5C9.08579 15 8.75 14.6642 8.75 14.25C8.75 13.8506 9.06235 13.5238 9.45605 13.501L9.5 13.5H14.5ZM14.5 9C14.9142 9 15.25 9.33579 15.25 9.75C15.25 10.1494 14.9376 10.4762 14.5439 10.499L14.5 10.5H9.5C9.08579 10.5 8.75 10.1642 8.75 9.75C8.75 9.35058 9.06235 9.02379 9.45605 9.00098L9.5 9H14.5Z',
   },
+  camera: {
+    d: 'M9.5 3.5C9.10058 3.5 8.77379 3.81235 8.75098 4.20605L8.75 4.25V5.5H6C4.48122 5.5 3.25 6.73122 3.25 8.25V18C3.25 19.5188 4.48122 20.75 6 20.75H18C19.5188 20.75 20.75 19.5188 20.75 18V8.25C20.75 6.73122 19.5188 5.5 18 5.5H15.25V4.25C15.25 3.83579 14.9142 3.5 14.5 3.5H9.5ZM4.75 8.25C4.75 7.55964 5.30964 7 6 7H9.5C9.91421 7 10.25 6.66421 10.25 6.25V5H13.75V6.25C13.75 6.66421 14.0858 7 14.5 7H18C18.6904 7 19.25 7.55964 19.25 8.25V18C19.25 18.6904 18.6904 19.25 18 19.25H6C5.30964 19.25 4.75 18.6904 4.75 18V8.25ZM12 9.5C9.92893 9.5 8.25 11.1789 8.25 13.25C8.25 15.3211 9.92893 17 12 17C14.0711 17 15.75 15.3211 15.75 13.25C15.75 11.1789 14.0711 9.5 12 9.5ZM9.75 13.25C9.75 12.0074 10.7574 11 12 11C13.2426 11 14.25 12.0074 14.25 13.25C14.25 14.4926 13.2426 15.5 12 15.5C10.7574 15.5 9.75 14.4926 9.75 13.25Z',
+  },
+  'placeholder-icon': {
+    d: 'M12 4.5C7.85786 4.5 4.5 7.85786 4.5 12C4.5 16.1421 7.85786 19.5 12 19.5C16.1421 19.5 19.5 16.1421 19.5 12C19.5 7.85786 16.1421 4.5 12 4.5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z',
+  },
+  'supplement-annotation': {
+    d: 'M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM12 3.5C7.30558 3.5 3.5 7.30558 3.5 12C3.5 16.6944 7.30558 20.5 12 20.5C16.6944 20.5 20.5 16.6944 20.5 12C20.5 7.30558 16.6944 3.5 12 3.5ZM12 14.75C12.5523 14.75 13 15.1977 13 15.75C13 16.3023 12.5523 16.75 12 16.75C11.4477 16.75 11 16.3023 11 15.75C11 15.1977 11.4477 14.75 12 14.75ZM12 7C12.4142 7 12.75 7.33579 12.75 7.75V12.75C12.75 13.1642 12.4142 13.5 12 13.5C11.5858 13.5 11.25 13.1642 11.25 12.75V7.75C11.25 7.33579 11.5858 7 12 7Z',
+  },
+  'supplement-jump': {
+    d: 'M8.72882 8.00042L5.37006 4.64166C5.07717 4.34877 5.07717 3.87389 5.37006 3.581C5.66295 3.2881 6.13783 3.2881 6.43072 3.581L10.8501 8.00042L6.43072 12.4198C6.13783 12.7127 5.66295 12.7127 5.37006 12.4198C5.07717 12.1269 5.07717 11.6521 5.37006 11.3592L8.72882 8.00042Z',
+    viewBox: '0 0 16 16',
+  },
+  'collapse-on': {
+    d: 'M5.46967 14.5303C5.17678 14.2374 5.17678 13.7626 5.46967 13.4697L11.4697 7.46967C11.7626 7.17678 12.2374 7.17678 12.5303 7.46967L18.5303 13.4697C18.8232 13.7626 18.8232 14.2374 18.5303 14.5303C18.2374 14.8232 17.7626 14.8232 17.4697 14.5303L12 9.06066L6.53033 14.5303C6.23744 14.8232 5.76256 14.8232 5.46967 14.5303Z',
+  },
+  'collapse-off': {
+    d: 'M5.46967 9.46967C5.76256 9.17678 6.23744 9.17678 6.53033 9.46967L12 14.9393L17.4697 9.46967C17.7626 9.17678 18.2374 9.17678 18.5303 9.46967C18.8232 9.76256 18.8232 10.2374 18.5303 10.5303L12.5303 16.5303C12.2374 16.8232 11.7626 16.8232 11.4697 16.5303L5.46967 10.5303C5.17678 10.2374 5.17678 9.76256 5.46967 9.46967Z',
+  },
+  'action-jump': {
+    d: 'M8.72882 8.00042L5.37006 4.64166C5.07717 4.34877 5.07717 3.87389 5.37006 3.581C5.66295 3.2881 6.13783 3.2881 6.43072 3.581L10.8501 8.00042L6.43072 12.4198C6.13783 12.7127 5.66295 12.7127 5.37006 12.4198C5.07717 12.1269 5.07717 11.6521 5.37006 11.3592L8.72882 8.00042Z',
+    viewBox: '0 0 16 16',
+  },
 } as const satisfies Record<LocalIconName, LocalIconDefinition>;
 
 export const LOCAL_ICON_ALIASES = {
@@ -253,4 +286,127 @@ export function getLocalIconDefinition(name: string): LocalIconDefinition | null
   const resolvedName = resolveLocalIconName(name);
 
   return resolvedName ? localIconRegistry[resolvedName] : null;
+}
+
+/**
+ * Decorative 分类
+ * - 与上方 outline 主分类显式区分
+ * - 不参与 outline 的统一描边/着色（不读 currentColor）
+ * - 由消费方决定原色/渐变彩色 SVG 输出
+ * - 名单与具体 SVG 由 Wave 2 内 ExhibitVeriFace 等实际消费组件落地后追加
+ */
+export interface DecorativeIconDefinition {
+  /** 设计稿原始宽度（px） */
+  width: number;
+  /** 设计稿原始高度（px） */
+  height: number;
+  /** SVG viewBox，例如 "0 0 64 64" */
+  viewBox: string;
+  /**
+   * 原色 SVG 子元素渲染器
+   * - 必须包含完整的 path/circle/defs 等，含写死的 fill / stroke
+   * - 不要使用 currentColor，否则与 outline 分类失去区分意义
+   */
+  render: () => ReactElement;
+}
+
+/* veriFace 装饰色（B.1 决议：作为组件内部常量，不入 token） */
+const VERI_FACE_COLORS = {
+  successStroke: '#4d83ff',
+  successAccent: '#407aff',
+  successFrame: '#00a9fe',
+  successScan: '#0095ff',
+  failedStroke: '#ff85e3',
+  failedFrame: '#ff99e4',
+} as const;
+
+const decorativeIconRegistry = {
+  'veri-face-success': {
+    width: 36,
+    height: 36,
+    viewBox: '0 0 36 36',
+    render: () => (
+      <g fill="none" stroke={VERI_FACE_COLORS.successStroke} strokeWidth={1.5} strokeLinecap="round">
+        <circle cx={18} cy={18} r={15} />
+        <circle cx={13} cy={15} r={1} fill={VERI_FACE_COLORS.successStroke} />
+        <circle cx={23} cy={15} r={1} fill={VERI_FACE_COLORS.successStroke} />
+        <path d="M12 21 Q18 25 24 21" />
+      </g>
+    ),
+  },
+  'veri-face-failed': {
+    width: 36,
+    height: 36,
+    viewBox: '0 0 36 36',
+    render: () => (
+      <g fill="none" stroke={VERI_FACE_COLORS.failedStroke} strokeWidth={1.5} strokeLinecap="round">
+        <circle cx={18} cy={18} r={15} />
+        <circle cx={13} cy={15} r={1} fill={VERI_FACE_COLORS.failedStroke} />
+        <circle cx={23} cy={15} r={1} fill={VERI_FACE_COLORS.failedStroke} />
+        <path d="M12 24 Q18 20 24 24" />
+      </g>
+    ),
+  },
+  'veri-frame-success': {
+    width: 100,
+    height: 100,
+    viewBox: '0 0 100 100',
+    render: () => (
+      <g fill="none" stroke={VERI_FACE_COLORS.successFrame} strokeWidth={2} strokeLinecap="round">
+        <path d="M2 18 L2 2 L18 2" />
+        <path d="M82 2 L98 2 L98 18" />
+        <path d="M98 82 L98 98 L82 98" />
+        <path d="M18 98 L2 98 L2 82" />
+      </g>
+    ),
+  },
+  'veri-frame-failed': {
+    width: 100,
+    height: 100,
+    viewBox: '0 0 100 100',
+    render: () => (
+      <g fill="none" stroke={VERI_FACE_COLORS.failedFrame} strokeWidth={2} strokeLinecap="round">
+        <path d="M2 18 L2 2 L18 2" />
+        <path d="M82 2 L98 2 L98 18" />
+        <path d="M98 82 L98 98 L82 98" />
+        <path d="M18 98 L2 98 L2 82" />
+      </g>
+    ),
+  },
+  /* 扫描线：横向三段渐变条（中间实心、两端淡出到白色），跨 success/failed 共用；
+   * 颜色来自 successScan，但透明度在两端归零，视觉上对 success/failed 两态都能兼容 */
+  'veri-scan-bar': {
+    width: 100,
+    height: 8,
+    viewBox: '0 0 100 8',
+    render: () => (
+      <g>
+        <defs>
+          <linearGradient id="fd-veri-scan-horizontal" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity={0} />
+            <stop offset="49%" stopColor={VERI_FACE_COLORS.successScan} stopOpacity={0.44} />
+            <stop offset="51%" stopColor={VERI_FACE_COLORS.successScan} stopOpacity={0.44} />
+            <stop offset="100%" stopColor="#ffffff" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <rect x={0} y={2} width={100} height={4} fill="url(#fd-veri-scan-horizontal)" />
+      </g>
+    ),
+  },
+} as const satisfies Record<string, DecorativeIconDefinition>;
+
+export type DecorativeIconName = keyof typeof decorativeIconRegistry;
+
+export function isDecorativeIconName(name: string): name is DecorativeIconName {
+  return Object.prototype.hasOwnProperty.call(decorativeIconRegistry, name);
+}
+
+export function hasDecorativeIcon(name: string) {
+  return isDecorativeIconName(name);
+}
+
+export function getDecorativeIconDefinition(name: string): DecorativeIconDefinition | null {
+  return isDecorativeIconName(name)
+    ? (decorativeIconRegistry as Record<string, DecorativeIconDefinition>)[name] ?? null
+    : null;
 }

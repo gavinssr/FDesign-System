@@ -1,0 +1,8 @@
+component: form/atoms/LabelMultiTextSecondaryLightColor
+purpose: "次级灰色文本（body12 / text.tertiary），可选附 ! 注解小图标"
+provisional: false
+forbidden:
+  - "禁止内联颜色与字号；annotation 图标必须走 Icon registry"
+states:
+  - default
+  - withAnnotation

@@ -1,0 +1,11 @@
+component: form/exhibit/ExhibitMultiLinePretext
+purpose: "多行左对齐展示 cell（title + subLabel）+ 右侧预设内容，card=true/false 双态"
+provisional: false
+figmaNode: "8275:8467"
+forbidden:
+  - "禁止内联颜色与字号，必须通过 @fdesign/tokens 复合样式与 spacing.component.exhibit"
+  - "禁止在此 cell 内引入 hover 态样式与默认 cursor: pointer（移动端协议）"
+states:
+  - card=true
+  - card=false
+  - subAnnotation=true

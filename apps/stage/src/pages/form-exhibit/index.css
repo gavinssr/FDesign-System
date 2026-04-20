@@ -1,0 +1,48 @@
+/*postcss-pxtransform disable*/
+
+/* Form 表单单元 · Exhibit 展示类 cell 展示页。
+ * 容器背景统一使用 surface.page token（表单单元白底 cell 外容器背景规范）。
+ * 顶部 disable 注释：page-level CSS 默认会被 Taro postcss-pxtransform 按 designWidth=750 缩放（约对半），
+ * 该页内全部 px 都已经是「设备无关像素」语义（与 Figma 设计稿 px 一致），不应再被缩放。
+ * stage 全局 app.css / shell/styles/layout.module.css 已采用同一约定。 */
+.__stage-formExhibitFrame {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background: var(--fd-color-surface-page, #f5f7fa);
+  border-radius: 8px;
+}
+
+.__stage-formExhibitRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.__stage-formExhibitRowLabel {
+  color: var(--stage-text-muted, #787c85);
+  font-size: 12px;
+  line-height: 14px;
+}
+
+/* 两态对照：cell 本体已固定 Figma 设计稿宽度（card=355 / flush=375），父容器 wrap 排布即可 */
+.__stage-formExhibitPair {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.__stage-formExhibitPairItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.__stage-formExhibitPairCaption {
+  color: var(--stage-text-muted, #787c85);
+  font-size: 11px;
+  line-height: 14px;
+}

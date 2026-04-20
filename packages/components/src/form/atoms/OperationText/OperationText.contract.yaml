@@ -1,0 +1,7 @@
+component: form/atoms/TextOperator
+purpose: "文字按钮（14/16 Medium + text.primary，移动端无 hover）"
+provisional: false
+forbidden:
+  - "禁止内联颜色与字号，必须使用 @fdesign/tokens 复合样式"
+states:
+  - default

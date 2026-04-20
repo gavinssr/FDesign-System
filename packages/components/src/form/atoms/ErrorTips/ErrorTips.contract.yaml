@@ -1,0 +1,7 @@
+component: form/atoms/ErrorTips
+purpose: "单行错误提示（body12 / functional.red[8]）"
+provisional: false
+forbidden:
+  - "禁止内联颜色与字号，必须使用 @fdesign/tokens 复合样式"
+states:
+  - default

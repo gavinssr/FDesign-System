@@ -1,0 +1,16 @@
+component: form/exhibit/ExhibitAmountListTitleExternal
+purpose: "外置标题 + 金额列表（固定 card）"
+provisional: false
+figmaNode: "8417:9331"
+forbidden:
+  - "禁止拆出 card=false 变体（本 cell 固定 card；冻结决议）"
+  - "禁止内联颜色/字号；必须通过 @fdesign/tokens 与 spacing.component.exhibit"
+  - "禁止在此 cell 内引入 hover 态样式与默认 cursor: pointer（移动端协议）"
+states:
+  - default items
+  - custom title parts
+tokens:
+  parts:
+    - ExternalTileAmount
+    - AmountList
+    - CellAmountTag

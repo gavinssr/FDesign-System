@@ -1,0 +1,11 @@
+component: form/atoms/Jump
+purpose: "右向跳转箭头；绑定 onJump 时点击触发，未绑定仅展示（移动端无 hover/无 cursor pointer）"
+provisional: false
+forbidden:
+  - "禁止内联颜色与尺寸；必须走 Icon registry + spacing token"
+  - "禁止默认 cursor 与 hover 样式"
+a11y:
+  - "可交互态附 role=link；不可交互态不挂角色"
+states:
+  - default
+  - interactive

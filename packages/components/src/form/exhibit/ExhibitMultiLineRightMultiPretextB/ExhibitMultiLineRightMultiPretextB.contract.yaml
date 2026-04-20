@@ -1,0 +1,11 @@
+component: form/exhibit/ExhibitMultiLineRightMultiPretextB
+purpose: "多行右对齐多前置文本（B 组）：左侧 icon + 预设内容（14 secondary），右侧主次两行文本"
+provisional: false
+figmaNode: "8275:8824"
+forbidden:
+  - "禁止内联颜色与字号，必须通过 @fdesign/tokens 复合样式与 spacing.component.exhibit"
+  - "禁止在此 cell 内引入 hover 态样式与默认 cursor: pointer（移动端协议）"
+states:
+  - card=true
+  - card=false
+  - withIcon

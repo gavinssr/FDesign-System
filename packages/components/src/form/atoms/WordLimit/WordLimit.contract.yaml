@@ -1,0 +1,8 @@
+component: form/atoms/WordLimit
+purpose: "字数统计 current/max；超出时切换为 functional.red[8]"
+provisional: false
+forbidden:
+  - "禁止内联颜色与字号"
+states:
+  - default
+  - overflow

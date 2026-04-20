@@ -47,7 +47,7 @@ export function LocalIconRenderer({ name, contentSize, strokeWidth }: LocalIconR
     <View className="fd-icon-glyph fd-icon-glyph-local">
       {iconDefinition ? (
         <svg
-          viewBox="0 0 24 24"
+          viewBox={iconDefinition.viewBox ?? '0 0 24 24'}
           fill="none"
           style={shapeStyle}
           aria-hidden="true"

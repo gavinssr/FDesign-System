@@ -1,0 +1,19 @@
+component: form/exhibit/ExhibitInformationListPlainText
+purpose: "折叠信息列表（纯文本），card=true/false 双态 × expanded 双态"
+provisional: false
+figmaNode: "8275:8492"
+forbidden:
+  - "禁止内联颜色/字号；必须通过 @fdesign/tokens 与 spacing.component.exhibit"
+  - "禁止在此 cell 内引入 hover 态样式与默认 cursor: pointer（移动端协议）"
+  - "禁止对外导出 parts/*"
+states:
+  - card=true
+  - card=false
+  - expanded=true
+  - expanded=false
+  - controlled
+  - uncontrolled
+tokens:
+  parts:
+    - FoldingPureHeader
+    - SubListFlush

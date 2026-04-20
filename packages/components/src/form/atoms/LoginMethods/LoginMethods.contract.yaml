@@ -1,0 +1,8 @@
+component: form/atoms/LoginMethods
+purpose: "登录方式入口（文本 + Jump 箭头），可选 onJump"
+provisional: false
+forbidden:
+  - "禁止默认 cursor 与 hover 样式（移动端触控语境）"
+states:
+  - default
+  - interactive

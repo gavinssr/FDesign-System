@@ -4,7 +4,6 @@ import {
   Card,
   Icon,
   Input,
-  ListItem,
   Modal,
   Tag,
 } from '@fdesign/components';
@@ -116,15 +115,16 @@ export default function IndexPage() {
         >
           <View className="__realProject-stack">
             {launchChecklist.map((item) => (
-              <ListItem
-                key={item.title}
-                title={item.title}
-                description={item.description}
-                meta={item.meta}
-                leading={<Icon name={item.icon} label={item.title} />}
-                trailing={<Icon name="chevron-right" decorative />}
-                onPress={() => undefined}
-              />
+              <View key={item.title} className="__realProject-row">
+                <Icon name={item.icon} label={item.title} />
+                <View className="__realProject-stack" style={{ flex: 1, gap: 4 }}>
+                  <Text className="__realProject-copy">{item.title}</Text>
+                  <Text className="__realProject-copy __realProject-copyMuted">
+                    {item.description} · {item.meta}
+                  </Text>
+                </View>
+                <Icon name="chevron-right" decorative />
+              </View>
             ))}
           </View>
         </Card>

@@ -1,0 +1,10 @@
+component: form/atoms/SelectionContent
+purpose: "选择内容片段；20px 占位球 + 文案 + jump，支持 default/selected 2 态"
+provisional: false
+forbidden:
+  - "禁止默认 cursor 与 hover 样式"
+a11y:
+  - "role=checkbox + aria-checked"
+states:
+  - default
+  - selected

@@ -1,0 +1,13 @@
+component: form/exhibit/ExhibitMultiLineDefault
+purpose: "多行左对齐默认展示 cell（title + subLabel），card=true/false 双态"
+provisional: false
+figmaNode: "8333:12737"
+forbidden:
+  - "禁止内联颜色与字号，必须通过 @fdesign/tokens 复合样式与 spacing.component.exhibit"
+  - "禁止在此 cell 内引入 hover 态样式与默认 cursor: pointer（移动端协议）"
+states:
+  - card=true
+  - card=false
+  - withIcon
+  - withTag
+  - subAnnotation=true

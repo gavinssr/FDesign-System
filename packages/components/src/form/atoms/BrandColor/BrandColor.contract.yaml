@@ -1,0 +1,8 @@
+component: form/atoms/BrandColor
+purpose: "品牌蓝色数字标题，两档尺寸（Large=18 / Small=16），Large 带 -0.625 letter-spacing"
+provisional: false
+forbidden:
+  - "禁止脱离 brand.blue 体系换色"
+states:
+  - Large
+  - Small

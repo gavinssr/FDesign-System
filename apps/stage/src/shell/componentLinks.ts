@@ -84,6 +84,25 @@ const cssTokenLinks = [
   },
 ] as const satisfies readonly ComponentNavPage[];
 
+const formLinks = [
+  // Round 1 / Wave 2：Exhibit 展示类 cell 页位于 Atoms 之上。
+  // Atoms 仍位于分组最下方（决议冻结）。
+  {
+    type: 'page',
+    key: 'form-exhibit',
+    label: 'Exhibit 展示类',
+    title: 'Exhibit 展示类',
+    url: '/pages/form-exhibit/index',
+  },
+  {
+    type: 'page',
+    key: 'form-atoms',
+    label: 'Atoms 原子组件',
+    title: 'Atoms 原子组件',
+    url: '/pages/form-atoms/index',
+  },
+] as const satisfies readonly ComponentNavPage[];
+
 export const componentLinks = [
   { type: 'group', key: 'css-token', label: 'CssToken 全局样式', children: cssTokenLinks },
   { type: 'group', key: 'button', label: 'Button 按钮', children: buttonLinks },
@@ -91,14 +110,8 @@ export const componentLinks = [
   { type: 'page', key: 'tag', label: 'Tag 标签', title: 'Tag 标签', url: '/pages/tag/index' },
   { type: 'page', key: 'input', label: 'Input 输入框', title: 'Input 输入框', url: '/pages/input/index' },
   { type: 'page', key: 'card', label: 'Card 卡片', title: 'Card 卡片', url: '/pages/card/index' },
-  {
-    type: 'page',
-    key: 'list-item',
-    label: 'List Item 列表项',
-    title: 'List Item 列表项',
-    url: '/pages/list-item/index',
-  },
   { type: 'page', key: 'modal', label: 'Modal 弹窗', title: 'Modal 弹窗', url: '/pages/modal/index' },
+  { type: 'group', key: 'form', label: 'Form 表单单元', children: formLinks },
 ] as const satisfies readonly ComponentLink[];
 
 export const componentPages = componentLinks.flatMap((item) =>

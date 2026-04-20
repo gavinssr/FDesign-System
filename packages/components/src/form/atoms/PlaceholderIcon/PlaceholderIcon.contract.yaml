@@ -1,0 +1,7 @@
+component: form/atoms/PlaceholderIcon
+purpose: "展示类行的 leading icon 缺省占位球（24px 圆形浅蓝）"
+provisional: false
+forbidden:
+  - "禁止承担任何业务语义；纯装饰性占位"
+states:
+  - default

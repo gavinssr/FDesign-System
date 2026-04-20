@@ -1,0 +1,12 @@
+component: form/atoms/Switch
+purpose: "iOS 风格开关，支持 small/large 两档尺寸与受控/非受控双模式（移动端无 hover）"
+provisional: false
+forbidden:
+  - "禁止默认 cursor: pointer 与 hover 态样式（移动端触控语境）"
+  - "禁止内联颜色，必须使用 @fdesign/tokens"
+a11y:
+  - "role=switch + aria-checked，禁用态附 aria-disabled"
+states:
+  - off
+  - on
+  - disabled

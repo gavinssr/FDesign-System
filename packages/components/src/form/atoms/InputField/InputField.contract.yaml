@@ -1,0 +1,13 @@
+component: form/atoms/InputField
+purpose: "表单单元单行输入字段；支持 wait/focus/typing/filled/disabled/error 6 态；受控/非受控双模"
+provisional: false
+forbidden:
+  - "禁止内置边框/背景色（行容器由 cell 决定）；本原子只负责文本输入字段本身"
+  - "禁止默认 cursor 与 hover 态"
+states:
+  - wait
+  - focus
+  - typing
+  - filled
+  - disabled
+  - error

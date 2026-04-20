@@ -1,5 +1,6 @@
 export const spacingScale = {
   0: 0,
+  6: 6,
   8: 8,
   10: 10,
   12: 12,
@@ -27,6 +28,7 @@ export const spacingSemantic = {
   gapCellIconLeadingY: 14,
   gapRowCompactY: 12,
   gapRowRegularY: 14,
+  gapLabelToSubLabel: spacingScale[6],
   borderWidthHairline: 0.5,
 } as const;
 
@@ -115,6 +117,18 @@ export const spacingComponent = {
     gap: spacingScale[12],
     paddingX: spacingScale[10],
     paddingY: spacingSemantic.gapRowCompactY,
+  },
+  exhibit: {
+    rowPaddingY: spacingScale[16],
+    groupTitlePaddingY: spacingScale[12],
+    subCellPaddingY: spacingScale[16],
+    subCellHeight: 48,
+    iconGap: spacingScale[8],
+    titleTagGap: 2,
+    multiLineLabelGap: spacingSemantic.gapLabelToSubLabel,
+    iconPlaceholderSize: 24,
+    foldChevronSize: 16,
+    jumpArrowSize: 12,
   },
   icon: {
     size: {

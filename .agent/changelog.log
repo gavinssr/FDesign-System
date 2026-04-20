@@ -1,5 +1,23 @@
 # AI 变更日志（追加式）
 
+## 2026-04-18 — Form Cell Round 1 计划冻结（实施前的最后一次治理写入）
+
+### 文档与治理
+- `docs/exec-plans/active/phase-5-form-cell.md`：
+  - 顶部新增「计划状态」与「决议总览（冻结版）」两节，作为下一轮 Agent 入口必读；明确"如下文与早期段落（B 表草稿）有出入，以本节为准"
+  - 在 B.1 / B.2 / B.3 / B.4 / B.5 各小节末尾追加「**决议（已冻结）**」标注，与决议总览呼应
+  - B.1 段额外澄清"装饰色不入 token vs 装饰 SVG 走 Icon registry decorative 新分类"两件事的边界
+  - 「决议总览」内置 9 步 Wave 0 执行清单与 Wave 0 完成判定的构建集合
+- `.agent/checkpoint.yaml`：
+  - `current_focus` 切到 Form Cell Round 1 / Wave 0；`active_exec_plan` 改为 `phase-5-form-cell.md`，原 token 协议计划改记为 `secondary_active_exec_plan`
+  - `in_progress` / `next_recommended` 重写为 Form Cell Round 1 / Wave 0 主线
+  - `notes` 新增第 44/45 条：分别记录 Round 1 全部决议落点与移动端交互全局约束
+  - 「下一个 Agent 进入时」行动清单更新：必读 `phase-5-form-cell.md` 三段，准备在 Wave 0 内同步追加 spacing 协议「6 加入可用档位」的扩展
+- `.agent/decisions.log`：追加「2026-04-18 — 表单单元 Round 1 计划冻结（决议落地）」整段，含 10 项决议与 5 条被否决的替代方案
+
+### 范围说明
+- 本次仅做治理写入（Plan 冻结 + checkpoint / decisions 同步），**未触及 `packages/` 与 `apps/` 任何运行代码**；下一轮 Agent 直接从 Wave 0 开始实施
+
 ## 2026-04-17 — setup-dev-env 分支合并 `dev-listCell` 并解决 `checkpoint.yaml` 冲突
 
 ### 文档与治理
@@ -1194,3 +1212,531 @@
 - 本轮目标是环境搭建与可运行性证明，不涉及组件/业务代码实现改动
 - 当前 dev server 会在本地生成 `.swc/plugins/*` 目录作为运行时缓存；该目录未纳入版本控制
 
+
+## 2026-04-18 — Form Cell Round 1 / Wave 0 实施完成（token + Icon registry + ListItem 拆除）
+
+**类型**: 多包实施 + 治理同步
+**触发原因**: Round 1 计划已冻结（详见前一条 changelog），本次会话执行 Wave 0「准备」阶段
+
+**Token 包改动（packages/tokens）**:
+- `src/colors.ts`：在 `semanticColors.surface` 内新增 `iconPlaceholder: '#edf3fa'`
+- `src/spacing.ts`：
+  - `spacingScale` 新增 `6: 6`
+  - `spacingSemantic` 新增 `gapLabelToSubLabel: spacingScale[6]`
+  - `spacingComponent` 新增 `exhibit` 段，含 10 个语义字段：`rowPaddingY=16 / groupTitlePaddingY=12 / subCellPaddingY=16 / subCellHeight=48 / iconGap=8 / titleTagGap=2 / multiLineLabelGap=gapLabelToSubLabel / iconPlaceholderSize=24 / foldChevronSize=16 / jumpArrowSize=12`
+- `src/typography.ts`：
+  - `fontSize` 新增 `displayMicro: 20`
+  - `lineHeight.singleLine` 新增 `displayMicro: 22`
+  - `typographyStyles` 新增 8 个复合样式：`body14SingleLine` / `body14SingleLineStrong` / `body12SingleLine` / `body12SingleLineStrong` / `displayNumber14Medium` / `displayNumber16Medium` / `displayNumber18Medium` / `displayNumber20Medium`
+- `src/web-vars.css`：镜像以上全部新增 token，使用既有命名规则
+  - color：`--fd-color-surface-icon-placeholder`
+  - spacing scale：`--fd-space-6`
+  - spacing semantic：`--fd-gap-label-to-sublabel`
+  - spacing component：`--fd-exhibit-row-padding-y` 等 10 条
+  - typography size/lineHeight：`--fd-font-size-display-micro` / `--fd-line-height-single-display-micro`
+  - typography styles：8 组 `--fd-typography-*` 四元组（每组 4 条 CSS Var）
+
+**Components 包改动（packages/components）**:
+- `src/icon/iconRegistry.tsx`：
+  - `LOCAL_ICON_NAMES` 新增 7 项：`camera` / `placeholder-icon` / `supplement-annotation` / `supplement-jump` / `collapse-on` / `collapse-off` / `action-jump`
+  - 在 `localIconRegistry` 内补齐对应 7 条 `d` 路径（当前为 Material 风格几何路径占位；Wave 1/2/3 实施具体 atom 时若需精确还原 Figma 原 path 再行替换）
+  - 新增 `decorative` 装饰图分类完整架构：`DecorativeIconDefinition` 类型（含 `width / height / viewBox / render`）、`decorativeIconRegistry`（当前为空）、`DecorativeIconName` 类型、`isDecorativeIconName` / `hasDecorativeIcon` / `getDecorativeIconDefinition` 守卫与读取函数；不读 currentColor，与 outline 主分类显式区分；Wave 2 落地 ExhibitVeriFace 时再注入实际 SVG
+- `src/list-item/`：**整个目录删除**（`ListItem.tsx` / `ListItem.types.ts` / `ListItem.contract.yaml` / `ListItem.test.tsx` / `ListItem.harness.tsx` / `index.ts`）
+- `src/index.ts`：移除 `ListItem` / `ListItemHarness` / `ListItemProps` 导出
+
+**Stage 应用改动（apps/stage）**:
+- `src/pages/list-item/`：**整个目录删除**
+- `src/app.config.ts`：移除 `pages/list-item/index` 路由
+- `src/shell/componentLinks.ts`：移除 `list-item` 顶级 page 入口
+
+**消费方应用改动**:
+- `apps/example-consumer/src/pages/index/index.tsx`：移除 `ListItem` 导入；将原 ListItem 用法回收为「原生 View + Icon + Text 组合」，行间样式 `flex:1, gap:4`
+- `projects/real-project-1/src/pages/index/index.tsx`：同上策略回收 `launchChecklist.map` 内的 ListItem 用法
+
+**治理文档同步**:
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：
+  - 「Spacing 协议 / 基础 scale」新增 `6` 档位并标注「Round 1 表单单元扩展档位，仅用于 multiLine 内 title↔subLabel 同档紧凑场景」
+  - 「Typography 协议」字号体系新增 `20` 档位并标注「Round 1 表单单元扩展档位，仅用于 displayNumber20Medium 等数字展示场景」
+  - 「仓库映射方案 / spacing」与「typography」小节同步补齐协议扩展说明
+- `.agent/checkpoint.yaml`：`current_focus` 推进至「Wave 0 已完成，下一步进入 Wave 1（form/atoms/* 全部原子组件）」；`in_progress` / `next_recommended` 同步刷新；`notes` 新增第 46 / 47 条记录 Wave 0 实施摘要与协议扩展落地
+- `.agent/decisions.log`：新增「2026-04-18 — 表单单元 Round 1 / Wave 0 实施落地」决议条目
+
+**验证结果**:
+- `pnpm --filter @fdesign/tokens build`：通过
+- `pnpm --filter @fdesign/components test`：6 文件 / 15 用例全部通过
+- `pnpm --filter @fdesign/components build`：通过
+- `pnpm --filter @fdesign/stage build`：通过（仅保留既有 H5 entrypoint size warning，与本次改动无关）
+- `pnpm --filter @fdesign/example-consumer build`：通过（同上 warning）
+- `pnpm --filter @fdesign/real-project-1 build`：通过（同上 warning）
+
+**未触及**:
+- `Icon.tsx` 暂未接入 `decorative` source 分支（当前 `IconSource` 仍为 `'local' | 'material'`），等 Wave 2 落地 ExhibitVeriFace 时按届时实际渲染需求再决定接入方式
+- `form/` 目录骨架本轮**未创建**——按 Wave 0 / Wave 1 边界，目录骨架与 atoms 实装统一在 Wave 1 一次性建立，避免出现"空目录 + 空 index.ts"的过渡态
+- Button、Tag、Icon 等其他组件本体未触及
+
+## 2026-04-18 — Form Cell Round 1 / Wave 1 实施完成（33 原子 + 舞台页 + 组件顶层导出）
+
+### 范围
+- 覆盖 `docs/exec-plans/active/phase-5-form-cell.md`「执行 Wave 划分」Wave 1 全部准出项
+- 不触及 Wave 2 的 `form/exhibit/*` 展示类 cell 本体；不触及 Wave 3 的 Input / Action 类
+
+### 目录与骨架
+- 新建 `packages/components/src/form/`，内含：
+  - `form/index.ts`：仅 `export * from './atoms'`（`exhibit/*` 等 Wave 2 落地后再追加）
+  - `form/atoms/index.ts`：逐项 barrel 导出 33 个原子
+  - `form/atoms/_internal/`：两个私有共享原语（不对外导出）
+    - `textPrimitive.tsx` → `FormText`：把 `TypographyStyleSpec` + 颜色 token + className 渲染为一个 `Text` 节点
+    - `selectionBox.tsx` → `SelectionBox`：square / circle / tick 三形统一盒，供 `Checkbox / Radio / Tick` 共用
+  - `form/exhibit/parts/`：空目录占位，Wave 2 内部片段落地位置
+- 新建 `scripts/_form-atoms-gen.mjs`：一次性文件批量生成脚本（幂等），用于重复度高的纯文本原子的 types / tsx / contract / harness / test / index 六文件生成
+
+### Atoms 33 件套（每项均配套 `.tsx + .types.ts + .contract.yaml + .test.tsx + .harness.tsx + index.ts`）
+- Label 家族（10）：`Label`（XL/L/M）/ `NumberTitle`（XL/L/M/S，XL/L 组件内常量应用 `-0.625px` letterSpacing）/ `BrandColor`（Large/Small，Large 组件内常量应用 `-0.625px`）/ `LabelMultiTextFirst` / `LabelMultiTextSecondaryDark` / `LabelMultiTextSecondaryLightColor`（含可选 `supplement-annotation` 图标）/ `LabelAnnotation` / `LabelDescrip` / `LabelResultSupple` / `LabelAmountSupple`
+- Input & Error 家族（5）：`InputField`（wait/focus/disabled/error，controlled + uncontrolled 双模）/ `ErrorTips` / `ErrorText` / `ErrorPop`（可选关闭按钮，`functional.red[1]` 背景）/ `WordLimit`（含溢出变红态）
+- Action 家族（6）：`OperationText` / `OperationButton`（11 种 Figma 原命名 type：button-bluePrimary 等）/ `Jump` / `Collapse`（受控 `expanded` + 非受控 `defaultExpanded` + `onToggle`）/ `Supplement`（annotation / jump 两变体）/ `LoginMethods`
+- Selection 家族（9）：`SelectionContent` / `Checkbox` / `Radio` / `Tick` / `TickTag` / `OptionCardDefault` / `OptionCardMultiLabel` / `OptionCardPic` / `OptionCardThumb`
+- Misc 通用（3）：`Switch`（small / large，controlled + uncontrolled）/ `Divider`（含 `retract` prop）/ `PlaceholderIcon`（可配置 `size`，默认 24）
+
+### 交互协议（全部原子严格遵守）
+- 移动端：禁用 hover 态样式；禁用默认 `cursor: pointer`
+- 折叠/可切换类：同时支持 `expanded`（受控）与 `defaultExpanded` + `onExpandChange` / `onToggle`（非受控）
+- jump 类：统一通过 `onJump` 暴露导航意图；本体不承担路由
+
+### 顶层导出
+- `packages/components/src/index.ts` 追加 `export * from './form';`（暴露 33 原子 + 其 harness + 其 props 类型）
+- `packages/tokens/src/index.ts` 补齐 `export type { TypographyStyleKey, TypographyStyleSpec } from './typography';`（修复组件侧 `TS2724` 报错）
+
+### Stage 舞台
+- 新建 `apps/stage/src/pages/form-atoms/`：
+  - `index.config.ts`：`navigationBarTitleText: 'Atoms 原子组件'`
+  - `index.css`：容器背景使用 `--fd-color-surface-page` token（表单 cell 白底 / 外层 surface.page 的决议对齐）
+  - `index.tsx`：按五组（Label / Input & Error / Action / Selection / Misc）分节渲染全部 33 个 harness；使用既有 `StageShowcasePage` Hero + Gallery 壳
+- `apps/stage/src/app.config.ts` 追加 `pages/form-atoms/index`
+- `apps/stage/src/shell/componentLinks.ts` 新增一级折叠分组 `Form 表单单元`，当前仅含子项 `Atoms 原子组件`；分组置于所有既有组件导航项之后（即「分组最下方」决议），Wave 2 新增的 Exhibit 页将追加在该分组内、位于 Atoms 之上，保持 Atoms 仍居分组末位
+
+### 验证
+- `pnpm --filter @fdesign/components exec tsc --noEmit`：通过
+- `pnpm --filter @fdesign/components test`：39 测试文件 · 53 用例全绿
+- `pnpm --filter @fdesign/components build`：通过
+- `pnpm --filter @fdesign/stage build`：通过（仅保留既有 entry size warning）
+- `pnpm --filter @fdesign/example-consumer build`：通过（同上 warning）
+- `pnpm --filter @fdesign/real-project-1 build`：通过（同上 warning）
+- `pnpm check-boundaries`：通过
+
+### 未触及
+- `form/exhibit/*` 展示类 cell 本体（Wave 2 范围）
+- `decorativeIconRegistry` 仍为空注册表；`Icon.tsx` 仍未接入 `decorative` source 分支（按 Wave 0 既定，等 Wave 2 落地 ExhibitVeriFace 时再决定接入方式）
+- 7 个 nestOrigin local icon 仍为 Wave 0 引入的 Material 风格几何路径占位；未在 Wave 1 内替换为 Figma 原 path
+- Button、Tag、Icon 等其他组件本体未触及
+
+## 2026-04-18 · Form Cell Round 1 / Wave 2 · Exhibit 展示类 cell 本体（首轮落地）
+
+按 `docs/exec-plans/active/phase-5-form-cell.md` 执行 Wave 2：落地 `form/exhibit/*` 全部 8 个展示类 cell（SingleLine 2 + MultiLine 5 + VeriFace 1），以及装饰图分类首批 5 个 SVG 注入。
+
+### 展示类 cell 8 件套（每项均配套 `.tsx + .types.ts + .contract.yaml + .test.tsx + .harness.tsx + index.ts`）
+- SingleLine（2）：`ExhibitSingleLineLabel`（12287:12197）、`ExhibitSingleLineLabelPreContent`（8275:8466）
+- MultiLine（5）：`ExhibitMultiLineDefault`（8333:12737）、`ExhibitMultiLinePretext`（8275:8467）、`ExhibitMultiLineNumericTitle`（8275:8468，Roboto Medium 18/20 局部紧缩字距 -0.625px）、`ExhibitMultiLineRightMultiPretextA`（8275:8469）、`ExhibitMultiLineRightMultiPretextB`（8275:8824）
+- Verification（1）：`ExhibitVeriFace`（8333:12497，固定 card，veriFailed=false/true 两态）
+
+### 架构
+- 全部 cell 严格按决议冻结口径：`card=true / card=false` 作为同一组件内的 style variant（非拆分），由 `ExhibitFrame` 统一承接：
+  - `card=true`：`paddingX = paddingCardX(10)`、`borderRadius = radii.default(4)`、`overflow: hidden`、默认不附 bottom hairline
+  - `card=false`：`paddingX = paddingFlushX(16)`、无圆角、默认附 bottom hairline（`inset box-shadow`，`borderWidthHairline=0.5px`，`colors.semantic.border.subtle`）
+  - 提供 `showBottomDivider` 覆盖能力应对 Figma 内 card 态偶发带 divider 的局部差异
+- 新增内部共享片段 `form/exhibit/_internal/ExhibitFrame.tsx` 与 `form/exhibit/_internal/exhibitParts.tsx`（含 `ExhibitTitleInline / ExhibitDefaultBlueTag / ExhibitLeading / ExhibitLeadingTitle / ExhibitMultiLineStack / ExhibitPresetText / ExhibitRightPrimary / ExhibitRightSecondary`）。`_internal/*` 不在 `form/exhibit/index.ts` 或 `form/index.ts` 导出，仅供 exhibit/* 内部复用
+- 复用 Wave 1 原子：`PlaceholderIcon`、`LabelMultiTextSecondaryLightColor`、`FormText`（`atoms/_internal/textPrimitive`）；Tag 旁标签复用既有 `packages/components/src/tag` 的 `<Tag variant="outline" color="blue">`
+- `form/index.ts` 追加 `export * from './exhibit'`；`exhibit/index.ts` 按目录结构导出 8 个 cell
+
+### 装饰图（decorative category）首批 5 个条目（ExhibitVeriFace 专用）
+- 在 `packages/components/src/icon/iconRegistry.tsx` 的 `decorativeIconRegistry` 内落地 5 条：
+  - `veri-face-success`（36×36，蓝色 #4d83ff smiley 人脸）
+  - `veri-face-failed`（36×36，粉色 #ff85e3 sad 人脸）
+  - `veri-frame-success`（100×100，青色 #00a9fe 四角框线）
+  - `veri-frame-failed`（100×100，粉色 #ff99e4 四角框线）
+  - `veri-scan-bar`（100×8，横向 linear-gradient 扫描条，中间 #0095ff 44% 透明 + 两端白色淡出；跨 success/failed 态共用）
+- veriFace 的 5 种装饰色（`#407aff / #00a9fe / #0095ff / #ff99e4 / #ff85e3`）按 B.1 决议作为组件与 registry 内部常量落地（`VERI_FACE_COLORS` / `COLORS` 常量块），**不入 token**
+- 所有装饰 SVG 使用写死的 `fill` / `stroke`（不读 `currentColor`），与 outline 主分类显式区分（遵守 `DecorativeIconDefinition.render` 契约）
+- `ExhibitVeriFace` 采用"旁路 Icon 组件"方案：直接调用 `getDecorativeIconDefinition(name)` 并以原生 `<svg>` 渲染装饰图，Icon.tsx 的 `source` 分支保持 Wave 0 状态未扩展 `decorative`（避免 outline 尺寸协议被装饰彩色覆盖拉耦合）
+
+### Stage 舞台
+- 新建 `apps/stage/src/pages/form-exhibit/`：
+  - `index.config.ts`：`navigationBarTitleText: 'Exhibit 展示类'`
+  - `index.css`：容器背景使用 `--fd-color-surface-page` token；内部 2 列对照栅格用于并排展示 `card=false` 与 `card=true` 两态
+  - `index.tsx`：三分节（`单行展示类 / Single Line`、`多行展示类 / Multi Line`、`人脸验证 / Verification`）；每个 cell 以 `CellPair` 同时渲染两态，并附 caption；使用既有 `StageShowcasePage` Hero + Gallery 壳
+- `apps/stage/src/app.config.ts`：追加 `pages/form-exhibit/index`，位列 `pages/form-atoms/index` 之前
+- `apps/stage/src/shell/componentLinks.ts`：`Form 表单单元` 分组顶层追加 `Exhibit 展示类` 导航项，位列 `Atoms 原子组件` 之上，保持 Atoms 仍居分组末位（冻结决议）
+
+### 交互协议（严格保持）
+- 全部 exhibit cell：无 hover 态样式；无默认 `cursor: pointer`
+- 可点击能力（如 VeriFace 内未来可能挂的重试）交由消费层包装，Frame 与 cell 本体不预埋点击绑定
+
+### 验证
+- `pnpm --filter @fdesign/tokens build`：通过
+- `pnpm --filter @fdesign/components exec tsc --noEmit`：通过
+- `pnpm --filter @fdesign/components test`：47 测试文件 · 64 用例全绿（较 Wave 1 增加 8 个 exhibit 测试文件 · 11 个新用例）
+- `pnpm --filter @fdesign/components build`：通过
+- `pnpm --filter @fdesign/stage build`：通过（仅保留既有 entry size warning）
+- `pnpm --filter @fdesign/example-consumer build`：通过（同上 warning）
+- `pnpm --filter @fdesign/real-project-1 build`：通过（同上 warning）
+- `pnpm check-boundaries`：通过
+
+### 未触及
+- `form/exhibit/parts/*` 12 个内部嵌套原子（Wave 3 范围，组合展示/折叠展示类会依赖此层）
+- Round 1 中未落地的组合/折叠展示类 5 件套：`ExhibitInformationList / ExhibitAmountListTitleExternal / ExhibitAggregateMultiFold / ExhibitInformationListPlainText / ExhibitInformationListAmount`（Wave 3 范围）
+- Icon.tsx 的 `source` 分支暂未增设 `decorative`；如后续消费方需要在 Icon 组件内统一调度装饰图，可再扩展
+- 7 个 nestOrigin local icon 仍为 Wave 0 引入的 Material 风格几何路径占位
+
+## 2026-04-18 · Form Cell Round 1 / Wave 3 · Exhibit 组合 / 折叠结构（首轮落地）
+
+按 `docs/exec-plans/active/phase-5-form-cell.md` 执行 Wave 3：落地 `form/exhibit/parts/*` 11 个内部嵌套原子 + 5 个组合/折叠展示类 cell；舞台 Exhibit 页追加 Combined + Foldable 两节。
+
+### parts/* 内部嵌套原子 11 件套（不对外导出、不上舞台、不配 harness）
+
+- `GroupTitleH1`（8275:8525）：信息列表顶部组标题行（14 Medium primary + 可选 TextButton 12 Medium blue-primary）
+- `SubCellFlush`（8275:10360）：48 高子单元行（左 12 tertiary + 可选 annotation；右 text=12 primary 或 jump=12 tertiary + 12px action-jump 箭头）
+- `SubListFlush`（8275:9193）：SubCellFlush 竖排列表（末行关闭 hairline；每项可混用 text/jump）
+- `SubListCard`（15875:9901）：结构与 SubListFlush 同构，仅固定 `card=true`（保留独立节点对应，内部委托 SubListFlush）
+- `FoldingPureHeader`（18707:10950）：52 高折叠头部（左 14 Medium primary 标题 + 右 primary 文本 or Roboto Medium 数字 + 16px chevron；role=button + aria-expanded；`rightNumeric` 切换字体族）
+- `CellAmountTag`（8417:9026）：78 高金额行（12 tertiary label + 可选 outline tag gap 4 → Roboto Medium 20/22 紧缩字距 -0.625px 数字）
+- `AmountList`（8997:28837）：rounded 4 金额列表容器（多个 CellAmountTag，末行关闭 hairline）
+- `ExternalTileAmount`（8417:8155）：外置标题行（"全部代还" 14 Medium primary + BrandColor Small 品牌色数字 + "包含以下账单" 14 Medium primary；paddingL 2 + gap 4）
+- `SubInnercard`（8417:3847）：AggregateMultiFold 展开态二级单元（bg surface.page + 首/尾行圆角 + 12 tertiary leading/description/amount）
+- `CollapseNestAmount`（8417:4085）：金额折叠行（52 高 title + Roboto Medium 16/18 amount + chevron；受控 `expanded` + 非受控 `defaultExpanded` + `onToggle` 双模）
+- `AmountNestList`（8987:24897）：多个 CollapseNestAmount 竖排（末行关闭 hairline；每项独立非受控展开态）
+
+Parts 聚合出口在 `form/exhibit/parts/index.ts`；`form/exhibit/index.ts` 与 `form/index.ts` 均**不**再导出 parts/*（冻结决议）。
+
+### 组合 / 折叠展示类 cell 5 件套（每项配套 `.tsx + .types.ts + .contract.yaml + .test.tsx + .harness.tsx + index.ts`）
+
+- `ExhibitInformationList`（8275:10982）：信息列表 Tile（GroupTitleH1 + SubListFlush），card=true/false 双态；支持可选 `operation` + `onOperationPress`；子行右侧 `defaultRightKind: 'text' | 'jump'`
+- `ExhibitAmountListTitleExternal`（8417:9331）：外置标题 + 金额列表（固定 card）；ExternalTileAmount + AmountList，外层 flex-col gap 12
+- `ExhibitAggregateMultiFold`（8417:5824）：聚合多折叠（固定 card）；52 高标题行（16/18 Medium primary 主标题 + 12 tertiary 计数，计数未显式传入时按 `items.length` 自动推导 "共N笔"）+ AmountNestList；可选 `onJump` 绑定 role=link；每个子项通过非受控 `defaultExpanded` 决定初始展开
+- `ExhibitInformationListPlainText`（8275:8492）：折叠信息列表（纯文本），card=true/false × expanded 双态；受控 `expanded` + 非受控 `defaultExpanded` + `onExpandChange` 双模；展开态子行右侧为 text
+- `ExhibitInformationListAmount`（8275:8513）：折叠信息列表（金额），card=true/false × expanded 双态；FoldingPureHeader 使用 `rightNumeric`；**card+expand 态子行自动切为 jump（浅色 tertiary 文本 + 12px 右箭头）**；flush+expand 态子行为 text
+
+### 顶层导出
+- `form/exhibit/index.ts` 追加 Wave 3 五个 cell 的 `export *`；`form/index.ts` 未改动（已自动继承 exhibit/index 的变更）
+
+### Stage 舞台
+- `apps/stage/src/pages/form-exhibit/index.tsx` 追加 `组合展示类 / Combined` 与 `折叠展示类 / Foldable` 两节；
+  - Combined：`ExhibitInformationList`（CellPair 两态）+ `ExhibitAmountListTitleExternal`（单实例，固定 card）+ `ExhibitAggregateMultiFold`（单实例，固定 card，首项 defaultExpanded=true）
+  - Foldable：`ExhibitInformationListPlainText`（4 象限：card × expanded）+ `ExhibitInformationListAmount`（4 象限：card × expanded；card+expanded 默认走 jump 子行）
+- `heroMeta` 更新：Cells 13、Parts 11（不对外）、Interaction controlled/uncontrolled + onJump
+- `shell/componentLinks.ts` 未改动（Wave 2 已落位 `Exhibit 展示类` 页，Atoms 仍居分组末位）
+
+### 交互协议（Wave 3 严格保持）
+- 折叠类 cell 必须 `expanded`（受控）+ `defaultExpanded`（非受控）+ `onExpandChange` 双模共存
+- jump 类 cell 仅 `onJump`，不承担路由；未绑定时不可点击
+- 所有 parts 与 cell：无 hover、无默认 `cursor: pointer`
+
+### 验证
+- `pnpm --filter @fdesign/components exec tsc --noEmit`：通过
+- `pnpm --filter @fdesign/components test`：52 测试文件 · 71 用例全绿（较 Wave 2 新增 5 个 exhibit 测试文件 · 7 个新用例）
+- `pnpm --filter @fdesign/components build`：通过
+- `pnpm --filter @fdesign/stage build`：通过（仅保留既有 entry size warning）
+- `pnpm --filter @fdesign/example-consumer build`：通过（同上 warning）
+- `pnpm --filter @fdesign/real-project-1 build`：通过（同上 warning）
+- `pnpm check-boundaries`：通过（parts/* 未对外，不违反 import 边界）
+
+### 未触及
+- Input 类 / Action 类 cell（Round 2 / 3 范围）
+- Button（Base 类）收尾
+- `Icon.tsx` 的 source 分支仍未扩展 `decorative`（当前 ExhibitVeriFace 单点旁路消费；Wave 3 新增 cell 均未渲染装饰图）
+- 7 个 nestOrigin local icon（camera / placeholder-icon / supplement-annotation / supplement-jump / collapse-on / collapse-off / action-jump）仍为 Wave 0 Material 风格几何路径占位
+
+## 2026-04-18 · Form Cell Round 1 / Wave 4 · 验收通过（Round 1 可冻结）
+
+按 `docs/exec-plans/active/phase-5-form-cell.md`「执行 Wave 划分 · Wave 4」完成 Round 1 整体验收。无代码变更；本记录仅记录验收结果与状态切换。
+
+### 自动验证（全部通过）
+- `pnpm --filter @fdesign/tokens build`：通过
+- `pnpm --filter @fdesign/components test`：52 测试文件 · 71 用例全绿
+- `pnpm --filter @fdesign/components build`：通过
+- `pnpm --filter @fdesign/stage build`：通过（仅既有 entry size warning）
+- `pnpm --filter @fdesign/example-consumer build`：通过（同上 warning）
+- `pnpm --filter @fdesign/real-project-1 build`：通过（同上 warning）
+- `pnpm check-boundaries`：通过
+
+### 运行态视觉 + 交互验证（stage H5 dev server @ http://localhost:10086）
+- `#/pages/form-exhibit/index`：13 个展示类 cell 全部正常渲染；card=true / card=false 并排对照，圆角/flush 差异正确；flush 底部 hairline 可见
+- Single Line：ExhibitSingleLineLabel（含 placeholder + tag）、ExhibitSingleLineLabelPreContent（含右侧预设内容 + supplement-annotation ⓘ）视觉与 Figma 一致
+- Multi Line：Default / Pretext / NumericTitle（Roboto Medium 18/20 紧缩，右侧 action-jump 箭头）/ RightMultiPretextA（左 tag 右双行）/ RightMultiPretextB（左 preText + 右双行）全部对齐 Figma
+- Verification：ExhibitVeriFace 成功态蓝色 smiley + 青色 frame 角 + 扫描条 + "*凯 请根据提示完成刷脸操作"；失败态粉色 sad face + 粉色 frame + "验证失败 / 失败原因：光线不足"；两态区分清晰
+- Combined：ExhibitInformationList（card × flush 两态）含 "操作文本" 12 Medium primary blue；ExhibitAmountListTitleExternal 外置标题 "全部代还 ¥99999 包含以下账单" + 3 行金额卡；ExhibitAggregateMultiFold 头部 "共3笔" 自动推导，首项 defaultExpanded=true 展开 SubInnercard（第1/24期 第2/24期）
+- Foldable：ExhibitInformationListPlainText × 4 象限（card × expanded）chevron 方向正确（展开态向上 ^、折叠态向下 ∨）；ExhibitInformationListAmount × 4 象限——**card+expanded 子行显示为 jump（浅色 tertiary 文本 + 12px action-jump 右箭头）**、flush+expanded 子行显示为 text（深色 primary），差异对齐 Figma 规范
+- 交互：点击折叠态 ExhibitInformationListPlainText（card=false · collapsed）头部 → aria-expanded 从 collapsed → expanded；再次点击 → 回到 collapsed；独立非受控状态，不影响同页其它 fold 实例
+- Atoms 页 `#/pages/form-atoms/index`：5 组 33 个原子全部正常渲染；Switch / Checkbox / Radio / Tick / TickTag / OptionCard 家族的 role 与 checked 状态正确映射；Collapse / Supplement / Jump 等可交互原子 role=button/link 正确
+- 通过浏览器 aria snapshot 校验：所有折叠头 `role="button" + aria-expanded`、jump 类节点 `role="link"` 语义正确；未观察到意外 hover 态或默认 cursor:pointer
+
+### 视觉偏移评估
+- 7 个 nestOrigin local icon（camera / placeholder-icon / supplement-annotation / supplement-jump / collapse-on / collapse-off / action-jump）的 Material 风格几何路径占位在当前舞台尺寸下视觉可接受：supplement-annotation (ⓘ)、action-jump (>)、chevron 上/下形态清晰；**未触发** Figma MCP 回灌
+- `decorativeIconRegistry` 的 5 条 veriFace 装饰 SVG（veri-face-success/failed 36×36、veri-frame-success/failed 100×100、veri-scan-bar 100×8）在 ExhibitVeriFace 渲染时结构与色彩与 Figma 原图语义一致，视觉可接受；**未触发** Figma MCP 回灌
+- `Icon.tsx` 的 `source` 分支保持 Wave 2 既定：未扩展 `decorative`；当前仅 ExhibitVeriFace 单点消费旁路，API 面未膨胀
+
+### 状态切换
+- 表单单元 Round 1 / 展示类 + 原子组件整体进入 **可冻结**（等同 Button / Tag / Icon 的"可冻结首轮"口径；后续仅接受新输入驱动的增量修正）
+- `docs/exec-plans/active/phase-5-form-cell.md` 的「三轮规划」Round 1 出口状态、本文件 `current_focus` / `in_progress` / `next_recommended` 均已同步到 Round 2（Input 类）入口
+
+### 未触及
+- Round 2（Input 类 cell）尚未启动；无需回补原子（Wave 1 已完整覆盖）
+- Round 3（Action 类 cell）待 Round 2 完成后启动
+- Button（Base 类）收尾仍在 "收尾中"，可在 Round 2 之前/之间穿插推进，但不阻塞 Round 2 主线
+
+## 2026-04-18 · Form Cell Round 1 / Wave 4 验收回归修复（用户反馈两点）
+
+用户在 Wave 4 验收 stage 运行态时反馈两个问题，本次修复闭环：
+
+### 问题 1：表单单元组件宽度跟随父容器拉伸（应固定为 Figma 设计稿宽度）
+- 现象：`form/exhibit/*` 全部 cell 外层 `width: '100%'`，导致在 stage 两列 grid 1fr/1fr 中被拉伸到列宽，而非 Figma 设计稿规定的固定宽度（card=355、flush=375）
+- 根因：Wave 2/3 实现时对"组件本体宽度"与"页面容器宽度"语义未做强约束，默认 `width: 100%` 跟随父宽
+- 修复：
+  - `form/exhibit/_internal/ExhibitFrame.tsx` 新增导出 `EXHIBIT_FRAME_WIDTH_CARD = 355` / `EXHIBIT_FRAME_WIDTH_FLUSH = 375` 两个常量；ExhibitFrame 外层改为 `width: ${card ? 355 : 375}px + flexShrink: 0 + boxSizing: border-box`，按 card prop 切换固定宽度
+  - 5 个非 ExhibitFrame 包裹的 cell（ExhibitVeriFace / ExhibitAmountListTitleExternal / ExhibitAggregateMultiFold / ExhibitInformationList / ExhibitInformationListPlainText / ExhibitInformationListAmount）均统一引用上述两个常量：
+    - 固定 card 三件（VeriFace / AmountListTitleExternal / AggregateMultiFold）→ 固定 355
+    - 三件 InformationList → 按 card prop 在 355 / 375 之间切换
+  - 全部 cell 外层补 `flexShrink: 0 + boxSizing: border-box`，避免在 flex 父容器中被收缩
+  - parts/* 内部嵌套原子（GroupTitleH1 / SubCellFlush / SubListFlush / FoldingPureHeader / CellAmountTag / AmountList / SubInnercard / CollapseNestAmount / AmountNestList）保持 `width: 100%`，作为 cell 内部填充其父固定宽容器（无需感知 355 / 375）
+- stage form-exhibit 页 `__stage-formExhibitPair` 由 `display: grid; grid-template-columns: 1fr 1fr` 改为 `display: flex; flex-wrap: wrap; align-items: flex-start; gap: 16px`，列宽不再约束 cell；`__stage-formExhibitPairItem` 加 `flex: 0 0 auto`
+- form-atoms 页未触及（原子组件本身宽度自适应内容，没有"固定设计稿宽度"语义）
+
+### 问题 2：stage form-exhibit 页内 caption / row label 文字过小（实际渲染高度仅 ~6px）
+- 现象：用户在浏览器 inspect 选中 `__stage-formExhibitRowLabel` 与 `__stage-formExhibitPairCaption`，bounds 显示 height=6（应为 14 line-height）
+- 根因：stage 全局 `app.css` 与 `shell/styles/layout.module.css` 顶部都有 `/*postcss-pxtransform disable*/` 注释来禁用 Taro `postcss-pxtransform`（按 `designWidth: 750` 把 px 缩放约对半），但 Wave 2 新建 `apps/stage/src/pages/form-exhibit/index.css` 与 Wave 1 新建 `apps/stage/src/pages/form-atoms/index.css` 都遗漏了这个 disable 注释；导致两页内全部 px 被强制缩放，`font-size: 12px` → 实际 ~6px、`line-height: 14px` → 实际 ~7px
+  - 同样 `tag/index.css` 不需要 disable 注释，因为它通过 `var(--stage-font-size-description)` 读 CSS variable，而 var 引用在 PostCSS 处理时不会被 pxtransform 转换（只会在 cascade 时解析，那时已经过 disable 的 app.css 处理）
+- 修复：在 `apps/stage/src/pages/form-exhibit/index.css` 与 `apps/stage/src/pages/form-atoms/index.css` 顶部各补 `/*postcss-pxtransform disable*/` 注释，并在注释紧随的 block 注释里说明 stage 全局已采用此约定
+
+### 验证
+- `pnpm --filter @fdesign/components exec tsc --noEmit`：通过
+- `pnpm --filter @fdesign/components test`：52 文件 · 71 用例全绿（无变化）
+- `pnpm --filter @fdesign/components build`：通过
+- `pnpm --filter @fdesign/stage build`：通过
+- `pnpm --filter @fdesign/example-consumer build`：通过
+- `pnpm --filter @fdesign/real-project-1 build`：通过
+- `pnpm check-boundaries`：通过
+- stage H5 dev server 运行态复验：caption / row label 文字恢复 ~12-14px 可读高度；13 个 cell 在 flex-wrap 容器中固定宽度并排展示，flush（375）明显宽于 card（355），不再被父列拉伸；VeriFace / AmountListTitleExternal / AggregateMultiFold 三件固定 card 在 stage 单实例展示时也是固定 355 宽，不再撑满分节宽度
+
+### 治理决策（追加）
+- "组件本体宽度按 Figma 设计稿固定（card=355 / flush=375 / 固定 card cell=355），不跟随父容器拉伸" 作为 Round 1 表单单元的硬约束写入 decisions.log；后续 Round 2 / Round 3 的 input/* 与 action/* cell 沿用同一约束（在各自 cell 外层显式设置 width，不暴露为 prop）
+- "stage page 级 CSS 文件首行必须补 `/*postcss-pxtransform disable*/` 注释" 作为 stage 内的硬约束写入 decisions.log；后续新增 stage 页 CSS 时按此约定，避免 px 被 Taro pxtransform 二次缩放
+
+## 2026-04-19 13:50
+
+### Phase 5 · Form Cell Round 1 返修（wave 4 后原子修正，用户逐项反馈第 1 轮）
+
+### 本次处理范围
+- 继续对照 Figma `mJ1NYL6eRVa9vjGRQflNxJ / 26206:20590` 校正 Round 1 原子与 stage 展示，范围聚焦 `Label` 家族与 `Input/Error` 家族
+- 先修组件本体，再同步 stage 展示方式；不触碰用户未点名的 action 家族
+
+### 组件本体修复
+- `NumberTitle`：新增 `showArrow?: boolean`，保留既有数字字距逻辑，补齐 Figma component property；harness 同步展示带/不带 chevron
+- `LabelMultiTextFirst`：字重由 medium 改为 regular，并新增 `showArrow?: boolean`
+- `LabelMultiTextSecondaryDark`：颜色由 secondary 改回 primary，字重由 medium 改回 regular
+- `LabelMultiTextSecondaryLightColor`：保留注解能力，补齐注解图标的独立 14px 展示容器，贴近 Figma 标注尺寸
+- `LabelAnnotation`：从 10/16 tertiary 修正为 14/16 secondary，并新增 `showIcon?: boolean`
+- `LabelResultSupple`：按 Figma 修正为 10 号更紧凑的辅助文案样式
+- `LabelAmountSupple`：扩展为 `prefix + amount` 双段能力，兼容旧的 `children` 单段写法
+- `InputField`：补充 `typing` / `filled` / `align` / `showDelete`，去掉输入热区内错误色解读，新增 `caretColor` 以对齐输入光标颜色
+- `ErrorTips` / `ErrorText`：补充 `divider?: boolean`，并在 stage 上明确区分单行与多行
+- `ErrorPop`：重构为“白色外层容器 + 无描边粉色气泡 + 顶部三角 pointer + 可选操作按钮”结构，替换原先错误的红框条状实现
+
+### Stage 展示修复
+- `apps/stage/src/pages/form-atoms/index.tsx`
+  - `NumberTitle` 行补充 `showArrow`
+  - `LabelMultiTextFirst / SecondaryDark / SecondaryLightColor` 改为同组展示
+  - `LabelAnnotation` / `LabelAmountSupple` / `InputField` / `ErrorTips` / `ErrorText` / `ErrorPop` 标签文案同步反映可控 properties
+  - `InputField` 展示从 `wait/focus/disabled/error` 改为 `wait/focus/typing/filled/disabled/right`
+- `SelectionContent` 仍保留在 `Selection 选择家族` 分组，stage 页已有入口，不做重复创建
+
+### 测试与验证
+- `pnpm --filter @fdesign/components test`：通过（52 文件 · 77 用例）
+- `pnpm --filter @fdesign/components build`：通过
+- `pnpm --filter @fdesign/stage build`：通过
+- `ReadLints`：本次修改范围无新增诊断
+
+## 2026-04-19 14:24
+
+### Phase 5 · Form Cell Round 1 返修（stage 原子页展示协议第 2 轮）
+
+### 本次处理范围
+- 继续按用户反馈收敛 `apps/stage/src/pages/form-atoms/` 的展示协议，不改动原子组件对外 API
+
+### stage 原子页展示协议修复
+- `apps/stage/src/pages/form-atoms/index.tsx`
+  - 原子行结构改为「左侧元信息栏 + 右侧原子预览」，组件名与 props 名称拆开显示；原先写在括号里的属性不再占据组件上方整行
+  - `ErrorText` 从原子页展示列表移除（按用户明确指示“去掉”）
+  - `NumberTitle` 的 stage 展示改为按“无 arrow / 有 arrow”两列分别展示，不再把 5 条混在同一列
+  - 为 `InputField / ErrorTips / ErrorPop / Divider` 等依赖父级宽度协议的原子补上 stage 侧固定预览宽度，避免在展示容器内被拉伸到整行
+- `apps/stage/src/pages/form-atoms/index.css`
+  - 行布局改为 grid，两列宽度分别承载元信息与演示区
+  - 演示区改为 `inline-flex + justify-self:start`，避免 `Text/View` 根节点默认拉满整行
+
+### harness 文案与尺寸修复
+- `NumberTitleHarness`：拆成“无 arrow / 有 arrow”两组
+- `ErrorTipsHarness`：改回 Figma 文案 `错误提示文案不超过20个字`，并固定 355 宽，以便 divider 按设计稿宽度展示
+- `ErrorPopHarness`：改回 Figma 文案 `错误提示文案不超过20个字符`，按钮文案改为 `操作文本`，并固定 355 宽
+- `InputFieldHarness`：改回 Figma 口径 `占位(请输入)` / `输入的内容`，并固定 286 宽
+- `DividerHarness`：固定 375 宽，避免分割线展示被父容器拉伸
+
+### 测试与验证
+- `ReadLints`：本次修改范围无新增诊断
+- `pnpm --filter @fdesign/components test`：通过（52 文件 · 77 用例）
+- `pnpm --filter @fdesign/components build`：通过
+- `pnpm --filter @fdesign/stage build`：通过
+
+## 2026-04-19 15:00
+
+### Phase 5 · Form Cell Round 1 返修（stage 原子页展示协议第 3 轮）
+
+### 本次处理范围
+- 继续按用户反馈收敛 `apps/stage/src/pages/form-atoms/` 与原子层视觉协议，重点修复 props 标注方式、`InputField` 编排、错误态颜色与 token 使用
+
+### stage 原子页展示协议修复
+- `apps/stage/src/pages/form-atoms/index.tsx`
+  - 新增 page-level 的逐项 demo 标注结构，`Label / NumberTitle / BrandColor / InputField / ErrorTips / ErrorPop / Divider` 的属性名称改为跟随各自 demo 出现在左侧，不再作为整组汇总文案挂在组件标题下
+  - `InputField` 改为 `left / right` 两列展示，并在每列内分别展示 `wait / typing / filled / disabled` 四态；`focus` 不再作为独立静态属性展示
+  - `ErrorTips / ErrorPop / Divider` 改为逐项标注 `plain / divider on / closable / retract` 等具体变体
+- `apps/stage/src/pages/form-atoms/index.css`
+  - 新增逐项 demo、双列 demo、列标题与局部 props 文案样式，承接新的舞台展示协议
+
+### 原子组件与 token 收敛
+- `packages/components/src/form/atoms/InputField/InputField.tsx`
+  - 删除按钮仅在 `typing` 展示，不再在 `filled` 展示
+  - 占位色改为 `colors.semantic.text.disabled`，输入壳层改为按内容收口，右对齐态单独拉伸，删除 icon 改为 20 外框 + 16 内容尺寸，更贴近 Figma 原稿
+- `packages/components/src/form/atoms/ErrorTips/ErrorTips.tsx`
+  - 错误文案与 divider 改为 `colors.semantic.action.danger.*` 语义 token
+- `packages/components/src/form/atoms/ErrorText/ErrorText.tsx`
+  - 错误文案与 divider 同步改为 `colors.semantic.action.danger.*` 语义 token
+- `packages/components/src/form/atoms/ErrorPop/ErrorPop.tsx`
+  - 气泡外层 padding 改为底部 8、左右 10；气泡内边距改为 `15px 10px`
+  - 气泡背景、尖角与按钮描边改为 `colors.semantic.action.danger.*` 语义 token，替换直接引用 red reference 色板
+- `packages/components/src/form/atoms/WordLimit/WordLimit.tsx`
+  - 超限态改为 `colors.semantic.action.danger.subtleForeground`
+- `packages/components/src/form/atoms/SelectionContent/SelectionContent.tsx`
+- `packages/components/src/form/atoms/TickTag/TickTag.tsx`
+- `packages/components/src/form/atoms/OptionCardDefault/OptionCardDefault.tsx`
+- `packages/components/src/form/atoms/OptionCardPic/OptionCardPic.tsx`
+- `packages/components/src/form/atoms/OptionCardThumb/OptionCardThumb.tsx`
+- `packages/components/src/form/atoms/OptionCardMultiLabel/OptionCardMultiLabel.tsx`
+  - 已有可映射的选中态蓝色背景/描边/前景色统一收敛到 `colors.semantic.action.primary.*`，减少 form 原子对 `reference.brand.blue[*]` 的直接依赖
+
+### 测试与验证
+- `ReadLints`：本次修改范围无新增诊断
+- `pnpm --filter @fdesign/components exec vitest run src/form/atoms/InputField/InputField.test.tsx src/form/atoms/ErrorTips/ErrorTips.test.tsx src/form/atoms/ErrorPop/ErrorPop.test.tsx`：通过（3 文件 · 4 用例）
+- `pnpm --filter @fdesign/components build`：通过
+- `pnpm --filter @fdesign/stage build`：通过（仅保留既有 entry size warning）
+
+### Phase 5 · Form Cell Round 1 返修（stage 原子页分组等宽等高）
+
+### 本次处理范围
+- 继续按用户反馈修复 `apps/stage/src/pages/form-atoms/` 的分组容器布局，目标是让同组卡片在横排时按同排最高项等高，并按组内最宽项统一列宽
+
+### stage 原子页分组布局修复
+- `apps/stage/src/pages/form-atoms/index.tsx`
+  - 为 5 个原子分组补充稳定 `section key`
+  - 新增基于 `ResizeObserver + requestAnimationFrame` 的轻量测量逻辑，逐组读取 `.__stage-formAtomRow` 的最大宽度，并回写为 section 级 CSS 变量 `--stage-formAtomColumnWidth`
+  - 在渲染 `__stage-formAtomsSectionGrid` 时挂 ref，使 Label 家族等每个父级分组都独立计算自己的统一列宽
+- `apps/stage/src/pages/form-atoms/index.css`
+  - `__stage-formAtomsSectionGrid` 从 `flex-wrap` 改为自适应 `grid`
+  - grid 列宽统一读取 `--stage-formAtomColumnWidth`，从而让同组卡片宽度始终对齐到该组最宽项
+  - `align-items: stretch` + 卡片自身 `width: 100%` / `align-self: stretch`，让同排卡片高度自动以 tallest 项为准拉齐
+
+### 测试与验证
+- `ReadLints`：`apps/stage/src/pages/form-atoms/index.tsx`、`apps/stage/src/pages/form-atoms/index.css` 无新增诊断
+- `pnpm --filter @fdesign/stage build`：通过（仅保留既有 entry size warning）
+
+### Phase 5 · Form Cell Round 1 返修（原子实现纠偏第 8 轮）
+
+### 本次处理范围
+- 按用户逐项反馈回收 `InputField` / `ErrorPop` / `SelectionContent` / `OperationText(TextOperator)` / `Jump` / `OperationButton` 的设计偏差，并同步修正 `form-atoms` stage 展示
+
+### 原子组件纠偏
+- `packages/components/src/form/atoms/InputField/InputField.tsx`
+  - 将 `typing` / `focus` 视为初始聚焦态，补充内部聚焦状态机
+  - 删除按钮改为用户提供的 `/Users/gavinss/Downloads/.Icon/Delete.svg` 路径，点击后清空内容并透传 `onChange('')`
+  - 增加“外部点击失焦”和“回车失焦”行为，typing 失焦后回落为 filled/wait 视觉态
+  - 补充内联光标渲染，保持 typing 展示始终带焦点表达
+- `packages/components/src/form/atoms/ErrorPop/ErrorPop.tsx`
+  - 背景由错误使用的 `danger.subtleBackground` 改为 `colors.semantic.translucent.functionalRed.a30`（对应设计稿 `#FFF4F5`）
+  - 外层气泡改为固定 `40px` 高度，移除错误的纵向 `15px` padding
+  - 操作按钮描边改为 `colors.semantic.border.subtle`，与 base `secondary-outline` 协议一致
+- `packages/components/src/form/atoms/SelectionContent/*`
+  - 将原先的“可点击卡片”实现替换为 Figma `9638:25878` 对应的“占位球 + 文案 + jump”紧凑片段
+  - 保留 `selected/onChange` 协议，同时新增 `text` / `icon` 配置以承载占位文案与 icon 占位球
+- `packages/components/src/form/atoms/OperationText/*`
+  - 新增 `TextOperator` / `TextOperatorHarness` 别名，保留 `OperationText` 兼容导出
+  - 文字按钮视觉改为 `14/16 Medium + text.primary`，不再错误使用主蓝色
+- `packages/components/src/form/atoms/OperationButton/OperationButton.tsx`
+  - `preContent / subText / tagAmount / plusCount / textButton` 追加 jump 箭头表达
+  - `preContent` 改回 14/16 secondary；`textButton` 改回 14/16 Medium primary；`plusCount` 改回红色数字表达；`tagAmount` 改回蓝色数字表达
+- `packages/components/src/icon/iconRegistry.tsx`
+  - 为 local icon 增加可选 `viewBox`
+  - `action-jump` 与 `supplement-jump` 统一替换为用户提供的 `/Users/gavinss/Downloads/.Icon/icon=jump.svg` 路径（16x16）
+- `packages/components/src/icon/LocalIconRenderer.tsx`
+  - 支持按 iconDefinition 自定义 `viewBox` 渲染，避免 16x16 箭头被 24x24 默认视窗压缩
+
+### stage 展示修正
+- `apps/stage/src/pages/form-atoms/index.tsx`
+  - `InputField` 右对齐列补充 `align="end"`，展示容器与内容保持右对齐
+  - `ErrorPop` stage 移除不存在的 plain 变体，仅保留 closable
+  - `OperationText 操作文本` 展示标题改为 `TextOperator 文字按钮`
+- `apps/stage/src/pages/form-atoms/index.css`
+  - 新增 `__stage-formAtomDemoColumnAlignEnd`，让右侧列标题与内容一并右对齐
+- `packages/components/src/form/atoms/OperationButton/OperationButton.harness.tsx`
+  - 依据 Figma `8440:15495` 将 11 类展示重排为两行组合布局，并补上 `预设内容 / 二级文本 +9,000 / 标签 ¥5,000 / 文字按钮` 等设计稿表达
+
+### 合同与测试同步
+- 更新 `InputField.contract.yaml`、`ErrorPop.contract.yaml`、`SelectionContent.contract.yaml`、`OperationText.contract.yaml`
+- 更新 `InputField.test.tsx`，补充“删除清空”和“回车失焦”回归用例
+- 更新 `SelectionContent.test.tsx` 以匹配新片段式实现
+
+### 测试与验证
+- `ReadLints`：本轮编辑文件无新增诊断
+- `pnpm --filter @fdesign/components test`：通过（52 文件 · 79 用例）
+- `pnpm --filter @fdesign/components build`：通过
+- `pnpm --filter @fdesign/stage build`：通过（仅保留既有 entry size warning）
+
+### Phase 5 · Form Cell Round 1 返修（stage 原子页外层容器自动拉伸）
+
+### 本次处理范围
+- 按用户反馈修复 `apps/stage/src/pages/form-atoms/` 同层外卡片宽度，让 `__stage-formAtomRow` 自动沿其父容器内边距拉伸，但不改内部行容器与行内元素布局
+
+### stage 原子页外层容器宽度修复
+- `apps/stage/src/pages/form-atoms/index.css`
+  - `__stage-formAtomsSectionGrid` 的 cross-axis 对齐由 `flex-start` 改为 `stretch`
+  - `__stage-formAtomRow` 从内容驱动宽度改为 `width: auto` + `align-self: stretch`
+  - 保留 `min-width: min(100%, 240px)` 与内部 `DemoStack / DemoItem / DemoBody` 既有样式，不触碰内层展示结构
+
+### 测试与验证
+- `ReadLints`：`apps/stage/src/pages/form-atoms/index.css` 无新增诊断
+- `pnpm --filter @fdesign/stage build`：通过（仅保留既有 entry size warning）
+
+### Phase 5 · Form Cell Round 1 返修（InputField 列标题左对齐）
+
+### 本次处理范围
+- 按用户反馈修复 `apps/stage/src/pages/form-atoms/` 中 `InputField` 展示区 `left/right` 列标题的水平对齐
+
+### stage 原子页列标题对齐修复
+- `apps/stage/src/pages/form-atoms/index.css`
+  - 将 `__stage-formAtomDemoColumnTitle` 的 `padding-left` 从 `84px` 调整为 `0`
+  - 使 `left/right` 标题与本列上下内容直接左对齐，不再额外向右缩进
+
+### 测试与验证
+- `ReadLints`：`apps/stage/src/pages/form-atoms/index.css` 无新增诊断
+- `pnpm --filter @fdesign/stage build`：通过（仅保留既有 entry size warning）
+
+### Phase 5 · Form Cell Round 1 返修（stage 原子页恢复自动竖排）
+
+### 本次处理范围
+- 按用户反馈撤回 `apps/stage/src/pages/form-atoms/` 中同组容器横排等宽等高方案，让同类同层级容器恢复自动竖排
+
+### stage 原子页分组布局回退
+- `apps/stage/src/pages/form-atoms/index.tsx`
+  - 删除上一轮为分组等宽引入的 `section key`、`ResizeObserver` 与 `requestAnimationFrame` 测量逻辑
+  - 渲染层移除 section ref 回写行为，恢复静态分组容器输出
+- `apps/stage/src/pages/form-atoms/index.css`
+  - `__stage-formAtomsSectionGrid` 从自适应 grid 改回纵向 `flex` 容器
+  - `__stage-formAtomRow` 改回内容驱动宽度，恢复同组卡片自动竖排堆叠
+
+### 测试与验证
+- `ReadLints`：`apps/stage/src/pages/form-atoms/index.tsx`、`apps/stage/src/pages/form-atoms/index.css` 无新增诊断
+- `pnpm --filter @fdesign/stage build`：通过（仅保留既有 entry size warning）

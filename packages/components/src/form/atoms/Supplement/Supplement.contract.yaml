@@ -1,0 +1,9 @@
+component: form/atoms/Supplement
+purpose: "辅助说明小图标，icon 取 annotation | jump（仅做尺寸封装，不内嵌 path）"
+provisional: false
+forbidden:
+  - "禁止内嵌 SVG path；必须走 Icon registry"
+  - "禁止默认 cursor 与 hover 样式"
+states:
+  - annotation
+  - jump

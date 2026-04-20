@@ -1,0 +1,143 @@
+/*postcss-pxtransform disable*/
+
+/* Form 表单单元 · Atoms 原子组件展示页。
+ * 容器背景统一使用 surface.page token（见 decision：表单单元白底 cell 外容器背景）。
+ * 顶部 disable 注释：page-level CSS 默认会被 Taro postcss-pxtransform 按 designWidth=750 缩放（约对半），
+ * 该页内全部 px 都已经是「设备无关像素」语义（与 Figma 设计稿 px 一致），不应再被缩放。
+ * stage 全局 app.css / shell/styles/layout.module.css 已采用同一约定。 */
+.__stage-formAtomsSectionGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.__stage-formAtomRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: auto;
+  min-width: min(100%, 240px);
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 1px solid var(--stage-border);
+  box-sizing: border-box;
+  max-width: 100%;
+  align-self: stretch;
+}
+
+.__stage-formAtomMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.__stage-formAtomLabel {
+  color: var(--stage-text-primary, #1e2533);
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 500;
+}
+
+.__stage-formAtomProps {
+  color: var(--stage-text-muted, #787c85);
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.__stage-formAtomDemo {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.__stage-formAtomDemoColumns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.__stage-formAtomDemoColumns > .__stage-formAtomDemoColumn {
+  flex: 1 1 0;
+  min-width: 0;
+  align-self: stretch;
+}
+
+.__stage-formAtomDemoColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* InputField 双列：栈层占满列宽，右侧列才能与父行同宽对齐并拉伸 */
+.__stage-formAtomDemoColumns .__stage-formAtomDemoColumn .__stage-formAtomDemoStack {
+  width: 100%;
+  max-width: 100%;
+}
+
+.__stage-formAtomDemoColumnAlignEnd {
+  align-items: flex-end;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  align-self: stretch;
+  flex: 1 1 0;
+}
+
+.__stage-formAtomDemoColumnAlignEnd .__stage-formAtomDemoColumnTitle {
+  align-self: flex-end;
+}
+
+.__stage-formAtomDemoColumnAlignEnd > .__stage-formAtomDemoStack {
+  align-items: flex-end;
+}
+
+.__stage-formAtomDemoColumnTitle {
+  color: var(--stage-text-muted, #787c85);
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 500;
+  padding-left: 0;
+}
+
+.__stage-formAtomDemoStack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  align-items: flex-start;
+}
+
+.__stage-formAtomDemo > .__stage-formAtomDemoStack {
+  width: 100%;
+  align-items: stretch;
+}
+
+.__stage-formAtomDemoItem {
+  display: grid;
+  width: 100%;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: clamp(12px, 2vw, 24px);
+  align-items: center;
+}
+
+.__stage-formAtomDemoProp {
+  color: var(--stage-text-muted, #787c85);
+  font-size: 12px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+
+.__stage-formAtomDemoBody {
+  display: inline-flex;
+  width: 100%;
+  max-width: 100%;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: clamp(12px, 2vw, 24px);
+}

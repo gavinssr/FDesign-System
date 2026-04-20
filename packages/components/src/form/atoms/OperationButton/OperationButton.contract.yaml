@@ -1,0 +1,21 @@
+component: form/atoms/OperationButton
+purpose: "表单单元操作按钮原子，11 种 type 变体（保留 Figma 原命名）；移动端无 hover/无 cursor pointer"
+provisional: false
+forbidden:
+  - "禁止重命名 type 字段（决议冻结）"
+  - "禁止默认 cursor: pointer 与 hover 态样式"
+a11y:
+  - "role=button；disabled 态附 aria-disabled"
+states:
+  - button-bluePrimary
+  - button-pinkPrimary
+  - button-blueSecondary
+  - button-pinkSecondary
+  - button-blueOutline
+  - button-pinkOutline
+  - preContent
+  - subText
+  - tagAmount
+  - plusCount
+  - textButton
+  - disabled

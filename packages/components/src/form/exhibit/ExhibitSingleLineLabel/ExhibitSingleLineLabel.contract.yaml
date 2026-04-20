@@ -1,0 +1,12 @@
+component: form/exhibit/ExhibitSingleLineLabel
+purpose: "单行展示类 cell（label + 可选 leading icon / 可选 tag），card=true/false 双态"
+provisional: false
+figmaNode: "12287:12197"
+forbidden:
+  - "禁止内联颜色与字号，必须通过 @fdesign/tokens 复合样式与 spacing.component.exhibit"
+  - "禁止在此 cell 内引入 hover 态样式与默认 cursor: pointer（移动端协议）"
+states:
+  - card=true
+  - card=false
+  - withIcon
+  - withTag

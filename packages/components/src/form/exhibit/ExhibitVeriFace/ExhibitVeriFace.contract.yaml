@@ -1,0 +1,21 @@
+component: form/exhibit/ExhibitVeriFace
+purpose: "人脸验证展示 cell（固定 card，success / failed 两态）"
+provisional: false
+figmaNode: "8333:12497"
+forbidden:
+  - "禁止在此 cell 内引入 hover 态样式与默认 cursor: pointer（移动端协议）"
+  - "禁止绕过 decorativeIconRegistry 直接内联彩色 SVG；装饰图必须来自 registry（decorative 新分类）"
+states:
+  - veriFailed=false
+  - veriFailed=true
+tokens:
+  colors:
+    - colors.semantic.surface.base
+    - colors.semantic.text.primary
+    - colors.semantic.text.tertiary
+  decorativeIcons:
+    - veri-face-success
+    - veri-face-failed
+    - veri-frame-success
+    - veri-frame-failed
+    - veri-scan-bar

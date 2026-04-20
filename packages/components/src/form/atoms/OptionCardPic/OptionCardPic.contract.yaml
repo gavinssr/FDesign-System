@@ -1,0 +1,8 @@
+component: form/atoms/OptionCardPic
+purpose: "图片选项卡，2 态（default/selected），含 80×80 图片与可选 caption"
+provisional: false
+forbidden:
+  - "禁止默认 cursor 与 hover 样式"
+states:
+  - default
+  - selected

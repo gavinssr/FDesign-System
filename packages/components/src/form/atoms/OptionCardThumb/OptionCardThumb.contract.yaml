@@ -1,0 +1,8 @@
+component: form/atoms/OptionCardThumb
+purpose: "缩略图选项卡，2 态（default/selected），含 48×48 缩略图 + 主标题 + 可选描述"
+provisional: false
+forbidden:
+  - "禁止默认 cursor 与 hover 样式"
+states:
+  - default
+  - selected

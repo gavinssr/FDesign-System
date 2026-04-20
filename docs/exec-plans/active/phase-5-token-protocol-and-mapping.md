@@ -57,8 +57,9 @@
 
 #### 基础 scale
 
-- 已确认可用：`0 / 8 / 10 / 12 / 16 / 32 / 40`
+- 已确认可用：`0 / 6 / 8 / 10 / 12 / 16 / 32 / 40`
 - 明确禁用或当前不需要：`4 / 20 / 24 / 48 / 64`
+- **`6` 为 Phase 5 Round 1（表单单元 / Form Cell）扩展档位**：仅用于 multiLine 内 `title↔subLabel` 等同档紧凑场景；语义 alias 为 `spacingSemantic.gapLabelToSubLabel`。其它场景禁用 `6`，避免协议漂移
 
 #### 语义 alias
 
@@ -113,7 +114,8 @@
 
 - 平台字体先定义 platform token，再由语义字体 alias 引用
 - typography 层只应引用语义字体别名，不直接引用平台 token
-- 已确认字号体系：`10 / 12 / 14 / 16 / 18 / 22 / 26 / 36 / 44`
+- 已确认字号体系：`10 / 12 / 14 / 16 / 18 / 20 / 22 / 26 / 36 / 44`
+- **`20` 为 Phase 5 Round 1（表单单元 / Form Cell）扩展档位**：仅用于 `displayNumber20Medium`（Roboto Medium 20/22）等数字展示场景，对应 `fontSize.displayMicro` 与 `lineHeight.singleLine.displayMicro`；其它场景仍按既有字号档位选用，避免协议漂移
 - 已确认字重：`300 / 400 / 500`
 - 明确禁用：`600 / 700`
 - 单行文本与正文文本采用不同 line-height 规则
@@ -163,8 +165,8 @@
 - 不再沿用 `spacing[1] = 4` 的索引刻度写法
 - 改为“真实值键”或“语义 alias”并存
 - 建议 TS 层同时暴露：
-  - `spacingScale`: `0 / 8 / 10 / 12 / 16 / 32 / 40`
-  - `spacingSemantic`: `paddingPage / paddingCard / gapBetweenCards / ...`
+  - `spacingScale`: `0 / 6 / 8 / 10 / 12 / 16 / 32 / 40`（`6` 为 Round 1 表单单元扩展档位，仅限 multiLine 内 title↔subLabel 同档紧凑场景）
+  - `spacingSemantic`: `paddingPage / paddingCard / gapBetweenCards / gapLabelToSubLabel / ...`
 
 ### radii
 
@@ -176,6 +178,7 @@
 
 - 字体族：按 `platform family -> semantic family` 两层表达
 - 字号：按已确认档位表达，不再沿用 `xs / sm / base / lg / xl / 2xl / 3xl` 的英文验证期命名
+  - 当前可用字号：`10 / 12 / 14 / 16 / 18 / 20 / 22 / 26 / 36 / 44`（`20` 为 Round 1 表单单元扩展档位，仅限 `displayNumber20Medium` 等数字展示场景）
 - 字重：仅保留 `light / regular / medium`
 - line-height：拆成 `singleLine` 与 `body`
 

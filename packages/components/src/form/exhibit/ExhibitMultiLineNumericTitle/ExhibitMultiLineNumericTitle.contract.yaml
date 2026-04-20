@@ -1,0 +1,12 @@
+component: form/exhibit/ExhibitMultiLineNumericTitle
+purpose: "多行左对齐数字标题 cell（preLabel + 数字标题 + 可选 chevron），card=true/false 双态"
+provisional: false
+figmaNode: "8275:8468"
+forbidden:
+  - "禁止内联颜色与字号，必须通过 @fdesign/tokens 复合样式与 spacing.component.exhibit"
+  - "禁止在此 cell 内引入 hover 态样式与默认 cursor: pointer（移动端协议）"
+states:
+  - card=true
+  - card=false
+  - showChevron=true
+  - withPreText

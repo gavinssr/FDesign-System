@@ -1,0 +1,8 @@
+component: form/atoms/Divider
+purpose: "表单单元行间 0.5px 分隔线，支持 retract 左缩进"
+provisional: false
+forbidden:
+  - "禁止内联颜色或宽度，必须使用 @fdesign/tokens"
+states:
+  - default
+  - retract

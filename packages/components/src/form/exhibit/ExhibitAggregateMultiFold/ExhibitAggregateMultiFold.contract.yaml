@@ -1,0 +1,16 @@
+component: form/exhibit/ExhibitAggregateMultiFold
+purpose: "聚合多折叠 cell（固定 card；内部 N 个 CollapseNestAmount 非受控折叠）"
+provisional: false
+figmaNode: "8417:5824"
+forbidden:
+  - "禁止拆出 card=false 变体（本 cell 固定 card；冻结决议）"
+  - "禁止在此 cell 内引入 hover 态样式与默认 cursor: pointer（移动端协议）"
+  - "禁止对外导出 parts/*"
+states:
+  - default
+  - with onJump
+tokens:
+  parts:
+    - AmountNestList
+    - CollapseNestAmount
+    - SubInnercard

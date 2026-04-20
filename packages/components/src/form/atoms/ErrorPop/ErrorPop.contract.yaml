@@ -1,0 +1,9 @@
+component: form/atoms/ErrorPop
+purpose: "可关闭错误气泡（functionalRed.a30 背景 + neutral border + red[8] 文字 + 操作按钮）"
+provisional: false
+forbidden:
+  - "禁止默认 cursor: pointer 与 hover 态"
+a11y:
+  - "role=alert；关闭按钮 role=button + aria-label"
+states:
+  - withClose

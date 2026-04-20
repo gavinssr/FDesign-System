@@ -1,0 +1,11 @@
+component: form/atoms/Collapse
+purpose: "折叠 chevron；受控 + 非受控双模；点击切换；旋转 180° 表达 on/off"
+provisional: false
+forbidden:
+  - "禁止内联颜色与图形 path（仅做尺寸 + 旋转封装）"
+  - "禁止默认 cursor 与 hover 样式"
+a11y:
+  - "role=button + aria-expanded"
+states:
+  - off
+  - on

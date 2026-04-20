@@ -4,7 +4,6 @@ import {
   Card,
   Icon,
   Input,
-  ListItem,
   Modal,
   Tag,
 } from '@fdesign/components';
@@ -54,20 +53,26 @@ export default function IndexPage() {
 
         <Card title="Settings list" description="List composition with leading and trailing icons.">
           <View className="__consumer-stack">
-            <ListItem
-              title="Notifications"
-              description="Push and email preferences"
-              meta="2 new"
-              leading={<Icon name="info" label="Notifications" />}
-              trailing={<Icon name="chevron-right" decorative />}
-              onPress={() => undefined}
-            />
-            <ListItem
-              title="Security"
-              description="Passkeys and recovery methods"
-              leading={<Icon name="check" label="Security" />}
-              trailing={<Icon name="chevron-right" decorative />}
-            />
+            <View className="__consumer-row">
+              <Icon name="info" label="Notifications" />
+              <View className="__consumer-stack" style={{ flex: 1, gap: 4 }}>
+                <Text className="__consumer-copy">Notifications</Text>
+                <Text className="__consumer-copy __consumer-copyMuted">
+                  Push and email preferences · 2 new
+                </Text>
+              </View>
+              <Icon name="chevron-right" decorative />
+            </View>
+            <View className="__consumer-row">
+              <Icon name="check" label="Security" />
+              <View className="__consumer-stack" style={{ flex: 1, gap: 4 }}>
+                <Text className="__consumer-copy">Security</Text>
+                <Text className="__consumer-copy __consumer-copyMuted">
+                  Passkeys and recovery methods
+                </Text>
+              </View>
+              <Icon name="chevron-right" decorative />
+            </View>
           </View>
         </Card>
       </View>

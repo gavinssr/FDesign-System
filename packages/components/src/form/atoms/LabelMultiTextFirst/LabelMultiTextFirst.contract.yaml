@@ -1,0 +1,7 @@
+component: form/atoms/LabelMultiTextFirst
+purpose: "多行展示类首行标签（body14 medium / text.primary）"
+provisional: false
+forbidden:
+  - "禁止内联颜色与字号"
+states:
+  - default

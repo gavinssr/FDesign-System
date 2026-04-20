@@ -1,0 +1,10 @@
+component: form/atoms/TickTag
+purpose: "标签式可勾选项，2 态（default/selected）"
+provisional: false
+forbidden:
+  - "禁止默认 cursor 与 hover 样式"
+a11y:
+  - "role=checkbox + aria-checked"
+states:
+  - default
+  - selected

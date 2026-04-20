@@ -1,0 +1,7 @@
+component: form/atoms/LabelMultiTextSecondaryDark
+purpose: "多行展示类次级深色文本（body12 medium / text.secondary）"
+provisional: false
+forbidden:
+  - "禁止内联颜色与字号，必须使用 @fdesign/tokens 复合样式"
+states:
+  - default

@@ -1,0 +1,11 @@
+component: form/atoms/NumberTitle
+purpose: "Roboto Medium 数字标题，四档尺寸（XL=20 / L=18 / M=16 / S=14），XL/L 带 -0.625 letter-spacing"
+provisional: false
+forbidden:
+  - "禁止使用中文 family；必须 displayLatin"
+  - "letter-spacing 仅在 XL/L 局部使用，不进入 typography token"
+states:
+  - XL
+  - L
+  - M
+  - S

@@ -185,6 +185,7 @@ export const semanticColors = {
     overlay: 'rgba(0, 0, 0, 0.8)',
     overlaySoft: 'rgba(0, 0, 0, 0.7)',
     footer: '#cbd2e1',
+    iconPlaceholder: '#edf3fa',
   },
   border: {
     subtle: '#ededee',

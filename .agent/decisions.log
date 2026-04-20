@@ -188,3 +188,123 @@
 3. material source 使用 `Material Symbols Rounded` 可变字体，并按既定尺寸协议映射 `wght / GRAD`；字体加载由 H5 消费方负责
 4. 为兼容现有消费方，旧 icon 名 `info / check / chevron-right` 保留可用，并通过 material source 兜底
 5. 当前首轮本地图标集先以内联 SVG 稳定落地；后续若拿到稳定可入库的 Figma SVG/path，再按同一 registry 批量补齐，不在正式组件里长期依赖临时远程 Figma 资产 URL
+
+## 2026-04-18 — 表单单元 Round 1 计划冻结（决议落地）
+
+**背景**: 表单单元（Form Cell）三大类（展示类 / 输入类 / 操作类）需分轮推进。Round 1 锁定为「展示类 + 原子组件」，其计划文档 `docs/exec-plans/active/phase-5-form-cell.md` 包含一个 token B 表与 2 个二级裁决，均悬而未决，无法启动实施。本次会话用户已给出全部裁决，需把 Round 1 计划冻结，作为下一轮 Agent 的实施口径。
+
+**决策**:
+1. **范围与目录冻结**：Round 1 范围 = `form/atoms/*`（跨类共享、顶层导出、上舞台） + `form/exhibit/*`（对外展示类） + `form/exhibit/parts/*`（内部嵌套原子，不导出、不上舞台）；详见 `phase-5-form-cell.md`「架构决策」与「三轮规划」原文，不再调整
+2. **B.1 Color**：新增 `colors.semantic.surface.iconPlaceholder = '#edf3fa'`；veriFace 5 个装饰色值（`#407aff / #00a9fe / #0095ff / #ff99e4 / #ff85e3`）作为 `ExhibitVeriFace` 组件内部常量，**不入 token**
+3. **B.2 Typography**：新增 8 个复合 style keys：`body14SingleLine` / `body14SingleLineStrong` / `body12SingleLine` / `body12SingleLineStrong` / `displayNumber14Medium` / `displayNumber16Medium` / `displayNumber18Medium` / `displayNumber20Medium`；含 `displayNumber14Medium`（即使本轮无明确使用点也保留以满足协议完整性）
+4. **B.3 letterSpacing**（协议级）：选择方案 A——letterSpacing **不进 typography token**；Roboto 18/20 数字所需的 `-0.625px` 字距按使用方组件局部常量就近写入
+5. **B.4 Spacing 6px**：选择方案 A——`spacingScale[6] = 6` 进入 scale，并新增语义 alias `spacingSemantic.gapLabelToSubLabel = 6`（仅用于 multiLine 内 title↔subLabel 等同档紧凑场景）；同步把"6 加入可用档位"写入 `phase-5-token-protocol-and-mapping.md` 的 spacing 协议小节，避免协议漂移
+6. **B.5 Component spacing**：默认通过；在 `spacingComponent.exhibit` 下落地 10 个语义字段（rowPaddingY=16 / groupTitlePaddingY=12 / subCellPaddingY=16 / subCellHeight=48 / iconGap=8 / titleTagGap=2 / multiLineLabelGap=`gapLabelToSubLabel` / iconPlaceholderSize=24 / foldChevronSize=16 / jumpArrowSize=12）；不新增 reference 层
+7. **OperationButton 命名**：11 种 `type` 字段名保留 Figma 原命名（`button-bluePrimary` / `button-pinkPrimary` / `button-blueSecondary` / `button-pinkSecondary` / `button-blueOutline` / `button-pinkOutline` / `preContent` / `subText` / `tagAmount` / `plusCount` / `textButton`），不重命名
+8. **veriFace 装饰图处理**：装饰 SVG 走 `iconRegistry.tsx`，但作为**新分类 `decorative`**（命名以实施轮最终命名为准），与既有"黑白 outline"主分类显式区分；新分类的图标不参与 outline 类的统一描边/着色协议，按原样彩色渲染
+9. **移动端交互全局约束**：表单单元（含未来 Round 2/3）禁用 hover 态样式与默认 `cursor: pointer`；折叠类组件采用受控+非受控双模式，jump 类使用 `onJump`
+10. **ListItem 处理**：`packages/components/src/list-item/*` 与 `apps/example-consumer` / `projects/real-project-1` / `apps/stage` 中的 `ListItem` 引用本轮直接拆除，不保留旧 API
+
+**被否决的替代方案**:
+- B.3 选 B 或 C：在 typography 协议中引入 letterSpacing 字段或独立层——会扩大签名规则与匹配机制的影响面，仅为两条数字样式不值得
+- B.4 把 6 强制取整为 8：与 Figma 设计稿真实节奏冲突，会影响 multiLine 内 title↔subLabel 视觉密度
+- OperationButton 重命名为统一英文语义（如 `primary / secondary / link`）：会与 Figma 失去一一对应，未来设计同步成本反而更高
+- veriFace 装饰图内联到组件内：与既有"图标统一进 registry"治理规则冲突；选择 Icon registry 新分类既符合统一入口，又不污染 outline 主分类
+- 保留 `ListItem` 与新 Exhibit 系列并存：`ListItem` 是 Phase 1-2 验证框架的临时内容，与表单单元展示类语义重叠且 API 维度不一致，留下会形成两套相似 API 的维护负担
+
+## 2026-04-18 — 表单单元 Round 1 / Wave 0 实施落地
+
+**背景**: Round 1 计划已用户裁决冻结（见上一条决议）。本次会话执行 Wave 0「准备」阶段：补齐 token、扩 Icon registry（含 decorative 新分类架构）、拆除 ListItem，并验证全栈 build 通过。
+
+**决策**:
+1. **Token 镜像命名约定**：新增 token 全部按既有 web-vars.css 命名风格镜像
+   - `colors.semantic.surface.iconPlaceholder` → `--fd-color-surface-icon-placeholder`
+   - `spacingScale[6]` → `--fd-space-6`；`spacingSemantic.gapLabelToSubLabel` → `--fd-gap-label-to-sublabel`
+   - `spacingComponent.exhibit.*` → `--fd-exhibit-*`（沿用既有 `--fd-button-*` / `--fd-tag-*` 形式，不引入 `--fd-component-exhibit-*` 这种额外层级）
+   - 8 个新增 typographyStyles → `--fd-typography-*` 四元组，每个 style 各自镜像 4 条 CSS Var
+2. **Typography 协议扩展（fontSize 20 / lineHeight 22）**：
+   - 新增 `fontSize.displayMicro = 20`（位于 `head:18` 与 `displayNormal:22` 之间）
+   - 新增 `lineHeight.singleLine.displayMicro = 22`
+   - 命名理由：与既有 `displayNormal/displayLarge/displayXLarge/displayXXLarge` 阶梯化一致；不沿用 `headLarge` 之类与 `head` 容易混淆的命名
+   - 协议扩展同步追加到 `phase-5-token-protocol-and-mapping.md` 的 typography 协议小节，作为 Round 1 表单单元扩展档位（只允许 `displayNumber20Medium` 等数字展示场景使用）
+3. **Spacing 协议扩展（scale 6）已落地**：`phase-5-token-protocol-and-mapping.md` 的 spacing 协议小节同步标注「`6` 为 Round 1 表单单元扩展档位，仅限 multiLine 内 title↔subLabel 同档紧凑场景」
+4. **Icon registry 扩充策略**：
+   - nestOrigin 7 个 local 图标（`camera` / `placeholder-icon` / `supplement-annotation` / `supplement-jump` / `collapse-on` / `collapse-off` / `action-jump`）作为 LocalIconName 落地，**当前条目使用 Material 风格几何路径占位**；Wave 1/2/3 实施具体消费组件（`form/atoms/Camera` 不存在，但 Supplement / Collapse / Jump / PlaceholderIcon 等 atom 会消费这些图标）时，若需精确还原 Figma 原 path 再以 Figma MCP 拉取替换。这避免在 Wave 0 内进行大量 Figma MCP 同步调用，同时保证后续 atom 实装可立即引用、build 通过
+   - **`decorative` 装饰图分类**：在 `iconRegistry.tsx` 中新增独立子注册表 `decorativeIconRegistry`（当前为空），并落地完整类型架构：`DecorativeIconDefinition`（包含 `width / height / viewBox / render`）、`DecorativeIconName`、`isDecorativeIconName` / `hasDecorativeIcon` / `getDecorativeIconDefinition`。装饰图条目写死多色 fill，不读 currentColor，与 outline 主分类显式区分。**Icon.tsx 当前未接入 decorative source 分支**——`IconSource` 仍为 `'local' | 'material'`；待 Wave 2 落地 ExhibitVeriFace 时，再决定是把 `IconSource` 扩为 `'local' | 'material' | 'chromatic'`（`chromatic` 命名为避免与 `IconProps.decorative` a11y 布尔 prop 同名混淆），还是让组件直接调用 `getDecorativeIconDefinition` 旁路 Icon 组件
+5. **ListItem 拆除范围**：完整删除 `packages/components/src/list-item/` 与 `apps/stage/src/pages/list-item/`；从 `packages/components/src/index.ts` 移除 `ListItem` / `ListItemHarness` / `ListItemProps` 导出；从 `apps/stage/src/app.config.ts` 与 `apps/stage/src/shell/componentLinks.ts` 移除 `list-item` 入口；`apps/example-consumer` 与 `projects/real-project-1` 中的 `ListItem` 用法回收为「原生 View + Icon 组合」（带 `flex:1, gap:4` 行内样式作为最小回收方案；后续若需要更标准的 ListItem 替代品，由 Wave 2 的 `ExhibitSingleLineLabel` / `ExhibitMultiLineDefault` 承接）
+6. **Wave 0 出口验证**：`pnpm --filter @fdesign/tokens build`、`@fdesign/components test`（15 个用例全过）、`@fdesign/components build`、`@fdesign/stage build`、`@fdesign/example-consumer build`、`@fdesign/real-project-1 build` 全部通过；只保留既有 H5 entrypoint size warning，与本次改动无关
+
+**被否决的替代方案**:
+- 在 Wave 0 内同步完成 nestOrigin 7 个 local 图标的精确 Figma 原 path 拉取：会显著增加 MCP 往返与本轮上下文消耗；占位路径已能保证 build/类型/运行态可用，精确 path 可在 atom 实装时按需替换
+- 在 Wave 0 内同步落地 5 个 veriFace 装饰图 SVG 与 Icon.tsx decorative 渲染分支：当前没有任何消费方需要它们，过早实装会污染主分类入口；架构骨架已就绪足够 Wave 2 直接续接
+- 命名 `fontSize.headLarge = 20`：与既有 `head: 18` 命名形成混淆（究竟 large 是 18+ 的扩展还是另一档），改用 `displayMicro` 与同族 `displayNormal/displayLarge/...` 阶梯一致
+- ListItem 改为只删 stage 不删 source：会留下"导出但无任何消费方"的死代码，与「拆除即彻底拆除」治理决议矛盾
+
+## 2026-04-18 — 表单单元 Round 1 / Wave 1 实施落地（33 原子组件）
+
+**决策**: 按 Wave 0 冻结的决议，将 Form Cell Round 1 Wave 1 的 33 个原子组件一次性落地到 `packages/components/src/form/atoms/*`，并完成舞台 Atoms 原子组件页与组件顶层 `form` 命名空间导出。
+
+**实施要点**:
+1. **目录骨架**：`form/atoms/` + `form/atoms/_internal/` + `form/exhibit/parts/`（Wave 2 占位）+ `form/index.ts` + `form/atoms/index.ts` 一次建立；`packages/components/src/index.ts` 追加 `export * from './form'`。
+2. **共享原语下沉到 `_internal/`**：
+   - `FormText`（textPrimitive.tsx）把 `TypographyStyleSpec` + 颜色 token + className 三者打包成一次 `Text` 渲染，供所有纯文本原子共用；
+   - `SelectionBox`（selectionBox.tsx）把 square / circle / tick 三形选中盒合成一个组件，供 `Checkbox / Radio / Tick` 共用，避免三份独立 SVG + 边框拼装代码漂移。
+   这些原语**不对外导出**，仅为原子内部的实现细节。
+3. **批量生成脚本**：对重复度极高的纯文本原子（多个 `LabelMultiText*` 变体、`ErrorTips` / `ErrorText` / `OperationText` 等），在 `scripts/_form-atoms-gen.mjs` 用 SPECS 驱动一次性生成六件套；脚本幂等（已存在文件跳过），只产出样板，不替代人工编写需要交互/状态逻辑的原子。
+4. **Figma 原命名保留**：`OperationButton` 11 种 type 全量按 Figma 原命名保留为联合字符串枚举（`button-bluePrimary` / `tagAmount` 等），不做语义重命名；后续如需聚合归并，单独以决议形式触发。
+5. **letterSpacing 处理**：`NumberTitle` XL/L 与 `BrandColor` Large 所需的 `-0.625px` letterSpacing 以组件内常量 + inline `extraStyle` 应用（Wave 0 B.3 选 A 的直接兑现），**不入 token 系统**，避免被其它组件误用。
+6. **移动端交互协议**：全部可交互原子（Switch / Jump / Collapse / Supplement / OperationButton / OptionCard 家族等）实现上禁用 hover 态样式与默认 `cursor: pointer`，仅通过 `onClick` + `role` 暴露可交互性；`Collapse` 同时支持受控 `expanded` + 非受控 `defaultExpanded` + `onExpandChange` / `onToggle`，`Switch` / `InputField` 同样双模。
+7. **舞台页接入**：`apps/stage/src/pages/form-atoms/` 分五组（Label / Input & Error / Action / Selection / Misc）渲染全部 33 个 harness；容器背景使用 `--fd-color-surface-page` token（表单 cell 白底与外层 surface.page 的对齐）；侧栏 `Form 表单单元` 分组的 Atoms 原子组件页位于分组最下方（未来 Wave 2 Exhibit 页将追加在其上方）。
+
+**被否决的替代方案**:
+- 把 `card=true/false` 两态拆成两个组件：违背 Wave 0 已冻结决议（`card` 是同组件 API 的 style variant）；已在 Wave 1 的所有 OptionCard 类原子中提前贯彻「单组件 + 状态 prop」的实现姿态，为 Wave 2 cell 本体直接复用铺路。
+- 在 atoms 层即引入 `useHover` / 默认 `cursor: pointer`：违背「移动端 / 触控屏」协议；一旦原子层出现 hover 样式，所有组合它的 cell 都会继承，后续再回收成本极高，固定在原子层彻底禁用。
+- 把 `_internal/FormText` 升级为公共导出：会让调用方绕过原子语义，直接拼装排版 + 颜色，丧失 token 抽象收益；按「内部实现细节」保持私有，调用方只能通过具体的 `Label / LabelAmountSupple / ErrorTips` 等原子消费这些复合样式。
+- 使用通用 UI 库 `Checkbox / Radio` 再套皮：当前选择盒需同时满足 square / circle / tick 三形与 Figma 的精确描边/填充规则，SelectionBox 自绘的代价显著低于外部库覆写的代价，且完全落在已有 token 系统内。
+- 在 Wave 1 内顺手落地 Exhibit cell 本体：与「三轮推进」治理决议和 Wave 2 边界冲突；Wave 1 已在原子层覆盖了 Exhibit / Input / Action 三大类共用的全部原子，Wave 2 可直接进入组合而不用回补。
+
+## 2026-04-18 · Form Cell Round 1 / Wave 2 实施决议
+
+- Exhibit 展示类 cell 的 `card=true/false` 切换由新增的内部共享 `form/exhibit/_internal/ExhibitFrame` 统一承接：card 态 padding=10 + radii.default + overflow:hidden + 默认无 divider；flush 态 padding=16 + 默认 inset bottom hairline（borderWidthHairline=0.5）。Frame 暴露 `showBottomDivider` 覆盖入口以应对 Figma 内 card 偶发带 divider 的局部差异。不引入 "variants" 模块或额外配置层。
+- Exhibit 展示类 cell 的"通用片段"沉淀为 `form/exhibit/_internal/exhibitParts.tsx` 一个聚合文件（含 ExhibitTitleInline / ExhibitDefaultBlueTag / ExhibitLeading / ExhibitLeadingTitle / ExhibitMultiLineStack / ExhibitPresetText / ExhibitRightPrimary / ExhibitRightSecondary），与 Wave 3 的 `form/exhibit/parts/*` 对外命名的嵌套原子显式区分：`_internal/` 承接的是无 figma 节点对应、仅解决代码重复的私有片段；`parts/` 承接的是有 figma 节点对应、但不对外导出的嵌套原子（Wave 3 落地）。两者都不进舞台导航。
+- `decorativeIconRegistry` 首批 5 条装饰图（`veri-face-success` / `veri-face-failed` / `veri-frame-success` / `veri-frame-failed` / `veri-scan-bar`）全部以内联 SVG 近似 Figma 原图形态：smiley 表情（blue #4d83ff / pink #ff85e3）+ 四角 L 形 frame 边角（#00a9fe / #ff99e4）+ 横向三段渐变扫描条（#0095ff 44% opacity 中间 + 两端 white 淡出）。未采用 Figma 原始 PNG 光栅资源；如 Wave 3 校准时视觉差距较大，再以 Figma MCP 拉原 SVG 替换 registry 条目的 `render`。
+- 装饰色 5 色（`#407aff / #4d83ff / #00a9fe / #0095ff / #ff99e4 / #ff85e3`）严格作为 registry 内 `VERI_FACE_COLORS` 与 `ExhibitVeriFace` 组件内 `COLORS` 的内部常量落地，不进 token（B.1 决议）；Wave 3 内如再有彩色装饰图，按同一模式就近常量化，避免 token 语义漂移。
+- `Icon.tsx` 的 source 分支暂**不**扩展 `decorative`；`ExhibitVeriFace` 直接调用 `getDecorativeIconDefinition(name)` 并渲染原生 `<svg>` 旁路 Icon 组件。动机：outline 主分类使用 `currentColor` 与尺寸协议（tone/size/wght/grad），与装饰彩色 + 固定视觉的消费方式不兼容；在当前单点消费（仅 VeriFace）场景，接入 source 分支会让 Icon 组件的 props/行为空间膨胀。Wave 3 若多个 cell 都需渲染装饰图，再评估接入。
+- 舞台 `Form 表单单元` 分组的导航顺序为 `Exhibit 展示类 → Atoms 原子组件`：`Atoms 原子组件` 始终居分组末位（冻结决议），Wave 3 新增 `Combined / Foldable` 分节时仍复用 `Exhibit 展示类` 单页，不拆子页。
+- 舞台 `Exhibit 展示类` 页的 `card=true/false` 两态用 2 列 `CellPair` 同时并排展示，取代"每个变体单独一行"的密集陈列，利于视觉对照；容器背景仍使用 `--fd-color-surface-page`。
+- `ExhibitMultiLineNumericTitle` 的 Roboto Medium 18/20 紧缩字距 `-0.625px` 按 B.3 决议方案 A 作为使用点局部常量落地（`TIGHT_NUMERIC_LETTER_SPACING`）；其它 displayNumber 使用点（`NumberTitle` XL/L、`BrandColor` Large）在 Wave 1 已同模式落地。
+- `ExhibitSingleLineLabelPreContent` 的右侧 16px 注解图标走既有 `Icon name="supplement-annotation" size="xxs" tone="muted" decorative`（outline 主分类，不进 decorative registry），与 Wave 0 已落地的 nestOrigin 图标保持一致；VeriFace 的人脸/扫描/框线才走 decorative 分类。两套分类保持显式区分。
+
+## 2026-04-18 · Form Cell Round 1 / Wave 3 实施决议
+
+- `form/exhibit/parts/*` 11 件内部嵌套原子全部**不**导出、**不**上舞台、**不**配 `harness/contract/test`（节省治理开销，Wave 1 原子与 Wave 2/3 cell 的 test/harness 已覆盖其组合行为）。仅在需要 API 演进时再补 test 覆盖。
+- `SubListFlush` 与 `SubListCard`：Figma 有两个独立节点（8275:9193 / 15875:9901），视觉仅 paddingX 差异（16 / 10）。为避免双实现漂移，`SubListCard` 内部完全委托 `SubListFlush` 并固定 `card=true`；保留独立文件与导出以保留"Figma 节点-parts 映射"的对应关系。
+- `GroupTitleH1` 的右侧 "操作文本" 按 Figma 规范是 12 Medium primary-blue（与 `atoms/OperationText`=14 regular 不同），因此 GroupTitleH1 直接用 `FormText + body12SingleLineStrong + action.primary.background` 渲染，**不**复用 OperationText 原子。OperationText 原子仍保留给原本的 14 regular blue 场景。
+- `FoldingPureHeader` 不在 chevron 上施加 rotate(180deg)：collapse-on / collapse-off 两个 local icon 的路径本身已经是 up-chevron / down-chevron，直接用名字切换即可避免与现有 atoms/Collapse 的 transform 叠加歧义。这也意味着 Wave 3 折叠类 cell 的展开动效由 chevron 图标切换（瞬时）完成，不再做旋转过渡动画；如 Round 2/3 或 UX 验收要求过渡动画，再统一评估是否回改 atoms/Collapse 的 rotate 约定。
+- `ExhibitAggregateMultiFold` 的顶部 "共N笔" 计数在未显式传入 `count` 时自动按 `items.length` 推导（"共3笔"），减少消费方样板；显式传 `count=null` 可关闭（当前 API 未开放关闭，按需后补）。
+- `ExhibitInformationListAmount` 的 card+expanded 状态下子行强制切为 `jump` kind（Figma 原型如此：card 语境下展开的二级行隐含跳转意图）；flush+expanded 仍为 `text`。这是 Figma 规范明文差异，作为 cell API 内置行为固化，不暴露为可切换 prop。若消费方需要自定义每行 kind，可通过 `items: SubListItem[]` 中混入 `rightJumpText` 来覆盖。
+- `SubInnercard` 的 "首/尾行圆角" 规范：Figma 区分了 `展示型/item/二级单元/顶部` 与 `展示型/item/二级单元/尾部` 两个节点，分别带 `rounded-t-4` 与 `rounded-b-4`。实现上用 `index === 0` / `index === items.length - 1` 判定并只对首/尾角加圆角；中间行保持 0 圆角；尾行额外附 `paddingBottom=12` 以对齐 Figma 尾部节点的 pb-12。这保持了"一个 SubInnercard 管多行"的简洁 API，不引入"first/last 两个独立组件"。
+- Wave 3 的 stage 导航不新增二级子页：`Form 表单单元 / Exhibit 展示类` 单页继续承载全部 Wave 2 + Wave 3 的 13 个 cell 展示，通过新增 `Combined` 与 `Foldable` 两节水平扩展。这与"Atoms 居分组末位"的冻结决议保持一致——不拆子页、不把 Atoms 推下去。
+- 继续保持 Wave 2 的旁路 Icon 方案：Wave 3 cell 全部未消费 decorative registry；如 Round 2/3 出现多处需要装饰图，再评估是否在 `Icon.tsx` 接入 `decorative` source 分支。
+
+## 2026-04-18 · Form Cell Round 1 / Wave 4 验收决议
+
+- Wave 4 纯验收，不做代码变更：通过 stage H5 dev server 运行态截图 + aria snapshot + 交互点击的组合手段，而非引入额外 snapshot 测试或 E2E 套件。理由：当前 Round 1 的视觉一致性本质是"与 Figma 节点 1:1 对齐"的一次性校准，与 token 协议 + 组件合同（tests/contracts/harness）已提供的保障不同维度；Round 2 / Round 3 会对同一舞台页继续增量展示，E2E 成本不划算。
+- 7 个 nestOrigin local icon（Material 风格几何路径占位）**不**在 Wave 4 内替换为 Figma 原 SVG：运行态视觉可接受，且替换会引入新的 d 路径差异，增加回归面；保留为 Round 2 / Round 3 内若出现明显视觉反馈再处理的 "reactive" 改动。
+- `decorativeIconRegistry` 的 5 条 veriFace 装饰 SVG 同样**不**回灌 Figma 原 SVG：当前 ExhibitVeriFace 单点消费，近似 SVG 的几何结构与色彩已能正确表达 success / failed 语义；如 Round 2 / Round 3 新增 cell 复用这批装饰图，再按需精修。
+- `Icon.tsx` 的 source 分支**不**扩展 `decorative`：Round 1 结束时仍保持"单点旁路消费"；Round 2 / Round 3 若出现多处装饰图调用，再一次性在 Icon 组件内打通 `source='decorative'` 分支，避免当前阶段 API 面膨胀。
+- Round 1 整体状态切到 **可冻结**（不等同"可发版"，仅表示首轮 Figma 对齐已通过）；后续仅接受用户新输入驱动的增量修正，不再主动重构已冻结范围。
+
+## 2026-04-18 · Form Cell Round 1 / Wave 4 验收回归后追加治理决议
+
+- **表单单元组件本体宽度固定为 Figma 设计稿宽度（hardcoded，不跟随父容器，不暴露为 prop）**：
+  - card=true → `width: 355px`、card=false → `width: 375px`
+  - 固定 card 三件（ExhibitVeriFace / ExhibitAmountListTitleExternal / ExhibitAggregateMultiFold）→ `width: 355px`
+  - 实现路径：`form/exhibit/_internal/ExhibitFrame.tsx` 导出 `EXHIBIT_FRAME_WIDTH_CARD = 355` / `EXHIBIT_FRAME_WIDTH_FLUSH = 375` 两个常量，所有 cell 外层引用；不引入"响应式自适应"或"宽度 prop"，避免与 Figma 设计稿语义漂移
+  - 全部 cell 外层补 `flexShrink: 0 + boxSizing: border-box`，确保在 flex 父容器中不被收缩
+  - parts/* 内部嵌套原子保持 `width: 100%`（仅作为 cell 内部填充其父固定宽容器，无需感知 355 / 375）
+  - 后续 Round 2（Input 类 cell） / Round 3（Action 类 cell）沿用同一硬约束：在各自 `form/input/_internal/InputFrame` 与 `form/action/_internal/ActionFrame` 内同样导出宽度常量，cell 外层硬编码引用
+- **stage page-level CSS 文件首行必须补 `/*postcss-pxtransform disable*/` 注释**：
+  - 现状：stage 全局 `app.css` 与 `shell/styles/layout.module.css` 已采用该约定；page-level `tag/index.css` 因为通过 `var(--stage-font-size-*)` 读已 disable 的全局 CSS variable 而不需要补注释
+  - 决议：所有 page-level CSS 如果直接写 px（而不是引用 stage CSS variable），必须在文件首行补此注释；否则 Taro `postcss-pxtransform` 会按 `designWidth: 750` 把 px 缩放（约对半），导致 12px 文字渲染成 ~6px
+  - 实施：本次已对 `pages/form-exhibit/index.css` 与 `pages/form-atoms/index.css` 补齐；后续 Round 2 / Round 3 新增 stage 页（form-input / form-action 等）时按此约定

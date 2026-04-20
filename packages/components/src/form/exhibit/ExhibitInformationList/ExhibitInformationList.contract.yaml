@@ -1,0 +1,17 @@
+component: form/exhibit/ExhibitInformationList
+purpose: "信息列表 Tile（组标题 + 子行列表），card=true/false 双态"
+provisional: false
+figmaNode: "8275:10982"
+forbidden:
+  - "禁止内联颜色/字号；必须通过 @fdesign/tokens 复合样式与 spacing.component.exhibit"
+  - "禁止在此 cell 内引入 hover 态样式与默认 cursor: pointer（移动端协议）"
+  - "禁止对外导出 parts/*（仅供 exhibit/* 内部复用）"
+states:
+  - card=true
+  - card=false
+  - with operation
+  - without operation
+tokens:
+  parts:
+    - GroupTitleH1
+    - SubListFlush
