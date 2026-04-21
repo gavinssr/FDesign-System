@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build": "tsc --project tsconfig.json && node ../../scripts/copy-css-assets.mjs src dist",
+    "watch:dist": "node ../../scripts/watch-workspace-build.mjs package components",
     "clean": "rm -rf dist",
     "lint": "eslint src/",
     "test": "vitest run --passWithNoTests"

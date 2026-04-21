@@ -240,6 +240,11 @@ export const semanticColors = {
       a20: referenceColors.neutral.gray['2a20'],
     },
   },
+  formDisplay: {
+    faceScanAccent: '#00a9fe',
+    faceScanBeam: 'rgba(38, 165, 255, 0.94)',
+    faceScanLine: '#0095ff',
+  },
   action: {
     primary: {
       background: referenceColors.brand.blue[8],

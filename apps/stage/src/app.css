@@ -184,6 +184,25 @@ body {
   border-radius: 2px;
 }
 
+.__stage-formVariantStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stage-space-gallery-card-gap);
+}
+
+.__stage-formVariantShowcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stage-space-section-gap-tight);
+}
+
+.__stage-formVariantName {
+  color: var(--stage-text-soft);
+  font-size: var(--stage-font-size-description);
+  line-height: var(--stage-line-height-description);
+  font-weight: 500;
+}
+
 .__stage-tokenSwatch,
 .__stage-radiusPreview {
   width: 96px;

@@ -1194,3 +1194,77 @@
 - 本轮目标是环境搭建与可运行性证明，不涉及组件/业务代码实现改动
 - 当前 dev server 会在本地生成 `.swc/plugins/*` 目录作为运行时缓存；该目录未纳入版本控制
 
+## 2026-04-21 — 展示类 Form 组件首轮落地
+
+### 代码变更
+- `packages/tokens/src/spacing.ts`、`packages/tokens/src/typography.ts`、`packages/tokens/src/colors.ts`、`packages/tokens/src/web-vars.css`：新增展示类表单所需的 `formDisplay` spacing、`displaySmall` / `displayNumber20Small` 排版与刷脸扫描语义颜色，并同步补齐 Web CSS variables 镜像
+- `packages/components/src/form/*`、`packages/components/src/index.ts`：新增 `Form` 组件族与 `FormRow / FormFaceStatus / FormInfoList / FormAmountList / FormCollapseGroup / FormAggregateCollapseGroup` 导出，移除旧 `ListItem` 公共导出
+- `packages/components/src/icon/iconRegistry.tsx`、`packages/components/src/icon/LocalIconRenderer.tsx`：扩展 local icon registry 为“路径图标 + 自定义 SVG 渲染”双形态，并接入 `collapse`、`form-preset`、`face-status-success`、`face-status-failure`
+- `apps/stage/src/shell/componentLinks.ts`、`apps/stage/src/app.config.ts`、`apps/stage/src/pages/form-display/*`、`apps/stage/src/pages/form-input/*`、`apps/stage/src/pages/form-action/*`：将旧 `List Item` 页面替换为 `Form 表单` 折叠导航，正式实现展示类页并补输入类、行动类占位页
+- `apps/stage/src/pages/css-token/spacing/index.tsx`：补齐 `spacing.component.formDisplay.*` 在 token 展示页中的纵向间距映射
+- `apps/example-consumer/src/pages/index/index.tsx`、`projects/real-project-1/src/pages/index/index.tsx`：历史 `ListItem` 消费位迁移为 `FormRow`
+
+### 验证
+- `ReadLints`：本轮新增/改动文件未发现新增 linter 问题
+- `pnpm --filter @fdesign/tokens build`
+- `pnpm --filter @fdesign/components test`
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/stage build`
+- `pnpm --filter @fdesign/example-consumer build`
+- `pnpm --filter @fdesign/real-project-1 build`
+
+### 说明
+- stage、example-consumer 与 real-project-1 构建均通过；仍仅保留既有 H5 `EntrypointsOverSizeLimitWarning`，与本轮改动无关
+- 旧 `ListItem` 源文件与 stage 旧页已移除，不再保留兼容层
+
+## 2026-04-21 — 展示类 Form 首轮落地后视觉修复
+
+### 代码变更
+- `packages/components/src/form/Form.tsx`、`packages/components/src/form/Form.types.ts`：为展示类表单补充 `carded` 视觉语义，按通栏 `16px` / 卡片 `10px` 分流横向 padding；同时修正折叠金额子项背景透出、聚合多折叠明细缩进层级，以及金额列表标题外置仅列表行持有白底的结构
+- `packages/components/src/icon/iconRegistry.tsx`：新增 `form-leading-placeholder`、`form-info`、`form-jump`、`form-collapse-expand`、`form-collapse-fold` 五个本地图标，并将预设图标更新为与 Figma 一致的描边 SVG
+- `apps/stage/src/pages/form-display/index.tsx`：统一把 `卡片式=true` 示例显式传入 `carded`，并将展示页里错误写死的 `407 / 387 / 375` 宽度收口为用户确认口径下的通栏 `375`、卡片 `355`
+
+### 验证
+- `pnpm --filter @fdesign/components test`
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/stage build`
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+### 说明
+- 本轮未重新做浏览器运行态逐 DOM 复测；当前结论基于 Figma 节点上下文、代码实现对照与构建通过结果
+
+## 2026-04-21 — Form 金额折叠 jump 变体校准
+
+### 代码变更
+- `packages/components/src/form/Form.tsx`：将折叠子项里“仅传 `onAction`、不传 `actionLabel`”的隐式 jump 行统一按跳转态渲染，右侧值文案改为次级色并补齐小号 jump icon
+- `apps/stage/src/pages/form-display/index.tsx`：将“折叠信息列表-金额”分节补齐为 Figma 对齐的展开/收起、卡片/非卡片四态，并为子项接入真实 jump 点击反馈
+- `packages/components/src/form/Form.test.tsx`：新增折叠子项 jump 行渲染与点击回归测试
+
+### 验证
+- `pnpm --filter @fdesign/components test`
+- `pnpm --filter @fdesign/stage build`
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+### 说明
+- `@fdesign/stage` 构建通过；仍仅保留既有 H5 `EntrypointsOverSizeLimitWarning`，与本轮金额折叠校准无关
+
+## 2026-04-21 — Stage dist 同步规则与预览链路修订
+
+### 代码变更
+- `scripts/watch-workspace-build.mjs`：新增 workspace 监听脚本，支持包级 `watch:dist` 与根级 `stage-preview` 两种模式；当前会先串行同步 `@fdesign/tokens -> @fdesign/components` 的 `dist`，再启动 `@fdesign/stage`，并在源码变化后自动回灌最新构建产物
+- `package.json`：新增根命令 `pnpm dev:stage`，作为后续 stage 预览的唯一默认入口
+- `packages/tokens/package.json`、`packages/components/package.json`：分别新增包级 `watch:dist` 命令，供单包排查使用
+- `AGENTS.md`：补充 `Stage 预览协议`，明确 stage 验收以最新 `dist` 为准、`tokens -> components -> stage` 的串行规则，以及默认预览命令
+- `.agent/checkpoint.yaml`、`.agent/decisions.log`：固化本轮新的预览链路与治理决策，避免后续 agent 继续只改 `src` 或并行构建导致旧产物误判
+
+### 验证
+- `pnpm --filter @fdesign/tokens build`
+- `pnpm --filter @fdesign/components build`
+- `pnpm dev:stage` 启动后完成初始串行构建，并保持 `tokens/components` 源码监听
+- 对 `packages/components/src` 与 `packages/tokens/src` 分别做最小改动，确认 watcher 会把最新 `dist` 回灌到 `apps/stage` 预览链路
+- `ReadLints`：检查本轮新增/改动文件是否引入新增 linter 问题
+
+### 说明
+- 本轮保持 `dist` 作为开发与验收真值，不走 `stage` alias 到 `src` 的旁路
+- `watch:dist` 仅用于单包排查；涉及 stage 预览时，默认仍以 `pnpm dev:stage` 为标准工作流
+

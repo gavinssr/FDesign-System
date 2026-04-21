@@ -49,6 +49,15 @@ scripts/                 ← 校验与构建脚本
   - 如有架构决策变化：追加 `.agent/decisions.log`
   - 如有 Phase 完成：更新 `docs/ROADMAP.md` 中的检查清单
 
+## Stage 预览协议
+
+1. `apps/stage` 预览以 workspace 包的最新 `dist` 为准，不以 `packages/*/src` 为准
+2. 只要改动 `packages/tokens/src` 或 `packages/components/src`，就必须先同步对应 `dist`，再看 stage 效果
+3. 改动 `tokens` 时必须遵守串行顺序：先 `tokens dist`，再 `components dist`，最后再验证 `stage`；不得把 `tokens` 与 `components` 并行构建
+4. 后续 agent 启动 stage 预览时默认使用根命令 `pnpm dev:stage`；该命令会先做初始同步，再持续监听 `tokens/components` 源码并刷新 `dist`
+5. 若只排查单包构建，可使用包内 `watch:dist`，但这不替代根级 `pnpm dev:stage` 的完整预览链路
+6. 组件或 token 改动完成后，若本轮做过 stage 运行态验证，应优先确认当前预览来自最新 `dist`，而不是仅重启 `@fdesign/stage`
+
 ## 硬性约束（机械化执行）
 
 1. `packages/components/` 不得 import `apps/stage/` 的任何内容

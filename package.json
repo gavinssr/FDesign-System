@@ -5,6 +5,7 @@
   "description": "Taro-based design system monorepo — AI-governable, multi-platform, independently deliverable",
   "scripts": {
     "build": "turbo run build",
+    "dev:stage": "node scripts/watch-workspace-build.mjs stage-preview",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "changeset": "changeset",

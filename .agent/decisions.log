@@ -188,3 +188,25 @@
 3. material source 使用 `Material Symbols Rounded` 可变字体，并按既定尺寸协议映射 `wght / GRAD`；字体加载由 H5 消费方负责
 4. 为兼容现有消费方，旧 icon 名 `info / check / chevron-right` 保留可用，并通过 material source 兜底
 5. 当前首轮本地图标集先以内联 SVG 稳定落地；后续若拿到稳定可入库的 Figma SVG/path，再按同一 registry 批量补齐，不在正式组件里长期依赖临时远程 Figma 资产 URL
+
+## 2026-04-21 — 展示类表单以 Form 组件族替代 ListItem
+
+**背景**: 展示类表单的 Figma 节点 `26417:18225` 已明确覆盖单行、多行、刷脸、平铺信息列表、金额列表标题外置、折叠纯文本、折叠金额与聚合多折叠。原 `ListItem` 仅能表达 Phase 2 的单行信息单元，既无法承接折叠/组合型展示，也会继续把组件语义绑定在“列表项”而不是“表单展示”上。
+
+**决策**:
+1. `packages/components` 不再保留 `ListItem` 作为公共导出；展示类表单统一由 `form/` 目录下的 `Form` 组件族承载
+2. `Form` 组件族对外同时提供命名空间导出 `Form` 与具名导出 `FormRow / FormFaceStatus / FormInfoList / FormAmountList / FormCollapseGroup / FormAggregateCollapseGroup`
+3. 折叠类组件统一遵循 `expanded / defaultExpanded / onExpandedChange` 控制口径；jump 统一通过 `onJump` 或 `onAction` 暴露点击接口
+4. `apps/stage` 的一级导航从旧 `List Item 列表项` 调整为折叠分组 `Form 表单`，并拆为 `展示类 / 输入类 / 行动类` 三个二级页；本轮仅正式实现 `展示类`
+5. 历史消费位若仅依赖旧 `ListItem` 的“标题 + 描述 + 右侧信息”能力，应直接迁移到 `FormRow`，不再保留兼容层
+
+## 2026-04-21 — Stage 预览必须以最新 dist 为真
+
+**背景**: `apps/stage` 通过 workspace 包入口消费 `@fdesign/tokens` 与 `@fdesign/components` 的 `dist`。历史对话已反复暴露“只改 `src`、未同步 `dist`，重启 stage 仍看不到最新效果”的问题；其中 `tokens` 与 `components` 并行构建还会导致依赖顺序错乱，进一步放大误判。
+
+**决策**:
+1. `apps/stage` 的运行态验收统一以 workspace 包最新 `dist` 为真，不以 `packages/*/src` 为真
+2. 后续 agent 若要在 stage 预览 `tokens/components` 改动，默认使用根命令 `pnpm dev:stage`，由该命令承担“初始串行构建 + 持续监听回灌 dist + 启动 stage”
+3. 改动 `packages/tokens/src` 时必须遵守 `tokens build -> components build -> stage 验证` 的串行顺序，不得并行构建 `tokens/components`
+4. `packages/tokens` 与 `packages/components` 可各自提供包级 `watch:dist` 作为单包排查入口，但这不替代根级 stage 预览链路
+5. 后续凡记录 stage 运行态验证结果，若涉及 `tokens/components` 源码改动，应先确认当前预览来自最新 `dist`，不得只以“重启 `@fdesign/stage` 成功”作为同步依据

@@ -21,6 +21,7 @@ export const fontSize = {
   further: 14,
   increase: 16,
   head: 18,
+  displaySmall: 20,
   displayNormal: 22,
   displayLarge: 26,
   displayXLarge: 36,
@@ -41,6 +42,7 @@ export const lineHeight = {
     further: 16,
     increase: 18,
     head: 20,
+    displaySmall: 22,
     displayNormal: 24,
     displayLarge: 28,
     displayXLarge: 38,
@@ -144,6 +146,12 @@ export const typographyStyles = {
     fontFamily: fontFamilies.semantic.displayLatin,
     fontSize: fontSize.displayNormal,
     lineHeight: lineHeight.singleLine.displayNormal,
+    fontWeight: fontWeight.medium,
+  },
+  displayNumber20Small: {
+    fontFamily: fontFamilies.semantic.displayLatin,
+    fontSize: fontSize.displaySmall,
+    lineHeight: lineHeight.singleLine.displaySmall,
     fontWeight: fontWeight.medium,
   },
   displayChinese26Large: {
