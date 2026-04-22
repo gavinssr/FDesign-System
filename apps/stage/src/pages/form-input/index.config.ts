@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'Form 表单 / 输入类',
+  navigationBarTitleText: 'Form 表单输入类',
 });

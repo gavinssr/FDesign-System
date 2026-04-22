@@ -5,8 +5,6 @@ import { StageShowcasePage } from '../../shell/StageShowcasePage';
 export default function ButtonFabPage() {
   return (
     <StageShowcasePage
-      title="FAB 悬浮按钮"
-      navKey="button-fab"
       heroTitle="FAB 悬浮按钮"
       heroDescription="悬浮按钮通常承载页面中的高优先级快捷操作，当前页面先按统一样板预留结构。"
       heroMeta={[

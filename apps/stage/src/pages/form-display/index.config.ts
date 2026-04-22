@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'Form 表单 / 展示类',
+  navigationBarTitleText: '展示类',
 });

@@ -1,5 +1,6 @@
 export {
   Form,
+  FormGroup,
   FormAggregateCollapseGroup,
   FormAmountList,
   FormCollapseGroup,
@@ -12,6 +13,7 @@ export type {
   FormAggregateCollapseChildItem,
   FormAggregateCollapseGroupProps,
   FormAggregateCollapseItem,
+  FormGroupProps,
   FormAmountListItem,
   FormAmountListProps,
   FormCollapseGroupItem,
@@ -21,6 +23,7 @@ export type {
   FormInfoListProps,
   FormNamespace,
   FormRowProps,
+  FormSurfaceVariant,
   FormRowVariant,
   FormTagData,
 } from './Form.types';

@@ -1,6 +1,6 @@
 last_session: "2026-04-21T08:57:11Z"
 current_phase: "phase-5"
-current_focus: "Phase 5 正在进行中；当前仍以 Button（当前范围为多个分类下的 Base 类）收尾与 stage 展示校正为先，同时展示类 Form 已继续完成金额折叠子项 jump 变体与展开/收起四态对齐，后续继续为组件批次补齐全局样式 token"
+current_focus: "Phase 5 正在进行中；当前仍以 Button（当前范围为多个分类下的 Base 类）收尾与 stage 展示校正为先，同时展示类 Form 已继续补齐金额折叠子项 jump 四态、占位 icon / 预设内容隐藏变体与 stage 私有开关，后续继续为组件批次补齐全局样式 token"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -83,6 +83,10 @@ notes: |
   50. stage 预览链路已新增根命令 `pnpm dev:stage`：当前会先串行同步 `@fdesign/tokens -> @fdesign/components` 的 `dist`，再启动 `@fdesign/stage`，并持续监听 `packages/tokens/src` 与 `packages/components/src` 自动回灌最新构建产物
   51. `apps/stage` 的运行态验收口径已明确为“以 workspace 包最新 `dist` 为真”；仅修改 `packages/*/src` 或仅重启 `@fdesign/stage` 都不能视为预览链路已同步
   52. `packages/tokens` 与 `packages/components` 已分别补齐 `watch:dist` 包级监听命令，供单包排查使用；但涉及 stage 预览时默认仍应使用根级 `pnpm dev:stage`
+  53. 展示类表单变体命名已切换为“通栏 / 卡片”，代码命名统一使用 `flush / card`；同时保留历史映射：`通栏/flush ↔ 卡片式=false ↔ carded=false`，`卡片/card ↔ 卡片式=true ↔ carded=true`，供后续输入类与行动类续建时对照
+  54. `packages/components/src/form/*` 已进入兼容迁移期：组件公开 API 新增 `surfaceVariant="flush" | "card"`，内部统一解析为表面容器形态；旧 `carded` 仍保留兼容。由于 `FormRow`、`FormCollapseGroup` 已占用 `variant` 表示内容形态，本阶段不直接把容器形态字段命名为 `variant`
+  55. `packages/components/src/form/*` 已新增真实消费层组合语义：`FormGroup` / `Form.Group` 用于“一列组合”场景。规则为：单独排列时卡片组件自身承担 `4px` 圆角且默认隐藏底部分割线；列组合时由组合容器承担圆角裁切，非末项子表单显示底部分割线，末项隐藏
+  56. `packages/components/src/form/FormRow` 已新增 `showLeading` 与 `showTrailingContent` 子元素可见性控制；`apps/stage/src/pages/form-display/index.tsx` 已为单行、多行分节补齐 stage 私有 `icon / 预设内容` switch，并按 Figma 节点 `26573:20509` 落地 42x22 开关外观与 `toggle + switch` 的头部控件编排
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出

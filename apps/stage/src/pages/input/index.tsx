@@ -9,7 +9,6 @@ export default function InputPage() {
 
   return (
     <StageShowcasePage
-      title="Input 输入框"
       heroTitle="Input 输入框"
       heroDescription="输入框用于采集用户填写的信息，覆盖基础录入、校验提示和不可编辑等常见表单场景。"
       heroMeta={[

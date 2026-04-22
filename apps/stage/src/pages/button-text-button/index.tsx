@@ -5,8 +5,6 @@ import { StageShowcasePage } from '../../shell/StageShowcasePage';
 export default function ButtonTextButtonPage() {
   return (
     <StageShowcasePage
-      title="TextButton 文字按钮"
-      navKey="button-text-button"
       heroTitle="TextButton 文字按钮"
       heroDescription="文字按钮通常用于轻量次级操作或上下文链接，当前页面先按统一样板预留结构。"
       heroMeta={[

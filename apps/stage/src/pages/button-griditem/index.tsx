@@ -5,8 +5,6 @@ import { StageShowcasePage } from '../../shell/StageShowcasePage';
 export default function ButtonGriditemPage() {
   return (
     <StageShowcasePage
-      title="Griditem 格子按钮"
-      navKey="button-griditem"
       heroTitle="Griditem 格子按钮"
       heroDescription="格子按钮通常用于宫格入口和功能分发，当前页面先按统一样板预留结构。"
       heroMeta={[

@@ -60,15 +60,12 @@
   flex-shrink: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  overflow-anchor: none;
   overscroll-behavior-y: contain;
   border-right: 1px solid var(--stage-border);
   background: var(--stage-page-bg);
   scrollbar-width: thin;
   scrollbar-color: rgb(30 37 51 / 24%) transparent;
-}
-
-.__stage-sidebar[data-nav-overflowing='false'] {
-  overflow-y: hidden;
 }
 
 .__stage-sidebar::-webkit-scrollbar {
@@ -103,6 +100,7 @@
   flex-direction: column;
   width: max-content;
   min-width: max-content;
+  overflow-anchor: none;
 }
 
 .__stage-navScrollSpacer {
@@ -264,13 +262,6 @@
   background: var(--stage-page-bg);
 }
 
-.__stage-pageHeader {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-}
-
 .__stage-page {
   min-height: 100vh;
   padding: 16px;
@@ -292,18 +283,9 @@
   gap: var(--stage-space-section-gap-tight);
 }
 
-.__stage-title,
 .__stage-sectionTitle {
   color: var(--stage-text);
   font-weight: 500;
-}
-
-.__stage-title {
-  font-size: var(--stage-font-size-component-title);
-  line-height: var(--stage-line-height-component-title);
-}
-
-.__stage-sectionTitle {
   font-size: var(--stage-font-size-section-title);
   line-height: var(--stage-line-height-section-title);
 }

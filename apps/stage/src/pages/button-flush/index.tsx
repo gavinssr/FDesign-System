@@ -5,8 +5,6 @@ import { StageShowcasePage } from '../../shell/StageShowcasePage';
 export default function ButtonFlushPage() {
   return (
     <StageShowcasePage
-      title="Flush 通栏按钮"
-      navKey="button-flush"
       heroTitle="Flush 通栏按钮"
       heroDescription="通栏按钮通常用于表单提交或页面底部主操作，当前页面先按统一样板预留结构。"
       heroMeta={[

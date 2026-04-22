@@ -12,6 +12,14 @@ export type FormRowVariant =
   | 'double-line-numeric'
   | 'double-line-preset';
 
+export type FormSurfaceVariant = 'flush' | 'card';
+
+export interface FormGroupProps {
+  children: ReactNode;
+  surfaceVariant?: FormSurfaceVariant;
+  carded?: boolean;
+}
+
 export interface FormRowProps {
   variant?: FormRowVariant;
   title: string;
@@ -20,7 +28,10 @@ export interface FormRowProps {
   trailingSecondaryText?: string;
   presetText?: string;
   leading?: ReactNode;
+  showLeading?: boolean;
+  showTrailingContent?: boolean;
   tag?: FormTagData;
+  surfaceVariant?: FormSurfaceVariant;
   carded?: boolean;
   showDivider?: boolean;
   showInfoIcon?: boolean;
@@ -33,6 +44,7 @@ export interface FormFaceStatusProps {
   status?: 'success' | 'failure';
   maskedName?: string;
   description: string;
+  surfaceVariant?: FormSurfaceVariant;
   carded?: boolean;
 }
 
@@ -47,6 +59,7 @@ export interface FormInfoListProps {
   actionLabel?: string;
   onAction?: () => void;
   items: readonly FormInfoListItem[];
+  surfaceVariant?: FormSurfaceVariant;
   carded?: boolean;
 }
 
@@ -61,6 +74,7 @@ export interface FormAmountListProps {
   highlightAmount?: string;
   titleSuffix?: string;
   items: readonly FormAmountListItem[];
+  surfaceVariant?: FormSurfaceVariant;
   carded?: boolean;
 }
 
@@ -77,6 +91,7 @@ export interface FormCollapseGroupProps {
   tag?: FormTagData;
   summary?: string;
   items: readonly FormCollapseGroupItem[];
+  surfaceVariant?: FormSurfaceVariant;
   carded?: boolean;
   expanded?: boolean;
   defaultExpanded?: boolean;
@@ -102,10 +117,12 @@ export interface FormAggregateCollapseGroupProps {
   title: string;
   summary?: string;
   items: readonly FormAggregateCollapseItem[];
+  surfaceVariant?: FormSurfaceVariant;
   carded?: boolean;
 }
 
 export interface FormNamespace {
+  Group: typeof import('./Form').FormGroup;
   Row: typeof import('./Form').FormRow;
   FaceStatus: typeof import('./Form').FormFaceStatus;
   InfoList: typeof import('./Form').FormInfoList;

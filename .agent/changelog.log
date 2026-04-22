@@ -1,3 +1,19 @@
+## 2026-04-22 — Form 展示类占位 icon / 预设内容可见性优化
+
+### 代码变更
+- `packages/components/src/form/Form.types.ts`、`packages/components/src/form/Form.tsx`：为 `FormRow` 新增 `showLeading` 与 `showTrailingContent`，把前导占位 icon 与右侧预设内容区域下沉为组件本体可控变体；现有业务仍可继续按需传 `leading / presetText / trailingText`
+- `packages/components/src/form/Form.test.tsx`：新增占位 icon / 预设内容隐藏回归测试
+- `apps/stage/src/shell/StageVisibilitySwitch.tsx`、`apps/stage/src/app.css`、`apps/stage/src/pages/form-display/index.tsx`：新增 stage 私有文案 + switch 控件，并在 `单行 / 多行` section 头部接入 `icon`、`预设内容` 两个默认开启的可见性开关；开关视觉按 Figma 节点 `26573:20509` 对齐
+
+### 验证
+- `pnpm --filter @fdesign/components test`
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/stage build`
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+### 说明
+- `apps/stage` 构建仍仅保留既有 `EntrypointsOverSizeLimitWarning`，本轮未引入新的构建错误
+
 # AI 变更日志（追加式）
 
 ## 2026-04-17 — setup-dev-env 分支合并 `dev-listCell` 并解决 `checkpoint.yaml` 冲突
@@ -1267,4 +1283,49 @@
 ### 说明
 - 本轮保持 `dist` 作为开发与验收真值，不走 `stage` alias 到 `src` 的旁路
 - `watch:dist` 仅用于单包排查；涉及 stage 预览时，默认仍以 `pnpm dev:stage` 为标准工作流
+
+## 2026-04-21 — 展示类表单变体命名切换
+
+### 代码变更
+- `apps/stage/src/shell/StageCardModeToggle.tsx`：切换展示态切换器文案与内部命名，统一改为 `通栏 / 卡片` 与 `flush / card`
+- `apps/stage/src/pages/form-display/index.tsx`：将页面局部状态与展示容器命名从旧的 `carded` 布尔语义切换为 `flush / card` 变体语义，同时保留对 `Form` 现有 `carded` API 的兼容传参
+- `AGENTS.md`、`.agent/checkpoint.yaml`：补充展示类表单的变体命名约定与新旧映射，供后续输入类、行动类继续构建时对照
+
+### 验证
+- `rg "卡片式|cardedSections|renderCardModeToggle|CardedSectionKey"`：确认本轮触达的 stage 展示页与切换控件已切换到新命名
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+### 说明
+- `packages/components/src/form/*` 当前仍保留 `carded` 公开 API，以避免在输入类、行动类尚未开工前引入破坏性重命名；后续若要统一 API，再单独做一轮兼容迁移
+
+## 2026-04-21 — Form 表面变体兼容迁移
+
+### 代码变更
+- `packages/components/src/form/Form.types.ts`、`packages/components/src/form/Form.tsx`、`packages/components/src/form/index.ts`：为展示类表单组件补充 `surfaceVariant="flush" | "card"` 公开 API，并在内部统一把 `surfaceVariant` 与旧 `carded` 解析为同一套表面容器形态；旧 `carded` 继续保留兼容
+- `apps/stage/src/pages/form-display/index.tsx`：展示页示例调用切换为 `surfaceVariant="flush" | "card"`，不再继续新增 `carded` 调用
+- `AGENTS.md`、`.agent/checkpoint.yaml`：补充兼容迁移约定，明确因 `FormRow`、`FormCollapseGroup` 已占用 `variant` 表示内容形态，本阶段组件层使用 `surfaceVariant` 承载“通栏 / 卡片”
+
+### 验证
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/stage build`
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+### 说明
+- 当前只是兼容迁移，不是最终 API 收口；待输入类、行动类补齐后，再决定是否把“表面容器形态”统一并入更大的 `variant` 策略
+
+## 2026-04-21 — Form 真实消费圆角与分割线规则落地
+
+### 代码变更
+- `packages/components/src/form/Form.tsx`、`packages/components/src/form/Form.types.ts`、`packages/components/src/form/index.ts`：新增 `FormGroup` / `Form.Group` 组合容器，并为 `FormRow`、`FormFaceStatus`、`FormInfoList`、`FormAmountList`、`FormCollapseGroup`、`FormAggregateCollapseGroup` 接入组合上下文；当前单独排列时卡片组件自身承担 `4px` 圆角且默认隐藏底部分割线，列组合时由组合容器承担圆角裁切，非末项显示底部分割线
+- `packages/components/src/form/Form.test.tsx`：新增单独卡片行与组合容器的圆角/分割线回归测试
+- `AGENTS.md`、`.agent/checkpoint.yaml`：补充展示类表单在真实业务页中的单独排列/列组合消费规则，避免后续继续只按 stage 容器修样式
+
+### 验证
+- `pnpm --filter @fdesign/components test`
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/stage build`
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+### 说明
+- 当前规则已同时覆盖 `surfaceVariant="flush"` 与 `surfaceVariant="card"` 的分割线逻辑；圆角差异只体现在 `card`
 

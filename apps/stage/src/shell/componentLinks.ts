@@ -127,6 +127,20 @@ export function getNavPageByTitle(title: string) {
   return componentPages.find((item) => item.title === title);
 }
 
+export function getNavPageByUrl(rawUrl: string): ComponentNavPage | undefined {
+  if (typeof rawUrl !== 'string' || rawUrl.length === 0) {
+    return undefined;
+  }
+
+  const normalized = rawUrl
+    .replace(/^#/, '')
+    .replace(/\?.*$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/$/, '');
+
+  return componentPages.find((page) => normalized.endsWith(page.url));
+}
+
 export function getParentGroupByChildKey(childKey: string) {
   return componentLinks.find(
     (item): item is ComponentNavGroup =>

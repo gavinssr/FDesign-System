@@ -65,7 +65,7 @@ page {
   --stage-line-height-subsection-title: 20px;
   --stage-font-size-description: 12px;
   --stage-line-height-description: 18px;
-  --stage-space-main-gap: 8px;
+  --stage-space-main-gap: 16px;
   --stage-space-main-padding: 8px;
   --stage-space-demo-card-gap: 16px;
   --stage-space-demo-header-gap: 12px;
@@ -201,6 +201,164 @@ body {
   font-size: var(--stage-font-size-description);
   line-height: var(--stage-line-height-description);
   font-weight: 500;
+}
+
+.__stage-gallerySectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.__stage-gallerySectionControls {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
+.__stage-gallerySectionControlGroup {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+}
+
+.__stage-segmentedToggle {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 0;
+  border: 1px solid var(--stage-border);
+  background: var(--stage-surface);
+  overflow: hidden;
+}
+
+.__stage-segmentedToggleOption {
+  position: relative;
+  appearance: none;
+  cursor: pointer;
+  border: 0;
+  margin: 0;
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--stage-text-muted);
+  font-size: var(--stage-font-size-toggle);
+  line-height: var(--stage-line-height-toggle);
+  white-space: nowrap;
+}
+
+.__stage-segmentedToggleOption:hover {
+  background: var(--stage-surface-hover);
+  color: var(--stage-text);
+}
+
+.__stage-segmentedToggleOption[data-active='true'] {
+  z-index: 1;
+  background: var(--stage-surface);
+  color: var(--stage-text);
+  font-weight: 500;
+}
+
+.__stage-segmentedToggleOption[data-active='true']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 0.5px;
+  background: var(--stage-nav-active-border-gradient);
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.__stage-visibilitySwitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.__stage-visibilitySwitchLabel {
+  color: var(--stage-text);
+  font-size: var(--stage-font-size-toggle);
+  line-height: var(--stage-line-height-toggle);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.__stage-visibilitySwitchControl {
+  appearance: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 14px;
+  padding: 0;
+  border-radius: 7px;
+  border: 0.5px solid transparent;
+  margin: 0;
+  background:
+    linear-gradient(90deg, #b2caff 0%, #ffe5ed 100%) padding-box,
+    linear-gradient(90deg, #4d83ff 0%, #ff80a6 100%) border-box;
+  box-shadow: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.__stage-visibilitySwitchControl[data-checked='false'] {
+  background: #f3f4f5;
+  border-color: #ededee;
+}
+
+.__stage-visibilitySwitchTrack {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 10px;
+  border-radius: 999px;
+  overflow: visible;
+  background: transparent;
+}
+
+.__stage-visibilitySwitchFill {
+  display: none;
+}
+
+.__stage-visibilitySwitchThumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 0.5px solid transparent;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(90deg, #4d83ff 0%, #ff80a6 100%) border-box;
+  box-sizing: border-box;
+  box-shadow: none;
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.__stage-visibilitySwitchControl[data-checked='false'] .__stage-visibilitySwitchThumb {
+  background: #ffffff;
+  border: 0.5px solid #ededee;
+}
+
+.__stage-visibilitySwitchControl[data-checked='true'] .__stage-visibilitySwitchThumb {
+  transform: translateX(12px);
 }
 
 .__stage-tokenSwatch,

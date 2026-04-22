@@ -1,7 +1,7 @@
 import { Text, View } from '@tarojs/components';
 import { colors, spacing, typography } from '@fdesign/tokens';
 import type { CSSProperties, ReactNode } from 'react';
-import { useState } from 'react';
+import { Children, createContext, useContext, useState } from 'react';
 
 import { Icon } from '../icon/Icon';
 import { LocalIconRenderer } from '../icon/LocalIconRenderer';
@@ -9,6 +9,7 @@ import { Tag } from '../tag/Tag';
 import type {
   FormAggregateCollapseGroupProps,
   FormAggregateCollapseItem,
+  FormGroupProps,
   FormAmountListItem,
   FormAmountListProps,
   FormCollapseGroupItem,
@@ -18,6 +19,7 @@ import type {
   FormInfoListProps,
   FormNamespace,
   FormRowProps,
+  FormSurfaceVariant,
   FormTagData,
 } from './Form.types';
 import './Form.module.css';
@@ -33,12 +35,36 @@ const amountListTitleCardInsetX = Math.max(
   0,
 );
 
-function getFormSurfacePaddingX(carded = false) {
-  return carded ? cardPaddingX : flushPaddingX;
+interface FormGroupItemContextValue {
+  index: number;
+  total: number;
+  surfaceVariant: FormSurfaceVariant;
 }
 
-function getAmountListTitlePaddingX(carded = false) {
-  return carded ? amountListTitleCardInsetX : amountListTitleEdgeGapX;
+const FormGroupItemContext = createContext<FormGroupItemContextValue | null>(null);
+
+function resolveFormSurfaceVariant(
+  surfaceVariant?: FormSurfaceVariant,
+  carded?: boolean,
+  fallbackVariant: FormSurfaceVariant = 'flush',
+): FormSurfaceVariant {
+  if (surfaceVariant) {
+    return surfaceVariant;
+  }
+
+  if (carded !== undefined) {
+    return carded ? 'card' : 'flush';
+  }
+
+  return fallbackVariant;
+}
+
+function getFormSurfacePaddingX(surfaceVariant: FormSurfaceVariant = 'flush') {
+  return surfaceVariant === 'card' ? cardPaddingX : flushPaddingX;
+}
+
+function getAmountListTitlePaddingX(surfaceVariant: FormSurfaceVariant = 'flush') {
+  return surfaceVariant === 'card' ? amountListTitleCardInsetX : amountListTitleEdgeGapX;
 }
 
 function buildInsetDividerStyle(showDivider: boolean, paddingX: number): CSSProperties {
@@ -51,6 +77,42 @@ function buildInsetDividerStyle(showDivider: boolean, paddingX: number): CSSProp
     backgroundSize: `calc(100% - ${paddingX * 2}px) ${dividerThickness}px`,
     backgroundPosition: 'bottom center',
     backgroundRepeat: 'no-repeat',
+  };
+}
+
+function buildFormContainerStyle(
+  showDivider: boolean,
+  surfaceVariant: FormSurfaceVariant,
+  standaloneRounded: boolean,
+  background = colors.semantic.surface.base,
+): CSSProperties {
+  return {
+    backgroundColor: background,
+    borderRadius: standaloneRounded ? '4px' : undefined,
+    overflow: standaloneRounded ? 'hidden' : undefined,
+    ...buildInsetDividerStyle(showDivider, getFormSurfacePaddingX(surfaceVariant)),
+  };
+}
+
+function useFormContainerBehavior(
+  surfaceVariant?: FormSurfaceVariant,
+  carded?: boolean,
+  explicitShowDivider?: boolean,
+) {
+  const groupItem = useContext(FormGroupItemContext);
+  const resolvedSurfaceVariant = resolveFormSurfaceVariant(
+    surfaceVariant,
+    carded,
+    groupItem?.surfaceVariant ?? 'flush',
+  );
+  const showOuterDivider =
+    explicitShowDivider ?? (groupItem ? groupItem.index < groupItem.total - 1 : false);
+  const standaloneRounded = resolvedSurfaceVariant === 'card' && !groupItem;
+
+  return {
+    resolvedSurfaceVariant,
+    showOuterDivider,
+    standaloneRounded,
   };
 }
 
@@ -179,10 +241,10 @@ function buildRowSurfaceStyle(
   height: number,
   showDivider: boolean,
   interactive: boolean,
-  carded = false,
+  surfaceVariant: FormSurfaceVariant = 'flush',
   background = colors.semantic.surface.base,
 ): CSSProperties {
-  const paddingX = getFormSurfacePaddingX(carded);
+  const paddingX = getFormSurfacePaddingX(surfaceVariant);
 
   return {
     minHeight: `${height}px`,
@@ -192,7 +254,7 @@ function buildRowSurfaceStyle(
     justifyContent: 'space-between',
     gap: `${spacing.semantic.paddingCardX}px`,
     boxSizing: 'border-box',
-    background,
+    backgroundColor: background,
     cursor: interactive ? 'pointer' : undefined,
     ...buildInsetDividerStyle(showDivider, paddingX),
   };
@@ -200,10 +262,10 @@ function buildRowSurfaceStyle(
 
 function buildHeaderStyle(
   showDivider = true,
-  carded = false,
+  surfaceVariant: FormSurfaceVariant = 'flush',
   background = colors.semantic.surface.base,
 ): CSSProperties {
-  const paddingX = getFormSurfacePaddingX(carded);
+  const paddingX = getFormSurfacePaddingX(surfaceVariant);
 
   return {
     minHeight: '40px',
@@ -213,7 +275,7 @@ function buildHeaderStyle(
     justifyContent: 'space-between',
     gap: '12px',
     boxSizing: 'border-box',
-    background,
+    backgroundColor: background,
     ...buildInsetDividerStyle(showDivider, paddingX),
   };
 }
@@ -344,14 +406,22 @@ export function FormRow({
   trailingSecondaryText,
   presetText,
   leading,
+  showLeading = true,
+  showTrailingContent = true,
   tag,
-  carded = false,
-  showDivider = false,
+  surfaceVariant,
+  carded,
+  showDivider,
   showInfoIcon = false,
   showJumpIcon = false,
   onPress,
   onJump,
 }: FormRowProps) {
+  const { resolvedSurfaceVariant, showOuterDivider, standaloneRounded } = useFormContainerBehavior(
+    surfaceVariant,
+    carded,
+    showDivider,
+  );
   const rowPressHandler = onPress ?? onJump;
   const interactive = typeof rowPressHandler === 'function';
   const rowHeight =
@@ -386,6 +456,7 @@ export function FormRow({
   const mainLabel = (
     <FormHeaderLabel title={title} tag={tag} />
   );
+  const resolvedLeading = showLeading ? leading : undefined;
 
   let rightContent: ReactNode = null;
   let leftContent: ReactNode = null;
@@ -393,11 +464,11 @@ export function FormRow({
   if (variant === 'single-line') {
     leftContent = (
       <View style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
-        {renderLeading(leading)}
+        {renderLeading(resolvedLeading)}
         {mainLabel}
       </View>
     );
-    rightContent = (
+    rightContent = showTrailingContent ? (
       <View style={{ display: 'inline-flex', alignItems: 'center', gap: '2px', flexShrink: 0 }}>
         {presetText ? renderPresetContent(presetText) : null}
         {trailingText ? (
@@ -407,13 +478,13 @@ export function FormRow({
         ) : null}
         {!trailingText && showJumpIcon ? renderJumpIcon() : null}
       </View>
-    );
+    ) : null;
   }
 
   if (variant === 'double-line') {
     leftContent = (
       <View style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
-        {renderLeading(leading)}
+        {renderLeading(resolvedLeading)}
         <View style={leftTextStackStyle}>
           {mainLabel}
           {secondaryText ? (
@@ -430,11 +501,11 @@ export function FormRow({
         </View>
       </View>
     );
-    rightContent = trailingText ? (
+    rightContent = showTrailingContent && trailingText ? (
       <FormActionText muted onPress={onJump} showJump={showJumpIcon}>
         {trailingText}
       </FormActionText>
-    ) : showJumpIcon ? (
+    ) : showTrailingContent && showJumpIcon ? (
       renderJumpIcon()
     ) : null;
   }
@@ -442,11 +513,11 @@ export function FormRow({
   if (variant === 'double-line-right') {
     leftContent = (
       <View style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
-        {renderLeading(leading)}
+        {renderLeading(resolvedLeading)}
         {mainLabel}
       </View>
     );
-    rightContent = (
+    rightContent = showTrailingContent ? (
       <View style={rightTextStackStyle}>
         {trailingText ? (
           <Text
@@ -472,13 +543,13 @@ export function FormRow({
           </Text>
         ) : null}
       </View>
-    );
+    ) : null;
   }
 
   if (variant === 'double-line-numeric') {
     leftContent = (
       <View style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
-        {renderLeading(leading)}
+        {renderLeading(resolvedLeading)}
         <View style={leftTextStackStyle}>
           {secondaryText ? (
             <View style={{ display: 'inline-flex', alignItems: 'center', gap: '2px' }}>
@@ -500,17 +571,18 @@ export function FormRow({
         </View>
       </View>
     );
-    rightContent = trailingText ? <FormActionText muted>{trailingText}</FormActionText> : null;
+    rightContent =
+      showTrailingContent && trailingText ? <FormActionText muted>{trailingText}</FormActionText> : null;
   }
 
   if (variant === 'double-line-preset') {
     leftContent = (
       <View style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
-        {renderLeading(leading)}
+        {renderLeading(resolvedLeading)}
         {presetText ? renderPresetContent(presetText) : null}
       </View>
     );
-    rightContent = (
+    rightContent = showTrailingContent ? (
       <View style={rightTextStackStyle}>
         <Text
           style={{
@@ -533,7 +605,7 @@ export function FormRow({
           </Text>
         ) : null}
       </View>
-    );
+    ) : null;
   }
 
   return (
@@ -541,7 +613,10 @@ export function FormRow({
       className={`fd-formRow ${interactive ? 'fd-formInteractive' : ''}`}
       role={interactive ? 'button' : undefined}
       onClick={interactive ? () => rowPressHandler?.() : undefined}
-      style={buildRowSurfaceStyle(rowHeight, showDivider, interactive, carded)}
+      style={{
+        ...buildRowSurfaceStyle(rowHeight, false, interactive, resolvedSurfaceVariant),
+        ...buildFormContainerStyle(showOuterDivider, resolvedSurfaceVariant, standaloneRounded),
+      }}
     >
       {leftContent}
       {rightContent}
@@ -553,13 +628,22 @@ export function FormFaceStatus({
   status = 'success',
   maskedName = '*凯',
   description,
-  carded = false,
+  surfaceVariant,
+  carded,
 }: FormFaceStatusProps) {
+  const { resolvedSurfaceVariant, showOuterDivider, standaloneRounded } = useFormContainerBehavior(
+    surfaceVariant,
+    carded,
+  );
+
   return (
     <View
       style={{
-        background: colors.semantic.surface.base,
-        padding: `${spacing.component.formDisplay.face.paddingY}px ${getFormSurfacePaddingX(carded)}px`,
+        ...buildFormContainerStyle(showOuterDivider, resolvedSurfaceVariant, standaloneRounded),
+        backgroundColor: colors.semantic.surface.base,
+        padding: `${spacing.component.formDisplay.face.paddingY}px ${getFormSurfacePaddingX(
+          resolvedSurfaceVariant,
+        )}px`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -609,13 +693,13 @@ export function FormFaceStatus({
 function FormInfoListRow({
   item,
   showDivider,
-  carded,
+  surfaceVariant,
 }: {
   item: FormInfoListItem;
   showDivider: boolean;
-  carded: boolean;
+  surfaceVariant: FormSurfaceVariant;
 }) {
-  const paddingX = getFormSurfacePaddingX(carded);
+  const paddingX = getFormSurfacePaddingX(surfaceVariant);
 
   return (
     <View
@@ -627,7 +711,7 @@ function FormInfoListRow({
         justifyContent: 'space-between',
         gap: '12px',
         boxSizing: 'border-box',
-        background: colors.semantic.surface.base,
+        backgroundColor: colors.semantic.surface.base,
         ...buildInsetDividerStyle(showDivider, paddingX),
       }}
     >
@@ -659,11 +743,17 @@ export function FormInfoList({
   actionLabel,
   onAction,
   items,
-  carded = false,
+  surfaceVariant,
+  carded,
 }: FormInfoListProps) {
+  const { resolvedSurfaceVariant, showOuterDivider, standaloneRounded } = useFormContainerBehavior(
+    surfaceVariant,
+    carded,
+  );
+
   return (
-    <View style={{ background: colors.semantic.surface.base }}>
-      <View style={buildHeaderStyle(items.length > 0, carded)}>
+    <View style={buildFormContainerStyle(showOuterDivider, resolvedSurfaceVariant, standaloneRounded)}>
+      <View style={buildHeaderStyle(items.length > 0, resolvedSurfaceVariant)}>
         <FormHeaderLabel title={title} tag={tag} />
         {actionLabel ? (
           <FormActionText onPress={onAction}>
@@ -676,7 +766,7 @@ export function FormInfoList({
           key={`${item.label}-${item.value}-${index}`}
           item={item}
           showDivider={index < items.length - 1}
-          carded={carded}
+          surfaceVariant={resolvedSurfaceVariant}
         />
       ))}
     </View>
@@ -686,13 +776,13 @@ export function FormInfoList({
 function FormAmountListRow({
   item,
   showDivider,
-  carded,
+  surfaceVariant,
 }: {
   item: FormAmountListItem;
   showDivider: boolean;
-  carded: boolean;
+  surfaceVariant: FormSurfaceVariant;
 }) {
-  const paddingX = getFormSurfacePaddingX(carded);
+  const paddingX = getFormSurfacePaddingX(surfaceVariant);
 
   return (
     <View
@@ -703,7 +793,7 @@ function FormAmountListRow({
         alignItems: 'center',
         gap: '10px',
         boxSizing: 'border-box',
-        background: 'transparent',
+        backgroundColor: 'transparent',
         ...buildInsetDividerStyle(showDivider, paddingX),
       }}
     >
@@ -739,17 +829,22 @@ export function FormAmountList({
   highlightAmount,
   titleSuffix = '包含以下账单',
   items,
-  carded = false,
+  surfaceVariant,
+  carded,
 }: FormAmountListProps) {
-  const titlePaddingX = getAmountListTitlePaddingX(carded);
+  const { resolvedSurfaceVariant, showOuterDivider, standaloneRounded } = useFormContainerBehavior(
+    surfaceVariant,
+    carded,
+  );
+  const titlePaddingX = getAmountListTitlePaddingX(resolvedSurfaceVariant);
 
   return (
     <View
       style={{
+        ...buildInsetDividerStyle(showOuterDivider, getFormSurfacePaddingX(resolvedSurfaceVariant)),
         display: 'flex',
         flexDirection: 'column',
         gap: '12px',
-        background: colors.semantic.surface.page,
       }}
     >
       <View
@@ -788,7 +883,7 @@ export function FormAmountList({
           display: 'flex',
           flexDirection: 'column',
           background: colors.semantic.surface.base,
-          borderRadius: carded ? '4px' : undefined,
+          borderRadius: standaloneRounded ? '4px' : undefined,
           overflow: 'hidden',
         }}
       >
@@ -797,7 +892,7 @@ export function FormAmountList({
             key={`${item.label}-${item.amount}-${index}`}
             item={item}
             showDivider={index < items.length - 1}
-            carded={carded}
+            surfaceVariant={resolvedSurfaceVariant}
           />
         ))}
       </View>
@@ -809,14 +904,14 @@ function FormCollapseGroupItemRow({
   item,
   variant,
   showDivider,
-  carded,
+  surfaceVariant,
 }: {
   item: FormCollapseGroupItem;
   variant: 'text' | 'amount';
   showDivider: boolean;
-  carded: boolean;
+  surfaceVariant: FormSurfaceVariant;
 }) {
-  const paddingX = getFormSurfacePaddingX(carded);
+  const paddingX = getFormSurfacePaddingX(surfaceVariant);
   const showImplicitJump = Boolean(item.onAction) && !item.actionLabel;
 
   return (
@@ -834,7 +929,7 @@ function FormCollapseGroupItemRow({
         justifyContent: 'space-between',
         gap: '8px',
         boxSizing: 'border-box',
-        background: 'transparent',
+        backgroundColor: 'transparent',
         cursor: item.onAction ? 'pointer' : undefined,
         ...buildInsetDividerStyle(showDivider, paddingX),
       }}
@@ -878,11 +973,16 @@ export function FormCollapseGroup({
   tag,
   summary,
   items,
-  carded = false,
+  surfaceVariant,
+  carded,
   expanded,
   defaultExpanded,
   onExpandedChange,
 }: FormCollapseGroupProps) {
+  const { resolvedSurfaceVariant, showOuterDivider, standaloneRounded } = useFormContainerBehavior(
+    surfaceVariant,
+    carded,
+  );
   const [resolvedExpanded, setResolvedExpanded] = useControllableExpandedState(
     expanded,
     defaultExpanded,
@@ -890,7 +990,7 @@ export function FormCollapseGroup({
   );
 
   return (
-    <View style={{ background: colors.semantic.surface.base }}>
+    <View style={buildFormContainerStyle(showOuterDivider, resolvedSurfaceVariant, standaloneRounded)}>
       <View
         className="fd-formInteractive"
         role="button"
@@ -899,7 +999,7 @@ export function FormCollapseGroup({
           spacing.component.formDisplay.singleLine.height,
           resolvedExpanded,
           true,
-          carded,
+          resolvedSurfaceVariant,
         )}
       >
         <View style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
@@ -929,7 +1029,7 @@ export function FormCollapseGroup({
               item={item}
               variant={variant}
               showDivider={index < items.length - 1}
-              carded={carded}
+              surfaceVariant={resolvedSurfaceVariant}
             />
           ))
         : null}
@@ -1006,10 +1106,10 @@ function FormAggregateDetailRow({
 
 function FormAggregateCollapseItemBlock({
   item,
-  carded,
+  surfaceVariant,
 }: {
   item: FormAggregateCollapseItem;
-  carded: boolean;
+  surfaceVariant: FormSurfaceVariant;
 }) {
   const [resolvedExpanded, setResolvedExpanded] = useControllableExpandedState(
     item.expanded,
@@ -1025,7 +1125,7 @@ function FormAggregateCollapseItemBlock({
     >
       <View
         style={{
-          margin: `0 ${getFormSurfacePaddingX(carded)}px`,
+          margin: `0 ${getFormSurfacePaddingX(surfaceVariant)}px`,
           boxSizing: 'border-box',
         }}
       >
@@ -1086,11 +1186,18 @@ export function FormAggregateCollapseGroup({
   title,
   summary,
   items,
-  carded = false,
+  surfaceVariant,
+  carded,
 }: FormAggregateCollapseGroupProps) {
+  const { resolvedSurfaceVariant, showOuterDivider, standaloneRounded } = useFormContainerBehavior(
+    surfaceVariant,
+    carded,
+  );
+
   return (
     <View
       style={{
+        ...buildFormContainerStyle(showOuterDivider, resolvedSurfaceVariant, standaloneRounded),
         background: colors.semantic.surface.base,
         paddingBottom: `${spacing.scale[16]}px`,
       }}
@@ -1100,7 +1207,7 @@ export function FormAggregateCollapseGroup({
           spacing.component.formDisplay.singleLine.height,
           true,
           false,
-          carded,
+          resolvedSurfaceVariant,
         )}
       >
         <Text
@@ -1127,14 +1234,49 @@ export function FormAggregateCollapseGroup({
         <FormAggregateCollapseItemBlock
           key={`${item.title}-${item.amount}-${index}`}
           item={item}
-          carded={carded}
+          surfaceVariant={resolvedSurfaceVariant}
         />
       ))}
     </View>
   );
 }
 
+export function FormGroup({
+  children,
+  surfaceVariant,
+  carded,
+}: FormGroupProps) {
+  const resolvedSurfaceVariant = resolveFormSurfaceVariant(surfaceVariant, carded);
+  const items = Children.toArray(children);
+
+  return (
+    <View
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        background: colors.semantic.surface.base,
+        borderRadius: resolvedSurfaceVariant === 'card' ? '4px' : undefined,
+        overflow: resolvedSurfaceVariant === 'card' ? 'hidden' : undefined,
+      }}
+    >
+      {items.map((child, index) => (
+        <FormGroupItemContext.Provider
+          key={`form-group-item-${index}`}
+          value={{
+            index,
+            total: items.length,
+            surfaceVariant: resolvedSurfaceVariant,
+          }}
+        >
+          {child}
+        </FormGroupItemContext.Provider>
+      ))}
+    </View>
+  );
+}
+
 export const Form: FormNamespace = {
+  Group: FormGroup,
   Row: FormRow,
   FaceStatus: FormFaceStatus,
   InfoList: FormInfoList,

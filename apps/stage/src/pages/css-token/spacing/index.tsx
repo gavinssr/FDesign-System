@@ -142,7 +142,6 @@ const componentVerticalEntries = componentGapEntries.filter(
 export default function SpacingPage() {
   return (
     <StageShowcasePage
-      title="Spacing 间距"
       heroTitle="Spacing 间距"
       heroDescription="完整展示基础刻度、语义间距与组件层空间协议。组件层不使用真实组件，而用示意矩形与浅红标注矩形表达实际间距。"
       heroMeta={[
@@ -151,7 +150,6 @@ export default function SpacingPage() {
         { key: 'Component', value: `${componentEntries.length} 项` },
         { key: 'Preview', value: '示意矩形 + 标注值' },
       ]}
-      navKey="spacing"
       galleryTitle="Gallery / 总览"
       galleryDescription="Spacing 页按 token 特性拆分展示：刻度、语义、组件间距与组件尺寸分开展示，避免混淆。"
       sections={[

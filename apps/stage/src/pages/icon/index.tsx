@@ -93,7 +93,6 @@ function IconGalleryItem({ name, source }: IconGalleryItemProps) {
 export default function IconPage() {
   return (
     <StageShowcasePage
-      title="Icon 图标"
       heroTitle="Icon 图标"
       heroDescription="图标用于补充识别、状态和方向信息；当前组件统一支持自有 SVG 图标与 Google Material Symbols 两种来源。"
       heroMeta={[
@@ -102,7 +101,6 @@ export default function IconPage() {
         { key: 'Sizes', value: '6 种尺寸协议' },
         { key: 'Tones', value: '6 种语气' },
       ]}
-      navKey="icon"
       sections={[
         {
           title: '自有图标 / Local Icons',
