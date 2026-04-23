@@ -1,3 +1,111 @@
+# AI 变更日志（追加式）
+
+## 2026-04-23 — Button XL/L 宽度口径纠正
+
+### 代码变更
+- `packages/components/src/button/Button.tsx`、`packages/components/src/button/Button.module.css`：将 `xl` 宽度改回固定 `355px`；将 `l` 宽度收束为 `178px-327px` 区间规则，并保留 `block` 场景的宽度覆盖
+- `packages/adapters/src/rn/button.tsx`：同步 RN adapter 的 `xl / l` 宽度口径，避免与 H5 Button 本体分裂
+- `packages/components/src/button/Button.test.tsx`、`packages/adapters/src/rn/button.test.tsx`：将宽度回归测试改为校验 `xl=355px` 与 `l=178-327` 的正式规则
+- `packages/components/src/button/Button.contract.yaml`：同步修正 Base Button 当前范围的宽度约束描述
+
+### 文档与治理
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`、`.agent/checkpoint.yaml`、`.agent/decisions.log`：将 `xl / l` 宽度口径从“都可随容器收缩”纠正为“`xl=355px` 固定、`l=178px-327px` 区间，stage 当前按 `327px` 展示”
+
+### 说明
+- 本次仅修正 `xl / l` 宽度实现与对应治理口径，不改动已确认的 loading、固定高度与流式场景 padding 规则
+
+## 2026-04-23 — Button 治理层收尾重跑
+
+### 代码变更
+- `packages/components/src/button/Button.tsx`、`packages/components/src/button/Button.module.css`：将 Base Button 的固定高度、`xl / l` 固定宽度且可在窄容器内收缩、以及 `xl / l / m` 在流式场景下的横向 padding 收缩规则显式写回组件本体；保留全尺寸 loading spinner 口径
+- `packages/adapters/src/rn/button.tsx`：同步 React Native adapter 的固定高度、固定宽度可收缩与流式场景 padding 收缩规则，保持与 H5 Button 本体一致
+- `packages/components/src/button/Button.contract.yaml`：补记 Base Button 当前范围的正式布局约束，避免后续只从 stage 展示印象反推规则
+- `packages/components/src/button/Button.test.tsx`、`packages/adapters/src/rn/button.test.tsx`：补充固定宽度可收缩、流式场景 padding 与固定高度的最小回归测试
+
+### 文档与治理
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：将 Button 当前范围从“收尾中”更新为“可冻结”，并把 loading 与 Base 布局特性收束为正式协议；下一步默认起点切到 `Input / Card / Modal` 与 `Form` 输入类 / 行动类
+- `docs/ROADMAP.md`：同步 Phase 5 当前现状摘要，改为 `Button` 的 Base 类当前范围已完成收尾并可冻结
+- `.agent/checkpoint.yaml`：同步当前工作窗口、事实快照与下一步优先级，不再把 Button 作为默认第一优先级
+- `.agent/decisions.log`：追加“重新确认 Button 当前范围收尾口径”，将全尺寸 spinner 与 Base 布局规则收束为当前正式依据
+
+### 验证
+- `pnpm --filter @fdesign/components test`
+- `pnpm --filter @fdesign/adapters test`
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/adapters build`
+- `pnpm --filter @fdesign/stage build`
+- 运行态复看 stage Button 页：未发现需要停下询问用户的 `stage` 展示与组件本体分歧
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+### 说明
+- `apps/stage` 构建仍仅保留既有 `EntrypointsOverSizeLimitWarning`，本轮未引入新的构建错误
+
+## 2026-04-23 — 回滚 Button 治理改动
+
+### 代码变更
+- `packages/components/src/button/Button.tsx`、`packages/adapters/src/rn/button.tsx`：回滚到本轮 Button 治理前的实现状态
+- `packages/components/src/button/Button.test.tsx`、`packages/adapters/src/rn/button.test.tsx`：移除本轮 Button 治理新增的回归测试
+- `apps/stage/src/pages/button/index.tsx`：移除本轮 Button 治理新增的 loading 说明文案
+
+### 文档与治理
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：将 Button 状态与工作窗口回滚到“继续收尾 Button”的治理口径
+- `docs/ROADMAP.md`、`.agent/checkpoint.yaml`：同步回滚 Button 当前状态与下一步优先级
+
+### 说明
+- 本次按用户要求回滚到 Button 治理前；`Form/ListItem` 那轮治理收拢保持不变
+
+## 2026-04-23 — 修正 Button loading 口径
+
+### 代码变更
+- `packages/components/src/button/Button.tsx`：将 `m / s / xs / mini` 的 loading spinner 规则改回与 `xl / l` 一致，当前所有尺寸进入 loading 时都显示转动中的 loading 动画
+- `packages/adapters/src/rn/button.tsx`：同步 React Native adapter 的 spinner 规则，保证各尺寸 loading 表现与组件本体一致
+- `packages/components/src/button/Button.test.tsx`、`packages/adapters/src/rn/button.test.tsx`：将回归测试改为验证 `m` 尺寸 loading 也会显示 spinner
+- `apps/stage/src/pages/button/index.tsx`：将 Base 按钮页的 loading 说明改为“所有尺寸统一显示 loading 动画”
+
+### 文档与治理
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：将 Button loading 口径改为“全部尺寸统一显示 loading 动画”
+- `.agent/decisions.log`：追加用户最新确认，废止“仅 `xl / l` 展示 spinner”作为当前实现依据
+
+### 说明
+- 本次修正以用户最新确认的交互预期为准，覆盖我上一轮写入的错误收尾口径
+
+## 2026-04-23 — Button 当前轮次收尾完成
+
+### 代码变更
+- `packages/components/src/button/Button.tsx`：将 `loading` 规则重新对齐到既有 Button 决策，当前仅 `xl / l` 显示 spinner；`m / s / xs / mini` 仅保留 loading 语义与不可点击状态，不再误渲染 spinner
+- `packages/adapters/src/rn/button.tsx`：同步 React Native adapter 的 loading spinner 规则，保持与组件本体一致
+- `packages/components/src/button/Button.test.tsx`、`packages/adapters/src/rn/button.test.tsx`：补充“中小尺寸 loading 不显示 spinner”的回归测试
+- `apps/stage/src/pages/button/index.tsx`：在 Base 按钮页补充 loading 规则说明，明确只有 `XL / L` 显示 spinner
+
+### 文档与治理
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：将 `Button` 当前范围状态从“收尾中”更新为“可冻结”，并把下一步工作窗口切换到 `Input / Card / Modal` 与 `Form` 输入类 / 行动类
+- `docs/ROADMAP.md`：同步 Phase 5 当前现状摘要，标明 `Button` 当前范围已达到可冻结
+- `.agent/checkpoint.yaml`：同步 `Button` 当前轮次已可冻结，并重置下一步推荐顺序
+
+### 验证
+- `pnpm --filter @fdesign/components test`
+- `pnpm --filter @fdesign/adapters test`
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/adapters build`
+- `pnpm --filter @fdesign/stage build`
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+### 说明
+- `apps/stage` 构建仍仅保留既有 `EntrypointsOverSizeLimitWarning`，本轮未引入新的构建错误
+
+## 2026-04-23 — Phase 5 治理收拢
+
+### 文档与治理
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：对齐当前代码事实，补写 `Form` 展示类已落地、`ListItem` 已收敛为历史项，并将下一步起点统一为“先收尾 `Button`，再推进 `Input / Card / Modal` 与 `Form` 输入类 / 行动类范围定义”
+- `docs/exec-plans/completed/phase-5-form-display.md`：新增展示类 `Form` 首轮落地归档记录，明确其为已完成执行记录，不再作为当前行动入口
+- `docs/ROADMAP.md`：补充 `ListItem` 在 Phase 5 中收敛到 `Form` 组件族的后续演进说明，并更新 Phase 5 当前现状摘要
+- `.agent/checkpoint.yaml`：压缩为工作窗口摘要，同步 `Form` 展示类已归档、active 主计划为唯一事实源，以及新的下一步优先级
+- 删除 `.cursor/plans/phase5-form-display-plan_eca1b73a.plan.md`：原会话级计划已迁入正式 completed 归档，不再以 pending plan 形式保留
+
+### 说明
+- 本轮只做治理收拢，不扩展新的组件实现
+- 当前仓库的下一步正式起点已统一为：先收尾 `Button` 当前轮次，再按 active 主计划推进 `Input / Card / Modal` 与 `Form` 输入类 / 行动类
+
 ## 2026-04-22 — Form 展示类占位 icon / 预设内容可见性优化
 
 ### 代码变更
@@ -13,8 +121,6 @@
 
 ### 说明
 - `apps/stage` 构建仍仅保留既有 `EntrypointsOverSizeLimitWarning`，本轮未引入新的构建错误
-
-# AI 变更日志（追加式）
 
 ## 2026-04-17 — setup-dev-env 分支合并 `dev-listCell` 并解决 `checkpoint.yaml` 冲突
 

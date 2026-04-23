@@ -1,6 +1,6 @@
 last_session: "2026-04-21T08:57:11Z"
 current_phase: "phase-5"
-current_focus: "Phase 5 正在进行中；当前仍以 Button（当前范围为多个分类下的 Base 类）收尾与 stage 展示校正为先，同时展示类 Form 已继续补齐金额折叠子项 jump 四态、占位 icon / 预设内容隐藏变体与 stage 私有开关，后续继续为组件批次补齐全局样式 token"
+current_focus: "Phase 5 正在进行中；Button（多个分类下的 Base 类）当前范围已完成收尾并可冻结，当前默认工作窗口切换为按 active 主计划推进 Input / Card / Modal，并继续定义 Form 输入类、行动类的真实组件范围"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -16,77 +16,41 @@ completed:
   - "phase-4-segment-2-stage-baseline-and-weapp-build — stage 多端对照、H5 基线、Weex 策略与小程序最小构建完成"
   - "phase-4-multi-platform-adaptation — Phase 4 全部准出项完成并通过 H5 / 微信小程序运行态验收"
 in_progress:
-  - "Button 已落地首轮 Figma 对齐，但当前准确范围仅为多个分类下的 Base 类，仍处于收尾中"
-  - "Form 展示类已完成首轮 Figma 对齐与 ListItem -> Form 替换，输入类 / 行动类当前仅保留 stage 占位页"
   - "Phase 5 active plan 正作为长期滚动主计划维护，后续组件按批次推进"
+  - "Form 展示类已完成首轮 Figma 对齐与 ListItem -> Form 替换，当前已归档；输入类 / 行动类当前仅保留 stage 占位页，待后续定义真实组件范围"
   - "Icon 已落地首轮 Figma 对齐与双源架构（local inline SVG + material font），后续可继续按 registry 扩充本地图标集"
 blocked: []
 next_recommended:
-  - "先收尾 Button：继续按 stage 展示反馈校正页面效果，并确认 Button 当前轮次达到可冻结"
-  - "以 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 为唯一主计划，继续收尾 CssToken 展示细节后，按批次推进 Input / Card / Modal 与 Form 输入类、行动类，并继续补齐 Icon 本地图标集"
+  - "以 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 为唯一主计划，按批次推进 Input / Card / Modal，并在需要时继续定义 Form 输入类、行动类的真实组件范围"
+  - "Button / Tag 当前范围仅接受新输入驱动的增量修正；Icon 继续按 registry 做增量扩充"
   - "新增组件或迭代既有组件时，若现有全局 token 不足，先补齐 token 语义再回灌组件实现"
   - "继续按 docs/exec-plans/completed/phase-4-h5-webview-baseline.md 观察 adapters 接入后的 H5 体积变化"
 active_exec_plan: "docs/exec-plans/active/phase-5-token-protocol-and-mapping.md"
 notes: |
   Phase 4 主准出已完成，当前仓库已进入 Phase 5，且 Phase 5 按“长期滚动执行”治理，而不是一次性收口任务。
 
+  当前正式入口：
+  1. 长期协议、组件批次与下一步顺序，以 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md` 为唯一主计划
+  2. 本文件只记录当前工作窗口，不再承载比 active 主计划更细的长期事实
+
   当前事实快照：
-  1. `vars.css` 已落地首轮输入与协议抽取，radius / spacing / typography 规则已沉淀到 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
-  2. 仓库已落地基础全局样式 token 的首轮分层与 Web CSS variables 镜像；后续会随组件新增/迭代继续补齐语义 token
-  3. 当前已完成首轮 Figma 对齐的组件包括 `Button`、`Tag` 与 `Icon`；其中 `Button` 当前准确范围仅为多个分类下的 `Base` 类 button，不代表全部 button 分类均已完成
-  4. `apps/stage` 新壳层与 `Button` 样板页已落地，但 `Button` 当前仍在按展示反馈继续调整；现阶段收尾对象仍以多个分类下的 `Base` 类 button 为主，尚未达到“可冻结”
-  5. stage 侧栏分组导航箭头已按 Figma 节点 `25860:3434` 完成一轮图标对齐，当前采用与设计稿一致的 chevron 路径替换原 border 拼接形状
-  6. stage 壳层点击热区已收敛为通用 cursor 规则：侧栏导航与控制面板内的可点击项默认使用手型光标，组件本体默认不纳入
-  7. 已为未来 stage 非导航类自定义点击区预留 `__stage-clickable` 能力，后续新增热区可显式复用而无需再单点补样式
-  8. 一级折叠导航点击规则已细化：折叠态点击仅在当前分组没有已选中二级项时才跳到第一个二级导航；若该分组已有选中项，则仅展开
-  9. 一级折叠导航在展开态下点击仍仅折叠，不切换当前二级项
-  10. 一级折叠导航展开状态已持久化到 stage 本地存储；切换到非折叠一级导航后不会因为页面重建自动折叠既有已展开分组
-  11. 可折叠一级导航的文案与箭头着色已与展开状态解耦；无论展开或折叠都维持未展开态颜色，仅保留 hover 反馈
-  12. stage 组件命名的双语展示格式已统一：组件名中的 `English / 中文` 已收敛为 `English 中文`，英文名与中文名之间只保留一个空格
-  13. 历史上的“等待 Figma 输入”待机状态已结束；当前唯一 active 计划为 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
-  14. stage 全部已接入组件页面的内容区已按 `Base 基础按钮` 页样板统一为“Hero + Gallery 分节”结构；Button 二级页也已补齐同结构占位，未改动 stage 壳层 header、主导航和展示区布局
-  15. stage 展示页已移除 `矩阵验证 / Harness Matrix` 模块；舞台页只保留面向展示的内容，不再承载代码层矩阵验证
-  16. `Text` 不再作为设计系统通用组件保留；`apps/stage` 已新增折叠一级导航 `CssToken 全局样式`，并将原 `Text 文本` 页重构为其下的 `Typography 排版` 基础验证页
-  17. `apps/example-consumer` 与 `projects/real-project-1` 中原先依赖 `@fdesign/components/Text` 的文案已回收为“原生文本元素 + 页面层样式”写法，不再通过通用 `Text` 组件承载排版组合
-  18. `packages/components` 的 Vitest 测试基座已补齐统一 `setupFiles`；通过注入最小 Taro mock 与 `ENABLE_INNER_HTML` 全局常量，组件测试已恢复可运行状态
-  19. `Icon` 已从字符型 placeholder 重构为双源统一入口：未显式传 `source` 时按“local registry 优先，否则 material”自动分发
-  20. `packages/tokens` 已新增 `spacing.component.icon` 尺寸协议；`Icon` 已接入 `special-mini / xxs / xs / s / m / special-large` 六档尺寸、tone/color 覆盖与 Material Symbols 的 `wght/GRAD` 映射
-  21. 当前仓库已接入用户提供的 40 个自有导出 SVG，并统一收敛到 `Icon` local registry；旧用法中的 `info / check / chevron-right` 已通过 material source 兼容，且本地图标已完成两轮非破坏式语义别名整理，旧文件名风格名称仍保持兼容
-  22. `apps/stage` 的 `Icon 图标` 页已重写为 Hero + Local / Material / Sizes / Tones 分节，且导航位置已移到 Button 分组之后；当前 local 图标区优先展示语义别名，已覆盖卡类、账单/还款、公积金、红包提现等业务命名
-  23. `apps/stage` 的通用 `Gallery / 组件总览` 描述文案已从 `ComponentDemo` 头部全局移除，后续所有组件页不再显示该行说明文字
-  24. `apps/stage` 的 Icon 展示区已补齐统一 tile 排版：local/material 两区的单项展示容器宽度一致，仅展示单个 display name，超长名称按单词换行；tile 的 top/left/right padding 为 24px，bottom padding 与 icon-label gap 保持一致，且已进一步收紧横向密度
-  25. `apps/stage` 的 Icon 页中 `Tones` 分节已收敛为仅展示注释图标 `info`；`Sizes` 分节已改为对 `fd-icon-root` 施加仅 stage 生效的 inside border 说明样式，border 粗细等于尺寸协议中的 padding，并通过预览层放大校正使图形更贴近绘图区边缘；展示名称改为 `mini / xxs / xs / s / m / large`
-  26. `apps/stage` 已新增可复用的备注类小组件 `StageNoteText`：默认文案为“备注文案”，当前已在 Icon 页 `Material / info` 尺寸卡标题旁落地“外部组件绘图区不受控”说明
-  27. `apps/stage`、`apps/example-consumer` 与 `projects/real-project-1` 已接入 Material Symbols Rounded 字体加载；`pnpm --filter @fdesign/tokens build && pnpm --filter @fdesign/components test && pnpm --filter @fdesign/components build && pnpm --filter @fdesign/stage build && pnpm --filter @fdesign/example-consumer build && pnpm --filter @fdesign/real-project-1 build` 全部通过，仅保留既有 H5 entry size warning
-  28. `apps/stage` header 已新增品牌 logo：资源复制到 `src/assets/fd-logo.png`，并在壳层 `Layout` 左侧接入；当前 logo 尺寸已接入 header 样式变量，与标题字号口径保持联动
-  29. `apps/stage/src/index.html` 已补齐浏览器页签配置：当前 H5 页签标题为 `FDesign System`，并以内联 data URL 方式接入 favicon，避免额外静态路径耦合
-  30. `apps/stage` 一级折叠导航已补充“展开且其下存在当前选中二级项”态：当前通过 `__stage-navLinkGroupActive` 单独上背景色，并已切换为蓝到粉的半透明横向渐变背景
-  31. `apps/stage` 的 `CssToken 全局样式` 已统一迁移到 `pages/css-token/*` 路径下，当前导航已补齐 `Typography / Color / Spacing / Radii` 四个二级页
-  32. `apps/stage` 已为 token 展示补充通用叶子节点展开与示意预览能力；其中 `Spacing` 页的 component 分节不再借用真实组件，而是使用 stage 私有的蓝色元素示意与浅红标注色矩形来表达横向/纵向间距
-  33. `apps/stage` 非折叠导航选中态的左侧高亮已从纯色边框改为蓝到粉的纵向渐变条，当前通过 active 伪元素实现，不改动既有导航交互逻辑
-  34. `apps/stage` 侧栏导航已恢复独立纵向滚动：移除了阻断原生滚轮的 `preventDefault()`，并为导航列表补充底部滚动缓冲区；当前最后一个导航项在极限滚动时可上移到可视区垂直中线附近，且滚动不会链到 header、展示区或整页
-  35. `apps/stage` 侧栏滚动行为已细化为“仅真实溢出时可滚动”：当前通过运行时测量导航内容高度来切换溢出态；未溢出时隐藏侧栏纵向滚动，溢出时才挂载底部缓冲区；同时滚动条宽度已收窄为上一版的一半
-  36. `Tag` 已按 Figma 节点 `26117:11255` 完成一轮组件本体对齐：API 已切换到 `variant / color / couponPrefix`，并新增 `purple` 语义色与 tag 紧凑尺寸协议；`apps/stage` 的 `Tag 标签` 页已改为 `Variants / Colors / Coupon` 三分节展示结构
-  37. `apps/stage` 的 `Tag 标签` 页颜色卡片与券式卡片已从通用栅格卡片切换为页面私有的内容自适应容器：当前容器宽度以内部标签实际宽度为基准，左右 padding 对称收口，不再被父级列宽拉伸
-  38. `Tag` 当前轮次已通过用户验收：组件本体、token 映射与 stage 展示统一进入“可冻结”，后续仅接受新输入驱动的增量修正
-  39. `packages/tokens` 已新增 `colors.semantic.translucent` 语义分组，并接入 `brandBlue / brandPink / functionalRed / functionalOrange / functionalGreen / neutralGray` 的透明度颜色协议
-  40. `apps/stage` 的 `CssToken / Color` 页已新增独立 `Translucent` 分节，并补齐 `colors.semantic.translucent.*` 到 `--fd-color-translucent-*` 的 CSS Var 映射展示
-  41. `packages/tokens` 已按用户确认执行 `PR-2 + PR-3`：补齐 Typography 原子缺失镜像（display xlarge/xxlarge、single/body 相关 line-height 与 family semantic），并新增 `typography.styles` 与“仅当 fontFamily/fontSize/lineHeight/fontWeight 全量完全一致时命中”的复合样式匹配机制
-  42. Cursor Cloud Agent：已补齐 `.cursor/environment.json`（pnpm 固定版本 + frozen install）、对齐 `.cursor/worktrees.json`，并在根 `package.json` 增加 `pnpm.onlyBuiltDependencies`，避免 pnpm 10 默认拦截 Taro/esbuild 等依赖的 postinstall 导致云端构建不完整；已从 git 中移除误跟踪的各应用 `.swc` 插件缓存文件；相关提交已合并进 `dev-listCell` 并推送远端
-  43. 已在 Cursor Cloud 机器完成开发环境实测：`pnpm install` 后分别启动 `@fdesign/stage`、`@fdesign/example-consumer` 与 `@fdesign/real-project-1` 开发服务，当前监听端口为 `10086/10087/10088`，并已完成浏览器运行态验收
-  44. `packages/tokens` 已新增 `spacing.component.formDisplay`、`typography.fontSize.displaySmall`、`typography.lineHeight.singleLine.displaySmall`、`typography.styles.displayNumber20Small` 与 `colors.semantic.formDisplay`；`web-vars.css` 已同步补齐对应镜像变量
-  45. `packages/components` 已新增 `form/` 组件族，当前包含 `FormRow`、`FormFaceStatus`、`FormInfoList`、`FormAmountList`、`FormCollapseGroup`、`FormAggregateCollapseGroup` 与命名空间导出 `Form`
-  46. `packages/components` 的本地图标 registry 已扩展为同时支持单路径图标和自定义 SVG 渲染；本轮新增了 `collapse`、`form-preset`、`face-status-success`、`face-status-failure` 四个语义图标
-  47. 旧 `ListItem` 已从公共导出与 stage 页面中移除；`apps/example-consumer` 与 `projects/real-project-1` 的历史消费位已迁移到 `FormRow`
-  48. `apps/stage` 已新增一级折叠导航 `Form 表单`，并补齐 `展示类 / 输入类 / 行动类` 三个二级页；其中 `展示类` 已按 Hero + Gallery 结构落地 8 组 Figma 展示形态，折叠与 jump 交互可直接体验
-  49. `packages/components/src/form/Form.tsx` 已补充 `carded` 视觉语义，按通栏 `16px` / 卡片 `10px` 分流横向 padding；展示类表单的 jump / 注释 / 折叠箭头与占位前导图标已切换为本地语义 SVG，且 `apps/stage/src/pages/form-display/index.tsx` 中错误写死的 `407 / 387 / 375` demo 宽度已按用户验收口径收口为通栏 `375`、卡片 `355`
-  50. stage 预览链路已新增根命令 `pnpm dev:stage`：当前会先串行同步 `@fdesign/tokens -> @fdesign/components` 的 `dist`，再启动 `@fdesign/stage`，并持续监听 `packages/tokens/src` 与 `packages/components/src` 自动回灌最新构建产物
-  51. `apps/stage` 的运行态验收口径已明确为“以 workspace 包最新 `dist` 为真”；仅修改 `packages/*/src` 或仅重启 `@fdesign/stage` 都不能视为预览链路已同步
-  52. `packages/tokens` 与 `packages/components` 已分别补齐 `watch:dist` 包级监听命令，供单包排查使用；但涉及 stage 预览时默认仍应使用根级 `pnpm dev:stage`
-  53. 展示类表单变体命名已切换为“通栏 / 卡片”，代码命名统一使用 `flush / card`；同时保留历史映射：`通栏/flush ↔ 卡片式=false ↔ carded=false`，`卡片/card ↔ 卡片式=true ↔ carded=true`，供后续输入类与行动类续建时对照
-  54. `packages/components/src/form/*` 已进入兼容迁移期：组件公开 API 新增 `surfaceVariant="flush" | "card"`，内部统一解析为表面容器形态；旧 `carded` 仍保留兼容。由于 `FormRow`、`FormCollapseGroup` 已占用 `variant` 表示内容形态，本阶段不直接把容器形态字段命名为 `variant`
-  55. `packages/components/src/form/*` 已新增真实消费层组合语义：`FormGroup` / `Form.Group` 用于“一列组合”场景。规则为：单独排列时卡片组件自身承担 `4px` 圆角且默认隐藏底部分割线；列组合时由组合容器承担圆角裁切，非末项子表单显示底部分割线，末项隐藏
-  56. `packages/components/src/form/FormRow` 已新增 `showLeading` 与 `showTrailingContent` 子元素可见性控制；`apps/stage/src/pages/form-display/index.tsx` 已为单行、多行分节补齐 stage 私有 `icon / 预设内容` switch，并按 Figma 节点 `26573:20509` 落地 42x22 开关外观与 `toggle + switch` 的头部控件编排
+  1. 基础全局样式 token 已完成首轮分层与 Web CSS variables 镜像；后续继续按组件批次补齐语义 token
+  2. 当前已完成首轮 Figma 对齐的组件包括 `Button`、`Tag`、`Icon` 与 `Form` 展示类
+  3. `Button` 当前准确范围仍仅为多个分类下的 `Base` 类，当前状态为“可冻结”；正式口径为全尺寸 loading spinner、全部尺寸固定高度、`xl=355px` 固定宽度、`l=178px-327px` 区间宽度（当前 stage 按 327px 展示），以及 `xl / l / m` 在流式场景下收缩横向 padding
+  4. `Tag` 当前状态为“可冻结”；`Icon` 当前状态为“已落地首轮”
+  5. 展示类 `Form` 已完成首轮落地并完成 `ListItem -> Form` 替换；输入类 / 行动类当前仍只保留 stage 占位页
+  6. `Text` 不再作为设计系统通用组件保留，stage 中改由 `CssToken 全局样式 / Typography 排版` 承接基础验证
+
+  当前工作窗口：
+  1. 第一优先级是按 active 主计划推进 `Input / Card / Modal`，并在需要时继续定义 `Form` 输入类 / 行动类的真实组件范围
+  2. 第二优先级是若新增组件范围暴露 token 缺口，仍遵守“先补 token，再回灌组件”的顺序
+  3. `Button / Tag` 当前范围仅接受新输入驱动的增量修正，`Icon` 继续按 registry 扩充
+
+  Stage 与验证约束：
+  1. `apps/stage` 的运行态验收以 workspace 包最新 `dist` 为真
+  2. 默认使用根命令 `pnpm dev:stage` 进行预览；若改动 `packages/tokens/src`，必须遵守 `tokens build -> components build -> stage 验证` 的顺序，不得并行构建 `tokens/components`
+  3. 展示类 `Form` 的变体命名统一使用“通栏 / 卡片”，代码命名统一使用 `flush / card`；旧 `carded` 语义继续保持兼容映射
+  4. `FormGroup` / `Form.Group` 已承载列组合消费语义；单独排列与列组合的圆角 / 分割线规则以 `AGENTS.md` 与 active 主计划为准
 
   已确认治理约束：
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出
@@ -101,5 +65,5 @@ notes: |
   - 再读 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md` 获取长期协议、当前批次与滚动 backlog
   - 若本轮需要在 `apps/stage` 验证 `tokens/components` 改动，默认先运行根命令 `pnpm dev:stage`，不要只启动 `@fdesign/stage`
   - 若改动 `packages/tokens/src`，必须遵守 `tokens build -> components build -> stage 验证` 的顺序，不得并行构建 `tokens/components`
-  - 默认优先级：先收尾 `Button` 与 stage 展示，再按 active plan 的组件批次继续推进
+  - 默认优先级：先按 active plan 推进 `Input / Card / Modal` 与 `Form` 输入类 / 行动类范围，再处理新输入驱动的 `Button / Tag / Icon` 增量修正
   - 如未来出现明确 RN 消费方，再重新评估是否恢复更强的 RN 运行态验证

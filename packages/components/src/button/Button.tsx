@@ -24,7 +24,7 @@ type ButtonStyleVars = CSSProperties &
     | '--button-padding-x'
     | '--button-padding-x-min'
     | '--button-padding-x-effective'
-    | '--button-min-height'
+    | '--button-height'
     | '--button-font-size'
     | '--button-line-height'
     | '--button-font-weight'
@@ -114,7 +114,7 @@ const sizeStyles: Record<
     | '--button-content-gap'
     | '--button-padding-x'
     | '--button-padding-x-min'
-    | '--button-min-height'
+    | '--button-height'
     | '--button-font-size'
     | '--button-line-height'
     | '--button-width'
@@ -127,31 +127,31 @@ const sizeStyles: Record<
     '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
     '--button-padding-x': `${spacing.component.button.xl.paddingXFixed}px`,
     '--button-padding-x-min': `${spacing.component.button.xl.paddingXFluidMin}px`,
-    '--button-min-height': `${spacing.component.button.xl.minHeight}px`,
+    '--button-height': `${spacing.component.button.xl.minHeight}px`,
     '--button-font-size': `${typography.size.increase}px`,
     '--button-line-height': `${typography.lineHeight.singleLine.increase}px`,
     '--button-width': `${spacing.component.button.xl.width}px`,
-    '--button-min-width': 'auto',
-    '--button-max-width': 'none',
+    '--button-min-width': `${spacing.component.button.xl.width}px`,
+    '--button-max-width': `${spacing.component.button.xl.width}px`,
     '--button-spinner-size': `${spacing.component.button.xl.spinnerSize}px`,
   },
   l: {
     '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
     '--button-padding-x': `${spacing.component.button.l.paddingXFixed}px`,
     '--button-padding-x-min': `${spacing.component.button.l.paddingXFluidMin}px`,
-    '--button-min-height': `${spacing.component.button.l.minHeight}px`,
+    '--button-height': `${spacing.component.button.l.minHeight}px`,
     '--button-font-size': `${typography.size.increase}px`,
     '--button-line-height': `${typography.lineHeight.singleLine.increase}px`,
-    '--button-width': `${spacing.component.button.l.width}px`,
-    '--button-min-width': 'auto',
-    '--button-max-width': 'none',
+    '--button-width': `clamp(178px, 100%, ${spacing.component.button.l.width}px)`,
+    '--button-min-width': '178px',
+    '--button-max-width': `${spacing.component.button.l.width}px`,
     '--button-spinner-size': `${spacing.component.button.l.spinnerSize}px`,
   },
   m: {
     '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
     '--button-padding-x': `${spacing.component.button.m.paddingXDefault}px`,
     '--button-padding-x-min': `${spacing.component.button.m.paddingXMin}px`,
-    '--button-min-height': `${spacing.component.button.m.minHeight}px`,
+    '--button-height': `${spacing.component.button.m.minHeight}px`,
     '--button-font-size': `${typography.size.base}px`,
     '--button-line-height': `${typography.lineHeight.singleLine.base}px`,
     '--button-width': 'auto',
@@ -163,7 +163,7 @@ const sizeStyles: Record<
     '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
     '--button-padding-x': `${spacing.component.button.s.paddingXDefault}px`,
     '--button-padding-x-min': `${spacing.component.button.s.paddingXDefault}px`,
-    '--button-min-height': `${spacing.component.button.s.minHeight}px`,
+    '--button-height': `${spacing.component.button.s.minHeight}px`,
     '--button-font-size': `${typography.size.base}px`,
     '--button-line-height': `${typography.lineHeight.singleLine.base}px`,
     '--button-width': 'auto',
@@ -175,7 +175,7 @@ const sizeStyles: Record<
     '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
     '--button-padding-x': `${spacing.component.button.xs.paddingXDefault}px`,
     '--button-padding-x-min': `${spacing.component.button.xs.paddingXDefault}px`,
-    '--button-min-height': `${spacing.component.button.xs.minHeight}px`,
+    '--button-height': `${spacing.component.button.xs.minHeight}px`,
     '--button-font-size': `${typography.size.base}px`,
     '--button-line-height': `${typography.lineHeight.singleLine.base}px`,
     '--button-width': 'auto',
@@ -187,7 +187,7 @@ const sizeStyles: Record<
     '--button-content-gap': `${spacing.semantic.gapBetweenButtons}px`,
     '--button-padding-x': `${spacing.component.button.mini.paddingXDefault}px`,
     '--button-padding-x-min': `${spacing.component.button.mini.paddingXDefault}px`,
-    '--button-min-height': `${spacing.component.button.mini.minHeight}px`,
+    '--button-height': `${spacing.component.button.mini.minHeight}px`,
     '--button-font-size': `${typography.size.min}px`,
     '--button-line-height': `${typography.lineHeight.singleLine.min}px`,
     '--button-width': 'auto',
@@ -298,6 +298,14 @@ const compactLoadingSizes: Record<ButtonSize, boolean> = {
   mini: true,
 };
 
+function resolveButtonPaddingX(size: ButtonSize, block: boolean) {
+  if (size === 'xl' || size === 'l' || size === 'm') {
+    return block ? sizeStyles[size]['--button-padding-x-min'] : sizeStyles[size]['--button-padding-x'];
+  }
+
+  return sizeStyles[size]['--button-padding-x'];
+}
+
 export function Button({
   variant = 'primary-fill',
   size = 'm',
@@ -317,10 +325,7 @@ export function Button({
   const preserveDefaultWidthWithLoadingLabel = loading && spinner.show && size === 'm';
   const hideLabelWhenLoading = loading && spinner.show && compactLoadingSizes[size];
   const useCssVariables = shouldUseCssVariables();
-  const currentPaddingX =
-    block && (size === 'xl' || size === 'l')
-      ? currentSizeStyles['--button-padding-x-min']
-      : currentSizeStyles['--button-padding-x'];
+  const currentPaddingX = resolveButtonPaddingX(size, block);
 
   const className = [
     'fd-button-root',
@@ -352,7 +357,8 @@ export function Button({
     alignItems: 'center',
     justifyContent: 'center',
     gap: currentSizeStyles['--button-content-gap'],
-    minHeight: currentSizeStyles['--button-min-height'],
+    height: currentSizeStyles['--button-height'],
+    minHeight: currentSizeStyles['--button-height'],
     padding: `0 ${currentPaddingX}`,
     border: `${currentVariantStyles['--button-border-width']} solid ${currentVariantStyles['--button-border']}`,
     borderRadius: `${currentRadius}px`,

@@ -3,7 +3,8 @@
   align-items: center;
   justify-content: center;
   gap: var(--button-content-gap);
-  min-height: var(--button-min-height);
+  height: var(--button-height);
+  min-height: var(--button-height);
   padding: 0 var(--button-padding-x-effective);
   border: var(--button-border-width) solid var(--button-border);
   border-radius: var(--button-radius);
@@ -57,6 +58,8 @@
 :global(.fd-button-block) {
   display: flex;
   width: 100%;
+  min-width: 0;
+  max-width: none;
 }
 
 :global(.fd-button-inactive),

@@ -82,28 +82,38 @@ function getButtonState({
 
 const sizeContainerStyles: Record<ButtonSize, ReactNativeStyle> = {
   xl: {
+    height: spacing.component.button.xl.minHeight,
     minHeight: spacing.component.button.xl.minHeight,
     width: spacing.component.button.xl.width,
+    minWidth: spacing.component.button.xl.width,
+    maxWidth: spacing.component.button.xl.width,
     paddingHorizontal: spacing.component.button.xl.paddingXFixed,
   },
   l: {
+    height: spacing.component.button.l.minHeight,
     minHeight: spacing.component.button.l.minHeight,
-    width: spacing.component.button.l.width,
+    width: '100%',
+    minWidth: 178,
+    maxWidth: spacing.component.button.l.width,
     paddingHorizontal: spacing.component.button.l.paddingXFixed,
   },
   m: {
+    height: spacing.component.button.m.minHeight,
     minHeight: spacing.component.button.m.minHeight,
     paddingHorizontal: spacing.component.button.m.paddingXDefault,
   },
   s: {
+    height: spacing.component.button.s.minHeight,
     minHeight: spacing.component.button.s.minHeight,
     paddingHorizontal: spacing.component.button.s.paddingXDefault,
   },
   xs: {
+    height: spacing.component.button.xs.minHeight,
     minHeight: spacing.component.button.xs.minHeight,
     paddingHorizontal: spacing.component.button.xs.paddingXDefault,
   },
   mini: {
+    height: spacing.component.button.mini.minHeight,
     minHeight: spacing.component.button.mini.minHeight,
     paddingHorizontal: spacing.component.button.mini.paddingXDefault,
   },
@@ -135,6 +145,26 @@ const sizeSpinner: Record<ButtonSize, { show: boolean; size: number }> = {
   xs: { show: true, size: spacing.component.button.xs.spinnerSize },
   mini: { show: true, size: spacing.component.button.mini.spinnerSize },
 };
+
+function resolveContainerPaddingX(size: ButtonSize, block: boolean) {
+  if (!block) {
+    return sizeContainerStyles[size].paddingHorizontal;
+  }
+
+  if (size === 'xl') {
+    return spacing.component.button.xl.paddingXFluidMin;
+  }
+
+  if (size === 'l') {
+    return spacing.component.button.l.paddingXFluidMin;
+  }
+
+  if (size === 'm') {
+    return spacing.component.button.m.paddingXMin;
+  }
+
+  return sizeContainerStyles[size].paddingHorizontal;
+}
 
 const stateVariantStyles: Record<ButtonVariant, Record<ButtonState, { container: ReactNativeStyle; label: ReactNativeStyle }>> = {
   'primary-fill': {
@@ -243,6 +273,7 @@ export function getReactNativeButtonRenderSpec({
   const variantStateStyle = stateVariantStyles[variant][state];
   const spinner = sizeSpinner[size];
   const preserveDefaultWidthWithLoadingLabel = loading && spinner.show && size === 'm';
+  const resolvedPaddingX = resolveContainerPaddingX(size, block);
   const loadingLabelStyle =
     loading && size === 'm'
       ? {
@@ -255,13 +286,11 @@ export function getReactNativeButtonRenderSpec({
     ...(block
       ? {
           width: '100%',
-          ...(size === 'xl'
-            ? { paddingHorizontal: spacing.component.button.xl.paddingXFluidMin }
-            : size === 'l'
-              ? { paddingHorizontal: spacing.component.button.l.paddingXFluidMin }
-              : {}),
+          minWidth: undefined,
+          maxWidth: undefined,
+          paddingHorizontal: resolvedPaddingX,
         }
-      : {}),
+      : { paddingHorizontal: resolvedPaddingX }),
   };
 
   return {
