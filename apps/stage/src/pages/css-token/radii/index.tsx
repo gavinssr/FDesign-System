@@ -9,7 +9,6 @@ const radiiEntries = flattenTokenEntries(radii, 'radii');
 export default function RadiiPage() {
   return (
     <StageShowcasePage
-      title="Radii 圆角"
       heroTitle="Radii 圆角"
       heroDescription="展示当前协议中的四档圆角值，并用统一矩形容器示意不同圆角在舞台页中的实际视觉差异。"
       heroMeta={[
@@ -18,7 +17,6 @@ export default function RadiiPage() {
         { key: 'Preview', value: '统一矩形示意' },
         { key: 'CSS Var', value: '有镜像时一并展示' },
       ]}
-      navKey="radii"
       galleryTitle="Gallery / 总览"
       galleryDescription="圆角页按协议固定四档展示，不额外扩展未确认档位。"
       sections={[

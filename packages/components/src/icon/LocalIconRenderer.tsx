@@ -46,20 +46,24 @@ export function LocalIconRenderer({ name, contentSize, strokeWidth }: LocalIconR
   return (
     <View className="fd-icon-glyph fd-icon-glyph-local">
       {iconDefinition ? (
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          style={shapeStyle}
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path
-            d={iconDefinition.d}
-            fill="currentColor"
-            fillRule={iconDefinition.fillRule}
-            clipRule={iconDefinition.clipRule}
-          />
-        </svg>
+        iconDefinition.render ? (
+          iconDefinition.render({ contentSize, strokeWidth })
+        ) : (
+          <svg
+            viewBox={iconDefinition.viewBox ?? '0 0 24 24'}
+            fill="none"
+            style={shapeStyle}
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d={iconDefinition.d}
+              fill="currentColor"
+              fillRule={iconDefinition.fillRule}
+              clipRule={iconDefinition.clipRule}
+            />
+          </svg>
+        )
       ) : (
         <MissingLocalIcon contentSize={contentSize} strokeWidth={strokeWidth} />
       )}

@@ -2,7 +2,6 @@ import { Text, View } from '@tarojs/components';
 import { Button } from '@fdesign/components';
 
 import { ComponentDemo } from '../../shell/ComponentDemo';
-import { Layout } from '../../shell/Layout';
 
 type ButtonVariant = 'primary-fill' | 'primary-outline' | 'secondary-outline';
 type ButtonSize = 'xl' | 'l' | 'm' | 's' | 'xs' | 'mini';
@@ -32,7 +31,7 @@ const buttonText = '操作文本';
 
 export default function ButtonPage() {
   return (
-    <Layout title="Base 基础按钮" navKey="button-base" showPageTitle={false}>
+    <>
       <View className="__stage-demoCard">
         <View className="__stage-hero">
           <View className="__stage-heroBody">
@@ -141,6 +140,6 @@ export default function ButtonPage() {
           </View>
         </View>
       </ComponentDemo>
-    </Layout>
+    </>
   );
 }

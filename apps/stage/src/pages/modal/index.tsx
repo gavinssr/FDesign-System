@@ -9,7 +9,6 @@ export default function ModalPage() {
 
   return (
     <StageShowcasePage
-      title="Modal 弹窗"
       heroTitle="Modal 弹窗"
       heroDescription="弹窗用于承载需要打断当前流程的重要确认或补充信息，引导用户聚焦处理单一任务。"
       heroMeta={[

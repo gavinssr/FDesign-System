@@ -1,0 +1,16 @@
+component: Form
+purpose: "展示类表单信息与组合折叠场景的统一组件族"
+provisional: false
+forbidden:
+  - "不允许在 Form 组件内部耦合业务路由或埋点行为"
+  - "不允许直接引用磁盘图标资源，必须走 Icon registry 或内部图标渲染封装"
+a11y:
+  - "可点击行和折叠头部应暴露 button 语义"
+  - "纯展示态不应误暴露交互语义"
+slots:
+  leading: "行级前置图标或头像"
+  action: "右侧预设内容、跳转或折叠控制"
+states:
+  - default
+  - expanded
+  - collapsed

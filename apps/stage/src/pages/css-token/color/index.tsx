@@ -60,7 +60,6 @@ function renderColorGroup(
 export default function ColorPage() {
   return (
     <StageShowcasePage
-      title="Color 颜色"
       heroTitle="Color 颜色"
       heroDescription="按 tokens 主源完整展开 reference 与 semantic 两层颜色值，并展示对应的预览色块、token 路径与实际色值。"
       heroMeta={[
@@ -70,7 +69,6 @@ export default function ColorPage() {
         { key: 'Preview', value: '色块 + 值 + 路径' },
         { key: 'CSS Var', value: '有镜像时一并展示' },
       ]}
-      navKey="color"
       galleryTitle="Gallery / 总览"
       galleryDescription="颜色页完整覆盖 reference 与 semantic 色彩 token，不手写样例，不遗漏叶子节点。"
       sections={[

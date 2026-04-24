@@ -26,7 +26,6 @@ const colorLabels: Record<(typeof colors)[number], string> = {
 export default function TagPage() {
   return (
     <StageShowcasePage
-      title="Tag 标签"
       heroTitle="Tag 标签"
       heroDescription="标签用于呈现轻量分类与状态信息，当前已按 Figma 对齐为三种样式变体、七种颜色与券式前缀结构。"
       heroMeta={[

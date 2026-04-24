@@ -1,6 +1,6 @@
 export type IconSource = 'local' | 'material';
 
-export type IconSize = 'special-mini' | 'xxs' | 'xs' | 's' | 'm' | 'special-large';
+export type IconSize = 'special-mini' | 'xxxs' | 'xxs' | 'xs' | 's' | 'm' | 'special-large';
 
 export type IconTone = 'default' | 'muted' | 'primary' | 'success' | 'warning' | 'danger';
 

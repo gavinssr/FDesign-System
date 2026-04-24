@@ -8,6 +8,7 @@
   "files": ["dist"],
   "scripts": {
     "build": "tsc --project tsconfig.json",
+    "watch:dist": "node ../../scripts/watch-workspace-build.mjs package tokens",
     "clean": "rm -rf dist",
     "lint": "eslint src/"
   },

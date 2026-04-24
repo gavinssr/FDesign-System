@@ -84,20 +84,38 @@ const cssTokenLinks = [
   },
 ] as const satisfies readonly ComponentNavPage[];
 
+const formLinks = [
+  {
+    type: 'page',
+    key: 'form-display',
+    label: '展示类',
+    title: 'Form 表单 / 展示类',
+    url: '/pages/form-display/index',
+  },
+  {
+    type: 'page',
+    key: 'form-input',
+    label: '输入类',
+    title: 'Form 表单 / 输入类',
+    url: '/pages/form-input/index',
+  },
+  {
+    type: 'page',
+    key: 'form-action',
+    label: '行动类',
+    title: 'Form 表单 / 行动类',
+    url: '/pages/form-action/index',
+  },
+] as const satisfies readonly ComponentNavPage[];
+
 export const componentLinks = [
   { type: 'group', key: 'css-token', label: 'CssToken 全局样式', children: cssTokenLinks },
   { type: 'group', key: 'button', label: 'Button 按钮', children: buttonLinks },
+  { type: 'group', key: 'form', label: 'Form 表单', children: formLinks },
   { type: 'page', key: 'icon', label: 'Icon 图标', title: 'Icon 图标', url: '/pages/icon/index' },
   { type: 'page', key: 'tag', label: 'Tag 标签', title: 'Tag 标签', url: '/pages/tag/index' },
   { type: 'page', key: 'input', label: 'Input 输入框', title: 'Input 输入框', url: '/pages/input/index' },
   { type: 'page', key: 'card', label: 'Card 卡片', title: 'Card 卡片', url: '/pages/card/index' },
-  {
-    type: 'page',
-    key: 'list-item',
-    label: 'List Item 列表项',
-    title: 'List Item 列表项',
-    url: '/pages/list-item/index',
-  },
   { type: 'page', key: 'modal', label: 'Modal 弹窗', title: 'Modal 弹窗', url: '/pages/modal/index' },
 ] as const satisfies readonly ComponentLink[];
 
@@ -107,6 +125,20 @@ export const componentPages = componentLinks.flatMap((item) =>
 
 export function getNavPageByTitle(title: string) {
   return componentPages.find((item) => item.title === title);
+}
+
+export function getNavPageByUrl(rawUrl: string): ComponentNavPage | undefined {
+  if (typeof rawUrl !== 'string' || rawUrl.length === 0) {
+    return undefined;
+  }
+
+  const normalized = rawUrl
+    .replace(/^#/, '')
+    .replace(/\?.*$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/$/, '');
+
+  return componentPages.find((page) => normalized.endsWith(page.url));
 }
 
 export function getParentGroupByChildKey(childKey: string) {

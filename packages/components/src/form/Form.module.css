@@ -1,0 +1,18 @@
+:global(.fd-formRow) {
+  width: 100%;
+}
+
+:global(.fd-formInteractive) {
+  cursor: pointer;
+}
+
+:global(.fd-formCollapseIcon) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 120ms ease;
+}
+
+:global(.fd-formCollapseIconExpanded) {
+  transform: rotate(180deg);
+}

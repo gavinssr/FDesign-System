@@ -81,6 +81,9 @@
   --fd-color-translucent-neutral-gray-a60: #787c85;
   --fd-color-translucent-neutral-gray-a40: #a4a8ac;
   --fd-color-translucent-neutral-gray-a20: #d2d3d6;
+  --fd-color-form-display-face-scan-accent: #00a9fe;
+  --fd-color-form-display-face-scan-beam: rgba(38, 165, 255, 0.94);
+  --fd-color-form-display-face-scan-line: #0095ff;
   --fd-color-sidebar-background: #050c1c;
   --fd-color-primary-background: #4d83ff;
   --fd-color-primary-background-subtle: #f2f6ff;
@@ -132,6 +135,17 @@
   --fd-button-mini-min-height: 16px;
   --fd-button-mini-padding-x-default: 6px;
   --fd-button-mini-spinner-size: 12px;
+  --fd-form-display-single-line-height: 52px;
+  --fd-form-display-info-list-item-height: 48px;
+  --fd-form-display-double-line-height: 68px;
+  --fd-form-display-double-line-content-gap-y: 6px;
+  --fd-form-display-double-line-numeric-height: 72px;
+  --fd-form-display-double-line-numeric-content-gap-y: 6px;
+  --fd-form-display-amount-list-item-height: 78px;
+  --fd-form-display-face-content-gap-y: 28px;
+  --fd-form-display-face-padding-y: 36px;
+  --fd-form-display-face-icon-box: 100px;
+  --fd-form-display-aggregate-detail-item-height: 36px;
   --fd-font-family-text:
     PingFang SC,
     Noto Sans SC,
@@ -148,6 +162,7 @@
   --fd-font-size-further: 14px;
   --fd-font-size-increase: 16px;
   --fd-font-size-head: 18px;
+  --fd-font-size-display-small: 20px;
   --fd-font-size-display-normal: 22px;
   --fd-font-size-display-large: 26px;
   --fd-font-size-display-xlarge: 36px;
@@ -161,6 +176,7 @@
   --fd-line-height-single-further: 16px;
   --fd-line-height-single-increase: 18px;
   --fd-line-height-single-head: 20px;
+  --fd-line-height-single-display-small: 22px;
   --fd-line-height-single-display-normal: 24px;
   --fd-line-height-single-display-large: 28px;
   --fd-line-height-single-display-xlarge: 38px;
@@ -230,6 +246,10 @@
   --fd-typography-display-number-22-normal-font-size: var(--fd-font-size-display-normal);
   --fd-typography-display-number-22-normal-line-height: var(--fd-line-height-single-display-normal);
   --fd-typography-display-number-22-normal-font-weight: var(--fd-font-weight-medium);
+  --fd-typography-display-number-20-small-font-family: var(--fd-font-family-display-latin);
+  --fd-typography-display-number-20-small-font-size: var(--fd-font-size-display-small);
+  --fd-typography-display-number-20-small-line-height: var(--fd-line-height-single-display-small);
+  --fd-typography-display-number-20-small-font-weight: var(--fd-font-weight-medium);
   --fd-typography-display-chinese-26-large-font-family: var(--fd-font-family-display-chinese);
   --fd-typography-display-chinese-26-large-font-size: var(--fd-font-size-display-large);
   --fd-typography-display-chinese-26-large-line-height: var(--fd-line-height-single-display-large);

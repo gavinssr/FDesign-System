@@ -2,9 +2,9 @@ import { Text, View } from '@tarojs/components';
 import {
   Button,
   Card,
+  FormRow,
   Icon,
   Input,
-  ListItem,
   Modal,
   Tag,
 } from '@fdesign/components';
@@ -54,19 +54,21 @@ export default function IndexPage() {
 
         <Card title="Settings list" description="List composition with leading and trailing icons.">
           <View className="__consumer-stack">
-            <ListItem
+            <FormRow
               title="Notifications"
-              description="Push and email preferences"
-              meta="2 new"
+              trailingText="2 new"
               leading={<Icon name="info" label="Notifications" />}
-              trailing={<Icon name="chevron-right" decorative />}
+              secondaryText="Push and email preferences"
+              variant="double-line"
+              showJumpIcon
               onPress={() => undefined}
             />
-            <ListItem
+            <FormRow
               title="Security"
-              description="Passkeys and recovery methods"
+              secondaryText="Passkeys and recovery methods"
               leading={<Icon name="check" label="Security" />}
-              trailing={<Icon name="chevron-right" decorative />}
+              variant="double-line"
+              showJumpIcon
             />
           </View>
         </Card>

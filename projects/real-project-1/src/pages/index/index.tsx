@@ -2,9 +2,9 @@ import { Text, View } from '@tarojs/components';
 import {
   Button,
   Card,
+  FormRow,
   Icon,
   Input,
-  ListItem,
   Modal,
   Tag,
 } from '@fdesign/components';
@@ -116,13 +116,14 @@ export default function IndexPage() {
         >
           <View className="__realProject-stack">
             {launchChecklist.map((item) => (
-              <ListItem
+              <FormRow
                 key={item.title}
                 title={item.title}
-                description={item.description}
-                meta={item.meta}
+                secondaryText={item.description}
+                trailingText={item.meta}
                 leading={<Icon name={item.icon} label={item.title} />}
-                trailing={<Icon name="chevron-right" decorative />}
+                variant="double-line"
+                showJumpIcon
                 onPress={() => undefined}
               />
             ))}

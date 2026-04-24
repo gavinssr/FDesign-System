@@ -1,7 +1,6 @@
 import { Text, View } from '@tarojs/components';
 
 import { ComponentDemo } from './ComponentDemo';
-import { Layout } from './Layout';
 
 type StageNode = JSX.Element | JSX.Element[] | string | number | null;
 
@@ -12,32 +11,29 @@ interface StageMetaItem {
 
 interface StageSection {
   title: string;
+  controls?: StageNode;
   children: StageNode;
 }
 
 interface StageShowcasePageProps {
-  title: string;
   heroTitle: string;
   heroDescription: string;
   heroMeta: readonly StageMetaItem[];
   sections: readonly StageSection[];
-  navKey?: string;
   galleryTitle?: string;
   galleryDescription?: string;
 }
 
 export function StageShowcasePage({
-  title,
   heroTitle,
   heroDescription,
   heroMeta,
   sections,
-  navKey,
   galleryTitle = 'Gallery / 组件总览',
   galleryDescription = '统一使用与 Base 基础按钮页一致的英雄区与分节展示结构。',
 }: StageShowcasePageProps) {
   return (
-    <Layout title={title} navKey={navKey} showPageTitle={false}>
+    <>
       <View className="__stage-demoCard">
         <View className="__stage-hero">
           <View className="__stage-heroBody">
@@ -59,12 +55,15 @@ export function StageShowcasePage({
         <View className="__stage-galleryStack">
           {sections.map((section) => (
             <View key={section.title} className="__stage-gallerySection">
-              <Text className="__stage-subsectionTitle">{section.title}</Text>
+              <View className="__stage-gallerySectionHeader">
+                <Text className="__stage-subsectionTitle">{section.title}</Text>
+                {section.controls ? <View className="__stage-gallerySectionControls">{section.controls}</View> : null}
+              </View>
               {section.children}
             </View>
           ))}
         </View>
       </ComponentDemo>
-    </Layout>
+    </>
   );
 }

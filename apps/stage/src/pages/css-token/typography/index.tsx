@@ -130,7 +130,6 @@ function getTextStyle(style: CSSProperties): CSSProperties {
 export default function TypographyPage() {
   return (
     <StageShowcasePage
-      title="Typography 排版"
       heroTitle="Typography 排版"
       heroDescription="用于验证全局字体族、字号、字重、行高与基础文本行为在 stage 中的实际映射效果。"
       heroMeta={[
@@ -139,7 +138,6 @@ export default function TypographyPage() {
         { key: 'Weights', value: '3 档字重' },
         { key: 'Rules', value: 'singleLine / body' },
       ]}
-      navKey="typography"
       galleryTitle="Gallery / 总览"
       galleryDescription="按全局 typography token 组织展示。"
       sections={[

@@ -53,6 +53,17 @@ const sizeStyles: Record<
     '--icon-material-wght': '300',
     '--icon-material-grad': '40',
   },
+  xxxs: {
+    box: spacing.component.icon.size.xxxs.box,
+    contentSize: spacing.component.icon.size.xxxs.box - spacing.component.icon.size.xxxs.padding * 2,
+    strokeWidth: 1,
+    materialWeight: 300,
+    materialGrade: 0,
+    '--icon-box': `${spacing.component.icon.size.xxxs.box}px`,
+    '--icon-content-size': `${spacing.component.icon.size.xxxs.box - spacing.component.icon.size.xxxs.padding * 2}px`,
+    '--icon-material-wght': '300',
+    '--icon-material-grad': '0',
+  },
   xxs: {
     box: spacing.component.icon.size.xxs.box,
     contentSize: spacing.component.icon.size.xxs.box - spacing.component.icon.size.xxs.padding * 2,

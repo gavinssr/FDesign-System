@@ -8,7 +8,6 @@ const tones = ['default', 'primary', 'success', 'warning', 'danger'] as const;
 export default function CardPage() {
   return (
     <StageShowcasePage
-      title="Card 卡片"
       heroTitle="Card 卡片"
       heroDescription="卡片用于承载一组关联信息与操作，适合在信息流、概览页和设置页中组织内容层级。"
       heroMeta={[

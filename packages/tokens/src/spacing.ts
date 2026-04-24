@@ -116,10 +116,41 @@ export const spacingComponent = {
     paddingX: spacingScale[10],
     paddingY: spacingSemantic.gapRowCompactY,
   },
+  formDisplay: {
+    singleLine: {
+      height: 52,
+    },
+    infoListItem: {
+      height: 48,
+    },
+    doubleLine: {
+      height: 68,
+      contentGapY: 6,
+    },
+    doubleLineNumeric: {
+      height: 72,
+      contentGapY: 6,
+    },
+    amountListItem: {
+      height: 78,
+    },
+    face: {
+      contentGapY: 28,
+      paddingY: 36,
+      iconBox: 100,
+    },
+    aggregateDetailItem: {
+      height: 36,
+    },
+  },
   icon: {
     size: {
       specialMini: {
         box: 12,
+        padding: 1,
+      },
+      xxxs: {
+        box: 14,
         padding: 1,
       },
       xxs: {

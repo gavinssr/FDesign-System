@@ -39,14 +39,285 @@ export const LOCAL_ICON_NAMES = [
   'red-envelope-withdrawal',
   'red-envelope-withdrawal-2',
   'cards',
+  'collapse',
+  'form-preset',
+  'face-status-success',
+  'face-status-failure',
+  'form-leading-placeholder',
+  'form-info',
+  'form-jump',
+  'form-collapse-expand',
+  'form-collapse-fold',
 ] as const;
 
 export type LocalIconName = (typeof LOCAL_ICON_NAMES)[number];
 
 export interface LocalIconDefinition {
-  d: string;
+  d?: string;
   fillRule?: 'evenodd';
   clipRule?: 'evenodd';
+  viewBox?: string;
+  render?: (props: { contentSize: number; strokeWidth: number }) => JSX.Element;
+}
+
+function buildLocalIconStyle(contentSize: number) {
+  return {
+    width: `${contentSize}px`,
+    height: `${contentSize}px`,
+    display: 'block',
+  } as const;
+}
+
+function CollapseIcon({ contentSize }: { contentSize: number }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      style={buildLocalIconStyle(contentSize)}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M7.99996 8.82854L11.3587 5.46978C11.6516 5.17689 12.1265 5.17689 12.4194 5.46978C12.7123 5.76268 12.7123 6.23755 12.4194 6.53044L7.99996 10.9499L3.58054 6.53044C3.28765 6.23755 3.28765 5.76268 3.58054 5.46978C3.87344 5.17689 4.34831 5.17689 4.6412 5.46978L7.99996 8.82854Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function FormLeadingPlaceholderIcon({ contentSize }: { contentSize: number }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      style={buildLocalIconStyle(contentSize)}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect width="24" height="24" rx="12" fill="#EDF3FA" />
+    </svg>
+  );
+}
+
+function FormPresetIcon({ contentSize }: { contentSize: number }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      style={buildLocalIconStyle(contentSize)}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M8.72857 8.00017L5.36982 4.64141C5.07692 4.34852 5.07692 3.87365 5.36982 3.58075C5.66271 3.28786 6.13758 3.28786 6.43048 3.58075L10.8499 8.00017L6.43048 12.4196C6.13758 12.7125 5.66271 12.7125 5.36982 12.4196C5.07692 12.1267 5.07692 11.6518 5.36982 11.3589L8.72857 8.00017Z"
+        fill="#A4A8AC"
+      />
+    </svg>
+  );
+}
+
+function FormInfoIcon({ contentSize }: { contentSize: number }) {
+  return (
+    <svg
+      viewBox="0 0 19.5439 19.5439"
+      fill="none"
+      style={buildLocalIconStyle(contentSize)}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M18 9.77197C18 5.22746 14.3165 1.54395 9.77197 1.54395C5.22746 1.54395 1.54395 5.22746 1.54395 9.77197C1.54395 14.3165 5.22746 18 9.77197 18C14.3165 18 18 14.3165 18 9.77197ZM9 13.147V13.1074C9 12.6814 9.34592 12.3354 9.77197 12.3354C10.198 12.3354 10.5439 12.6814 10.5439 13.1074V13.147C10.5439 13.573 10.198 13.9189 9.77197 13.9189C9.34592 13.9189 9 13.573 9 13.147ZM9 9.77197V5.27197C9 4.84592 9.34592 4.5 9.77197 4.5C10.198 4.5 10.5439 4.84592 10.5439 5.27197V9.77197C10.5439 10.198 10.198 10.5439 9.77197 10.5439C9.34592 10.5439 9 10.198 9 9.77197ZM19.5439 9.77197C19.5439 15.1686 15.1686 19.5439 9.77197 19.5439C4.37536 19.5439 0 15.1686 0 9.77197C4.83181e-08 4.37536 4.37536 4.83166e-08 9.77197 0C15.1686 0 19.5439 4.37536 19.5439 9.77197Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function FormJumpIcon({ contentSize }: { contentSize: number }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      style={buildLocalIconStyle(contentSize)}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M8.72857 8.00017L5.36982 4.64141C5.07692 4.34852 5.07692 3.87365 5.36982 3.58075C5.66271 3.28786 6.13758 3.28786 6.43048 3.58075L10.8499 8.00017L6.43048 12.4196C6.13758 12.7125 5.66271 12.7125 5.36982 12.4196C5.07692 12.1267 5.07692 11.6518 5.36982 11.3589L8.72857 8.00017Z"
+        fill="#A4A8AC"
+      />
+    </svg>
+  );
+}
+
+function FormCollapseExpandIcon({ contentSize }: { contentSize: number }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      style={buildLocalIconStyle(contentSize)}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M8 7.17161L11.3588 10.5304C11.6517 10.8233 12.1265 10.8233 12.4194 10.5304C12.7123 10.2375 12.7123 9.7626 12.4194 9.46971L8 5.05029L3.58059 9.46971C3.28769 9.7626 3.28769 10.2375 3.58059 10.5304C3.87348 10.8233 4.34835 10.8233 4.64125 10.5304L8 7.17161Z"
+        fill="#A4A8AC"
+      />
+    </svg>
+  );
+}
+
+function FormCollapseFoldIcon({ contentSize }: { contentSize: number }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      style={buildLocalIconStyle(contentSize)}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M8 8.82843L11.3588 5.46967C11.6516 5.17678 12.1265 5.17678 12.4194 5.46967C12.7123 5.76256 12.7123 6.23744 12.4194 6.53033L8 10.9497L3.58058 6.53033C3.28769 6.23744 3.28769 5.76256 3.58058 5.46967C3.87347 5.17678 4.34835 5.17678 4.64124 5.46967L8 8.82843Z"
+        fill="#A4A8AC"
+      />
+    </svg>
+  );
+}
+
+function FaceStatusSuccessIcon({ contentSize }: { contentSize: number }) {
+  return (
+    <svg
+      viewBox="0 0 100 100"
+      fill="none"
+      style={buildLocalIconStyle(contentSize)}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g opacity="0.85">
+        <circle cx="49.8214" cy="49.8215" r="30" stroke="url(#fd-face-success-circle)" strokeWidth="2.5" />
+        <path d="M37.0632 42.532V46.8884" stroke="url(#fd-face-success-eye-left)" strokeWidth="3" strokeLinecap="round" />
+        <path d="M62.5795 42.532V46.8884" stroke="url(#fd-face-success-eye-right)" strokeWidth="3" strokeLinecap="round" />
+        <path d="M50.755 41.5718C50.755 44.0671 50.755 47.81 50.755 52.8007C50.755 54.8629 49.0832 55.9124 47.0209 55.9124" stroke="url(#fd-face-success-nose)" strokeWidth="3" strokeLinecap="round" />
+        <path d="M40.4556 63.3082C42.3547 65.5875 45.8383 67.1148 49.8214 67.1148C53.9417 67.1148 57.5276 65.4804 59.3778 63.0698" stroke="url(#fd-face-success-mouth)" strokeWidth="3" strokeLinecap="round" />
+      </g>
+      <rect opacity="0.23" x="3" y="51" width="94" height="26" fill="url(#fd-face-success-beam)" />
+      <rect x="3" y="51" width="16" height="26" fill="url(#fd-face-success-mask-left)" />
+      <rect x="81" y="51" width="16" height="26" fill="url(#fd-face-success-mask-right)" />
+      <rect opacity="0.435625" x="3" y="50" width="94" height="1" fill="url(#fd-face-success-line)" />
+      <path d="M6 23V18C6 11.3726 11.3726 6 18 6H23" stroke="#E4EFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M94 23V18C94 11.3726 88.6274 6 82 6H77" stroke="#E4EFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M94 77V82C94 88.6274 88.6274 94 82 94H77" stroke="#E4EFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M6 77V82C6 88.6274 11.3726 94 18 94H23" stroke="#E4EFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <defs>
+        <linearGradient id="fd-face-success-circle" x1="84.9015" y1="81.0715" x2="84.9015" y2="18.5715" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#6995FF" />
+          <stop offset="1" stopColor="#80B8FF" />
+        </linearGradient>
+        <linearGradient id="fd-face-success-eye-left" x1="37.9151" y1="45.9495" x2="35.559" y2="45.3647" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#6E98FF" />
+          <stop offset="1" stopColor="#84B5FF" />
+        </linearGradient>
+        <linearGradient id="fd-face-success-eye-right" x1="63.4313" y1="45.9495" x2="61.0752" y2="45.3647" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#6E98FF" />
+          <stop offset="1" stopColor="#84B5FF" />
+        </linearGradient>
+        <linearGradient id="fd-face-success-nose" x1="53.9991" y1="52.8217" x2="41.5414" y2="47.1854" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#6E98FF" />
+          <stop offset="1" stopColor="#84B5FF" />
+        </linearGradient>
+        <linearGradient id="fd-face-success-mouth" x1="75.8171" y1="66.243" x2="74.6832" y2="57.0262" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#6E98FF" />
+          <stop offset="1" stopColor="#84B5FF" />
+        </linearGradient>
+        <linearGradient id="fd-face-success-beam" x1="3" y1="51" x2="3" y2="77" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#26A5FF" stopOpacity="0.942514" />
+          <stop offset="1" stopColor="#26A5FF" stopOpacity="0.01" />
+        </linearGradient>
+        <linearGradient id="fd-face-success-mask-left" x1="19" y1="51" x2="3" y2="51" gradientUnits="userSpaceOnUse">
+          <stop stopColor="white" stopOpacity="0.01" />
+          <stop offset="1" stopColor="white" />
+        </linearGradient>
+        <linearGradient id="fd-face-success-mask-right" x1="97" y1="51" x2="81" y2="51" gradientUnits="userSpaceOnUse">
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0.01" />
+        </linearGradient>
+        <linearGradient id="fd-face-success-line" x1="97" y1="50" x2="3" y2="50" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#0095FF" stopOpacity="0.01" />
+          <stop offset="0.49308" stopColor="#0095FF" />
+          <stop offset="1" stopColor="#0095FF" stopOpacity="0.01" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+function FaceStatusFailureIcon({ contentSize }: { contentSize: number }) {
+  return (
+    <svg
+      viewBox="0 0 100 100"
+      fill="none"
+      style={buildLocalIconStyle(contentSize)}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g opacity="0.78">
+        <circle cx="49.8214" cy="49.8215" r="30" stroke="url(#fd-face-failure-circle)" strokeWidth="2.5" />
+        <path d="M37.0632 42.532V46.8884" stroke="url(#fd-face-failure-eye-left)" strokeWidth="3" strokeLinecap="round" />
+        <path d="M62.5795 42.532V46.8884" stroke="url(#fd-face-failure-eye-right)" strokeWidth="3" strokeLinecap="round" />
+        <path d="M50.755 41.5718C50.755 44.0671 50.755 47.81 50.755 52.8007C50.755 54.8629 49.0832 55.9124 47.0209 55.9124" stroke="url(#fd-face-failure-nose)" strokeWidth="3" strokeLinecap="round" />
+        <path d="M40.4556 66.8764C42.3547 64.597 45.8383 63.0698 49.8214 63.0698C53.9417 63.0698 57.5276 64.7041 59.3778 67.1147" stroke="url(#fd-face-failure-mouth)" strokeWidth="3" strokeLinecap="round" />
+      </g>
+      <rect opacity="0.22" x="3" y="51" width="94" height="26" fill="url(#fd-face-failure-beam)" />
+      <rect x="3" y="51" width="16" height="26" fill="url(#fd-face-failure-mask-left)" />
+      <rect x="81" y="51" width="16" height="26" fill="url(#fd-face-failure-mask-right)" />
+      <rect opacity="0.315625" x="3" y="50" width="94" height="1" fill="url(#fd-face-failure-line)" />
+      <g opacity="0.661596">
+        <path d="M6 23V18C6 11.3726 11.3726 6 18 6H23" stroke="#FFE2E9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M94 23V18C94 11.3726 88.6274 6 82 6H77" stroke="#FFE2E9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M94 77V82C94 88.6274 88.6274 94 82 94H77" stroke="#FFE2E9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M6 77V82C6 88.6274 11.3726 94 18 94H23" stroke="#FFE2E9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <defs>
+        <linearGradient id="fd-face-failure-circle" x1="18.5714" y1="18.5715" x2="18.5714" y2="81.0715" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FF6E94" />
+          <stop offset="1" stopColor="#FF6982" />
+        </linearGradient>
+        <linearGradient id="fd-face-failure-eye-left" x1="36.7521" y1="42.532" x2="36.7521" y2="46.8884" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FF6E94" />
+          <stop offset="1" stopColor="#FF6982" />
+        </linearGradient>
+        <linearGradient id="fd-face-failure-eye-right" x1="62.2683" y1="42.532" x2="62.2683" y2="46.8884" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FF6E94" />
+          <stop offset="1" stopColor="#FF6982" />
+        </linearGradient>
+        <linearGradient id="fd-face-failure-nose" x1="47.0209" y1="41.5718" x2="47.0209" y2="55.9124" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FF6E94" />
+          <stop offset="1" stopColor="#FF6982" />
+        </linearGradient>
+        <linearGradient id="fd-face-failure-mouth" x1="40.4556" y1="67.1147" x2="40.4556" y2="63.0698" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FF6E94" />
+          <stop offset="1" stopColor="#FF6982" />
+        </linearGradient>
+        <linearGradient id="fd-face-failure-beam" x1="3" y1="51" x2="3" y2="77" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FF99E4" />
+          <stop offset="1" stopColor="white" stopOpacity="0.01" />
+        </linearGradient>
+        <linearGradient id="fd-face-failure-mask-left" x1="19" y1="51" x2="3" y2="51" gradientUnits="userSpaceOnUse">
+          <stop stopColor="white" stopOpacity="0.01" />
+          <stop offset="1" stopColor="white" />
+        </linearGradient>
+        <linearGradient id="fd-face-failure-mask-right" x1="97" y1="51" x2="81" y2="51" gradientUnits="userSpaceOnUse">
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="white" stopOpacity="0.01" />
+        </linearGradient>
+        <linearGradient id="fd-face-failure-line" x1="97" y1="50" x2="3" y2="50" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FF85E3" stopOpacity="0.01" />
+          <stop offset="0.49308" stopColor="#FF85E3" />
+          <stop offset="1" stopColor="#FF85E3" stopOpacity="0.01" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
 }
 
 const localIconRegistry = {
@@ -194,6 +465,42 @@ const localIconRegistry = {
   cards: {
     d: 'M19.25 3.25C20.7688 3.25 22 4.48122 22 6V9.5C22 9.91421 21.6642 10.25 21.25 10.25C20.3244 10.25 19.5654 11.0291 19.5654 12C19.5654 12.9709 20.3244 13.75 21.25 13.75L21.2939 13.751C21.6876 13.7738 22 14.1006 22 14.5V18C22 19.5188 20.7688 20.75 19.25 20.75H4.75C3.23122 20.75 2 19.5188 2 18V14.5C2 14.0858 2.33579 13.75 2.75 13.75L2.80762 13.749C3.70689 13.7175 4.43457 12.9507 4.43457 12C4.43457 11.0291 3.67562 10.25 2.75 10.25C2.33579 10.25 2 9.91421 2 9.5V6C2 4.48122 3.23122 3.25 4.75 3.25H19.25ZM4.75 4.75C4.05964 4.75 3.5 5.30964 3.5 6V8.84082L3.5625 8.85645C4.90625 9.21717 5.89975 10.4519 5.93359 11.9229L5.93457 12C5.93457 13.5051 4.92983 14.7765 3.5625 15.1436L3.5 15.1592V18C3.5 18.672 4.03033 19.2204 4.69531 19.249L4.75 19.25H19.25C19.9404 19.25 20.5 18.6904 20.5 18V15.1592L20.4375 15.1436C19.0702 14.7765 18.0654 13.5051 18.0654 12C18.0654 10.4949 19.0702 9.2235 20.4375 8.85645L20.5 8.84082V6C20.5 5.32797 19.9697 4.7796 19.3047 4.75098L19.25 4.75H4.75ZM14.5 13.5C14.9142 13.5 15.25 13.8358 15.25 14.25C15.25 14.6494 14.9376 14.9762 14.5439 14.999L14.5 15H9.5C9.08579 15 8.75 14.6642 8.75 14.25C8.75 13.8506 9.06235 13.5238 9.45605 13.501L9.5 13.5H14.5ZM14.5 9C14.9142 9 15.25 9.33579 15.25 9.75C15.25 10.1494 14.9376 10.4762 14.5439 10.499L14.5 10.5H9.5C9.08579 10.5 8.75 10.1642 8.75 9.75C8.75 9.35058 9.06235 9.02379 9.45605 9.00098L9.5 9H14.5Z',
   },
+  collapse: {
+    viewBox: '0 0 16 16',
+    render: ({ contentSize }) => <CollapseIcon contentSize={contentSize} />,
+  },
+  'form-preset': {
+    viewBox: '0 0 16 16',
+    render: ({ contentSize }) => <FormPresetIcon contentSize={contentSize} />,
+  },
+  'face-status-success': {
+    viewBox: '0 0 100 100',
+    render: ({ contentSize }) => <FaceStatusSuccessIcon contentSize={contentSize} />,
+  },
+  'face-status-failure': {
+    viewBox: '0 0 100 100',
+    render: ({ contentSize }) => <FaceStatusFailureIcon contentSize={contentSize} />,
+  },
+  'form-leading-placeholder': {
+    viewBox: '0 0 24 24',
+    render: ({ contentSize }) => <FormLeadingPlaceholderIcon contentSize={contentSize} />,
+  },
+  'form-info': {
+    viewBox: '0 0 11.4006 11.4006',
+    render: ({ contentSize }) => <FormInfoIcon contentSize={contentSize} />,
+  },
+  'form-jump': {
+    viewBox: '0 0 16 16',
+    render: ({ contentSize }) => <FormJumpIcon contentSize={contentSize} />,
+  },
+  'form-collapse-expand': {
+    viewBox: '0 0 16 16',
+    render: ({ contentSize }) => <FormCollapseExpandIcon contentSize={contentSize} />,
+  },
+  'form-collapse-fold': {
+    viewBox: '0 0 16 16',
+    render: ({ contentSize }) => <FormCollapseFoldIcon contentSize={contentSize} />,
+  },
 } as const satisfies Record<LocalIconName, LocalIconDefinition>;
 
 export const LOCAL_ICON_ALIASES = {
@@ -221,6 +528,15 @@ export const LOCAL_ICON_ALIASES = {
   'red-envelope-alt': 'red-envelope-withdrawal-2',
   'red-envelope-cashout': 'red-envelope-withdrawal',
   'red-envelope-cashout-alt': 'red-envelope-withdrawal-2',
+  'form-collapse': 'collapse',
+  preset: 'form-preset',
+  'preset-info': 'form-preset',
+  info: 'form-info',
+  'jump-right': 'form-jump',
+  'form-expand': 'form-collapse-expand',
+  'form-fold': 'form-collapse-fold',
+  'face-scan-success': 'face-status-success',
+  'face-scan-failure': 'face-status-failure',
 } as const satisfies Record<string, LocalIconName>;
 
 export type LocalIconAliasName = keyof typeof LOCAL_ICON_ALIASES;
