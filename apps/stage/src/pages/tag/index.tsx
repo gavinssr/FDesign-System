@@ -55,7 +55,7 @@ export default function TagPage() {
             <View className="__stage-tagFlow">
               {colors.map((color) => (
                 <View key={color} className="__stage-tagCard">
-                  <Text className="__stage-tagCardLabel">{colorLabels[color]}</Text>
+                  <Text className="__stage-galleryCardLabel">{colorLabels[color]}</Text>
                   <View className="__stage-stack">
                     {variants.map((variant) => (
                       <Tag key={`${color}-${variant}`} variant={variant} color={color}>
@@ -74,7 +74,7 @@ export default function TagPage() {
             <View className="__stage-tagFlow">
               {colors.map((color) => (
                 <View key={`coupon-${color}`} className="__stage-tagCard">
-                  <Text className="__stage-tagCardLabel">{colorLabels[color]}</Text>
+                  <Text className="__stage-galleryCardLabel">{colorLabels[color]}</Text>
                   <Tag variant="outline" color={color} couponPrefix="券">
                     满300减30
                   </Tag>

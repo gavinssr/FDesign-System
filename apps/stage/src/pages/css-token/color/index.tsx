@@ -70,7 +70,6 @@ export default function ColorPage() {
         { key: 'CSS Var', value: '有镜像时一并展示' },
       ]}
       galleryTitle="Gallery / 总览"
-      galleryDescription="颜色页完整覆盖 reference 与 semantic 色彩 token，不手写样例，不遗漏叶子节点。"
       sections={[
         {
           title: 'Reference',

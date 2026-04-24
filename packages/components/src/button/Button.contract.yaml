@@ -5,6 +5,10 @@ platform_notes:
   h5: "默认渲染为 Taro View/Text，并映射 onPress 到点击事件"
   rn: "需要 TouchableOpacity adapter（Phase 4 实现）"
   weex: "不在主路径，需要 adapter 桥接（Phase 4 评估）"
+layout_notes:
+  - "Base Button 全部尺寸使用固定高度，不依赖内容把按钮纵向撑高"
+  - "`xl` 宽度固定为 355px；`l` 宽度约束在 178px-327px 范围内，默认展示上限为 327px"
+  - "`xl / l / m` 在 block 等流式场景下，横向 padding 允许从默认值收缩到最小安全留白"
 forbidden:
   - "不允许传入业务特有的 icon 集合"
   - "不允许在 Button 内部处理路由跳转"

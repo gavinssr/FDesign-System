@@ -54,4 +54,43 @@ describe('Button', () => {
 
     expect(onPress).not.toHaveBeenCalled();
   });
+
+  it('keeps xl width fixed at 355px', () => {
+    const { getByRole } = render(<Button size="xl">XL button</Button>);
+
+    const button = getByRole('button') as HTMLDivElement;
+    const style = button.getAttribute('style') ?? '';
+
+    expect(style).toContain('--button-width: 355px;');
+    expect(style).toContain('--button-min-width: 355px;');
+    expect(style).toContain('--button-max-width: 355px;');
+    expect(style).toContain('--button-height: 48px;');
+  });
+
+  it('keeps l width within the 178px to 327px range', () => {
+    const { getByRole } = render(<Button size="l">L button</Button>);
+
+    const button = getByRole('button') as HTMLDivElement;
+    const style = button.getAttribute('style') ?? '';
+
+    expect(style).toContain('--button-width: clamp(178px, 100%, 327px);');
+    expect(style).toContain('--button-min-width: 178px;');
+    expect(style).toContain('--button-max-width: 327px;');
+    expect(style).toContain('--button-height: 44px;');
+  });
+
+  it('uses fluid padding for block medium buttons', () => {
+    const { getByRole } = render(
+      <Button block size="m">
+        Medium block
+      </Button>,
+    );
+
+    const button = getByRole('button') as HTMLDivElement;
+    const style = button.getAttribute('style') ?? '';
+
+    expect(style).toContain('--button-padding-x-effective: 12px;');
+    expect(style).toContain('--button-height: 36px;');
+    expect(button.className).toContain('fd-button-block');
+  });
 });

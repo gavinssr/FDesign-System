@@ -24,17 +24,18 @@
 - Phase 5 已启动，且已从“等待 Figma 输入”切换到长期滚动执行
 - `vars.css` 已提供颜色、字体、圆角、阴影基础定义，并由用户补齐 spacing、字体、line-height 与协议备注
 - 仓库已落地基础全局样式 token 的首轮收口，并已建立 TS 主源 + Web CSS variables 镜像
-- 当前已完成首轮 Figma 对齐的组件包括 `Button`（当前仅多个分类下的 `Base` 类 button 已完成，其余分类后续补齐）、`Tag` 与 `Icon`
-- `Button` 当前状态为“收尾中”，准确范围为多个分类下的 `Base` 类 button；其余分类仍待后续继续补齐
+- 当前已完成首轮 Figma 对齐且当前范围可冻结的组件包括 `Button`（当前仅多个分类下的 `Base` 类 button 已完成，其余分类后续补齐）、`Tag`、`Icon` 与 `Form` 展示类
+- `Button` 当前状态为“可冻结”，准确范围为多个分类下的 `Base` 类 button；其余分类仍待后续继续补齐
 - `Tag` 当前状态为“可冻结”，本轮组件本体、token 映射与 stage 展示已通过验收
 - `Icon` 当前状态为“已落地首轮”，双源架构、尺寸协议与 stage 展示已完成一轮对齐
+- `Form` 当前状态为“已落地首轮”，展示类已完成首轮 Figma 对齐，`ListItem` 已从公共导出与 stage 页面中移除并收敛为 `Form` 组件族；输入类 / 行动类当前仅保留 stage 占位页
 - 其余组件与其语义 token 仍按批次持续推进，不按一次性全部完成来管理
 
 ## 当前工作窗口
 
-- 第一优先级：继续收尾 `Button`，让组件本体与 `apps/stage` 展示效果达到“可冻结”
-- 第二优先级：沿同一协议继续推进 `Typography / Input / Card / Modal / ListItem / Icon`
-- 第三优先级：当新增组件或修正既有组件暴露 token 缺口时，先补齐全局 token 语义，再回灌组件实现
+- 第一优先级：沿同一协议推进 `Input / Card / Modal`，并在 `Form` 展示类已落地的基础上继续定义输入类 / 行动类的真实组件范围
+- 第二优先级：当新增组件或修正既有组件暴露 token 缺口时，先补齐全局 token 语义，再回灌组件实现
+- 第三优先级：`Button / Tag / Icon` 当前范围仅接受新输入驱动的增量修正，不再作为默认主动收尾对象
 
 ## 滚动 backlog 管理方式
 
@@ -191,9 +192,9 @@
 
 ### 2. 当前已知会受影响的组件
 
-- 第一批：`Button`（当前仅多个分类下的 `Base` 类 button 已落地首轮对齐，仍在收尾中）、`Tag`（已通过本轮验收，当前可冻结）、`Icon`（已落地首轮对齐）
-- 第二批：`Typography`、`Input`
-- 第三批：`Card`、`Modal`、`ListItem`
+- 第一批：`Button`（当前仅多个分类下的 `Base` 类 button 已完成本轮收尾并可冻结）、`Tag`（已通过本轮验收，当前可冻结）、`Icon`（已落地首轮对齐）
+- 第二批：`Form`（展示类已落地首轮，输入类 / 行动类待定义真实组件范围）、`Input`
+- 第三批：`Card`、`Modal`
 - 横向跟进：`apps/stage` 全局壳层、`projects/real-project-1` 全局壳层
 
 ### 3. 组件级协议映射建议
@@ -206,8 +207,10 @@
 - 已落地首轮对齐：`Base` 类新增 `inactive` 状态，并与 `disabled` 分离
 - 已落地首轮对齐：`Text.weight` 的历史 `semibold / bold` 不再用于 `Base` 类 Button 文案
 - 已落地首轮对齐：`Base` 类 `xl / l` 使用 `radius=8`，`m / s / xs` 使用 `radius=4`，`mini` 使用 `radius=2`
-- 已落地首轮对齐：`Base` 类 `loading` 仅在 `xl / l` 渲染 spinner，`m / s / xs / mini` 保持“加载中状态但不展示 spinner”的设计稿行为
-- 当前状态：其余 button 分类后续继续补齐
+- 已落地首轮对齐：`Base` 类 `loading` 在 `xl / l / m / s / xs / mini` 全尺寸均渲染 spinner，并统一保持 loading 语义与不可点击状态
+- 已落地首轮对齐：`Base` 类全部尺寸当前均按固定高度实现，不再依赖内容把按钮纵向撑高
+- 已落地首轮对齐：`Base` 类 `xl` 宽度固定为 `355px`；`l` 宽度约束在 `178px-327px` 范围内，当前 stage 展示按上限 `327px` 呈现；`block` 等流式场景下 `xl / l / m` 的横向 padding 会收缩到最小安全留白
+- 当前状态：`Base` 类当前范围已完成本轮收尾，可冻结；其余 button 分类后续继续补齐
 
 #### Input
 
@@ -219,6 +222,14 @@
 - 不再保留 `Text` 作为设计系统通用组件
 - stage 中改为 `Typography` 基础排版验证页，挂到 `CssToken 全局样式` 分组下
 - 排版能力由全局 typography token 与页面/组件语义封装组合完成，不再围绕 `Text` props 扩展 API
+
+#### Form
+
+- 已落地首轮对齐：展示类所需 `spacing / typography / color` 语义 token 已补齐，并同步到 `web-css-vars`
+- 已落地首轮对齐：`Form` 组件族已承接原 `ListItem` 的公共导出职责，当前包含 `FormRow`、`FormFaceStatus`、`FormInfoList`、`FormAmountList`、`FormCollapseGroup`、`FormAggregateCollapseGroup`
+- 已落地首轮对齐：`apps/stage` 已新增 `Form 表单 / 展示类 / 输入类 / 行动类` 导航；其中展示类已落地 8 组形态，输入类 / 行动类当前为占位页
+- 已落地首轮对齐：组件公开 API 已新增 `surfaceVariant=\"flush\" | \"card\"`，旧 `carded` 仍保留兼容；`FormGroup` / `Form.Group` 已承载列组合消费语义
+- 当前状态：展示类当前可作为后续迭代基础，输入类 / 行动类待在下一批次明确真实范围后继续推进
 
 #### Tag
 
@@ -240,11 +251,11 @@
 - 当前 padding `24` 不在可用 spacing 中，需要改成协议允许值或语义 alias
 - 标题 `700` 需 remap 到 `500`
 
-#### ListItem
+#### ListItem（历史项）
 
-- 默认应改为 `4`
-- 当前 padding / gap `16` 可保留，但需映射到已确认 spacing
-- 文本字重 `600` 需 remap 到 `500`
+- `ListItem` 已不再作为当前设计系统的公共组件继续演进
+- 历史 `ListItem` 的展示类能力已收敛到 `Form` 组件族中，不再单独作为 Phase 5 的待推进批次管理
+- 如后续历史文档仍出现 `ListItem`，应按“Phase 2 历史组件名”理解，而不是当前组件面
 
 #### Icon
 
@@ -276,6 +287,7 @@
 1. 继续维护本文件中的长期协议与批次顺序，不把它当作一次性收口文档
 2. 已落地首轮：建立 TS token 分层与 Web CSS variables 镜像
 3. 已落地首轮：`Button` 与公共 token 运行时
-4. 当前优先：继续收尾 `Button`，同步校正 `apps/stage` 展示效果
-5. 后续按批次推进其余组件，逐步消除与协议冲突的 radius / font-weight / spacing / color 用法；`Tag` 仅接受新输入驱动的增量修正
-6. 如用户继续提供 Figma 输入或新的组件范围，再按同一主计划扩展，而不是新开平行 active 文档
+4. 已落地首轮：`Form` 展示类替代历史 `ListItem`，并完成 stage 展示与基础消费语义落地
+5. 当前优先：按批次推进 `Input / Card / Modal`，并在需要时继续补齐 `Form` 输入类 / 行动类的真实范围
+6. `Button / Tag` 当前范围已可冻结，后续仅接受新输入驱动的增量修正；`Icon` 按 registry 做增量扩充
+7. 如用户继续提供 Figma 输入或新的组件范围，再按同一主计划扩展，而不是新开平行 active 文档

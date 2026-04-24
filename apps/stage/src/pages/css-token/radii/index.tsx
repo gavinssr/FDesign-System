@@ -18,7 +18,6 @@ export default function RadiiPage() {
         { key: 'CSS Var', value: '有镜像时一并展示' },
       ]}
       galleryTitle="Gallery / 总览"
-      galleryDescription="圆角页按协议固定四档展示，不额外扩展未确认档位。"
       sections={[
         {
           title: '视觉对照 / Usage Preview',

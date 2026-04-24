@@ -36,7 +36,6 @@ page {
 
 :root {
   --stage-header-height: 64px;
-  --stage-sidebar-width: 288px;
   --stage-header-logo: 20px;
   --stage-font-size-header-title: 24px;
   --stage-line-height-header-title: 28px;
@@ -68,7 +67,6 @@ page {
   --stage-space-main-gap: 16px;
   --stage-space-main-padding: 8px;
   --stage-space-demo-card-gap: 16px;
-  --stage-space-demo-header-gap: 12px;
   --stage-space-demo-body-gap: 32px;
   --stage-space-hero-gap: 32px;
   --stage-space-section-gap-tight: 8px;
@@ -90,6 +88,7 @@ page {
   --stage-surface-sublink-hover: #f2f2f2;
   --stage-surface-muted: #f6f6f6;
   --stage-surface-group-active: #FCFCFC;
+  --stage-nav-group-expanded-bg: var(--stage-surface-group-active);
   --stage-nav-active-border-gradient: linear-gradient(180deg, #4D83FF 0%, #6694FF 50%, #FF6694 100%);
   --stage-border: #F5F5F5;
   --stage-border-subtle: #F5F5F5;
@@ -127,6 +126,8 @@ body {
 }
 
 .__stage-iconTile {
+  display: flex;
+  flex-direction: column;
   width: 144px;
   padding: 24px 24px 8px;
   gap: 8px;

@@ -97,4 +97,52 @@ describe('React Native button adapter', () => {
     expect((button as HTMLButtonElement).disabled).toBe(false);
     expect(label.getAttribute('data-style')).toContain('"color":"#1e2533"');
   });
+
+  it('keeps xl width fixed at 355px', () => {
+    const spec = getReactNativeButtonRenderSpec({
+      children: 'XL action',
+      size: 'xl',
+      variant: 'primary-fill',
+    });
+
+    expect(spec.containerStyle[2]).toMatchObject({
+      width: 355,
+      minWidth: 355,
+      maxWidth: 355,
+      height: 48,
+      minHeight: 48,
+    });
+  });
+
+  it('keeps l width within the 178 to 327 range', () => {
+    const spec = getReactNativeButtonRenderSpec({
+      children: 'L action',
+      size: 'l',
+      variant: 'primary-fill',
+    });
+
+    expect(spec.containerStyle[2]).toMatchObject({
+      width: '100%',
+      minWidth: 178,
+      maxWidth: 327,
+      height: 44,
+      minHeight: 44,
+    });
+  });
+
+  it('uses fluid padding for medium block buttons', () => {
+    const spec = getReactNativeButtonRenderSpec({
+      block: true,
+      children: 'Medium action',
+      size: 'm',
+      variant: 'primary-outline',
+    });
+
+    expect(spec.containerStyle[2]).toMatchObject({
+      width: '100%',
+      paddingHorizontal: 12,
+      height: 36,
+      minHeight: 36,
+    });
+  });
 });

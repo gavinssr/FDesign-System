@@ -17,10 +17,3 @@
   border: 1px solid var(--stage-border);
   background: var(--stage-surface);
 }
-
-.__stage-tagCardLabel {
-  color: var(--stage-text);
-  font-size: var(--stage-font-size-description);
-  line-height: var(--stage-line-height-description);
-  font-weight: 500;
-}
