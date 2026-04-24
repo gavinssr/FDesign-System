@@ -126,6 +126,8 @@ body {
 }
 
 .__stage-iconTile {
+  display: flex;
+  flex-direction: column;
   width: 144px;
   padding: 24px 24px 8px;
   gap: 8px;
