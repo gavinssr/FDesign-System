@@ -37,13 +37,13 @@ function patchHistoryOnce() {
     window.dispatchEvent(new Event(STAGE_PATHNAME_CHANGED_EVENT));
   };
 
-  const wrap = <T extends 'pushState' | 'replaceState'>(method: T) => {
-    const original = history[method].bind(history);
-    history[method] = function patched(...args: Parameters<typeof original>) {
-      const result = original(...args);
+  const wrap = (method: 'pushState' | 'replaceState') => {
+    const original = history[method];
+    history[method] = function patched(data: any, unused: string, url?: string | URL | null) {
+      const result = original.call(history, data, unused, url);
       emit();
       return result;
-    } as typeof original;
+    };
   };
 
   wrap('pushState');
