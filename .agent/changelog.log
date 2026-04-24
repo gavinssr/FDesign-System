@@ -1,5 +1,15 @@
 # AI 变更日志（追加式）
 
+## 2026-04-24 — Button 治理收尾 plan 归档
+
+### 文档与治理
+- `docs/exec-plans/completed/phase-5-button-governance-closeout.md`：新增 `Button` 当前轮次治理收尾的正式 completed 归档记录，明确其只覆盖多个分类下的 `Base` 类当前范围
+- 删除 `.cursor/plans/button-governance-closeout_a1777881.plan.md`：原会话级执行 plan 已完成，不再作为治理层待办入口保留
+
+### 说明
+- 本轮只做治理归档与事实源收口，不新增组件实现改动
+- Phase 5 当前唯一行动入口仍是 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`
+
 ## 2026-04-23 — Button XL/L 宽度口径纠正
 
 ### 代码变更
