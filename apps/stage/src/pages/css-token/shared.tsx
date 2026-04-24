@@ -230,7 +230,7 @@ export function MeasurePreview({
           <View className="__stage-measureAnnotation" style={annotationStyle} />
           <View className="__stage-measureBlock" />
         </View>
-        <Text className="__stage-measureLabel __stage-measureLabelHorizontal" style={labelStyle}>{`${value}px`}</Text>
+        <Text className="__stage-measureLabel" style={labelStyle}>{`${value}px`}</Text>
       </View>
     );
   }
@@ -248,7 +248,7 @@ export function MeasurePreview({
         <View className="__stage-measureAnnotation __stage-measureAnnotationVertical" style={annotationStyle} />
         <View className="__stage-measureBlock" />
       </View>
-      <Text className="__stage-measureLabel __stage-measureLabelVertical" style={labelStyle}>{`${value}px`}</Text>
+      <Text className="__stage-measureLabel" style={labelStyle}>{`${value}px`}</Text>
     </View>
   );
 }
@@ -303,7 +303,7 @@ export function PaddingPreview({
           <View className="__stage-paddingPreviewFrame" style={previewStyle}>
             <View className={insetClassName.join(' ')} />
           </View>
-          <Text className="__stage-measureLabel __stage-measureLabelHorizontal">{`${value}px`}</Text>
+          <Text className="__stage-measureLabel">{`${value}px`}</Text>
         </View>
       </View>
     );
@@ -315,7 +315,7 @@ export function PaddingPreview({
         <View className="__stage-paddingPreviewFrame" style={previewStyle}>
           <View className={insetClassName.join(' ')} />
         </View>
-        <Text className="__stage-measureLabel __stage-measureLabelVertical">{`${value}px`}</Text>
+        <Text className="__stage-measureLabel">{`${value}px`}</Text>
       </View>
     </View>
   );

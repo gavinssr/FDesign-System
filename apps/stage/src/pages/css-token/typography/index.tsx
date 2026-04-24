@@ -139,7 +139,6 @@ export default function TypographyPage() {
         { key: 'Rules', value: 'singleLine / body' },
       ]}
       galleryTitle="Gallery / 总览"
-      galleryDescription="按全局 typography token 组织展示。"
       sections={[
         {
           title: '字体族 / Font Family',

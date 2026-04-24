@@ -1,7 +1,7 @@
 import { Text, View } from '@tarojs/components';
 import { Button } from '@fdesign/components';
 
-import { ComponentDemo } from '../../shell/ComponentDemo';
+import { StageShowcasePage } from '../../shell/StageShowcasePage';
 
 type ButtonVariant = 'primary-fill' | 'primary-outline' | 'secondary-outline';
 type ButtonSize = 'xl' | 'l' | 'm' | 's' | 'xs' | 'mini';
@@ -31,38 +31,20 @@ const buttonText = '操作文本';
 
 export default function ButtonPage() {
   return (
-    <>
-      <View className="__stage-demoCard">
-        <View className="__stage-hero">
-          <View className="__stage-heroBody">
-            <Text className="__stage-heroTitle">Base 基础按钮</Text>
-            <Text className="__stage-heroDescription">
-              按钮用于执行用户在交互流程中触发指令、提交更改或完成的即时操作。
-            </Text>
-            <View className="__stage-heroMeta">
-              <View className="__stage-metaItem">
-                <Text className="__stage-metaKey">Variants</Text>
-                <Text className="__stage-metaValue">3 种类型</Text>
-              </View>
-              <View className="__stage-metaItem">
-                <Text className="__stage-metaKey">Sizes</Text>
-                <Text className="__stage-metaValue">6 种尺寸</Text>
-              </View>
-              <View className="__stage-metaItem">
-                <Text className="__stage-metaKey">States</Text>
-                <Text className="__stage-metaValue">4 种状态</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-
-      <ComponentDemo
-        title="Gallery / 变体总览"
-      >
-        <View className="__stage-galleryStack">
-          <View className="__stage-gallerySection">
-            <Text className="__stage-subsectionTitle">类型 / Variants</Text>
+    <StageShowcasePage
+      heroTitle="Base 基础按钮"
+      heroDescription="按钮用于执行用户在交互流程中触发指令、提交更改或完成的即时操作。"
+      heroMeta={[
+        { key: 'Variants', value: '3 种类型' },
+        { key: 'Sizes', value: '6 种尺寸' },
+        { key: 'States', value: '4 种状态' },
+      ]}
+      galleryTitle="Gallery / 变体总览"
+      sections={[
+        {
+          key: 'variants',
+          title: '类型 / Variants',
+          children: (
             <View className="__stage-overviewRow">
               {variantOrder.map((variant) => (
                 <View key={`variant-${variant}`} className="__stage-captionedItem">
@@ -73,10 +55,12 @@ export default function ButtonPage() {
                 </View>
               ))}
             </View>
-          </View>
-
-          <View className="__stage-gallerySection">
-            <Text className="__stage-subsectionTitle">尺寸 / Sizes</Text>
+          ),
+        },
+        {
+          key: 'sizes',
+          title: '尺寸 / Sizes',
+          children: (
             <View className="__stage-overviewRow">
               {sizeOrder.map((size) => (
                 <View key={`size-${size}`} className="__stage-captionedItem">
@@ -87,10 +71,12 @@ export default function ButtonPage() {
                 </View>
               ))}
             </View>
-          </View>
-
-          <View className="__stage-gallerySection">
-            <Text className="__stage-subsectionTitle">状态矩阵 / State Matrix</Text>
+          ),
+        },
+        {
+          key: 'state-matrix',
+          title: '状态矩阵 / State Matrix',
+          children: (
             <View className="__stage-matrixGrid">
               {variantOrder.map((variant) => (
                 <View key={`matrix-${variant}`} className="__stage-galleryCard">
@@ -123,10 +109,12 @@ export default function ButtonPage() {
                 </View>
               ))}
             </View>
-          </View>
-
-          <View className="__stage-gallerySection">
-            <Text className="__stage-subsectionTitle">不同尺寸 Loading / Primary Outline</Text>
+          ),
+        },
+        {
+          key: 'outline-loading',
+          title: '不同尺寸 Loading / Primary Outline',
+          children: (
             <View className="__stage-overviewRow">
               {sizeOrder.map((size) => (
                 <View key={`loading-${size}`} className="__stage-captionedItem">
@@ -137,9 +125,9 @@ export default function ButtonPage() {
                 </View>
               ))}
             </View>
-          </View>
-        </View>
-      </ComponentDemo>
-    </>
+          ),
+        },
+      ]}
+    />
   );
 }

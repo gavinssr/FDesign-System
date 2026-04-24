@@ -88,9 +88,6 @@
 /* stage 壳层点击热区统一使用手型光标；组件本体不默认纳入，非导航点击区可显式挂 __stage-clickable */
 .__stage-sidebar [role='button'],
 .__stage-sidebar [role='link'],
-.__stage-controlPanel button,
-.__stage-controlPanel [role='button'],
-.__stage-controlPanel [role='link'],
 .__stage-clickable {
   cursor: pointer;
 }
@@ -255,17 +252,15 @@
   height: calc(100vh - var(--stage-header-height));
   overflow-y: auto;
   overscroll-behavior: contain;
-  display: flex;
-  flex-direction: column;
-  gap: var(--stage-space-main-gap);
   padding: var(--stage-space-main-padding);
   background: var(--stage-page-bg);
 }
 
-.__stage-page {
-  min-height: 100vh;
-  padding: 16px;
-  background: var(--stage-page-bg);
+.__stage-main > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stage-space-main-gap);
+  min-width: 0;
 }
 
 .__stage-demoCard {
@@ -300,12 +295,6 @@
   color: var(--stage-text-muted);
   font-size: var(--stage-font-size-control-label);
   line-height: var(--stage-line-height-control-label);
-}
-
-.__stage-controlPanel {
-  padding: 0;
-  border: 0;
-  background: transparent;
 }
 
 .__stage-controls,
@@ -347,21 +336,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--stage-space-demo-body-gap);
-}
-
-.__stage-compareGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-}
-
-.__stage-compareCard {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  border: 1px solid var(--stage-border);
-  background: var(--stage-surface-muted);
 }
 
 .__stage-kvList {
@@ -408,8 +382,7 @@
 }
 
 .__stage-heroBody,
-.__stage-gallerySection,
-.__stage-verificationNote {
+.__stage-gallerySection {
   display: flex;
   flex-direction: column;
   gap: var(--stage-space-section-gap-tight);
@@ -417,15 +390,6 @@
 
 .__stage-heroBody {
   padding-right: 8px;
-}
-
-.__stage-heroLabel {
-  color: var(--stage-text-soft);
-  font-size: var(--stage-font-size-hero-label);
-  line-height: var(--stage-line-height-hero-label);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 .__stage-heroTitle {
@@ -439,12 +403,6 @@
   color: var(--stage-text-muted);
   font-size: var(--stage-font-size-hero-description);
   line-height: var(--stage-line-height-hero-description);
-}
-
-.__stage-caption {
-  color: var(--stage-text-muted);
-  font-size: var(--stage-font-size-description);
-  line-height: var(--stage-line-height-description);
 }
 
 .__stage-heroMeta {
@@ -494,15 +452,6 @@
   font-size: var(--stage-font-size-meta-value);
   line-height: var(--stage-line-height-meta-value);
   font-weight: 500;
-}
-
-.__stage-playgroundCanvas {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
 }
 
 .__stage-galleryStack {
@@ -626,16 +575,8 @@
   gap: 12px;
 }
 
-.__stage-divider {
-  height: 1px;
-  background: var(--stage-border-subtle);
-}
-
-.__stage-main > * {
+.__stage-main > div > * {
   flex-shrink: 0;
-}
-
-@media (max-width: 1024px) {
 }
 
 @media (max-width: 720px) {

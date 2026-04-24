@@ -23,7 +23,6 @@ export function StageVisibilitySwitch({
         type="button"
       >
         <span className="__stage-visibilitySwitchTrack">
-          <span className="__stage-visibilitySwitchFill" />
           <span className="__stage-visibilitySwitchThumb" />
         </span>
       </button>

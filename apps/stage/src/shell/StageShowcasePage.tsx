@@ -1,7 +1,5 @@
 import { Text, View } from '@tarojs/components';
 
-import { ComponentDemo } from './ComponentDemo';
-
 type StageNode = JSX.Element | JSX.Element[] | string | number | null;
 
 interface StageMetaItem {
@@ -10,6 +8,7 @@ interface StageMetaItem {
 }
 
 interface StageSection {
+  key?: string;
   title: string;
   controls?: StageNode;
   children: StageNode;
@@ -21,7 +20,6 @@ interface StageShowcasePageProps {
   heroMeta: readonly StageMetaItem[];
   sections: readonly StageSection[];
   galleryTitle?: string;
-  galleryDescription?: string;
 }
 
 export function StageShowcasePage({
@@ -30,7 +28,6 @@ export function StageShowcasePage({
   heroMeta,
   sections,
   galleryTitle = 'Gallery / 组件总览',
-  galleryDescription = '统一使用与 Base 基础按钮页一致的英雄区与分节展示结构。',
 }: StageShowcasePageProps) {
   return (
     <>
@@ -51,19 +48,28 @@ export function StageShowcasePage({
         </View>
       </View>
 
-      <ComponentDemo title={galleryTitle} description={galleryDescription}>
-        <View className="__stage-galleryStack">
-          {sections.map((section) => (
-            <View key={section.title} className="__stage-gallerySection">
-              <View className="__stage-gallerySectionHeader">
-                <Text className="__stage-subsectionTitle">{section.title}</Text>
-                {section.controls ? <View className="__stage-gallerySectionControls">{section.controls}</View> : null}
-              </View>
-              {section.children}
-            </View>
-          ))}
+      <View className="__stage-demoCard">
+        <View className="__stage-demoHeader">
+          <Text className="__stage-sectionTitle">{galleryTitle}</Text>
         </View>
-      </ComponentDemo>
+        <View className="__stage-demoBody">
+          <View className="__stage-galleryStack">
+            {sections.map((section) => (
+              <View key={section.key ?? section.title} className="__stage-gallerySection">
+                {section.controls ? (
+                  <View className="__stage-gallerySectionHeader">
+                    <Text className="__stage-subsectionTitle">{section.title}</Text>
+                    <View className="__stage-gallerySectionControls">{section.controls}</View>
+                  </View>
+                ) : (
+                  <Text className="__stage-subsectionTitle">{section.title}</Text>
+                )}
+                {section.children}
+              </View>
+            ))}
+          </View>
+        </View>
+      </View>
     </>
   );
 }
