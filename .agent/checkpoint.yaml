@@ -1,4 +1,4 @@
-last_session: "2026-04-21T08:57:11Z"
+last_session: "2026-04-24T00:00:00+08:00"
 current_phase: "phase-5"
 current_focus: "Phase 5 正在进行中；Button（多个分类下的 Base 类）当前范围已完成收尾并可冻结，当前默认工作窗口切换为按 active 主计划推进 Input / Card / Modal，并继续定义 Form 输入类、行动类的真实组件范围"
 completed:
@@ -19,6 +19,7 @@ in_progress:
   - "Phase 5 active plan 正作为长期滚动主计划维护，后续组件按批次推进"
   - "Form 展示类已完成首轮 Figma 对齐与 ListItem -> Form 替换，当前已归档；输入类 / 行动类当前仅保留 stage 占位页，待后续定义真实组件范围"
   - "Icon 已落地首轮 Figma 对齐与双源架构（local inline SVG + material font），后续可继续按 registry 扩充本地图标集"
+  - "navbar-1 已本地合并 origin/main 并解决 PR 合并冲突；冲突主要集中在 stage 壳层样式、Layout history patch 类型与展示页抽象结构"
 blocked: []
 next_recommended:
   - "以 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 为唯一主计划，按批次推进 Input / Card / Modal，并在需要时继续定义 Form 输入类、行动类的真实组件范围"
@@ -40,6 +41,7 @@ notes: |
   4. `Tag` 当前状态为“可冻结”；`Icon` 当前状态为“已落地首轮”
   5. 展示类 `Form` 已完成首轮落地并完成 `ListItem -> Form` 替换；输入类 / 行动类当前仍只保留 stage 占位页
   6. `Text` 不再作为设计系统通用组件保留，stage 中改由 `CssToken 全局样式 / Typography 排版` 承接基础验证
+  7. `navbar-1` 已吸收 `origin/main` 的展示类 Form 计划与 stage 兼容样式，PR 合并冲突已在本地解决；Button 页与 `StageShowcasePage` 保留当前分支的抽象展示结构，`Layout` 吸收更严格的 history patch 类型写法
 
   当前工作窗口：
   1. 第一优先级是按 active 主计划推进 `Input / Card / Modal`，并在需要时继续定义 `Form` 输入类 / 行动类的真实组件范围

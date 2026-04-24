@@ -263,6 +263,12 @@
   min-width: 0;
 }
 
+.__stage-page {
+  min-height: 100vh;
+  padding: 16px;
+  background: var(--stage-page-bg);
+}
+
 .__stage-demoCard {
   display: flex;
   flex-direction: column;

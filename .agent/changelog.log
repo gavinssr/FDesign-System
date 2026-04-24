@@ -1,3 +1,19 @@
+## 2026-04-22 — Form 展示类占位 icon / 预设内容可见性优化
+
+### 代码变更
+- `packages/components/src/form/Form.types.ts`、`packages/components/src/form/Form.tsx`：为 `FormRow` 新增 `showLeading` 与 `showTrailingContent`，把前导占位 icon 与右侧预设内容区域下沉为组件本体可控变体；现有业务仍可继续按需传 `leading / presetText / trailingText`
+- `packages/components/src/form/Form.test.tsx`：新增占位 icon / 预设内容隐藏回归测试
+- `apps/stage/src/shell/StageVisibilitySwitch.tsx`、`apps/stage/src/app.css`、`apps/stage/src/pages/form-display/index.tsx`：新增 stage 私有文案 + switch 控件，并在 `单行 / 多行` section 头部接入 `icon`、`预设内容` 两个默认开启的可见性开关；开关视觉按 Figma 节点 `26573:20509` 对齐
+
+### 验证
+- `pnpm --filter @fdesign/components test`
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/stage build`
+- `ReadLints`：本轮改动文件未发现新增 linter 问题
+
+### 说明
+- `apps/stage` 构建仍仅保留既有 `EntrypointsOverSizeLimitWarning`，本轮未引入新的构建错误
+
 # AI 变更日志（追加式）
 
 ## 2026-04-24 — Button 治理收尾 plan 归档
@@ -1445,3 +1461,16 @@
 ### 说明
 - 当前规则已同时覆盖 `surfaceVariant="flush"` 与 `surfaceVariant="card"` 的分割线逻辑；圆角差异只体现在 `card`
 
+## 2026-04-24 — navbar-1 PR 合并冲突解决
+
+### 代码变更
+- 本地将 `origin/main` 合入 `navbar-1`，解决 `.agent/checkpoint.yaml`、`apps/stage/src/app.css`、`apps/stage/src/pages/button/index.tsx`、`apps/stage/src/shell/Layout.tsx`、`apps/stage/src/shell/StageShowcasePage.tsx`、`apps/stage/src/shell/StageVisibilitySwitch.tsx` 与 `apps/stage/src/shell/styles/layout.module.css` 的冲突
+- `Button` 页与 `StageShowcasePage` 保留当前分支的抽象展示结构，避免回退到 `main` 中较早的手写 Gallery 结构
+- `Layout` 吸收 `origin/main` 中更严格的 `history.pushState/replaceState` 类型封装；stage 样式保留旧 `__stage-page` 兼容容器与 visibility switch fill 占位样式
+
+### 验证
+- `npm test`
+- `npm run lint`
+
+### 说明
+- 本轮仅处理 PR 合并冲突，不新增生产依赖，不改变组件公开 API
