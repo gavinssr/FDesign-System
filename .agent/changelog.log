@@ -1474,3 +1474,17 @@
 
 ### 说明
 - 本轮仅处理 PR 合并冲突，不新增生产依赖，不改变组件公开 API
+
+## 2026-04-26 — Taro 持久化缓存开启
+
+### 代码变更
+- `apps/stage/config/index.ts`、`apps/example-consumer/config/index.ts`、`projects/real-project-1/config/index.ts`：在 Taro 顶层配置中新增 `cache.enable: true`，开启 Webpack5 filesystem 持久化缓存
+- `.gitignore`：忽略 Codex 桌面端自动生成的本地 `.codex/` 环境目录，避免无关运行态文件进入版本控制
+- `.agent/checkpoint.yaml`：记录本轮 Taro cache 配置状态，避免后续重复处理终端 Tips
+
+### 验证
+- `npm run lint`
+- `npm test`
+
+### 说明
+- 本轮仅调整 Taro 构建配置，不新增依赖，不改变组件公开 API

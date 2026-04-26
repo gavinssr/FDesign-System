@@ -4,6 +4,7 @@ dist/
 dist-h5/
 dist-weapp/
 .turbo/
+.codex/
 .deliverables/
 
 *.log

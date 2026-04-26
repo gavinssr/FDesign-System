@@ -13,6 +13,9 @@ export default defineConfig<'webpack5'>(async (merge, { mode }) => {
     },
     framework: 'react',
     compiler: 'webpack5',
+    cache: {
+      enable: true,
+    },
     h5: {
       publicPath: '/',
       staticDirectory: 'static',
