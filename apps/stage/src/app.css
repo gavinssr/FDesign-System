@@ -64,8 +64,8 @@ page {
   --stage-line-height-subsection-title: 20px;
   --stage-font-size-description: 12px;
   --stage-line-height-description: 18px;
-  --stage-space-main-gap: 16px;
   --stage-space-main-padding: 8px;
+  --stage-space-main-gap: var(--stage-space-main-padding);
   --stage-space-demo-card-gap: 16px;
   --stage-space-demo-body-gap: 32px;
   --stage-space-hero-gap: 32px;

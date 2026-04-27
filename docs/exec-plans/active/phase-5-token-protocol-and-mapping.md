@@ -29,11 +29,12 @@
 - `Tag` 当前状态为“可冻结”，本轮组件本体、token 映射与 stage 展示已通过验收
 - `Icon` 当前状态为“已落地首轮”，双源架构、尺寸协议与 stage 展示已完成一轮对齐
 - `Form` 当前状态为“已落地首轮”，展示类已完成首轮 Figma 对齐，`ListItem` 已从公共导出与 stage 页面中移除并收敛为 `Form` 组件族；输入类 / 行动类当前仅保留 stage 占位页
+- 用户已明确确认 `Input / Card / Modal` 不再属于当前设计系统公共组件范围；对应组件本体、公开导出、stage 分支页与导航入口已移除
 - 其余组件与其语义 token 仍按批次持续推进，不按一次性全部完成来管理
 
 ## 当前工作窗口
 
-- 第一优先级：沿同一协议推进 `Input / Card / Modal`，并在 `Form` 展示类已落地的基础上继续定义输入类 / 行动类的真实组件范围
+- 第一优先级：继续定义 `Form` 输入类 / 行动类的真实组件范围，并沿 Web DOM 路线收敛后续交互组件边界
 - 第二优先级：当新增组件或修正既有组件暴露 token 缺口时，先补齐全局 token 语义，再回灌组件实现
 - 第三优先级：`Button / Tag / Icon` 当前范围仅接受新输入驱动的增量修正，不再作为默认主动收尾对象
 
@@ -44,6 +45,16 @@
 - 若当前 focus 发生变化，由 `checkpoint.yaml` 记录短期窗口；本文件只同步结构性变化与阶段性结论
 
 ## 已确认协议
+
+### 0. Stage 展示交互识别协议
+
+- `apps/stage` 作为展示舞台，组件展示区里的真实可点击节点在 hover 时都必须呈现 `pointer`
+- `apps/stage` 页内文本默认允许鼠标框选复制，便于核对文案、token 名称、示例值与组件展示内容
+- `pointer` 对组件展示区不再由 stage 壳层统一补齐；公共组件应在 H5 主路径自行承担 hover cursor 与交互语义
+- stage 壳层只为自己的导航、折叠组、切换控件等舞台层节点补 `pointer`，不得替公共组件兜底交互暗示
+- 这条规则用于帮助识别交互热区，但不得反向要求组件本体引入额外展示容器、辅助边框或 stage 专属视觉语义
+- 文本可选择同样属于 stage 私有展示增强，不得反向要求组件本体在真实消费场景中取消既有 `user-select` 语义
+- 新增组件或重构组件时，若 stage 中未出现 `pointer`，优先修组件本体的真实节点、hover cursor 与交互语义；不要把“手动给某个 demo 包一层可点击 class”或“让 stage 自动命中”当成长期主路径
 
 ### 1. Radius 协议
 
@@ -124,6 +135,11 @@
 - token 实施前，必须先让用户确认映射方案
 - 协议优先级高于现有 provisional 实现
 - 若现有组件与协议冲突，应调整组件实现，不应为了兼容旧代码新增禁用 token
+- H5 主路径的公共组件优先输出可控 Web DOM；所有可交互元素的真实节点、状态 class、ARIA 语义和样式命中点应由 `packages/components` 明确持有
+- 不再默认使用 Taro 表单 / 交互组件承接公共组件内部交互语义；若 Taro 组件会生成 `taro-*`、`weui-*` 等额外内层结构或平台预设样式，应改为原生 HTML 语义或组件自持结构
+- `View` / `Text` 可继续作为 Taro H5 基础布局和文本容器，但 `button`、`input`、`textarea`、`select`、`a`、自定义点击区域等交互节点必须按最终 H5 DOM 可控性优先设计
+- 禁止把覆盖 Taro / weui 内层默认样式作为长期方案；NavBar 搜索框改为原生 `input` 是后续交互组件的路线样板
+- Form 输入类 / 行动类后续新增真实交互组件时，必须先按上述 Web DOM 路线定义真实 DOM 结构，再做 token、视觉和平台适配
 
 ## 仓库映射方案
 
@@ -193,8 +209,7 @@
 ### 2. 当前已知会受影响的组件
 
 - 第一批：`Button`（当前仅多个分类下的 `Base` 类 button 已完成本轮收尾并可冻结）、`Tag`（已通过本轮验收，当前可冻结）、`Icon`（已落地首轮对齐）
-- 第二批：`Form`（展示类已落地首轮，输入类 / 行动类待定义真实组件范围）、`Input`
-- 第三批：`Card`、`Modal`
+- 第二批：`Form`（展示类已落地首轮，输入类 / 行动类待定义真实组件范围）
 - 横向跟进：`apps/stage` 全局壳层、`projects/real-project-1` 全局壳层
 
 ### 3. 组件级协议映射建议
@@ -212,11 +227,6 @@
 - 已落地首轮对齐：`Base` 类 `xl` 宽度固定为 `355px`；`l` 宽度约束在 `178px-327px` 范围内，当前 stage 展示按上限 `327px` 呈现；`block` 等流式场景下 `xl / l / m` 的横向 padding 会收缩到最小安全留白
 - 当前状态：`Base` 类当前范围已完成本轮收尾，可冻结；其余 button 分类后续继续补齐
 
-#### Input
-
-- 当前输入框 radius `8` 不符合默认矩形容器协议，建议改为 `4`
-- label / helper 的字重与字号需改为 typography 协议值
-
 #### Typography
 
 - 不再保留 `Text` 作为设计系统通用组件
@@ -229,6 +239,7 @@
 - 已落地首轮对齐：`Form` 组件族已承接原 `ListItem` 的公共导出职责，当前包含 `FormRow`、`FormFaceStatus`、`FormInfoList`、`FormAmountList`、`FormCollapseGroup`、`FormAggregateCollapseGroup`
 - 已落地首轮对齐：`apps/stage` 已新增 `Form 表单 / 展示类 / 输入类 / 行动类` 导航；其中展示类已落地 8 组形态，输入类 / 行动类当前为占位页
 - 已落地首轮对齐：组件公开 API 已新增 `surfaceVariant=\"flush\" | \"card\"`，旧 `carded` 仍保留兼容；`FormGroup` / `Form.Group` 已承载列组合消费语义
+- 后续输入类 / 行动类必须先按 Web DOM 实现路线定义真实交互节点，不得默认复用 Taro 表单 / 交互组件导致 H5 内层样式干扰
 - 当前状态：展示类当前可作为后续迭代基础，输入类 / 行动类待在下一批次明确真实范围后继续推进
 
 #### Tag
@@ -238,18 +249,6 @@
 - 已落地首轮对齐：`purple` 已经按用户确认进入 `semantic.tag`，未新增 reference 层
 - 已落地首轮对齐：Tag 紧凑协议已抽取到 token，当前包含 `minHeight=16 / paddingX=4 / couponGap=2 / couponDividerHeight=8 / line-height=9`
 - 当前状态：`apps/stage` 的 `Tag 标签` 页展示已通过验收，本轮可冻结
-
-#### Card
-
-- 默认卡片 radius 应改为 `4`
-- 若是 finance hero card，可按协议例外使用 `8`
-- 当前 padding `24` 不在可用 spacing 中，需要改成协议允许值或语义 alias
-
-#### Modal
-
-- dialog corners 可使用 `8`
-- 当前 padding `24` 不在可用 spacing 中，需要改成协议允许值或语义 alias
-- 标题 `700` 需 remap 到 `500`
 
 #### ListItem（历史项）
 
@@ -288,6 +287,6 @@
 2. 已落地首轮：建立 TS token 分层与 Web CSS variables 镜像
 3. 已落地首轮：`Button` 与公共 token 运行时
 4. 已落地首轮：`Form` 展示类替代历史 `ListItem`，并完成 stage 展示与基础消费语义落地
-5. 当前优先：按批次推进 `Input / Card / Modal`，并在需要时继续补齐 `Form` 输入类 / 行动类的真实范围
+5. 当前优先：继续定义 `Form` 输入类 / 行动类的真实范围，并在新增组件前先收敛真实交互边界
 6. `Button / Tag` 当前范围已可冻结，后续仅接受新输入驱动的增量修正；`Icon` 按 registry 做增量扩充
 7. 如用户继续提供 Figma 输入或新的组件范围，再按同一主计划扩展，而不是新开平行 active 文档

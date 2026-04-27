@@ -114,9 +114,7 @@ export const componentLinks = [
   { type: 'group', key: 'form', label: 'Form 表单', children: formLinks },
   { type: 'page', key: 'icon', label: 'Icon 图标', title: 'Icon 图标', url: '/pages/icon/index' },
   { type: 'page', key: 'tag', label: 'Tag 标签', title: 'Tag 标签', url: '/pages/tag/index' },
-  { type: 'page', key: 'input', label: 'Input 输入框', title: 'Input 输入框', url: '/pages/input/index' },
-  { type: 'page', key: 'card', label: 'Card 卡片', title: 'Card 卡片', url: '/pages/card/index' },
-  { type: 'page', key: 'modal', label: 'Modal 弹窗', title: 'Modal 弹窗', url: '/pages/modal/index' },
+  { type: 'page', key: 'navbar', label: 'NavBar 标题栏', title: 'NavBar 标题栏', url: '/pages/navbar/index' },
 ] as const satisfies readonly ComponentLink[];
 
 export const componentPages = componentLinks.flatMap((item) =>

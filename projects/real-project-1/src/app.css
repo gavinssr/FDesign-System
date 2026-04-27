@@ -38,6 +38,12 @@ body {
   line-height: var(--fd-line-height-single-display-large, 28px);
 }
 
+.__realProject-sectionTitle {
+  font-size: var(--fd-font-size-increase);
+  font-weight: var(--fd-font-weight-medium);
+  line-height: var(--fd-line-height-single-increase);
+}
+
 .__realProject-description {
   color: var(--fd-color-text-secondary);
   font-size: var(--fd-font-size-further);
@@ -88,4 +94,74 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: var(--fd-space-12);
+}
+
+.__realProject-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fd-space-8);
+}
+
+.__realProject-fieldLabel {
+  color: var(--fd-color-text-primary);
+  font-size: var(--fd-font-size-further);
+  font-weight: var(--fd-font-weight-medium);
+  line-height: var(--fd-line-height-single-further);
+}
+
+.__realProject-fieldHelp {
+  color: var(--fd-color-text-secondary);
+  font-size: var(--fd-font-size-base);
+  line-height: var(--fd-line-height-body-base);
+}
+
+.__realProject-input {
+  height: 36px;
+  padding: 0 var(--fd-space-12);
+  border: 1px solid var(--fd-color-border-subtle);
+  border-radius: var(--fd-radius-default);
+  background: var(--fd-color-surface-base);
+  color: var(--fd-color-text-primary);
+  font-family: var(--fd-font-family-text);
+  font-size: var(--fd-font-size-further);
+  line-height: var(--fd-line-height-single-further);
+  box-sizing: border-box;
+}
+
+.__realProject-input:focus {
+  border-color: var(--fd-color-primary-background);
+  outline: none;
+}
+
+.__realProject-modalRoot {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--fd-space-16);
+  box-sizing: border-box;
+}
+
+.__realProject-modalBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(30 37 51 / 56%);
+  cursor: pointer;
+}
+
+.__realProject-modalPanel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: min(100%, 520px);
+  flex-direction: column;
+  gap: var(--fd-space-16);
+  padding: var(--fd-space-16);
+  border: 1px solid var(--fd-color-border-subtle);
+  border-radius: var(--fd-radius-large);
+  background: var(--fd-color-surface-base);
+  box-shadow: var(--fd-shadow-surface);
+  box-sizing: border-box;
 }

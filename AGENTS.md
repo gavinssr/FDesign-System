@@ -57,11 +57,23 @@ scripts/                 ← 校验与构建脚本
 4. 后续 agent 启动 stage 预览时默认使用根命令 `pnpm dev:stage`；该命令会先做初始同步，再持续监听 `tokens/components` 源码并刷新 `dist`
 5. 若只排查单包构建，可使用包内 `watch:dist`，但这不替代根级 `pnpm dev:stage` 的完整预览链路
 6. 组件或 token 改动完成后，若本轮做过 stage 运行态验证，应优先确认当前预览来自最新 `dist`，而不是仅重启 `@fdesign/stage`
+7. 公共组件在 H5 主路径中，真实可点击节点本身就应在 hover 时呈现 `pointer`；这是组件本体的交互语义，不应只依赖 stage 壳层补充
+8. `apps/stage` 只为自身导航与壳层控件补 `pointer`；对于组件展示区，stage 的职责是暴露“组件本体是否正确输出 hover cursor 与交互语义”，而不是替组件兜底
+9. stage 页内文本默认允许鼠标框选复制；这同样属于 stage 私有展示增强，不改变组件本体在真实业务场景中的 `user-select` 语义
 
 ## 视觉实现约定
 
 1. 基于 1 倍图还原时，宽度等于 `375px` 的通栏元素默认不强制圆角
 2. 基于 1 倍图还原时，宽度不等于 `375px` 的元素，圆角值优先取 `4px`；若设计明确给出其它圆角，再按设计覆盖
+
+## Web DOM 实现路线
+
+1. 公共组件的 H5 主路径优先输出可控 Web DOM：结构、交互节点、状态 class、ARIA 语义与样式命中点都应由 `packages/components` 明确持有
+2. 所有可交互元素默认使用原生 HTML 语义或显式 role 封装，包括但不限于 `button`、`input`、`textarea`、`select`、`a` 以及自定义点击区域；不要默认使用会生成额外内层结构或平台预设样式的 Taro 表单 / 交互组件
+3. `@tarojs/components` 的 `View` / `Text` 可继续作为 Taro H5 运行时中的基础布局与文本容器；涉及真实输入、点击、选择、开关、提交等交互语义时，必须先评估最终 H5 DOM 是否完全可控
+4. 禁止通过高优先级选择器长期覆盖 Taro / weui 内层默认样式来完成视觉还原；若出现 `taro-*`、`weui-*` 等内部结构干扰，应优先改为组件自持的 Web DOM 结构
+5. 新增或重构组件时，应在 stage 或测试中确认关键交互节点的真实 DOM 结构符合预期；Form 输入类 / 行动类后续实现必须先遵守本路线，再讨论平台适配
+6. 若未来明确需要小程序 / RN / Weex 差异实现，通过 adapter、平台分支或独立实现承接，不回退 H5 主路径的 Web DOM 可控性
 
 ## 变体命名约定
 
@@ -132,5 +144,3 @@ scripts/                 ← 校验与构建脚本
 | Lint 规则      | `packages/eslint-config/`                                    |
 | 边界校验         | `scripts/validate-boundaries.ts`                             |
 | 完整需求文档（归档参考） | `docs/references/RequirementStarter.Optimized.md`（已达成共识的完整版） |
-
-

@@ -9,6 +9,13 @@
   color: var(--stage-text);
 }
 
+/* stage 文本默认允许鼠标框选复制；这是舞台页私有增强，不改变组件本体语义 */
+.__stage-layout,
+.__stage-layout * {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 .__stage-header {
   position: fixed;
   top: 0;
@@ -85,7 +92,7 @@
   background: rgb(30 37 51 / 36%);
 }
 
-/* stage 壳层点击热区统一使用手型光标；组件本体不默认纳入，非导航点击区可显式挂 __stage-clickable */
+/* stage 壳层只为自身导航/控件补 pointer；组件展示区的 hover 语义应由组件本体自行承担 */
 .__stage-sidebar [role='button'],
 .__stage-sidebar [role='link'],
 .__stage-clickable {

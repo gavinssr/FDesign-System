@@ -1,19 +1,12 @@
 import { Text, View } from '@tarojs/components';
 import {
   Button,
-  Card,
   FormRow,
   Icon,
-  Input,
-  Modal,
   Tag,
 } from '@fdesign/components';
-import { useState } from 'react';
 
 export default function IndexPage() {
-  const [value, setValue] = useState('workspace@fdesign.dev');
-  const [open, setOpen] = useState(false);
-
   return (
     <View className="__consumer-page">
       <View className="__consumer-hero">
@@ -26,33 +19,33 @@ export default function IndexPage() {
             consumer
           </Tag>
           <Tag variant="fill-secondary" color="green">workspace package</Tag>
-          <Button size="m" onPress={() => setOpen(true)}>Open modal</Button>
+          <Button size="m">Browse components</Button>
         </View>
       </View>
 
       <View className="__consumer-grid">
-        <Card
-          title="Profile form"
-          description="Consumer page composes Input, token-styled copy and Button without stage shell."
-        >
+        <View className="__consumer-section">
+          <Text className="__consumer-title">Profile actions</Text>
+          <Text className="__consumer-description">
+            Consumer page now demonstrates composition with the retained primitives only.
+          </Text>
           <View className="__consumer-stack">
             <Text className="__consumer-copy __consumer-copyMuted">
-              The current input value is managed locally inside the consumer page.
+              Form-like layout and action rhythm stay available without relying on the removed Input,
+              Card, or Modal components.
             </Text>
-            <Input
-              label="Contact email"
-              value={value}
-              helperText="This value is controlled by the consumer app."
-              onValueChange={setValue}
-            />
             <View className="__consumer-row">
               <Button size="m">Save changes</Button>
               <Button size="m" variant="secondary-outline">Cancel</Button>
             </View>
           </View>
-        </Card>
+        </View>
 
-        <Card title="Settings list" description="List composition with leading and trailing icons.">
+        <View className="__consumer-section">
+          <Text className="__consumer-title">Settings list</Text>
+          <Text className="__consumer-description">
+            List composition with leading and trailing icons.
+          </Text>
           <View className="__consumer-stack">
             <FormRow
               title="Notifications"
@@ -71,24 +64,8 @@ export default function IndexPage() {
               showJumpIcon
             />
           </View>
-        </Card>
+        </View>
       </View>
-
-      <Modal
-        open={open}
-        title="Consumer modal"
-        description="This modal is rendered from apps/example-consumer, not from apps/stage."
-        primaryActionLabel="Close"
-        secondaryActionLabel="Keep open"
-        onPrimaryAction={() => setOpen(false)}
-        onSecondaryAction={() => setOpen(true)}
-        onClose={() => setOpen(false)}
-      >
-        <Text className="__consumer-copy">
-          Consumer apps can compose design-system primitives directly while staying isolated from
-          the stage shell.
-        </Text>
-      </Modal>
     </View>
   );
 }

@@ -1,0 +1,57 @@
+component: NavBar
+purpose: "二级页标题栏组件，承载返回、标题、右侧操作、Tabs 分类与搜索入口"
+status: figma-aligned-first-pass
+provisional: false
+source:
+  figma: "https://www.figma.com/design/kX3MyVcOZTNkJzet8sGVBB/branch/2OLa4iMlqOGTKtjlWwsrTW?node-id=26761-11536"
+variants:
+  - title
+  - titleWithIconActions
+  - titleWithTextAction
+  - noTitleWithIconActions
+  - tabsWithIconActions
+  - search
+  - searchWithIconAction
+layout:
+  width: 375
+  height: 44
+  backButton:
+    box: 24
+  searchBox:
+    height: 34
+    radius: 8
+interactions:
+  back: onBack
+  iconAction: action.onPress
+  textAction: textAction.onPress
+  tabs: activeTabKey / defaultActiveTabKey / onTabChange
+  search:
+    input: onValueChange
+    submit: onSubmit
+    clear: onClear
+    tagRemove: onTagRemove
+iconActions:
+  supported:
+    - search
+    - cart
+    - more
+    - customer-service
+    - bill
+    - credit-increase
+    - support
+    - calendar
+    - wallet
+  rendering: "local NavBar SVG assets; support/calendar/wallet retained as compatibility aliases"
+states:
+  - title
+  - titleWithIconActions
+  - titleWithTextAction
+  - noTitleWithIconActions
+  - tabs
+  - search
+  - searchWithIconAction
+a11y:
+  - "返回、右侧操作、Tabs 与清空/删除标签操作应暴露可访问语义"
+forbidden:
+  - "不允许在 NavBar 内部处理业务路由跳转"
+  - "不允许在 NavBar 内部耦合业务埋点"

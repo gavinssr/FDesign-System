@@ -13,10 +13,8 @@ export default defineAppConfig({
     'pages/form-input/index',
     'pages/form-action/index',
     'pages/tag/index',
-    'pages/input/index',
-    'pages/card/index',
     'pages/icon/index',
-    'pages/modal/index',
+    'pages/navbar/index',
   ],
   window: {
     navigationBarTitleText: 'FDesign System',

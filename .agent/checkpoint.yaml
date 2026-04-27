@@ -1,6 +1,6 @@
-last_session: "2026-04-26T00:00:00+08:00"
+last_session: "2026-04-27T00:00:00+08:00"
 current_phase: "phase-5"
-current_focus: "Phase 5 正在进行中；Button（多个分类下的 Base 类）当前范围已完成收尾并可冻结，当前默认工作窗口切换为按 active 主计划推进 Input / Card / Modal，并继续定义 Form 输入类、行动类的真实组件范围"
+current_focus: "Phase 5 正在进行中；NavBar 标题栏已完成本轮搜索框原生 input 替换、聚焦空输入色值、输入行高归一、返回箭头资产替换、右侧 action 图标资产替换、stage 作用域内所有标题栏组件 root 透明背景 + 0.5px 边界展示修复、清空按钮 SVG 资产替换，以及 stage 灰底承载容器 0 圆角与 hero/Gallery 卡间距收紧；此外已将“hover pointer”原则重新收口为组件本体承担交互光标语义、stage 仅保留壳层控件 pointer 与展示验收职责，并继续保留页内文本可框选复制规则；本轮已按用户要求移除 `Input / Card / Modal` 的组件本体、公共导出、stage 分支页与导航，当前默认工作窗口改为继续定义 Form 输入类、行动类的真实组件范围"
 completed:
   - "requirements-alignment — 需求对齐与优化方案确定"
   - "phase-0-repo-scaffold — monorepo 骨架搭建"
@@ -18,12 +18,25 @@ completed:
 in_progress:
   - "Phase 5 active plan 正作为长期滚动主计划维护，后续组件按批次推进"
   - "Form 展示类已完成首轮 Figma 对齐与 ListItem -> Form 替换，当前已归档；输入类 / 行动类当前仅保留 stage 占位页，待后续定义真实组件范围"
+  - "用户已确认 `Input / Card / Modal` 不再作为当前设计系统公共组件保留；对应组件源码、公开导出、stage 分支页与导航入口已移除，example-consumer 已同步解耦"
   - "Icon 已落地首轮 Figma 对齐与双源架构（local inline SVG + material font），后续可继续按 registry 扩充本地图标集"
+  - "NavBar 标题栏已按 Figma 节点 26761:11536 完成首轮组件本体与 stage 展示，并已做一次设计稿差异修正：右侧 action 图标改为复用 Icon registry，标题+3icon 示例更新为 support / calendar / wallet，文字按钮右边距与搜索框内部间距已回调到 Figma 结构；当前带标题场景已把返回按钮与标题文本拆成独立 DOM，标题文本本身不可点击"
+  - "NavBar 搜索区已修复浏览器批注：stage 两条搜索示例输入/清除互相独立；蓝色假光标已删除；带提交按钮的清除按钮位置改为分割线左侧 inline 排布"
+  - "NavBar 搜索框内搜索 icon 已统一替换为用户导出的 `packages/components/src/navbar/assets/search.svg`，原 CSS 伪元素绘制已移除"
+  - "NavBar 搜索框输入前提示文本已统一使用 `colors.semantic.text.tertiary`，对应设计稿硬编码色 `#A4A8AC`；stage 搜索+图标示例初始值已改为空，避免真实 value 伪装 placeholder"
+  - "NavBar 搜索框已继续修复：搜索输入从 Taro `Input` / `taro-input-core` 改为 H5 原生 `input`，移除 `weui-input` 套壳；聚焦且 0 输入时 placeholder 切换为 `colors.semantic.text.disabled`（#D2D3D6），输入节点固定 12px/14px 文本节奏，返回按钮统一替换为用户导出的 `packages/components/src/navbar/assets/back.svg`"
+  - "NavBar 右侧 action 图标已按用户导出的 SVG 资产替换：客服、账单、提额、搜索按钮、购物车-1、更多_三个点方案；`support/calendar/wallet` 作为兼容别名继续映射到新的本地资产；为避免 H5 stage 外部相对路径失效，action SVG 已改为 CSS data URI 内联"
+  - "NavBar stage 页面内 8 个标题栏组件 root 均在 stage 作用域下展示为透明背景 + 0.5px 边框；边框命中组件自身最外层 `.fd-navbar-root`，不命中承载它的 `__stage-navbarFrame`，真实组件源码不额外携带展示边框"
+  - "NavBar 搜索框清空按钮已替换为用户导出的 `packages/components/src/navbar/assets/close-filled.svg`；stage 灰底 `__stage-navbarFrame` 继续只作为私有展示承载层，已移除圆角；全局 StageShowcasePage 两张主卡的间距已绑定到 `--stage-space-main-padding`"
+  - "hover `pointer` 原则已重新收口：公共组件的 H5 主路径必须自行承担交互光标语义；stage 壳层不再为组件展示区统一补 `pointer`，仅保留导航与壳层控件的 pointer 规则，并以运行态暴露组件是否真实具备该能力"
+  - "本轮已按该原则复核当前保留公共组件：Button、Form 展示类与 NavBar 的真实可点击节点均已由组件本体承担 `cursor: pointer`；Icon、Tag 与 Phase1Probe 当前无点击 API，不强行输出手形光标"
+  - "stage 页内文本已补齐默认可框选复制规则；该规则留在 stage 壳层，不改动组件本体真实消费场景的 `user-select` 语义，并已写入 `AGENTS.md` 与 active plan"
+  - "NavBar 搜索框经验已上升为仓库级 Web DOM 实现路线：公共组件 H5 主路径优先输出可控 Web DOM，所有可交互元素必须先确认真实 DOM、状态 class、ARIA 语义与样式命中点可由组件自持，后续 Form 输入类 / 行动类不得默认复用 Taro 表单 / 交互组件"
   - "navbar-1 已本地合并 origin/main 并解决 PR 合并冲突；冲突主要集中在 stage 壳层样式、Layout history patch 类型与展示页抽象结构"
   - "apps/stage、apps/example-consumer 与 projects/real-project-1 的 Taro 配置已开启持久化缓存，后续 dev/build 不应再出现 cache Tips"
 blocked: []
 next_recommended:
-  - "以 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 为唯一主计划，按批次推进 Input / Card / Modal，并在需要时继续定义 Form 输入类、行动类的真实组件范围"
+  - "以 docs/exec-plans/active/phase-5-token-protocol-and-mapping.md 为唯一主计划，继续定义 Form 输入类、行动类的真实组件范围，并在新增交互组件前先收敛真实 DOM 边界"
   - "Button / Tag 当前范围仅接受新输入驱动的增量修正；Icon 继续按 registry 做增量扩充"
   - "新增组件或迭代既有组件时，若现有全局 token 不足，先补齐 token 语义再回灌组件实现"
   - "继续按 docs/exec-plans/completed/phase-4-h5-webview-baseline.md 观察 adapters 接入后的 H5 体积变化"
@@ -38,15 +51,20 @@ notes: |
   当前事实快照：
   1. 基础全局样式 token 已完成首轮分层与 Web CSS variables 镜像；后续继续按组件批次补齐语义 token
   2. 当前已完成首轮 Figma 对齐的组件包括 `Button`、`Tag`、`Icon` 与 `Form` 展示类
-  3. `Button` 当前准确范围仍仅为多个分类下的 `Base` 类，当前状态为“可冻结”；正式口径为全尺寸 loading spinner、全部尺寸固定高度、`xl=355px` 固定宽度、`l=178px-327px` 区间宽度（当前 stage 按 327px 展示），以及 `xl / l / m` 在流式场景下收缩横向 padding
-  4. `Tag` 当前状态为“可冻结”；`Icon` 当前状态为“已落地首轮”
-  5. 展示类 `Form` 已完成首轮落地并完成 `ListItem -> Form` 替换；输入类 / 行动类当前仍只保留 stage 占位页
-  6. `Text` 不再作为设计系统通用组件保留，stage 中改由 `CssToken 全局样式 / Typography 排版` 承接基础验证
-  7. `navbar-1` 已吸收 `origin/main` 的展示类 Form 计划与 stage 兼容样式，PR 合并冲突已在本地解决；Button 页与 `StageShowcasePage` 保留当前分支的抽象展示结构，`Layout` 吸收更严格的 history patch 类型写法
-  8. `apps/stage/config/index.ts`、`apps/example-consumer/config/index.ts` 与 `projects/real-project-1/config/index.ts` 已统一配置 `cache.enable: true`，用于开启 Taro / Webpack5 持久化缓存并提升二次编译速度
+  3. `NavBar` 标题栏已按 Figma 节点 `26761:11536` 完成首轮新增、一次设计稿差异修正、搜索区批注修复、搜索框图标资产替换、placeholder 语义 token 对齐，以及本轮搜索框原生 input 替换、聚焦空输入 H4 色值、输入行高归一、返回箭头资产替换、右侧 action 图标资产替换、清空按钮 SVG 资产替换、带标题场景标题文本去点击化与 stage 作用域下所有组件 root 透明边界展示修复；组件 API 覆盖返回、右侧跳转按钮、Tabs 分类切换、搜索输入/回车提交/清空与关键词标签删除；stage 页面位于 `apps/stage/src/pages/navbar`
+  4. `Button` 当前准确范围仍仅为多个分类下的 `Base` 类，当前状态为“可冻结”；正式口径为全尺寸 loading spinner、全部尺寸固定高度、`xl=355px` 固定宽度、`l=178px-327px` 区间宽度（当前 stage 按 327px 展示），以及 `xl / l / m` 在流式场景下收缩横向 padding
+  5. `Tag` 当前状态为“可冻结”；`Icon` 当前状态为“已落地首轮”
+  6. 展示类 `Form` 已完成首轮落地并完成 `ListItem -> Form` 替换；输入类 / 行动类当前仍只保留 stage 占位页
+  7. 用户已明确确认 `Input / Card / Modal` 不再属于当前设计系统公共组件范围；组件本体、stage 页面、导航入口与 example-consumer 中的对应消费已一并移除
+  8. `Text` 不再作为设计系统通用组件保留，stage 中改由 `CssToken 全局样式 / Typography 排版` 承接基础验证
+  9. `navbar-1` 已吸收 `origin/main` 的展示类 Form 计划与 stage 兼容样式，PR 合并冲突已在本地解决；Button 页与 `StageShowcasePage` 保留当前分支的抽象展示结构，`Layout` 吸收更严格的 history patch 类型写法
+  10. `apps/stage/config/index.ts`、`apps/example-consumer/config/index.ts` 与 `projects/real-project-1/config/index.ts` 已统一配置 `cache.enable: true`，用于开启 Taro / Webpack5 持久化缓存并提升二次编译速度
+  11. 公共组件 H5 主路径已确认为“可控 Web DOM 优先”路线；所有可交互元素必须先保证真实 DOM、状态 class、ARIA 语义与样式命中点由组件自持，不能把覆盖 Taro / weui 内层样式作为长期方案
+  12. `apps/stage` 已确认“组件展示区的 pointer 应由组件本体承担，stage 只负责验收”与“页内文本默认可框选复制”都是长期协议；stage 壳层不再统一替组件补交互光标，只保留自身导航/控件的 pointer，并默认放开文本选择
+  13. 当前保留公共组件的 hover `pointer` 复核结果：`Button` 根交互节点、`Form` 可点击行/折叠头/行动文本、`NavBar` 返回/Tab/搜索提交/清空/标签删除/右侧 action/文字 action 均已在组件本体命中；`Icon`、`Tag` 与 `Phase1Probe` 当前不暴露点击 API，不承担手形光标
 
   当前工作窗口：
-  1. 第一优先级是按 active 主计划推进 `Input / Card / Modal`，并在需要时继续定义 `Form` 输入类 / 行动类的真实组件范围
+  1. 第一优先级是按 active 主计划继续定义 `Form` 输入类 / 行动类的真实组件范围，并在新增交互组件前先收敛真实 DOM 边界
   2. 第二优先级是若新增组件范围暴露 token 缺口，仍遵守“先补 token，再回灌组件”的顺序
   3. `Button / Tag` 当前范围仅接受新输入驱动的增量修正，`Icon` 继续按 registry 扩充
 
@@ -60,8 +78,10 @@ notes: |
   1. TypeScript 仍是 token 与组件合同的主源；Web CSS variables 仅作镜像输出
   2. 组件样式值优先来自本项目全局 token；若当前 token 暂无对应项，必须先询问用户确认，才可临时使用硬编码或 reference token，并在当前任务收尾前完成语义抽取与回灌
   3. 排版协议不保留 `600 / 700` 字重，也不再保留设计系统通用 `Text` 组件
-  4. `Card / Modal` spacing 采用“外层容器 padding + 内容行节奏”两级协议，不做单值映射
-  5. 状态词口径：阶段层使用“进行中 / 已完成”；组件批次层使用“已落地首轮 / 收尾中 / 可冻结”
+  4. 状态词口径：阶段层使用“进行中 / 已完成”；组件批次层使用“已落地首轮 / 收尾中 / 可冻结”
+  5. Web DOM 路线优先级高于历史 provisional 实现；Form 输入类 / 行动类后续新增真实交互组件时，必须按该路线先定义真实交互结构，再做视觉与平台适配
+  6. stage 只负责暴露组件 hover `pointer` 是否真实成立；新增组件若缺少原生语义、真实节点或组件本体 cursor，应优先修组件，不再新增 stage 命中规则兜底
+  7. stage 页内文本可复制属于舞台层默认能力；若某个组件在真实业务中出于交互原因保留 `user-select: none`，stage 若需放开复制应优先由壳层覆盖，而不是改组件本体语义
 
   下一个 Agent 进入时：
   - 先读本文件获取当前工作窗口
@@ -69,5 +89,5 @@ notes: |
   - 再读 `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md` 获取长期协议、当前批次与滚动 backlog
   - 若本轮需要在 `apps/stage` 验证 `tokens/components` 改动，默认先运行根命令 `pnpm dev:stage`，不要只启动 `@fdesign/stage`
   - 若改动 `packages/tokens/src`，必须遵守 `tokens build -> components build -> stage 验证` 的顺序，不得并行构建 `tokens/components`
-  - 默认优先级：先按 active plan 推进 `Input / Card / Modal` 与 `Form` 输入类 / 行动类范围，再处理新输入驱动的 `Button / Tag / Icon` 增量修正
+  - 默认优先级：先按 active plan 定义 `Form` 输入类 / 行动类范围，再处理新输入驱动的 `Button / Tag / Icon` 增量修正
   - 如未来出现明确 RN 消费方，再重新评估是否恢复更强的 RN 运行态验证

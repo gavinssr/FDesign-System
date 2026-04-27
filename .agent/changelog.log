@@ -16,6 +16,29 @@
 
 # AI 变更日志（追加式）
 
+## 2026-04-27 — 移除 Input / Card / Modal 及其 stage 入口
+
+### 代码变更
+- 删除 `packages/components/src/input/`、`packages/components/src/card/`、`packages/components/src/modal/`：移除 `Input`、`Card`、`Modal` 的组件本体、类型、合同、测试与 harness
+- `packages/components/src/index.ts`：移除上述三个组件的公开导出，避免外部继续从 `@fdesign/components` 引用已下线组件
+- 删除 `apps/stage/src/pages/input/`、`apps/stage/src/pages/card/`、`apps/stage/src/pages/modal/`，并同步更新 `apps/stage/src/app.config.ts`、`apps/stage/src/shell/componentLinks.ts`：移除对应分支页注册与导航入口
+- `apps/example-consumer/src/pages/index/index.tsx`：将消费样板改为仅使用保留中的 `Button / Tag / Icon / FormRow`，解除对已删除组件的依赖
+
+### 文档与治理
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：把 `Input / Card / Modal` 从当前推进批次中移除，并将当前默认工作窗口收束为继续定义 `Form` 输入类 / 行动类范围
+- `.agent/checkpoint.yaml`：同步当前工作窗口与事实快照，记录三个组件已退出当前设计系统公共范围
+
+### 验证
+- `npm test`
+- `npm run lint`
+- `pnpm --filter @fdesign/components clean && pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/stage build`
+- `pnpm --filter @fdesign/example-consumer build`
+
+### 说明
+- 本轮按用户明确范围执行结构性删除，而不是保留占位导出或隐藏 stage 入口
+- 构建阶段仅保留既有 `EntrypointsOverSizeLimitWarning` 与 webpack cache serialization warning，未出现新的删除相关错误
+
 ## 2026-04-24 — Button 治理收尾 plan 归档
 
 ### 文档与治理
@@ -1488,3 +1511,261 @@
 
 ### 说明
 - 本轮仅调整 Taro 构建配置，不新增依赖，不改变组件公开 API
+
+## 2026-04-27 — NavBar 标题栏首轮 Figma 对齐
+
+### 代码变更
+- `packages/components/src/navbar/`：新增 `NavBar` 组件本体、类型、样式、合同、harness 与测试，覆盖标题栏、无标题+图标、标题+图标、标题+文字按钮、Tabs、搜索、搜索+图标等 Figma 形态
+- `NavBar` 公开 API 预留并实现返回 `onBack`、右侧按钮 `onPress`、Tabs `activeTabKey/onTabChange`、搜索 `onValueChange/onSubmit/onClear/onTagRemove`，使组件本体具备真实消费交互
+- `apps/stage/src/pages/navbar/`、`apps/stage/src/app.config.ts`、`apps/stage/src/shell/componentLinks.ts`：新增 stage 展示页与导航入口；stage 中以浅灰容器包裹，组件本体在展示容器内填充白色背景
+- `packages/components/src/index.ts`：导出 `NavBar`、`NavBarHarness` 与相关类型
+
+### 验证
+- `pnpm --filter @fdesign/components test`
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/stage build`
+- `pnpm test`
+- `pnpm dev:stage` 运行态验证：stage 页面可打开，Tabs 可切换，搜索输入回车可提交
+
+### 说明
+- NavBar 样式按 Figma 1 倍图固定 375px 通栏还原，因此组件 CSS 与 stage 包裹 CSS 均显式禁用 Taro pxtransform，避免在 `designWidth: 750` 的 H5 stage 中被缩小一半
+
+## 2026-04-27 — NavBar 设计稿差异修正
+
+### 代码变更
+- `packages/components/src/navbar/NavBar.tsx`、`NavBar.types.ts`、`NavBar.module.css`：右侧 action 图标改为优先复用既有 `Icon` registry，并补充 `support` 图标类型；仅 `more` 保留当前 CSS 三点结构；微调标题+文字按钮右边距与搜索框内部 icon/text 间距
+- `apps/stage/src/pages/navbar/index.tsx`：标题+3icon 示例从近似图标顺序修正为 `support / calendar / wallet`，与 Figma 截图中的三枚图标语义更一致
+- `packages/components/src/navbar/NavBar.contract.yaml`：补充 `purpose`、`states` 与 NavBar 支持的 action icon 范围，避免合同校验继续把 NavBar 新合同识别为结构不完整
+
+### 验证
+- `npm test`
+- `pnpm --filter @fdesign/components test -- --run`
+- `pnpm validate-contracts`：NavBar 合同已通过；当前仍失败于既有 `Form.contract.yaml` 缺少 `export interface FormProps` 对应类型签名
+- `pnpm dev:stage`：已按根命令完成 tokens dist -> components dist -> stage 预览链路，H5 服务监听 `http://127.0.0.1:10086/`
+
+### 说明
+- 本轮未新增生产依赖；视觉修正遵守“组件复用已治理 Icon registry”的设计系统收敛原则
+
+## 2026-04-27 — NavBar 搜索批注修复
+
+### 代码变更
+- `apps/stage/src/pages/navbar/index.tsx`：拆分两个搜索示例的状态，避免普通搜索与搜索+图标示例在输入、清空时互相联动
+- `packages/components/src/navbar/NavBar.tsx`、`NavBar.module.css`：删除原先把 Figma 光标误当静态装饰的 `fakeCaret`；带“搜索”提交按钮的输入态清除按钮改为 inline 排布，出现在提交分割线左侧并保持间距
+
+### 验证
+- `npm test`
+- `pnpm dev:stage` 热更新验证：页面重新编译成功；浏览器侧确认两条搜索输入不再联动、假光标已消失、输入态清除按钮位置已移到分割线左侧
+
+### 说明
+- 本轮未新增生产依赖；搜索输入仍保留原生输入框自身光标能力
+
+## 2026-04-27 — NavBar 搜索图标资产替换
+
+### 代码变更
+- `packages/components/src/navbar/assets/search.svg`：新增用户导出的搜索图标资产
+- `packages/components/src/navbar/NavBar.module.css`：搜索框内的 `fd-navbar-searchIcon` 改为引用该 SVG，移除原 CSS 伪元素绘制
+
+### 验证
+- `pnpm --filter @fdesign/components build`
+- `pnpm dev:stage` 热更新验证：`navbar/assets/search.svg` 已进入 H5 bundle；浏览器侧确认搜索框内三处搜索 icon 均已替换
+
+### 说明
+- 本轮仅替换搜索框内搜索图标资产，不改变 NavBar 公开 API
+
+## 2026-04-27 — NavBar 搜索 placeholder token 对齐
+
+### 代码变更
+- `packages/components/src/navbar/NavBar.tsx`：搜索输入的 `placeholderStyle` 改为使用 `colors.semantic.text.tertiary`，对应设计稿硬编码色 `#A4A8AC`，无需新增 token
+- `apps/stage/src/pages/navbar/index.tsx`：搜索+图标示例初始值改为空，避免用真实输入值伪装 placeholder
+- `packages/components/src/navbar/NavBar.test.tsx`：测试 mock 吸收 Taro `placeholderStyle` 属性，避免 React DOM 噪音
+
+### 验证
+- `npm test`
+- `pnpm dev:stage` 热更新验证：浏览器侧确认两条搜索示例均以空值展示 placeholder，搜索图标资产仍正常显示
+
+### 说明
+- 本轮没有新增 token；`#A4A8AC` 已存在于 `colors.semantic.text.tertiary`
+
+## 2026-04-27 — NavBar 搜索框视觉还原修复
+
+### 代码变更
+- `packages/components/src/navbar/NavBar.tsx`：搜索输入从 Taro `Input` / `taro-input-core` 改为 H5 原生 `input`，移除真实 DOM 中的 `weui-input` 套壳；输入前 placeholder 继续使用 `colors.semantic.text.tertiary`（#A4A8AC），聚焦且 0 输入时通过状态 class 切换到 `colors.semantic.text.disabled`（#D2D3D6）
+- `packages/components/src/navbar/NavBar.module.css`：清除原生 input 默认 margin、padding、border、appearance、box-shadow 与 outline，将真实输入文本盒固定为 12px / 14px；不再依赖覆盖 Taro 内置 `.weui-input { height: 1.47059em; line-height: 1.47059 }`
+- `packages/components/src/navbar/assets/back.svg`：新增用户导出的返回箭头资产；`BackIcon` 改为统一引用该 SVG，不再用 CSS border 画箭头
+- `packages/components/src/navbar/NavBar.test.tsx`：新增聚焦空输入 placeholder token 回归测试
+
+### 验证
+- `pnpm --filter @fdesign/components build`
+- `npm test`
+- `pnpm lint`
+- 既有 `http://127.0.0.1:10086/pages/navbar/index#/pages/navbar/index` 页面刷新验证：DOM snapshot 已确认搜索框不再包含 `taro-input-core` / `weui-input`，搜索区与返回箭头显示正常
+
+### 说明
+- 输入前状态确实已经使用 token；当前通过 `fd-navbar-searchInput` / `fd-navbar-searchInputFocusedEmpty` 两个 class 分别映射 `colors.semantic.text.tertiary` 与 `colors.semantic.text.disabled`
+
+## 2026-04-27 — NavBar 右侧 action 图标资产替换
+
+### 代码变更
+- `packages/components/src/navbar/assets/`：新增用户导出的客服、账单、提额、搜索按钮、购物车与更多 SVG 资产，并通过组件 dist 同步进入消费侧 bundle
+- `packages/components/src/navbar/NavBar.tsx`、`NavBar.types.ts`、`NavBar.module.css`：右侧 action 图标从通用 `Icon` registry / CSS 三点改为 NavBar 本地 SVG 资产；新增 `customer-service / bill / credit-increase` 语义 icon 名称，并保留 `support / calendar / wallet` 兼容别名；为避免 H5 stage 中 workspace 外部相对路径失效，action SVG 已改为 CSS data URI 内联
+- `apps/stage/src/pages/navbar/index.tsx`、`packages/components/src/navbar/NavBar.harness.tsx`、`NavBar.contract.yaml`：stage 示例、测试 harness 与合同同步改为新的本地 action 图标语义
+
+### 验证
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/stage build`
+- `npm test`
+- `pnpm lint`
+- 既有 `http://127.0.0.1:10086/pages/navbar/index#/pages/navbar/index` 页面刷新验证：六类新 action asset class 均已出现在 DOM 中，旧 `.fd-icon-svg` 数量为 0，浏览器日志无 action SVG 404/ERR，截图确认图标恢复显示
+
+### 说明
+- 本轮未新增生产依赖；搜索框内放大镜仍使用搜索输入专用 `search.svg`，右侧按钮区搜索图标独立使用用户导出的 `action-search.svg`
+
+## 2026-04-27 — Web DOM 交互组件路线固化
+
+### 文档变更
+- `AGENTS.md`：新增 Web DOM 实现路线，明确公共组件 H5 主路径优先输出可控 Web DOM；所有可交互元素必须先确认真实节点、状态 class、ARIA 语义与样式命中点由组件自持
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：在实施边界协议中补充交互组件路线；明确 NavBar 原生 `input` 是后续交互组件样板，公共 `Input` 与 Form 输入类 / 行动类后续必须按该路线修正
+- `.agent/checkpoint.yaml`：同步当前事实快照与后续工作约束
+- `.agent/decisions.log`：追加架构决策记录
+
+### 验证
+- 文档规则变更，未修改 JavaScript 文件；未运行 `npm test`
+
+### 说明
+- 这不是只针对 `input / textarea` 的局部规则，而是所有公共组件与可交互元素的统一 H5 实现路线
+
+## 2026-04-27 — NavBar 搜索组件 root 边界修复
+
+### 代码变更
+- `packages/components/src/navbar/NavBar.tsx`、`NavBar.module.css`：NavBar 有 `search` prop 时，组件自身最外层 root 增加 `fd-navbar-rootSearch`，并由组件本体承担透明背景 + `0.5px` 边框
+- `apps/stage/src/pages/navbar/index.tsx`、`index.css`：撤回上一版 stage 承载容器 modifier；stage 白底规则改为排除 `.fd-navbar-rootSearch`，避免承载层误承担组件边界语义
+
+### 验证
+- `pnpm --filter @fdesign/components build`
+- `npm test`
+- `pnpm lint`
+- 既有 `http://127.0.0.1:10086/pages/navbar/index#/pages/navbar/index` 页面刷新验证：命中 3 个 `.fd-navbar-rootSearch`，旧 `__stage-navbarSearchFrame` 数量为 0，截图确认边界落在搜索类 NavBar 组件自身 root 上
+
+### 说明
+- 本轮不改变 NavBar 公开 API；仅把搜索形态的组件最外层容器视觉从 stage 展示层移回组件本体
+
+## 2026-04-27 — NavBar stage root 边界展示修正
+
+### 代码变更
+- `packages/components/src/navbar/NavBar.module.css`：移除搜索形态 `fd-navbar-rootSearch` 在组件源码中的 `0.5px` 展示边框，避免真实组件消费侧继承 stage 辅助边界
+- `apps/stage/src/pages/navbar/index.css`：恢复 `__stage-navbarFrame` 只承担灰色展示底与 padding；新增 stage 作用域规则 `.__stage-navbarFrame .fd-navbar-root`，让所有 8 个标题栏组件自身最外层 root 在 stage 中呈现透明背景 + `0.5px` 边框
+
+### 验证
+- `pnpm --filter @fdesign/components build`
+- `pnpm lint`
+- 既有 `http://127.0.0.1:10086/pages/navbar/index#/pages/navbar/index` 页面刷新验证：命中 8 个 `.__stage-navbarFrame .fd-navbar-root`，截图确认边界落在每个 NavBar 组件自身 root 上；搜索类内嵌搜索框仍保持白色背景
+
+### 说明
+- 这次修正只作用于 stage 展示，不改变 NavBar 公开 API，也不把辅助展示边界带入真实业务消费场景
+
+## 2026-04-27 — Stage pointer 原则收口到组件本体
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：移除 `__stage-main` 对组件展示区 `button / a / summary / role="button|link|tab"` 的统一 `cursor: pointer` 兜底；stage 壳层仅保留侧边导航与自身控件的 pointer 规则
+- `AGENTS.md`、`docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：将长期协议从“stage 自动补 pointer”收口为“公共组件在 H5 主路径自行承担 hover pointer；stage 仅负责验收与暴露问题”
+- `.agent/checkpoint.yaml`、`.agent/decisions.log`：同步当前工作窗口与架构决策，明确 stage 不再替组件展示区兜底交互光标
+
+### 验证
+- 待执行：`pnpm lint`
+- 待执行：reload 当前 stage 页面，确认组件展示区不再依赖壳层自动补 pointer；真实可点击组件若仍有 pointer，来源应回到组件本体样式
+
+### 说明
+- 这次调整的核心是把“交互暗示”从舞台层回收到组件合同里。对用户来说，stage 应该更像真实业务消费的放大镜，而不是另做一层视觉修饰后的样板间
+
+## 2026-04-27 — NavBar 清空按钮与 stage 展示节奏修复
+
+### 代码变更
+- `packages/components/src/navbar/assets/close-filled.svg`：新增用户导出的内嵌搜索框清空按钮 SVG 资产
+- `packages/components/src/navbar/NavBar.tsx`、`NavBar.module.css`：清空按钮从 CSS 圆形 + 两条线绘制改为本地 SVG 背景图，保持现有 `aria-label="清空搜索内容"` 与点击合同不变
+- `apps/stage/src/pages/navbar/index.css`：移除灰底 `__stage-navbarFrame` 的圆角；该容器只作为 stage 私有承载层，组件边界仍命中 `.fd-navbar-root`
+- `apps/stage/src/app.css`：将 `--stage-space-main-gap` 绑定到 `--stage-space-main-padding`，让所有 StageShowcasePage 的 hero 卡与 Gallery 展示区间距与主展示区 padding 保持一致
+
+### 验证
+- `npm test`
+
+## 2026-04-27 — NavBar 标题 hover 光标语义修正
+
+### 代码变更
+- `packages/components/src/navbar/NavBar.module.css`：移除 `.fd-navbar-left` / `.fd-navbar-leftTabs` 的 `cursor: pointer`，避免标题文本仅因包裹在左侧容器里就显示手形；保留返回按钮、Tabs、右侧 actions 等真实交互节点自己的 pointer 规则
+
+### 验证
+- `pnpm --filter @fdesign/components build`
+- 浏览器 reload 当前 `http://127.0.0.1:10086/#/pages/navbar/index`，确认 stage 已加载最新产物；标题 hover 的根因规则已从组件源码与 dist CSS 中移除，仅返回按钮 / Tabs / actions 继续保留 pointer 规则
+
+### 说明
+- 这次修正针对的是“交互暗示”而不是点击行为本身：标题此前已经不可点击，但容器级 `cursor` 仍在给用户错误的可点击预期
+
+## 2026-04-27 — NavBar 标题文本去点击化
+
+### 代码变更
+- `packages/components/src/navbar/NavBar.tsx`：把非搜索态的左侧结构从“整块返回热区”拆成“独立返回按钮 + 非交互标题/Tab 区”；带标题场景下标题文本不再继承返回点击事件
+- `packages/components/src/navbar/NavBar.test.tsx`：补充回归测试，确认点击 `标题文本` 不会触发 `onBack`，只有点击返回按钮才会返回
+- `.agent/checkpoint.yaml`：同步 NavBar 当前事实快照，明确标题文本已去点击化
+
+### 验证
+- `pnpm --filter @fdesign/components build`
+- `pnpm --filter @fdesign/components lint`
+- `npm test`
+
+### 说明
+- 这次修正的核心是把交互语义和视觉内容重新分层：返回是明确的操作按钮，标题只是信息表达，不应该共享同一块点击热区
+
+### 说明
+- 本轮没有新增生产依赖，也没有改变 NavBar 公开 API；stage 容器修复是把实现重新拉回既有“灰底承载层不表达组件圆角语义”的规则
+
+## 2026-04-27 — Stage 可点击节点 hover pointer 协议固化
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：stage 展示区新增统一 hover 命中规则；`__stage-page` 下的 `button`、`a[href]`、`summary`、`role="button"`、`role="link"`、`role="tab"` 默认呈现 `cursor: pointer`
+- `AGENTS.md`、`docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：把“stage 内所有可点击节点必须呈现 pointer”写成长期协议，并明确这是 stage 私有展示增强，不进入组件本体视觉语义
+- `.agent/checkpoint.yaml`：同步当前事实快照与后续新增组件的执行约束
+
+### 验证
+- `pnpm lint`
+
+### 说明
+- 这次修正的关键不是给某个组件单点补样式，而是把 stage 壳层默认规则和治理文档同时补齐，让后续 agent 只要遵守真实交互语义，就能自动继承 pointer 展示
+
+## 2026-04-27 — Stage pointer 命中作用域修正
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：将展示区 hover `pointer` 规则从未实际承载页面内容的 `__stage-page` 改为真实主内容容器 `__stage-main`，确保 NavBar 等 stage 页面里的 `role="button" | "link" | "tab"` 节点能被壳层统一命中
+
+### 验证
+- `pnpm lint`
+
+### 说明
+- 这次不是组件语义缺失，而是 stage 壳层 selector 第一版写窄了；修正后规则会覆盖当前所有挂载在 `__stage-main` 下的展示页
+
+## 2026-04-27 — Stage 页内文本可框选复制协议固化
+
+### 代码变更
+- `apps/stage/src/shell/styles/layout.module.css`：在 `__stage-layout` 壳层下统一放开文本选择，stage 页内文本默认允许鼠标框选复制
+- `AGENTS.md`、`docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：把“stage 页内文本默认可复制”写成长期展示协议，并明确这属于 stage 私有增强，不改变组件本体真实消费语义
+- `.agent/checkpoint.yaml`：同步当前事实快照与后续执行约束
+
+### 验证
+- `pnpm lint`
+
+### 说明
+- 这次修正仍然走 stage 壳层默认能力，而不是逐页给文本节点零散补 `user-select`
+
+## 2026-04-27 — 公共组件 hover pointer 复核与 real-project 消费面清理
+
+### 代码变更
+- `packages/components/src/*`：复核当前保留公共组件的真实可点击节点，确认 `Button`、`Form` 展示类与 `NavBar` 均已在组件本体承担 `cursor: pointer`，`Icon`、`Tag` 与 `Phase1Probe` 当前无点击 API，不强行输出手形光标
+- `projects/real-project-1/src/pages/index/index.tsx`：移除已退出公共组件面的 `Card / Input / Modal` 引用，改用业务页 section、原生 `input` 与本页确认层；公共组件消费面收敛到 `Button / FormRow / Icon / Tag`
+- `projects/real-project-1/src/app.css`：补齐业务页 section、输入框与确认层样式，并让可点击关闭遮罩明确输出 `cursor: pointer`
+- `.agent/checkpoint.yaml`：记录本轮 hover `pointer` 复核结果
+
+### 验证
+- `npm test`
+- `npm run lint`
+
+### 说明
+- 这次复核没有发现当前保留公共组件缺失 `pointer` 的问题；额外清理的是测试中暴露的真实业务样板旧组件引用，避免后续构建继续出现已移除导出的警告
