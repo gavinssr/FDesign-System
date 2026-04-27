@@ -296,3 +296,17 @@
 4. `__stage-clickable` 或类似舞台层辅助类不再作为公共组件 hover cursor 的长期主路径
 
 影响：后续新增或重构组件时，hover `pointer` 将成为组件本体交付标准的一部分，与真实 DOM、ARIA 语义、状态 class 一起由 `packages/components` 持有；stage 继续作为验收场，而不再扮演交互光标兜底层。
+
+## 2026-04-27 — Phase 5 治理事实源收拢
+
+背景：`8ff83d4` 合入后，仓库同时发生了三类结构性变化：`NavBar` 新增并完成首轮 Figma 对齐，`Input / Card / Modal` 退出当前公共组件范围，stage hover `pointer` 规则从“壳层统一兜底”修正为“组件本体承担、stage 负责验收”。这些变化已分散记录在 checkpoint、changelog 与 active plan 中，需要统一事实源边界，避免后续 agent 继续按旧组件面或旧 pointer 规则推进。
+
+决策：
+1. `docs/ROADMAP.md` 只记录阶段层状态和历史范围演进，不承载 NavBar 每个修复点的细节
+2. `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md` 继续作为 Phase 5 唯一 active 主计划，负责维护组件批次状态、长期协议与滚动推进顺序
+3. `.agent/checkpoint.yaml` 只记录当前工作窗口和短期事实快照，不再复制 active plan 中的全部长期协议
+4. `NavBar` 纳入 Phase 5 “已落地首轮”组件批次；后续只接受新 Figma 输入、真实业务消费反馈或平台适配反馈驱动的增量修正
+5. `Input / Card / Modal` 退出当前公共组件范围的口径同步到 ROADMAP 与 active plan；如未来重新进入，必须重新定义真实业务语义、Web DOM 边界与 token 映射，不恢复 Phase 2 旧实现作为默认路径
+6. `Stage 展示区统一承担可点击节点的 pointer 识别` 是已被后续决策修正的历史记录；当前有效口径以 `组件展示区的 hover pointer 回归组件本体` 为准
+
+影响：后续治理层更新应优先判断信息属于“阶段口径、长期主计划、当前工作窗口、历史变更记录”中的哪一类，再写入对应文件；重复的中间态记录不再继续扩散到多个事实源。

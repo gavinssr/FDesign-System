@@ -24,11 +24,12 @@
 - Phase 5 已启动，且已从“等待 Figma 输入”切换到长期滚动执行
 - `vars.css` 已提供颜色、字体、圆角、阴影基础定义，并由用户补齐 spacing、字体、line-height 与协议备注
 - 仓库已落地基础全局样式 token 的首轮收口，并已建立 TS 主源 + Web CSS variables 镜像
-- 当前已完成首轮 Figma 对齐且当前范围可冻结的组件包括 `Button`（当前仅多个分类下的 `Base` 类 button 已完成，其余分类后续补齐）、`Tag`、`Icon` 与 `Form` 展示类
+- 当前已完成首轮 Figma 对齐的组件包括 `Button`（当前仅多个分类下的 `Base` 类 button 已完成，其余分类后续补齐）、`Tag`、`Icon`、`Form` 展示类与 `NavBar`
 - `Button` 当前状态为“可冻结”，准确范围为多个分类下的 `Base` 类 button；其余分类仍待后续继续补齐
 - `Tag` 当前状态为“可冻结”，本轮组件本体、token 映射与 stage 展示已通过验收
 - `Icon` 当前状态为“已落地首轮”，双源架构、尺寸协议与 stage 展示已完成一轮对齐
 - `Form` 当前状态为“已落地首轮”，展示类已完成首轮 Figma 对齐，`ListItem` 已从公共导出与 stage 页面中移除并收敛为 `Form` 组件族；输入类 / 行动类当前仅保留 stage 占位页
+- `NavBar` 当前状态为“已落地首轮”，标题栏、返回按钮、右侧 action、Tabs、搜索输入、搜索提交、清空与关键词标签删除已形成首轮组件合同；搜索输入已改为 H5 原生 `input`，并作为后续交互组件 Web DOM 路线样板
 - 用户已明确确认 `Input / Card / Modal` 不再属于当前设计系统公共组件范围；对应组件本体、公开导出、stage 分支页与导航入口已移除
 - 其余组件与其语义 token 仍按批次持续推进，不按一次性全部完成来管理
 
@@ -48,7 +49,7 @@
 
 ### 0. Stage 展示交互识别协议
 
-- `apps/stage` 作为展示舞台，组件展示区里的真实可点击节点在 hover 时都必须呈现 `pointer`
+- `apps/stage` 作为展示舞台，应验收组件展示区里的真实可点击节点在 hover 时是否呈现 `pointer`
 - `apps/stage` 页内文本默认允许鼠标框选复制，便于核对文案、token 名称、示例值与组件展示内容
 - `pointer` 对组件展示区不再由 stage 壳层统一补齐；公共组件应在 H5 主路径自行承担 hover cursor 与交互语义
 - stage 壳层只为自己的导航、折叠组、切换控件等舞台层节点补 `pointer`，不得替公共组件兜底交互暗示
@@ -140,6 +141,13 @@
 - `View` / `Text` 可继续作为 Taro H5 基础布局和文本容器，但 `button`、`input`、`textarea`、`select`、`a`、自定义点击区域等交互节点必须按最终 H5 DOM 可控性优先设计
 - 禁止把覆盖 Taro / weui 内层默认样式作为长期方案；NavBar 搜索框改为原生 `input` 是后续交互组件的路线样板
 - Form 输入类 / 行动类后续新增真实交互组件时，必须先按上述 Web DOM 路线定义真实 DOM 结构，再做 token、视觉和平台适配
+
+### 5. 组件范围治理协议
+
+- Phase 2 的高频组件清单是当时的模式验证范围，不等同于 Phase 5 的当前公共组件范围
+- 当前公共组件面以 active plan、公共导出与 stage 导航三者一致为准；三者不一致时，优先收敛到同一事实源
+- `Input / Card / Modal` 已退出当前公共组件范围，不保留软废弃占位；若未来重新进入，必须先重新定义真实业务语义、Web DOM 边界与 token 映射，而不是恢复 Phase 2 旧实现
+- `Text` 与 `ListItem` 分别由 `Typography` 基础验证页与 `Form` 展示类承接历史能力，不再作为当前组件批次推进
 
 ## 仓库映射方案
 
@@ -262,6 +270,14 @@
 - 已落地首轮对齐：已接入 `special-mini / xxs / xs / s / m / special-large` 六档尺寸、tone/color 覆盖与 stage 展示
 - 当前剩余工作：后续按 registry 继续扩充本地图标集，并在有新 Figma 输入时继续增量校正
 
+#### NavBar
+
+- 已落地首轮对齐：组件新增标题栏、返回、右侧 action、Tabs、搜索输入、搜索提交、清空与关键词标签删除等核心交互合同
+- 已落地首轮对齐：搜索输入已从 Taro `Input` / `taro-input-core` 改为 H5 原生 `input`，避免平台内层样式干扰，并沉淀为后续交互组件的 Web DOM 样板
+- 已落地首轮对齐：返回箭头、搜索 icon、右侧 action 与清空按钮已收敛到本地 SVG 资产；右侧 action 在 H5 stage 中使用 CSS data URI 避免相对路径失效
+- 已落地首轮对齐：stage 中 NavBar root 边界由 stage 作用域展示规则承载，真实组件源码不携带辅助展示边框
+- 当前剩余工作：后续仅接受新的 Figma 输入、真实业务消费反馈或平台适配反馈驱动的增量修正
+
 ## 阻塞项与待确认项
 
 ### 已明确，不再回退
@@ -287,6 +303,7 @@
 2. 已落地首轮：建立 TS token 分层与 Web CSS variables 镜像
 3. 已落地首轮：`Button` 与公共 token 运行时
 4. 已落地首轮：`Form` 展示类替代历史 `ListItem`，并完成 stage 展示与基础消费语义落地
-5. 当前优先：继续定义 `Form` 输入类 / 行动类的真实范围，并在新增组件前先收敛真实交互边界
-6. `Button / Tag` 当前范围已可冻结，后续仅接受新输入驱动的增量修正；`Icon` 按 registry 做增量扩充
-7. 如用户继续提供 Figma 输入或新的组件范围，再按同一主计划扩展，而不是新开平行 active 文档
+5. 已落地首轮：`NavBar` 标题栏完成首轮组件合同与 stage 展示，并把搜索输入沉淀为 Web DOM 路线样板
+6. 当前优先：继续定义 `Form` 输入类 / 行动类的真实范围，并在新增组件前先收敛真实交互边界
+7. `Button / Tag` 当前范围已可冻结，后续仅接受新输入驱动的增量修正；`Icon / NavBar` 按新输入做增量扩充或校正
+8. 如用户继续提供 Figma 输入或新的组件范围，再按同一主计划扩展，而不是新开平行 active 文档

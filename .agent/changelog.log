@@ -1769,3 +1769,17 @@
 
 ### 说明
 - 这次复核没有发现当前保留公共组件缺失 `pointer` 的问题；额外清理的是测试中暴露的真实业务样板旧组件引用，避免后续构建继续出现已移除导出的警告
+
+## 2026-04-27 — 项目治理层收拢
+
+### 文档变更
+- `docs/ROADMAP.md`：补充 `Input / Card / Modal` 退出当前公共组件范围的 Phase 5 演进说明，并将 Phase 5 当前摘要更新为 `Button / Tag` 可冻结、`Icon / Form 展示类 / NavBar` 已落地首轮
+- `docs/exec-plans/active/phase-5-token-protocol-and-mapping.md`：把 `NavBar` 纳入已落地首轮组件批次，新增组件范围治理协议，并收拢 hover `pointer` 的最终口径为组件本体承担、stage 负责验收
+- `.agent/checkpoint.yaml`：压缩当前工作窗口，记录本轮治理事实源边界与下一步默认焦点
+- `.agent/decisions.log`：追加 Phase 5 治理事实源收拢决策，明确旧的 stage pointer 兜底决策已被后续组件本体决策取代
+
+### 验证
+- `pnpm lint`
+
+### 说明
+- 本轮只修改治理文档与状态文件，未修改 JavaScript / TypeScript 源码；因此未触发 `npm test` 的必跑约束
